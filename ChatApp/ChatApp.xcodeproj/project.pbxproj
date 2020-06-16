@@ -79,6 +79,7 @@
 		CBD5984E24986037000CBEBD = {
 			isa = PBXGroup;
 			children = (
+				CBD5988A2498620D000CBEBD /* Authentication Views */,
 				CBD5985924986037000CBEBD /* ChatApp */,
 				CBD5987024986040000CBEBD /* ChatAppTests */,
 				CBD5987B24986041000CBEBD /* ChatAppUITests */,
@@ -102,7 +103,6 @@
 				CBD5985A24986037000CBEBD /* AppDelegate.swift */,
 				CBD5985C24986037000CBEBD /* SceneDelegate.swift */,
 				CBD5985E24986037000CBEBD /* ViewController.swift */,
-				CBD5986024986037000CBEBD /* Main.storyboard */,
 				CBD5986324986040000CBEBD /* Assets.xcassets */,
 				CBD5986524986040000CBEBD /* LaunchScreen.storyboard */,
 				CBD5986824986040000CBEBD /* Info.plist */,
@@ -126,6 +126,14 @@
 				CBD5987E24986041000CBEBD /* Info.plist */,
 			);
 			path = ChatAppUITests;
+			sourceTree = "<group>";
+		};
+		CBD5988A2498620D000CBEBD /* Authentication Views */ = {
+			isa = PBXGroup;
+			children = (
+				CBD5986024986037000CBEBD /* Main.storyboard */,
+			);
+			path = "Authentication Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
