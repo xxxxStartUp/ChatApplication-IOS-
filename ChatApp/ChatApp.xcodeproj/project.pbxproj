@@ -76,9 +76,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		439F5AD62499A91200D06BCF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		CBD5984E24986037000CBEBD = {
 			isa = PBXGroup;
 			children = (
+				439F5AD62499A91200D06BCF /* Model */,
 				CBD5988A2498620D000CBEBD /* Authentication Views */,
 				CBD5985924986037000CBEBD /* ChatApp */,
 				CBD5987024986040000CBEBD /* ChatAppTests */,
