@@ -17,6 +17,7 @@
 		43BBB4122499D5C70024F449 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4112499D5C70024F449 /* GoogleService-Info.plist */; };
 		43BBB4142499D5D10024F449 /* ebuka-FireService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB4132499D5D10024F449 /* ebuka-FireService.swift */; };
 		43BBB4162499D5DC0024F449 /* Views in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4152499D5DC0024F449 /* Views */; };
+		43BBB419249A7B910024F449 /* Git.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB418249A7B910024F449 /* Git.swift */; };
 		CBD5985B24986037000CBEBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5985A24986037000CBEBD /* AppDelegate.swift */; };
 		CBD5985D24986037000CBEBD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5985C24986037000CBEBD /* SceneDelegate.swift */; };
 		CBD5985F24986037000CBEBD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5985E24986037000CBEBD /* ViewController.swift */; };
@@ -55,6 +56,7 @@
 		43BBB4112499D5C70024F449 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		43BBB4132499D5D10024F449 /* ebuka-FireService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ebuka-FireService.swift"; sourceTree = "<group>"; };
 		43BBB4152499D5DC0024F449 /* Views */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Views; sourceTree = "<group>"; };
+		43BBB418249A7B910024F449 /* Git.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Git.swift; sourceTree = "<group>"; };
 		CBD5985724986037000CBEBD /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBD5985A24986037000CBEBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CBD5985C24986037000CBEBD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,9 +107,18 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		43BBB417249A7B790024F449 /* Git */ = {
+			isa = PBXGroup;
+			children = (
+				43BBB418249A7B910024F449 /* Git.swift */,
+			);
+			path = Git;
+			sourceTree = "<group>";
+		};
 		CBD5984E24986037000CBEBD = {
 			isa = PBXGroup;
 			children = (
+				43BBB417249A7B790024F449 /* Git */,
 				43BBB4152499D5DC0024F449 /* Views */,
 				439F5AD62499A91200D06BCF /* Model */,
 				CBD5988A2498620D000CBEBD /* Authentication Views */,
@@ -315,6 +326,7 @@
 			files = (
 				CBD5985F24986037000CBEBD /* ViewController.swift in Sources */,
 				CBD5985B24986037000CBEBD /* AppDelegate.swift in Sources */,
+				43BBB419249A7B910024F449 /* Git.swift in Sources */,
 				43BBB4142499D5D10024F449 /* ebuka-FireService.swift in Sources */,
 				CBD5985D24986037000CBEBD /* SceneDelegate.swift in Sources */,
 				439F5AD82499A9DC00D06BCF /* FireService.swift in Sources */,
