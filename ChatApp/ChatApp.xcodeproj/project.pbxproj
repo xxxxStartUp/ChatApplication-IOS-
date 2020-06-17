@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		439F5AD82499A9DC00D06BCF /* FireService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439F5AD72499A9DB00D06BCF /* FireService.swift */; };
+		43BBB40B2499D5B80024F449 /* SignUpSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4052499D5B80024F449 /* SignUpSB.storyboard */; };
+		43BBB40C2499D5B80024F449 /* WelcomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4062499D5B80024F449 /* WelcomeScreen.storyboard */; };
+		43BBB40D2499D5B80024F449 /* SignInStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4072499D5B80024F449 /* SignInStoryboard.storyboard */; };
+		43BBB40E2499D5B80024F449 /* NewGroup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4082499D5B80024F449 /* NewGroup.storyboard */; };
+		43BBB40F2499D5B80024F449 /* AddContact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4092499D5B80024F449 /* AddContact.storyboard */; };
+		43BBB4102499D5B80024F449 /* ChatLogSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB40A2499D5B80024F449 /* ChatLogSB.storyboard */; };
+		43BBB4122499D5C70024F449 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4112499D5C70024F449 /* GoogleService-Info.plist */; };
+		43BBB4142499D5D10024F449 /* ebuka-FireService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB4132499D5D10024F449 /* ebuka-FireService.swift */; };
+		43BBB4162499D5DC0024F449 /* Views in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4152499D5DC0024F449 /* Views */; };
 		CBD5985B24986037000CBEBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5985A24986037000CBEBD /* AppDelegate.swift */; };
 		CBD5985D24986037000CBEBD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5985C24986037000CBEBD /* SceneDelegate.swift */; };
 		CBD5985F24986037000CBEBD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5985E24986037000CBEBD /* ViewController.swift */; };
@@ -37,6 +46,15 @@
 
 /* Begin PBXFileReference section */
 		439F5AD72499A9DB00D06BCF /* FireService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireService.swift; sourceTree = "<group>"; };
+		43BBB4052499D5B80024F449 /* SignUpSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignUpSB.storyboard; sourceTree = "<group>"; };
+		43BBB4062499D5B80024F449 /* WelcomeScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WelcomeScreen.storyboard; sourceTree = "<group>"; };
+		43BBB4072499D5B80024F449 /* SignInStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignInStoryboard.storyboard; sourceTree = "<group>"; };
+		43BBB4082499D5B80024F449 /* NewGroup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewGroup.storyboard; sourceTree = "<group>"; };
+		43BBB4092499D5B80024F449 /* AddContact.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AddContact.storyboard; sourceTree = "<group>"; };
+		43BBB40A2499D5B80024F449 /* ChatLogSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatLogSB.storyboard; sourceTree = "<group>"; };
+		43BBB4112499D5C70024F449 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		43BBB4132499D5D10024F449 /* ebuka-FireService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ebuka-FireService.swift"; sourceTree = "<group>"; };
+		43BBB4152499D5DC0024F449 /* Views */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Views; sourceTree = "<group>"; };
 		CBD5985724986037000CBEBD /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBD5985A24986037000CBEBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CBD5985C24986037000CBEBD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				439F5AD72499A9DB00D06BCF /* FireService.swift */,
+				43BBB4132499D5D10024F449 /* ebuka-FireService.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -89,6 +108,7 @@
 		CBD5984E24986037000CBEBD = {
 			isa = PBXGroup;
 			children = (
+				43BBB4152499D5DC0024F449 /* Views */,
 				439F5AD62499A91200D06BCF /* Model */,
 				CBD5988A2498620D000CBEBD /* Authentication Views */,
 				CBD5985924986037000CBEBD /* ChatApp */,
@@ -117,6 +137,7 @@
 				CBD5986324986040000CBEBD /* Assets.xcassets */,
 				CBD5986524986040000CBEBD /* LaunchScreen.storyboard */,
 				CBD5986824986040000CBEBD /* Info.plist */,
+				43BBB4112499D5C70024F449 /* GoogleService-Info.plist */,
 			);
 			path = ChatApp;
 			sourceTree = "<group>";
@@ -143,6 +164,12 @@
 			isa = PBXGroup;
 			children = (
 				CBD5986024986037000CBEBD /* Main.storyboard */,
+				43BBB4092499D5B80024F449 /* AddContact.storyboard */,
+				43BBB40A2499D5B80024F449 /* ChatLogSB.storyboard */,
+				43BBB4082499D5B80024F449 /* NewGroup.storyboard */,
+				43BBB4072499D5B80024F449 /* SignInStoryboard.storyboard */,
+				43BBB4052499D5B80024F449 /* SignUpSB.storyboard */,
+				43BBB4062499D5B80024F449 /* WelcomeScreen.storyboard */,
 			);
 			path = "Authentication Views";
 			sourceTree = "<group>";
@@ -251,9 +278,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43BBB4162499D5DC0024F449 /* Views in Resources */,
 				CBD5986724986040000CBEBD /* LaunchScreen.storyboard in Resources */,
+				43BBB40F2499D5B80024F449 /* AddContact.storyboard in Resources */,
+				43BBB40B2499D5B80024F449 /* SignUpSB.storyboard in Resources */,
+				43BBB40C2499D5B80024F449 /* WelcomeScreen.storyboard in Resources */,
 				CBD5986424986040000CBEBD /* Assets.xcassets in Resources */,
+				43BBB40E2499D5B80024F449 /* NewGroup.storyboard in Resources */,
+				43BBB4102499D5B80024F449 /* ChatLogSB.storyboard in Resources */,
+				43BBB4122499D5C70024F449 /* GoogleService-Info.plist in Resources */,
 				CBD5986224986037000CBEBD /* Main.storyboard in Resources */,
+				43BBB40D2499D5B80024F449 /* SignInStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +315,7 @@
 			files = (
 				CBD5985F24986037000CBEBD /* ViewController.swift in Sources */,
 				CBD5985B24986037000CBEBD /* AppDelegate.swift in Sources */,
+				43BBB4142499D5D10024F449 /* ebuka-FireService.swift in Sources */,
 				CBD5985D24986037000CBEBD /* SceneDelegate.swift in Sources */,
 				439F5AD82499A9DC00D06BCF /* FireService.swift in Sources */,
 			);
