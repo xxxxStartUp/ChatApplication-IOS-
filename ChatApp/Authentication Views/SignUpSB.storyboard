@@ -28,6 +28,9 @@
                                         <state key="normal" title="Sign Up">
                                             <color key="titleColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="nbw-oy-I83" kind="show" id="VuK-V5-CVp"/>
+                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mji-yS-NVL">
                                         <rect key="frame" x="3.6666666666666714" y="39" width="250.66666666666663" height="50"/>
@@ -47,6 +50,9 @@
                                                         <state key="normal" title="Login">
                                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         </state>
+                                                        <connections>
+                                                            <segue destination="nbw-oy-I83" kind="show" id="Byh-JB-OeC"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
@@ -176,7 +182,20 @@
             </objects>
             <point key="canvasLocation" x="131.8840579710145" y="102.45535714285714"/>
         </scene>
+        <!--SignInStoryboard-->
+        <scene sceneID="xYf-8p-Y2l">
+            <objects>
+                <viewControllerPlaceholder storyboardName="SignInStoryboard" id="nbw-oy-I83" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="bgI-Le-vEC"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gdH-Sa-quh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="606" y="238"/>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="VuK-V5-CVp"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="bubble.left.and.bubble.right" catalog="system" width="128" height="96"/>
     </resources>
