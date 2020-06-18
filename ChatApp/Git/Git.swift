@@ -19,8 +19,9 @@
 //8. Make sure you have changed anything in development by doing a -> git status . (If you have message ebuka or Dara)
 //9. Checkout in your new branch ->eg  git checkout ebuka-FireUserClass
 //10. Because you created the branch in development it will be the same as development. So now your new branch is the current with development and you can code
-//
-//
+
+
+
 //Steps to pushing a new feature
 //
 //1. Follow steps to start new feature
@@ -30,8 +31,8 @@
 //5. Git commit -m “your message of what you did”
 //6. Git push origin <your branch name>
 //7. Ebuka or Dara  will merge your commits
-//
-//
+
+
 
 //: MARK Adding a File to Git
 //
