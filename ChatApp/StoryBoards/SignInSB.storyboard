@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Sign InVC-->
         <scene sceneID="H0m-8q-ca2">
             <objects>
-                <viewController id="ntD-Sa-b7J" sceneMemberID="viewController">
+                <viewController id="ntD-Sa-b7J" customClass="SignInVC" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="I5q-u2-xTo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -100,7 +100,8 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="mih-uj-ehr" kind="push" id="ghB-kg-b7J"/>
+                                                    <action selector="Login:" destination="ntD-Sa-b7J" eventType="touchUpInside" id="jww-9t-kE1"/>
+                                                    <segue destination="cbR-LT-MCk" kind="showDetail" id="YPw-uY-VRe"/>
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="w3t-n5-Eh9">
@@ -141,20 +142,24 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PMo-Oz-aJX"/>
                     </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="Yn5-jA-nSx" id="txF-pm-t4j"/>
+                        <outlet property="passwordTextField" destination="r91-41-VtY" id="Hce-qQ-6Ig"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I29-N5-yV1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="53.623188405797109" y="-155.70652173913044"/>
         </scene>
         <!--ChatLogSB-->
-        <scene sceneID="waC-iA-gM0">
+        <scene sceneID="iEi-rm-KhC">
             <objects>
-                <viewControllerPlaceholder storyboardName="ChatLogSB" id="mih-uj-ehr" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="dB5-xe-oVB"/>
+                <viewControllerPlaceholder storyboardName="ChatLogSB" id="cbR-LT-MCk" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="tlH-hO-OBk"/>
                 </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="K7G-3B-o8O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZMy-oq-p24" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="556" y="-76"/>
+            <point key="canvasLocation" x="658" y="-29"/>
         </scene>
     </scenes>
 </document>

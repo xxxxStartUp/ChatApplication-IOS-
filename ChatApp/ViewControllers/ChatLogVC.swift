@@ -20,13 +20,20 @@ class ChatLogVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
         chatLogTableview.register(UINib(nibName: "ChatLogCell", bundle: nil), forCellReuseIdentifier: "ChatCellIdentifier")
         chatLogTableview.delegate = self
         chatLogTableview.dataSource = self
-
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatCellIdentifier") as! ChatLogCell
         cell.updateViews(indexPath: indexPath.row+1)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let vc = UIStoryboard(name: "ChatSB", bundle: nil).instantiateInitialViewController()!
+       
+        navigationController?.pushViewController(vc, animated: true)
     }
     
 

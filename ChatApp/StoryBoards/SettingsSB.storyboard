@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="P4w-Nq-2ev">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Settings-->
+        <scene sceneID="vRy-av-dnW">
+            <objects>
+                <viewController id="P4w-Nq-2ev" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1qE-lM-ZZT">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NameOf User : None  " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OZO-YQ-Mch">
+                                <rect key="frame" x="20" y="371" width="374" height="90"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="90" id="fyG-ws-ODY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j8c-f2-uSZ">
+                                <rect key="frame" x="10" y="773" width="394" height="30"/>
+                                <state key="normal" title="SignOut"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Lxc-Cd-qDT" firstAttribute="bottom" secondItem="j8c-f2-uSZ" secondAttribute="bottom" constant="10" id="HzP-9h-ZDT"/>
+                            <constraint firstItem="Lxc-Cd-qDT" firstAttribute="trailing" secondItem="j8c-f2-uSZ" secondAttribute="trailing" constant="10" id="Y6n-wv-gcY"/>
+                            <constraint firstItem="Lxc-Cd-qDT" firstAttribute="trailing" secondItem="OZO-YQ-Mch" secondAttribute="trailing" constant="20" id="hqG-s2-M5C"/>
+                            <constraint firstItem="j8c-f2-uSZ" firstAttribute="leading" secondItem="Lxc-Cd-qDT" secondAttribute="leading" constant="10" id="sA4-BN-Zpr"/>
+                            <constraint firstItem="OZO-YQ-Mch" firstAttribute="leading" secondItem="Lxc-Cd-qDT" secondAttribute="leading" constant="20" id="sP1-es-dDE"/>
+                            <constraint firstItem="OZO-YQ-Mch" firstAttribute="top" secondItem="Lxc-Cd-qDT" secondAttribute="top" constant="327" id="srR-yk-vGF"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Lxc-Cd-qDT"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Settings" id="Nsn-5p-sLm"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7yH-x9-RJY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="100.00000000000001" y="98.4375"/>
+        </scene>
+    </scenes>
+</document>
