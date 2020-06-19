@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Sign InVC-->
         <scene sceneID="H0m-8q-ca2">
             <objects>
-                <viewController id="ntD-Sa-b7J" sceneMemberID="viewController">
+                <viewController id="ntD-Sa-b7J" customClass="SignInVC" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="I5q-u2-xTo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -100,6 +100,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
+                                                    <action selector="Login:" destination="ntD-Sa-b7J" eventType="touchUpInside" id="jww-9t-kE1"/>
                                                     <segue destination="cbR-LT-MCk" kind="showDetail" id="YPw-uY-VRe"/>
                                                 </connections>
                                             </button>

@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Pmj-kn-Ipv">
-                                <rect key="frame" x="0.0" y="44" width="414" height="692"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="643"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
                         </subviews>
@@ -30,20 +30,26 @@
                         <viewLayoutGuide key="safeArea" id="tvi-lJ-gkS"/>
                     </view>
                     <navigationItem key="navigationItem" title="Chat Log" id="57B-W4-Cju">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="xvq-Ff-Urz">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="5br-Im-6ow">
-                                <rect key="frame" x="20" y="11" width="22" height="22"/>
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="xZ9-1U-hVB">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Ra7-Ux-Yi4">
+                                <rect key="frame" x="20" y="7" width="92" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <state key="normal" image="message" catalog="system"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="New Chat"/>
+                                <connections>
+                                    <segue destination="Sbf-Rq-bE3" kind="show" id="SAB-bb-Cmp"/>
+                                </connections>
                             </button>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Chat Log" image="magnifyingglass" catalog="system" style="done" id="xBS-vx-7Xg">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="16O-Gi-n9t">
-                                <rect key="frame" x="320" y="11" width="74" height="22"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="jpw-hx-17B">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0JS-Vd-dl6">
+                                <rect key="frame" x="374" y="11" width="20" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="magnifyingglass" catalog="system"/>
+                                <connections>
+                                    <segue destination="nfG-8g-AaW" kind="show" id="sJU-AH-cbt"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
@@ -55,11 +61,33 @@
             </objects>
             <point key="canvasLocation" x="695.6521739130435" y="-149.18478260869566"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--AddContactSB-->
+        <scene sceneID="nP6-1h-Ib7">
+            <objects>
+                <viewControllerPlaceholder storyboardName="AddContactSB" id="Sbf-Rq-bE3" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="f56-MP-Yth"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ENZ-b4-UZC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="684" y="-568"/>
+        </scene>
+        <!--ContactsSB-->
+        <scene sceneID="Sdo-An-BXO">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ContactsSB" id="nfG-8g-AaW" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="0ua-rb-H9B"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rII-QB-q7h" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1211" y="-343"/>
+        </scene>
+        <!--Chats-->
         <scene sceneID="njz-jD-Y1G">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sMJ-dg-PRO" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Chats" image="message" catalog="system" id="jZ0-w9-uMY"/>
                     <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="FqY-Ro-Dg5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
