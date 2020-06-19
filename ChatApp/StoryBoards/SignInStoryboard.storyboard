@@ -100,7 +100,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="mih-uj-ehr" kind="push" id="ghB-kg-b7J"/>
+                                                    <segue destination="cbR-LT-MCk" kind="showDetail" id="YPw-uY-VRe"/>
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="w3t-n5-Eh9">
@@ -147,14 +147,14 @@
             <point key="canvasLocation" x="53.623188405797109" y="-155.70652173913044"/>
         </scene>
         <!--ChatLogSB-->
-        <scene sceneID="waC-iA-gM0">
+        <scene sceneID="iEi-rm-KhC">
             <objects>
-                <viewControllerPlaceholder storyboardName="ChatLogSB" id="mih-uj-ehr" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="dB5-xe-oVB"/>
+                <viewControllerPlaceholder storyboardName="ChatLogSB" id="cbR-LT-MCk" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="tlH-hO-OBk"/>
                 </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="K7G-3B-o8O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZMy-oq-p24" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="556" y="-76"/>
+            <point key="canvasLocation" x="658" y="-29"/>
         </scene>
     </scenes>
 </document>

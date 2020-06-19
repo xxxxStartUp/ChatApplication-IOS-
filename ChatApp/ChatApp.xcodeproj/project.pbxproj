@@ -154,7 +154,6 @@
 		43BBB417249A7B790024F449 /* Git */ = {
 			isa = PBXGroup;
 			children = (
-				43BBB41A249ABDB40024F449 /* Chat */,
 				43BBB418249A7B910024F449 /* Git.swift */,
 			);
 			path = Git;
@@ -185,9 +184,10 @@
 		CBD5984E24986037000CBEBD = {
 			isa = PBXGroup;
 			children = (
+				43BBB41A249ABDB40024F449 /* Chat */,
 				43BBB417249A7B790024F449 /* Git */,
 				439F5AD62499A91200D06BCF /* Model */,
-				CBD5988A2498620D000CBEBD /* Authentication Views */,
+				CBD5988A2498620D000CBEBD /* StoryBoards */,
 				CBD5985924986037000CBEBD /* ChatApp */,
 				CBD5987024986040000CBEBD /* ChatAppTests */,
 				CBD5987B24986041000CBEBD /* ChatAppUITests */,
@@ -239,7 +239,7 @@
 			path = ChatAppUITests;
 			sourceTree = "<group>";
 		};
-		CBD5988A2498620D000CBEBD /* Authentication Views */ = {
+		CBD5988A2498620D000CBEBD /* StoryBoards */ = {
 			isa = PBXGroup;
 			children = (
 				CBD5986024986037000CBEBD /* Main.storyboard */,
@@ -251,7 +251,7 @@
 				43BBB4052499D5B80024F449 /* SignUpSB.storyboard */,
 				43BBB4062499D5B80024F449 /* WelcomeScreen.storyboard */,
 			);
-			path = "Authentication Views";
+			path = StoryBoards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
