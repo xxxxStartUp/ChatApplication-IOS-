@@ -22,8 +22,6 @@
 		43BBB420249ABDC60024F449 /* ChatLogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB41B249ABDC50024F449 /* ChatLogVC.swift */; };
 		43BBB421249ABDC60024F449 /* ChatLogCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB41C249ABDC50024F449 /* ChatLogCell.xib */; };
 		43BBB422249ABDC60024F449 /* ChatLogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB41D249ABDC50024F449 /* ChatLogCell.swift */; };
-		43BBB423249ABDC60024F449 /* AuthenticationButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB41E249ABDC50024F449 /* AuthenticationButtonsView.swift */; };
-		43BBB424249ABDC60024F449 /* AuthenticationButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB41F249ABDC60024F449 /* AuthenticationButtonView.swift */; };
 		43BBB426249B0EE70024F449 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB425249B0EE70024F449 /* Message.swift */; };
 		43BBB428249B13EA0024F449 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB427249B13EA0024F449 /* User.swift */; };
 		43BBB42A249C42280024F449 /* ContactsSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB429249C42280024F449 /* ContactsSB.storyboard */; };
@@ -79,8 +77,6 @@
 		43BBB41B249ABDC50024F449 /* ChatLogVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLogVC.swift; sourceTree = "<group>"; };
 		43BBB41C249ABDC50024F449 /* ChatLogCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatLogCell.xib; sourceTree = "<group>"; };
 		43BBB41D249ABDC50024F449 /* ChatLogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLogCell.swift; sourceTree = "<group>"; };
-		43BBB41E249ABDC50024F449 /* AuthenticationButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationButtonsView.swift; sourceTree = "<group>"; };
-		43BBB41F249ABDC60024F449 /* AuthenticationButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationButtonView.swift; sourceTree = "<group>"; };
 		43BBB425249B0EE70024F449 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		43BBB427249B13EA0024F449 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		43BBB429249C42280024F449 /* ContactsSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ContactsSB.storyboard; sourceTree = "<group>"; };
@@ -169,21 +165,10 @@
 			path = Git;
 			sourceTree = "<group>";
 		};
-		43BBB41A249ABDB40024F449 /* Chat */ = {
-			isa = PBXGroup;
-			children = (
-				43BBB41E249ABDC50024F449 /* AuthenticationButtonsView.swift */,
-				43BBB41F249ABDC60024F449 /* AuthenticationButtonView.swift */,
-				43BBB41D249ABDC50024F449 /* ChatLogCell.swift */,
-				43BBB41C249ABDC50024F449 /* ChatLogCell.xib */,
-				43BBB41B249ABDC50024F449 /* ChatLogVC.swift */,
-			);
-			path = Chat;
-			sourceTree = "<group>";
-		};
 		43BBB431249C997C0024F449 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				43BBB41B249ABDC50024F449 /* ChatLogVC.swift */,
 				43BBB432249C99B80024F449 /* SignInVC.swift */,
 			);
 			path = ViewControllers;
@@ -195,6 +180,23 @@
 				43BBB435249C9E1C0024F449 /* Validate.swift */,
 			);
 			path = Utitliies;
+			sourceTree = "<group>";
+		};
+		43BBB439249CA47F0024F449 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				43BBB43A249CA48D0024F449 /* ChatlLogCell */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		43BBB43A249CA48D0024F449 /* ChatlLogCell */ = {
+			isa = PBXGroup;
+			children = (
+				43BBB41D249ABDC50024F449 /* ChatLogCell.swift */,
+				43BBB41C249ABDC50024F449 /* ChatLogCell.xib */,
+			);
+			path = ChatlLogCell;
 			sourceTree = "<group>";
 		};
 		5201B7049B6C551C2059AEFF /* Frameworks */ = {
@@ -210,9 +212,9 @@
 		CBD5984E24986037000CBEBD = {
 			isa = PBXGroup;
 			children = (
+				43BBB439249CA47F0024F449 /* Cells */,
 				43BBB434249C9E0C0024F449 /* Utitliies */,
 				43BBB431249C997C0024F449 /* ViewControllers */,
-				43BBB41A249ABDB40024F449 /* Chat */,
 				43BBB417249A7B790024F449 /* Git */,
 				439F5AD62499A91200D06BCF /* Model */,
 				CBD5988A2498620D000CBEBD /* StoryBoards */,
@@ -540,7 +542,6 @@
 				CBD5985B24986037000CBEBD /* AppDelegate.swift in Sources */,
 				43BBB420249ABDC60024F449 /* ChatLogVC.swift in Sources */,
 				43BBB419249A7B910024F449 /* Git.swift in Sources */,
-				43BBB424249ABDC60024F449 /* AuthenticationButtonView.swift in Sources */,
 				43BBB433249C99B80024F449 /* SignInVC.swift in Sources */,
 				43BBB4142499D5D10024F449 /* ebuka-FireService.swift in Sources */,
 				43BBB426249B0EE70024F449 /* Message.swift in Sources */,
@@ -549,7 +550,6 @@
 				43BBB428249B13EA0024F449 /* User.swift in Sources */,
 				43BBB422249ABDC60024F449 /* ChatLogCell.swift in Sources */,
 				439F5AD82499A9DC00D06BCF /* FireService.swift in Sources */,
-				43BBB423249ABDC60024F449 /* AuthenticationButtonsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
