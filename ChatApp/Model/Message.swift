@@ -29,11 +29,7 @@ class Message {
 }
 
 
-class User {
-    
-    
-    
-}
+
 
 class FireUser : User {
     
