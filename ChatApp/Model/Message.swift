@@ -23,17 +23,8 @@ class Message {
         
     }
     
-    
-    
-    
 }
 
-
-
-
-class FireUser : User {
-    
-}
 
 struct Content {
     
