@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D1B08AC249D9EF30028A6A7 /* ramzi-FireService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1B08AB249D9EF30028A6A7 /* ramzi-FireService.swift */; };
+		2D1B08AD249D9EF30028A6A7 /* ramzi-FireService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1B08AB249D9EF30028A6A7 /* ramzi-FireService.swift */; };
+		2D1B08AE249D9EF30028A6A7 /* ramzi-FireService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1B08AB249D9EF30028A6A7 /* ramzi-FireService.swift */; };
 		3541292F535A21BAAC5F2C66 /* Pods_ChatApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423890E3C5130288FBA965E0 /* Pods_ChatApp.framework */; };
 		38DF35B92F050C0C26A9768B /* Pods_ChatAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50AA4DAC9ADCF9DAF516B0FE /* Pods_ChatAppTests.framework */; };
 		439F5AD82499A9DC00D06BCF /* FireService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439F5AD72499A9DB00D06BCF /* FireService.swift */; };
@@ -63,6 +66,7 @@
 		0A7DE9360EE34B4BF535D3E6 /* Pods-ChatAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatAppTests.debug.xcconfig"; path = "Target Support Files/Pods-ChatAppTests/Pods-ChatAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2941CA96B7C8FD29FEB0C824 /* Pods_ChatApp_ChatAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatApp_ChatAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A313512E9052DFF8993A3F9 /* Pods-ChatApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp.debug.xcconfig"; path = "Target Support Files/Pods-ChatApp/Pods-ChatApp.debug.xcconfig"; sourceTree = "<group>"; };
+		2D1B08AB249D9EF30028A6A7 /* ramzi-FireService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ramzi-FireService.swift"; sourceTree = "<group>"; };
 		30A603C1DA64CF44CDDDE161 /* Pods-ChatAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatAppTests.release.xcconfig"; path = "Target Support Files/Pods-ChatAppTests/Pods-ChatAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		423890E3C5130288FBA965E0 /* Pods_ChatApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		439F5AD72499A9DB00D06BCF /* FireService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireService.swift; sourceTree = "<group>"; };
@@ -152,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				439F5AD72499A9DB00D06BCF /* FireService.swift */,
+				2D1B08AB249D9EF30028A6A7 /* ramzi-FireService.swift */,
 				43BBB4132499D5D10024F449 /* ebuka-FireService.swift */,
 				43BBB425249B0EE70024F449 /* Message.swift */,
 				43BBB427249B13EA0024F449 /* User.swift */,
@@ -553,6 +558,7 @@
 				43BBB436249C9E1C0024F449 /* Validate.swift in Sources */,
 				43BBB428249B13EA0024F449 /* User.swift in Sources */,
 				43BBB422249ABDC60024F449 /* ChatLogCell.swift in Sources */,
+				2D1B08AC249D9EF30028A6A7 /* ramzi-FireService.swift in Sources */,
 				439F5AD82499A9DC00D06BCF /* FireService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -562,6 +568,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBD5987224986041000CBEBD /* ChatAppTests.swift in Sources */,
+				2D1B08AD249D9EF30028A6A7 /* ramzi-FireService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,6 +577,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBD5987D24986041000CBEBD /* ChatAppUITests.swift in Sources */,
+				2D1B08AE249D9EF30028A6A7 /* ramzi-FireService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
