@@ -20,21 +20,22 @@ extension FireService {
         - Returns: Void
     */
     func SignUp(email : String , password : String, completion : @escaping (Bool) -> ()) {
+        
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
 
             if error != nil {
                 completion(false)
+                print(error?.localizedDescription)
                 return
             }
-
-            guard result != nil else {
+            else{
                 completion(true)
-                return
             }
+//            guard result != nil else {
+//                completion(true)
+//                return
+//            }
         }
     }
-    
-    
-    
 
 }

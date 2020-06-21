@@ -35,6 +35,9 @@
 		43BBB438249CA1AE0024F449 /* SettingsSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB437249CA1AE0024F449 /* SettingsSB.storyboard */; };
 		43BBB43E249D6EFD0024F449 /* ChatStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB43D249D6EFD0024F449 /* ChatStoryBoard.storyboard */; };
 		9A1FD7EEF59FEFF812C86703 /* Pods_ChatApp_ChatAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2941CA96B7C8FD29FEB0C824 /* Pods_ChatApp_ChatAppUITests.framework */; };
+		CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA4249DB7C6000A8041 /* SignUpVC.swift */; };
+		CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA6249EF5BB000A8041 /* Constants.swift */; };
+		CB381BA9249EFE32000A8041 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA8249EFE32000A8041 /* SettingsVC.swift */; };
 		CBD5985B24986037000CBEBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5985A24986037000CBEBD /* AppDelegate.swift */; };
 		CBD5985D24986037000CBEBD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5985C24986037000CBEBD /* SceneDelegate.swift */; };
 		CBD5985F24986037000CBEBD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5985E24986037000CBEBD /* ViewController.swift */; };
@@ -93,6 +96,9 @@
 		43BBB43D249D6EFD0024F449 /* ChatStoryBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatStoryBoard.storyboard; sourceTree = "<group>"; };
 		50AA4DAC9ADCF9DAF516B0FE /* Pods_ChatAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B2AD9233536C88847F0E6B3 /* Pods-ChatApp-ChatAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp-ChatAppUITests.release.xcconfig"; path = "Target Support Files/Pods-ChatApp-ChatAppUITests/Pods-ChatApp-ChatAppUITests.release.xcconfig"; sourceTree = "<group>"; };
+		CB381BA4249DB7C6000A8041 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		CB381BA6249EF5BB000A8041 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		CB381BA8249EFE32000A8041 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		CBD5985724986037000CBEBD /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBD5985A24986037000CBEBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CBD5985C24986037000CBEBD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -177,6 +183,8 @@
 			children = (
 				43BBB41B249ABDC50024F449 /* ChatLogVC.swift */,
 				43BBB432249C99B80024F449 /* SignInVC.swift */,
+				CB381BA4249DB7C6000A8041 /* SignUpVC.swift */,
+				CB381BA8249EFE32000A8041 /* SettingsVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -185,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				43BBB435249C9E1C0024F449 /* Validate.swift */,
+				CB381BA6249EF5BB000A8041 /* Constants.swift */,
 			);
 			path = Utitliies;
 			sourceTree = "<group>";
@@ -547,10 +556,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */,
 				CBD5985F24986037000CBEBD /* ViewController.swift in Sources */,
 				CBD5985B24986037000CBEBD /* AppDelegate.swift in Sources */,
 				43BBB420249ABDC60024F449 /* ChatLogVC.swift in Sources */,
 				43BBB419249A7B910024F449 /* Git.swift in Sources */,
+				CB381BA9249EFE32000A8041 /* SettingsVC.swift in Sources */,
+				CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */,
 				43BBB433249C99B80024F449 /* SignInVC.swift in Sources */,
 				43BBB4142499D5D10024F449 /* ebuka-FireService.swift in Sources */,
 				43BBB426249B0EE70024F449 /* Message.swift in Sources */,
