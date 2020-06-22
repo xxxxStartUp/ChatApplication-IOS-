@@ -15,8 +15,10 @@ class Validate {
     static func isPasswordValid(_ password : String) -> Bool {
         // validates passowrd
         
-        let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}")
-        return passwordTest.evaluate(with: password)
+//        let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}")
+//        return passwordTest.evaluate(with: password)
+        
+        return true
     }
     
     static func isValidEmail(_ email: String) -> Bool {

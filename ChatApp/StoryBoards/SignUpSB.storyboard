@@ -125,7 +125,9 @@
                                                     <constraint firstAttribute="height" constant="30" id="Ckb-F9-FwQ"/>
                                                     <constraint firstAttribute="width" constant="186" id="Ifq-QB-Pit"/>
                                                 </constraints>
-                                                <state key="normal" title="Sign Up"/>
+                                                <state key="normal" title="Sign Up">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="signUpButtonTapped:" destination="lgI-td-x0z" eventType="touchUpInside" id="IFf-Ic-LYs"/>
                                                 </connections>
