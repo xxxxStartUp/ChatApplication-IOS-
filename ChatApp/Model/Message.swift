@@ -8,11 +8,15 @@
 
 import Foundation
 
+
 class Message {
     var id : String
     var content : Content
     var sender : FireUser
     var timeStamp : Date
+    
+    
+    
     init(id : String , content : Content , sender : FireUser , timeStamp : Date) {
         
         self.id = id
@@ -22,10 +26,6 @@ class Message {
         
         
     }
-    
-    
-    
-    
 }
 
 
