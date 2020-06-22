@@ -46,8 +46,8 @@
                                                                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Appdev@gmail.com" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yn5-jA-nSx">
-                                                                        <rect key="frame" x="0.0" y="28.333333333333371" width="149" height="21"/>
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Testing@gmail.com" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yn5-jA-nSx">
+                                                                        <rect key="frame" x="0.0" y="28.333333333333371" width="146" height="21"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                                         <textInputTraits key="textInputTraits"/>
                                                                     </textField>
@@ -69,8 +69,8 @@
                                                                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r91-41-VtY">
-                                                                        <rect key="frame" x="0.0" y="28.333333333333371" width="72" height="21"/>
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Testing123*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r91-41-VtY">
+                                                                        <rect key="frame" x="0.0" y="28.333333333333371" width="89" height="21"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                                         <textInputTraits key="textInputTraits" textContentType="password"/>
                                                                     </textField>
@@ -101,7 +101,6 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="Login:" destination="ntD-Sa-b7J" eventType="touchUpInside" id="jww-9t-kE1"/>
-                                                    <segue destination="cbR-LT-MCk" kind="showDetail" id="YPw-uY-VRe"/>
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="w3t-n5-Eh9">
@@ -150,16 +149,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I29-N5-yV1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="53.623188405797109" y="-155.70652173913044"/>
-        </scene>
-        <!--ChatLogSB-->
-        <scene sceneID="iEi-rm-KhC">
-            <objects>
-                <viewControllerPlaceholder storyboardName="ChatLogSB" id="cbR-LT-MCk" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="tlH-hO-OBk"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZMy-oq-p24" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="658" y="-29"/>
         </scene>
     </scenes>
 </document>

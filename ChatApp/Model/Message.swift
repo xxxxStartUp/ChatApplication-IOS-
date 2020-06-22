@@ -26,15 +26,9 @@ class Message {
         
         
     }
-}
 
 
-
-
-class FireUser : User {
     
-}
-
 struct Content {
     
     var type : ContentType

@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Sign UpVC-->
         <scene sceneID="nsX-dg-xp0">
             <objects>
-                <viewController storyboardIdentifier="First" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lgI-td-x0z" customClass="ViewController" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="First" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lgI-td-x0z" customClass="SignUpVC" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="veg-S8-Y1f">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -118,16 +118,17 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="Ibk-CR-zbb">
                                         <rect key="frame" x="0.0" y="552.66666666666663" width="398" height="113.33333333333337"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xgv-Qf-oCa" customClass="AuthenticationButtonsView" customModule="ChatApp" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xgv-Qf-oCa">
                                                 <rect key="frame" x="106" y="0.0" width="186" height="30"/>
                                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="Ckb-F9-FwQ"/>
                                                     <constraint firstAttribute="width" constant="186" id="Ifq-QB-Pit"/>
                                                 </constraints>
-                                                <state key="normal" title="Sign Up">
-                                                    <color key="titleColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                                </state>
+                                                <state key="normal" title="Sign Up"/>
+                                                <connections>
+                                                    <action selector="signUpButtonTapped:" destination="lgI-td-x0z" eventType="touchUpInside" id="IFf-Ic-LYs"/>
+                                                </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="T6S-5u-b4U">
                                                 <rect key="frame" x="74.333333333333329" y="81.333333333333371" width="249.66666666666669" height="32"/>
@@ -145,7 +146,7 @@
                                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
-                                                            <segue destination="nbw-oy-I83" kind="show" id="TRc-bI-45N"/>
+                                                            <action selector="loginButtonTapped:" destination="lgI-td-x0z" eventType="touchUpInside" id="DGl-AE-Frm"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -164,6 +165,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="XhM-7l-dya"/>
                     </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="LJl-EF-vRv" id="JQS-4q-Oni"/>
+                        <outlet property="nameTextField" destination="PWU-uY-UKh" id="KRj-c5-r9S"/>
+                        <outlet property="passwordTextField" destination="WvI-a7-yEI" id="5dw-Av-s4m"/>
+                        <segue destination="nbw-oy-I83" kind="show" identifier="loginSBIdentifier" id="ksI-Ii-hoN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="60c-Gc-cTh" sceneMemberID="firstResponder"/>
             </objects>

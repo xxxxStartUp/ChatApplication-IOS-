@@ -10,7 +10,7 @@
         <!--Settings-->
         <scene sceneID="vRy-av-dnW">
             <objects>
-                <viewController id="P4w-Nq-2ev" sceneMemberID="viewController">
+                <viewController id="P4w-Nq-2ev" customClass="SettingsVC" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1qE-lM-ZZT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -27,6 +27,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j8c-f2-uSZ">
                                 <rect key="frame" x="10" y="773" width="394" height="30"/>
                                 <state key="normal" title="SignOut"/>
+                                <connections>
+                                    <action selector="signOutButtonTapped:" destination="P4w-Nq-2ev" eventType="touchUpInside" id="mal-zV-bdu"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

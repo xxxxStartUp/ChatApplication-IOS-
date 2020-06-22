@@ -11,6 +11,8 @@ import Foundation
 // this class connects to firebase
 class FireService {
     
+     static let sharedInstance = FireService()
+    
     
 }
 
