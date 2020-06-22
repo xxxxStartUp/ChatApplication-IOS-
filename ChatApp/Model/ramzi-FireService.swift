@@ -28,10 +28,13 @@ extension FireService {
             if error != nil{
                 completion(false)
             }
-        
-            if authResult  != nil {
+            else{
                 completion(true)
             }
+            //commented off this code
+//            if authResult  != nil {
+//                completion(true)
+//            }
         }
     }
     
