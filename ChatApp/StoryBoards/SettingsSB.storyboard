@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--SettingsVC-->
+        <!--Settings-->
         <scene sceneID="vRy-av-dnW">
             <objects>
                 <viewController id="P4w-Nq-2ev" customClass="SettingsVC" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -126,6 +126,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Lxc-Cd-qDT"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Settings" image="plus" catalog="system" id="LHZ-Jq-ykQ"/>
                     <navigationItem key="navigationItem" id="C88-tg-fZi"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -158,5 +159,6 @@
     </scenes>
     <resources>
         <image name="greaterthan" catalog="system" width="128" height="111"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
     </resources>
 </document>
