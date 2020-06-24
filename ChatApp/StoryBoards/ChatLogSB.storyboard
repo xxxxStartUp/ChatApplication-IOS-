@@ -61,10 +61,10 @@
             </objects>
             <point key="canvasLocation" x="695.6521739130435" y="-149.18478260869566"/>
         </scene>
-        <!--AddContactSB-->
+        <!--NewGroupSB-->
         <scene sceneID="nP6-1h-Ib7">
             <objects>
-                <viewControllerPlaceholder storyboardName="AddContactSB" id="Sbf-Rq-bE3" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="NewGroupSB" id="Sbf-Rq-bE3" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="f56-MP-Yth"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ENZ-b4-UZC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
