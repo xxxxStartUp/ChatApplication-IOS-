@@ -43,6 +43,8 @@
 		43BBB45424A071B20024F449 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB45324A071B10024F449 /* SettingsCell.swift */; };
 		43BBB45624A0795E0024F449 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB45524A0795E0024F449 /* ChatVC.swift */; };
 		43BBB45924A07ACC0024F449 /* ChatCell-ebuka.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB45824A07ACC0024F449 /* ChatCell-ebuka.swift */; };
+		43BBB45B24A19CE20024F449 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB45A24A19CE20024F449 /* Chat.swift */; };
+		43C2F9FA24A315700080CD8F /* NewGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C2F9F924A315700080CD8F /* NewGroupVC.swift */; };
 		9A1FD7EEF59FEFF812C86703 /* Pods_ChatApp_ChatAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2941CA96B7C8FD29FEB0C824 /* Pods_ChatApp_ChatAppUITests.framework */; };
 		CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA4249DB7C6000A8041 /* SignUpVC.swift */; };
 		CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA6249EF5BB000A8041 /* Constants.swift */; };
@@ -111,6 +113,8 @@
 		43BBB45324A071B10024F449 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		43BBB45524A0795E0024F449 /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		43BBB45824A07ACC0024F449 /* ChatCell-ebuka.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatCell-ebuka.swift"; sourceTree = "<group>"; };
+		43BBB45A24A19CE20024F449 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		43C2F9F924A315700080CD8F /* NewGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupVC.swift; sourceTree = "<group>"; };
 		50AA4DAC9ADCF9DAF516B0FE /* Pods_ChatAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B2AD9233536C88847F0E6B3 /* Pods-ChatApp-ChatAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp-ChatAppUITests.release.xcconfig"; path = "Target Support Files/Pods-ChatApp-ChatAppUITests/Pods-ChatApp-ChatAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CB381BA4249DB7C6000A8041 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
@@ -184,6 +188,7 @@
 				43BBB4132499D5D10024F449 /* ebuka-FireService.swift */,
 				43BBB425249B0EE70024F449 /* Message.swift */,
 				43BBB427249B13EA0024F449 /* User.swift */,
+				43BBB45A24A19CE20024F449 /* Chat.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -202,6 +207,7 @@
 				43BBB41B249ABDC50024F449 /* ChatLogVC.swift */,
 				43BBB45524A0795E0024F449 /* ChatVC.swift */,
 				43BBB44C24A064660024F449 /* SettingsVC.swift */,
+				43C2F9F924A315700080CD8F /* NewGroupVC.swift */,
 				43BBB44724A061150024F449 /* ContactsVC.swift */,
 				43BBB432249C99B80024F449 /* SignInVC.swift */,
 				CB381BA4249DB7C6000A8041 /* SignUpVC.swift */,
@@ -607,6 +613,7 @@
 				43BBB44B24A062150024F449 /* ContactCell.swift in Sources */,
 				CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */,
 				CBD5985F24986037000CBEBD /* ViewController.swift in Sources */,
+				43BBB45B24A19CE20024F449 /* Chat.swift in Sources */,
 				CBD5985B24986037000CBEBD /* AppDelegate.swift in Sources */,
 				43BBB420249ABDC60024F449 /* ChatLogVC.swift in Sources */,
 				43BBB419249A7B910024F449 /* Git.swift in Sources */,
@@ -619,6 +626,7 @@
 				43BBB44624A04DF20024F449 /* FireUser.swift in Sources */,
 				43BBB433249C99B80024F449 /* SignInVC.swift in Sources */,
 				43BBB45224A070BD0024F449 /* SettingsProfileCell.swift in Sources */,
+				43C2F9FA24A315700080CD8F /* NewGroupVC.swift in Sources */,
 				43BBB4142499D5D10024F449 /* ebuka-FireService.swift in Sources */,
 				43BBB426249B0EE70024F449 /* Message.swift in Sources */,
 				CBD5985D24986037000CBEBD /* SceneDelegate.swift in Sources */,

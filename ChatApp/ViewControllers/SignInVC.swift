@@ -23,8 +23,8 @@ class SignInVC: UIViewController {
     
     @IBAction func Login(_ sender: Any) {
         
-        //login()
-        self.goToTab()
+        login()
+       // self.goToTab()
     }
     
     
