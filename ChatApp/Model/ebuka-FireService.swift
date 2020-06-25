@@ -31,11 +31,39 @@ extension FireService {
             else{
                 completion(true)
             }
-//            guard result != nil else {
-//                completion(true)
-//                return
-//            }
+
         }
     }
+    
+    
+    
+    
+    func createGroup(group : Group ,completion : @escaping (Bool , Error?) -> () ){
+        let data = ["grouppname":group.name, "groupadmin" : group.GroupAdmin.email]
+        
+        
+
+        FireService.users.document(group.GroupAdmin.email).collection(group.name).document(group.name).setData(data, merge: true) { (error) in
+            
+            
+            if let error = error {
+                completion(false , error)
+                return
+            }
+            completion(true, nil)
+            
+        
+        }
+        
+        
+        
+    }
+    
+    func deleteGroup (group: Group){
+        
+        FireService.db.collection("users").document(group.GroupAdmin.email).collection(group.name).document(group.name).delete()
+    }
+    
+
 
 }
