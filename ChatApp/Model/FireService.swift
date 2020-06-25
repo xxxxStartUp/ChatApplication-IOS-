@@ -15,17 +15,18 @@ import FirebaseFirestore
 
 // this class connects to firebase
 class FireService {
-    static let db = Firestore.firestore()
+     static let db = Firestore.firestore()
     
     
     static let users = db.collection("users")
     
-     static let sharedInstance = FireService()
+    static let sharedInstance = FireService()
+    
     
     
     
     func addData(user : FireUser , data : [String : Any] , completion : @escaping (Error? , Bool) -> ()) {
-        
+    
         
         FireService.users.document(user.email).setData(data, merge: true) { (error) in
             
@@ -33,8 +34,8 @@ class FireService {
                 completion(error , false)
                 return
             }
-            UserDefaults.standard.set(user, forKey: "user")
-
+            //UserDefaults.standard.set(user, forKey: "user")
+            
             completion(nil , true)
         }
         

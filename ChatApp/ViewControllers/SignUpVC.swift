@@ -41,7 +41,9 @@ class SignUpVC: UIViewController {
                     [ "firstname" : name,
                       "email":email
                     ]
+                
                 let user = FireUser(userID: 1, userName: name, userEmail: email, creationDate: Date())
+
                 
                 FireService.sharedInstance.SignUp(email: email, password: password) { (completed) in
                     if completed{
@@ -61,7 +63,7 @@ class SignUpVC: UIViewController {
                                 
                             }
                         }
-    
+                        
                         
                         
                     }
