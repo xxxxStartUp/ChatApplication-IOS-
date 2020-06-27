@@ -13,8 +13,12 @@ class User {
 
 }
 
-
-class Friend : User {
+// Since we are making a Friend class, we need to inherit Equatable to be able to compare  two friends objects. I added it here, with the == operator function. Now two Friends objects are 'equal' if they have the same email address.
+class Friend : User, Equatable {
+    static func == (lhs: Friend, rhs: Friend) -> Bool {
+        return lhs.email == rhs.email
+    }
+    
     
     let email : String
     let username : String
@@ -35,8 +39,8 @@ class Group {
     
     var GroupAdmin : FireUser
     var friends : [Friend]
-    var timeCreated : Date
-    var id : Int
+    let timeCreated : Date
+    let id : Int
     var name : String
     var image :Data
     

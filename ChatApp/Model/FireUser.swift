@@ -22,7 +22,7 @@ class FireUser : User {
     
     var messages: [String: Any]
     var group: [String]
-    var friends: [String]
+    var friends: [Friend]
     var userType: Int
     
     
