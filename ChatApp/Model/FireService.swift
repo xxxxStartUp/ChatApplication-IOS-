@@ -33,7 +33,7 @@ class FireService {
                 completion(error , false)
                 return
             }
-            UserDefaults.standard.set(user, forKey: "user")
+            //UserDefaults.standard.set(user, forKey: "user")
 
             completion(nil , true)
         }
