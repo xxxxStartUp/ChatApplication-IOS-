@@ -15,8 +15,6 @@ class Message {
     var sender : FireUser
     var timeStamp : Date
     
-    
-    
     init(id : String , content : Content , sender : FireUser , timeStamp : Date) {
         
         self.id = id
@@ -42,5 +40,19 @@ enum ContentType {
     case video
     case file
     case image
+    
+    
+    var rawValue: String {
+        switch self {
+        case .string:
+            return "string"
+        case .video:
+            return "video"
+        case .file:
+            return "file"
+        case .image:
+            return "image"
+        }
+    }
     
 }

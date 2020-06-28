@@ -13,8 +13,6 @@ struct Chat  {
     
     var chatType : ChatType
     var ChatInfo : String
-    
-    
 }
 
 enum ChatType {
