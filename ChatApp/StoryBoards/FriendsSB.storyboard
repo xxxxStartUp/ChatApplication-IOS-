@@ -10,7 +10,7 @@
         <!--Contacts-->
         <scene sceneID="paz-38-wKD">
             <objects>
-                <viewController storyboardIdentifier="contact" id="EA7-x8-64S" customClass="ContactsVC" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="contact" id="EA7-x8-64S" customClass="FriendsVC" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="t5y-Ib-mD8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -64,6 +64,11 @@
                                                 <constraint firstItem="1dg-So-b5B" firstAttribute="leading" secondItem="cQW-lL-Zgz" secondAttribute="leading" constant="30" id="upH-ly-jzX"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="FreindimageView" destination="N8n-57-KgT" id="YWr-E8-TNN"/>
+                                            <outlet property="freindLocation" destination="JXB-2D-RoQ" id="Pa1-N3-vRH"/>
+                                            <outlet property="friendName" destination="qcD-ZB-gZo" id="NQM-KJ-1hg"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="121" id="1iK-H0-8dX">
                                         <rect key="frame" x="0.0" y="149" width="414" height="121"/>
@@ -268,13 +273,11 @@
                         <color key="badgeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
                     <navigationItem key="navigationItem" title="Contacts" id="RQs-zD-hzC">
-                        <barButtonItem key="rightBarButtonItem" image="person.crop.circle.fill.badge.plus" catalog="system" style="plain" id="zbl-SH-p0r">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Eez-hN-WbC">
-                                <rect key="frame" x="370" y="11" width="24" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <state key="normal" image="person.crop.circle.badge.plus" catalog="system"/>
-                            </button>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="pMQ-1a-vDF">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <segue destination="EeL-zI-d8a" kind="show" id="Rls-H8-axI"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
@@ -285,6 +288,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oHz-bC-axj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="994.20289855072474" y="146.73913043478262"/>
+        </scene>
+        <!--AddFriendSB-->
+        <scene sceneID="OcK-3d-YcD">
+            <objects>
+                <viewControllerPlaceholder storyboardName="AddFriendSB" id="EeL-zI-d8a" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="rih-AK-ExI"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cjR-yT-6U0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1696" y="-84"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="l0b-w7-3BL">
@@ -305,8 +318,4 @@
             <point key="canvasLocation" x="86.956521739130437" y="146.73913043478262"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="person.crop.circle.badge.plus" catalog="system" width="128" height="101"/>
-        <image name="person.crop.circle.fill.badge.plus" catalog="system" width="128" height="101"/>
-    </resources>
 </document>

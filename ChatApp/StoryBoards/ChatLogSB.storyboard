@@ -74,7 +74,7 @@
         <!--contact-->
         <scene sceneID="Sdo-An-BXO">
             <objects>
-                <viewControllerPlaceholder storyboardName="ContactsSB" referencedIdentifier="contact" id="nfG-8g-AaW" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="FriendsSB" referencedIdentifier="contact" id="nfG-8g-AaW" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="0ua-rb-H9B"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rII-QB-q7h" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

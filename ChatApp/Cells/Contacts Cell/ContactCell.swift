@@ -9,10 +9,23 @@
 import UIKit
 
 class ContactCell: UITableViewCell {
-
+    
+    @IBOutlet weak var FreindimageView: UIImageView!
+    @IBOutlet weak var friendName: UILabel!
+    
+    @IBOutlet weak var freindLocation: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    }
+    
+    
+    var friend : Friend!{
+        didSet{
+            friendName.text = friend.username
+            freindLocation.text = friend.email
+        }
     }
     
     

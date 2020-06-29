@@ -16,6 +16,7 @@ class SignUpVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkForUser()
     }
     
     @IBAction func loginButtonTapped(_ sender: Any) {
@@ -32,23 +33,20 @@ class SignUpVC: UIViewController {
     }
     
     
+
+    
     func signUp(){
         if let name = nameTextField.text, let email = emailTextField.text, let password = passwordTextField.text{
             //Need to complete validate class and functions in class before using it
             if Validate.isPasswordValid(password) && Validate.isValidEmail(email){
                 
-                let data =
-                    [ "firstname" : name,
-                      "email":email
-                    ]
-                
                 let user = FireUser(userID: 1, userName: name, userEmail: email, creationDate: Date())
-
+                
                 
                 FireService.sharedInstance.SignUp(email: email, password: password) { (completed) in
                     if completed{
                         
-                        FireService.sharedInstance.addData(user:user, data: data) { (error, sucess) in
+                        FireService.sharedInstance.addData(user:user) { (error, sucess) in
                             
                             
                             if sucess{
@@ -90,10 +88,47 @@ extension UIViewController {
     // to user this just type: let user = UIViewController.user
     
     var user : FireUser? {
-        if let user = UserDefaults.standard.object(forKey: "user") as? FireUser{
-            return user
-        }else{
-            return nil
+        return  globalUser
+    }
+    
+    
+    func checkForUser(){
+        FireService.sharedInstance.getCurrentUser { (user) in
+            if let email = user?.email{
+                
+                FireService.sharedInstance.getCurrentUserData(email: email) { (fireUser, error) in
+                    if let fireUser = fireUser{
+                        globalUser = fireUser
+                        self.goToTab()
+                    }
+                    
+                }
+            }
         }
     }
+    
+    
+//    func encodeUser(user : FireUser){
+//
+//        let data =
+//        let encodedData = try! NSKeyedArchiver.archivedData(withRootObject: user, requiringSecureCoding: false)
+//        let userDefaults = UserDefaults.standard
+//        userDefaults.set(encodedData, forKey: "user")
+//        UserDefaults.standard.set(encodedData, forKey: "user")
+//
+//    }
+//
+//    func decodeData() -> FireUser?{
+//        if let decoded  = UserDefaults.standard.object(forKey:"user") as? Data{
+//            let user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! FireUser
+//                   return user
+//        }else{
+//            return nil
+//        }
+//    }
+    
+    
+    
 }
+
+
