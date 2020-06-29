@@ -23,6 +23,79 @@ class FireService {
     static let sharedInstance = FireService()
     
     
+    
+    
+    
+    func loadAllFriends(){
+        
+    }
+    
+    func changeDictionaryToFireUser(data : ([String : Any])) -> FireUser{
+        let id = data["id"] as! Int32
+        let username = data["username"] as! String
+        let email = data["email"] as! String
+        let date = data["timecreated"] as! Timestamp
+        let finalDate = date.dateValue()
+        let fireUser = FireUser(userID: id, userName: username, userEmail: email, creationDate: finalDate)
+        return fireUser
+        
+    }
+    
+    func changeDictionaryToFriend(data : ([String : Any])? = nil , user : FireUser? = nil) -> Friend?{
+        
+        if let user = user {
+            let freind = Friend(email: user.email, username: user.name, id: user.id)
+            return freind
+        }else if let data = data{
+            let id = data["id"] as! Int32
+            let username = data["username"] as! String
+            let email = data["email"] as! String
+            let freind = Friend(email: email, username: username, id: id)
+            return freind
+            
+        }else{
+            return nil
+        }
+        
+        
+        
+    }
+    
+    func searchOneFreindWithEmail(email : String,completion : @escaping (Friend? , Error?) -> ()){
+        var data : [String : Any] = [:]
+        let query = FireService.users.whereField("email", isEqualTo: email)
+        
+        query.addSnapshotListener { (snapshot, error) in
+            if let error = error{
+                completion(nil , error)
+            }
+            
+            guard let documents = snapshot?.documents else{return}
+            let count = documents.count
+            if count == 1 {
+                for document in documents{
+                   data = document.data()
+                    let user = self.changeDictionaryToFireUser(data: data)
+                    let friend = self.changeDictionaryToFriend(user: user)
+                    
+                    completion(friend, nil)
+                }
+                
+                
+            }else{
+                fatalError("This should not be happenening")
+            }
+
+            
+            
+            
+            
+        }
+        
+    }
+    
+    
+    
     func getCurrentUser(completion : @escaping (FirebaseAuth.User?) -> ()){
         let user = Auth.auth().currentUser
         
@@ -44,12 +117,8 @@ class FireService {
             }
             
             guard let data = snapshot?.data() else {return}
-            let id = data["id"] as! Int32
-            let username = data["username"] as! String
-            let email = data["email"] as! String
-            let date = data["timecreated"] as! Timestamp
-            let finalDate = date.dateValue()
-            let fireUser = FireUser(userID: id, userName: username, userEmail: email, creationDate: finalDate)
+
+            let fireUser = self.changeDictionaryToFireUser(data: data)
             completion(fireUser , nil)
             return
             
@@ -171,7 +240,11 @@ class FireService {
     
     
     //need to test
-    func addFriend(data :[String:Any] ,User :FireUser ,friend : Friend , completion : @escaping (Bool , Error?) -> ()) {
+    func addFriend(User :FireUser ,friend : Friend , completion : @escaping (Bool , Error?) -> ()) {
+        
+        let data = ["name" : friend.username,
+                    "email":friend.email,
+                    "id": friend.id] as [String : Any]
         FireService.users.document(User.email).collection(FireService.firendsString).document(friend.email).setData(data) { (error) in
             if let error = error {
                 completion(false, error)

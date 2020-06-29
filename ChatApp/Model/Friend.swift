@@ -17,9 +17,9 @@ class Friend : User, Equatable {
     
     let email : String
     let username : String
-    let id : Int
+    let id : Int32
     
-    init(email : String , username : String , id : Int) {
+    init(email : String , username : String , id : Int32) {
         
         self.email = email
         self.username = username

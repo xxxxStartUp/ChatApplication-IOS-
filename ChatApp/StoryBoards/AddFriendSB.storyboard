@@ -54,6 +54,9 @@
                                                 <state key="normal" title="Add">
                                                     <color key="titleColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="addFriend:" destination="K2B-Il-9wv" eventType="touchUpInside" id="Qaa-h0-9Xn"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -75,6 +78,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pdU-v8-nVo"/>
                     </view>
+                    <connections>
+                        <outlet property="emailTextfield" destination="P6v-oc-nC5" id="5kI-Hf-vfb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kdy-WE-j5f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
