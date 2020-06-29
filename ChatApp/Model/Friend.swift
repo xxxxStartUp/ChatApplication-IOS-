@@ -27,5 +27,9 @@ class Friend : User, Equatable {
         super.init()
     }
     
+    required init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
+    }
+    
     
 }

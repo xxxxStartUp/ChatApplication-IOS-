@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ContactsVC: UIViewController {
+class FriendsVC: UIViewController {
     
     
     @IBOutlet weak var contactsTable: UITableView!
@@ -33,7 +33,7 @@ class ContactsVC: UIViewController {
 }
 
 
-extension ContactsVC : UITableViewDelegate , UITableViewDataSource {
+extension FriendsVC : UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }

@@ -14,7 +14,7 @@
 		43BBB40C2499D5B80024F449 /* WelcomeScreenSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4062499D5B80024F449 /* WelcomeScreenSB.storyboard */; };
 		43BBB40D2499D5B80024F449 /* SignInSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4072499D5B80024F449 /* SignInSB.storyboard */; };
 		43BBB40E2499D5B80024F449 /* NewGroupSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4082499D5B80024F449 /* NewGroupSB.storyboard */; };
-		43BBB40F2499D5B80024F449 /* AddContactSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4092499D5B80024F449 /* AddContactSB.storyboard */; };
+		43BBB40F2499D5B80024F449 /* AddFriendSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4092499D5B80024F449 /* AddFriendSB.storyboard */; };
 		43BBB4102499D5B80024F449 /* ChatLogSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB40A2499D5B80024F449 /* ChatLogSB.storyboard */; };
 		43BBB4122499D5C70024F449 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4112499D5C70024F449 /* GoogleService-Info.plist */; };
 		43BBB419249A7B910024F449 /* Git.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB418249A7B910024F449 /* Git.swift */; };
@@ -23,7 +23,7 @@
 		43BBB422249ABDC60024F449 /* ChatLogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB41D249ABDC50024F449 /* ChatLogCell.swift */; };
 		43BBB426249B0EE70024F449 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB425249B0EE70024F449 /* Message.swift */; };
 		43BBB428249B13EA0024F449 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB427249B13EA0024F449 /* User.swift */; };
-		43BBB42A249C42280024F449 /* ContactsSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB429249C42280024F449 /* ContactsSB.storyboard */; };
+		43BBB42A249C42280024F449 /* FriendsSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB429249C42280024F449 /* FriendsSB.storyboard */; };
 		43BBB42C249C8FCF0024F449 /* ChatSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB42B249C8FCF0024F449 /* ChatSB.storyboard */; };
 		43BBB42E249C980D0024F449 /* MainTabStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB42D249C980D0024F449 /* MainTabStoryboard.storyboard */; };
 		43BBB433249C99B80024F449 /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB432249C99B80024F449 /* SignInVC.swift */; };
@@ -32,7 +32,7 @@
 		43BBB43E249D6EFD0024F449 /* ChatStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB43D249D6EFD0024F449 /* ChatStoryBoard.storyboard */; };
 		43BBB44424A04DE60024F449 /* Admin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB44324A04DE60024F449 /* Admin.swift */; };
 		43BBB44624A04DF20024F449 /* FireUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB44524A04DF20024F449 /* FireUser.swift */; };
-		43BBB44824A061150024F449 /* ContactsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB44724A061150024F449 /* ContactsVC.swift */; };
+		43BBB44824A061150024F449 /* FriendsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB44724A061150024F449 /* FriendsVC.swift */; };
 		43BBB44B24A062150024F449 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB44A24A062150024F449 /* ContactCell.swift */; };
 		43BBB44D24A064660024F449 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB44C24A064660024F449 /* SettingsVC.swift */; };
 		43BBB45224A070BD0024F449 /* SettingsProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB45124A070BD0024F449 /* SettingsProfileCell.swift */; };
@@ -42,6 +42,9 @@
 		43BBB45B24A19CE20024F449 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB45A24A19CE20024F449 /* Chat.swift */; };
 		43BD8A8C24A81B6200749E2A /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BD8A8B24A81B6200749E2A /* Group.swift */; };
 		43BD8A8E24A81C4400749E2A /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BD8A8D24A81C4400749E2A /* Friend.swift */; };
+		43BD8A9324AA6CFE00749E2A /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BD8A9224AA6CFE00749E2A /* Global.swift */; };
+		43BD8A9724AA6E0F00749E2A /* NoContactData.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BD8A9624AA6E0F00749E2A /* NoContactData.storyboard */; };
+		43BD8A9924AA713D00749E2A /* AddFriendVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BD8A9824AA713D00749E2A /* AddFriendVC.swift */; };
 		43C2F9FA24A315700080CD8F /* NewGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C2F9F924A315700080CD8F /* NewGroupVC.swift */; };
 		9A1FD7EEF59FEFF812C86703 /* Pods_ChatApp_ChatAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2941CA96B7C8FD29FEB0C824 /* Pods_ChatApp_ChatAppUITests.framework */; };
 		CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA4249DB7C6000A8041 /* SignUpVC.swift */; };
@@ -84,7 +87,7 @@
 		43BBB4062499D5B80024F449 /* WelcomeScreenSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WelcomeScreenSB.storyboard; sourceTree = "<group>"; };
 		43BBB4072499D5B80024F449 /* SignInSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignInSB.storyboard; sourceTree = "<group>"; };
 		43BBB4082499D5B80024F449 /* NewGroupSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewGroupSB.storyboard; sourceTree = "<group>"; };
-		43BBB4092499D5B80024F449 /* AddContactSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AddContactSB.storyboard; sourceTree = "<group>"; };
+		43BBB4092499D5B80024F449 /* AddFriendSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AddFriendSB.storyboard; sourceTree = "<group>"; };
 		43BBB40A2499D5B80024F449 /* ChatLogSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatLogSB.storyboard; sourceTree = "<group>"; };
 		43BBB4112499D5C70024F449 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		43BBB418249A7B910024F449 /* Git.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Git.swift; sourceTree = "<group>"; };
@@ -93,7 +96,7 @@
 		43BBB41D249ABDC50024F449 /* ChatLogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLogCell.swift; sourceTree = "<group>"; };
 		43BBB425249B0EE70024F449 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		43BBB427249B13EA0024F449 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		43BBB429249C42280024F449 /* ContactsSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ContactsSB.storyboard; sourceTree = "<group>"; };
+		43BBB429249C42280024F449 /* FriendsSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FriendsSB.storyboard; sourceTree = "<group>"; };
 		43BBB42B249C8FCF0024F449 /* ChatSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChatSB.storyboard; sourceTree = "<group>"; };
 		43BBB42D249C980D0024F449 /* MainTabStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainTabStoryboard.storyboard; sourceTree = "<group>"; };
 		43BBB432249C99B80024F449 /* SignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
@@ -102,7 +105,7 @@
 		43BBB43D249D6EFD0024F449 /* ChatStoryBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatStoryBoard.storyboard; sourceTree = "<group>"; };
 		43BBB44324A04DE60024F449 /* Admin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Admin.swift; sourceTree = "<group>"; };
 		43BBB44524A04DF20024F449 /* FireUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireUser.swift; sourceTree = "<group>"; };
-		43BBB44724A061150024F449 /* ContactsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsVC.swift; sourceTree = "<group>"; };
+		43BBB44724A061150024F449 /* FriendsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsVC.swift; sourceTree = "<group>"; };
 		43BBB44A24A062150024F449 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		43BBB44C24A064660024F449 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		43BBB45124A070BD0024F449 /* SettingsProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsProfileCell.swift; sourceTree = "<group>"; };
@@ -112,6 +115,9 @@
 		43BBB45A24A19CE20024F449 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		43BD8A8B24A81B6200749E2A /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		43BD8A8D24A81C4400749E2A /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
+		43BD8A9224AA6CFE00749E2A /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		43BD8A9624AA6E0F00749E2A /* NoContactData.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NoContactData.storyboard; sourceTree = "<group>"; };
+		43BD8A9824AA713D00749E2A /* AddFriendVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendVC.swift; sourceTree = "<group>"; };
 		43C2F9F924A315700080CD8F /* NewGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupVC.swift; sourceTree = "<group>"; };
 		50AA4DAC9ADCF9DAF516B0FE /* Pods_ChatAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B2AD9233536C88847F0E6B3 /* Pods-ChatApp-ChatAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp-ChatAppUITests.release.xcconfig"; path = "Target Support Files/Pods-ChatApp-ChatAppUITests/Pods-ChatApp-ChatAppUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -206,9 +212,10 @@
 				43BBB45524A0795E0024F449 /* ChatVC.swift */,
 				43BBB44C24A064660024F449 /* SettingsVC.swift */,
 				43C2F9F924A315700080CD8F /* NewGroupVC.swift */,
-				43BBB44724A061150024F449 /* ContactsVC.swift */,
+				43BBB44724A061150024F449 /* FriendsVC.swift */,
 				43BBB432249C99B80024F449 /* SignInVC.swift */,
 				CB381BA4249DB7C6000A8041 /* SignUpVC.swift */,
+				43BD8A9824AA713D00749E2A /* AddFriendVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -267,6 +274,30 @@
 			path = ChatCell;
 			sourceTree = "<group>";
 		};
+		43BD8A9124AA6CEE00749E2A /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				43BD8A9224AA6CFE00749E2A /* Global.swift */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
+		43BD8A9424AA6DC400749E2A /* BadConnection */ = {
+			isa = PBXGroup;
+			children = (
+				43BD8A9524AA6DDC00749E2A /* Nodata */,
+			);
+			path = BadConnection;
+			sourceTree = "<group>";
+		};
+		43BD8A9524AA6DDC00749E2A /* Nodata */ = {
+			isa = PBXGroup;
+			children = (
+				43BD8A9624AA6E0F00749E2A /* NoContactData.storyboard */,
+			);
+			path = Nodata;
+			sourceTree = "<group>";
+		};
 		5201B7049B6C551C2059AEFF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -280,6 +311,7 @@
 		CBD5984E24986037000CBEBD = {
 			isa = PBXGroup;
 			children = (
+				43BD8A9124AA6CEE00749E2A /* Global */,
 				43BBB439249CA47F0024F449 /* Cells */,
 				43BBB434249C9E0C0024F449 /* Utitliies */,
 				43BBB431249C997C0024F449 /* ViewControllers */,
@@ -340,14 +372,15 @@
 		CBD5988A2498620D000CBEBD /* StoryBoards */ = {
 			isa = PBXGroup;
 			children = (
+				43BD8A9424AA6DC400749E2A /* BadConnection */,
 				CBD5986024986037000CBEBD /* MainSB.storyboard */,
 				43BBB437249CA1AE0024F449 /* SettingsSB.storyboard */,
-				43BBB4092499D5B80024F449 /* AddContactSB.storyboard */,
+				43BBB4092499D5B80024F449 /* AddFriendSB.storyboard */,
 				43BBB43D249D6EFD0024F449 /* ChatStoryBoard.storyboard */,
 				43BBB40A2499D5B80024F449 /* ChatLogSB.storyboard */,
 				43BBB42D249C980D0024F449 /* MainTabStoryboard.storyboard */,
 				43BBB42B249C8FCF0024F449 /* ChatSB.storyboard */,
-				43BBB429249C42280024F449 /* ContactsSB.storyboard */,
+				43BBB429249C42280024F449 /* FriendsSB.storyboard */,
 				43BBB4082499D5B80024F449 /* NewGroupSB.storyboard */,
 				43BBB4072499D5B80024F449 /* SignInSB.storyboard */,
 				43BBB4052499D5B80024F449 /* SignUpSB.storyboard */,
@@ -465,9 +498,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43BD8A9724AA6E0F00749E2A /* NoContactData.storyboard in Resources */,
 				CBD5986724986040000CBEBD /* LaunchScreen.storyboard in Resources */,
 				43BBB42C249C8FCF0024F449 /* ChatSB.storyboard in Resources */,
-				43BBB40F2499D5B80024F449 /* AddContactSB.storyboard in Resources */,
+				43BBB40F2499D5B80024F449 /* AddFriendSB.storyboard in Resources */,
 				43BBB40B2499D5B80024F449 /* SignUpSB.storyboard in Resources */,
 				43BBB40C2499D5B80024F449 /* WelcomeScreenSB.storyboard in Resources */,
 				CBD5986424986040000CBEBD /* Assets.xcassets in Resources */,
@@ -476,7 +510,7 @@
 				43BBB4122499D5C70024F449 /* GoogleService-Info.plist in Resources */,
 				43BBB43E249D6EFD0024F449 /* ChatStoryBoard.storyboard in Resources */,
 				CBD5986224986037000CBEBD /* MainSB.storyboard in Resources */,
-				43BBB42A249C42280024F449 /* ContactsSB.storyboard in Resources */,
+				43BBB42A249C42280024F449 /* FriendsSB.storyboard in Resources */,
 				43BBB421249ABDC60024F449 /* ChatLogCell.xib in Resources */,
 				43BBB42E249C980D0024F449 /* MainTabStoryboard.storyboard in Resources */,
 				43BBB40D2499D5B80024F449 /* SignInSB.storyboard in Resources */,
@@ -608,6 +642,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43BD8A9924AA713D00749E2A /* AddFriendVC.swift in Sources */,
 				43BBB44B24A062150024F449 /* ContactCell.swift in Sources */,
 				CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */,
 				CBD5985F24986037000CBEBD /* ViewController.swift in Sources */,
@@ -616,7 +651,7 @@
 				CBD5985B24986037000CBEBD /* AppDelegate.swift in Sources */,
 				43BBB420249ABDC60024F449 /* ChatLogVC.swift in Sources */,
 				43BBB419249A7B910024F449 /* Git.swift in Sources */,
-				43BBB44824A061150024F449 /* ContactsVC.swift in Sources */,
+				43BBB44824A061150024F449 /* FriendsVC.swift in Sources */,
 				43BBB44424A04DE60024F449 /* Admin.swift in Sources */,
 				CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */,
 				43BD8A8E24A81C4400749E2A /* Friend.swift in Sources */,
@@ -634,6 +669,7 @@
 				43BBB45924A07ACC0024F449 /* ChatCell-ebuka.swift in Sources */,
 				43BBB422249ABDC60024F449 /* ChatLogCell.swift in Sources */,
 				439F5AD82499A9DC00D06BCF /* FireService.swift in Sources */,
+				43BD8A9324AA6CFE00749E2A /* Global.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

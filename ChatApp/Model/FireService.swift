@@ -23,7 +23,39 @@ class FireService {
     static let sharedInstance = FireService()
     
     
+    func getCurrentUser(completion : @escaping (FirebaseAuth.User?) -> ()){
+        let user = Auth.auth().currentUser
+        
+        if let user = user {
+            completion(user)
+        }else{
+            completion(nil)
+        }
+    }
     
+    
+    
+    func getCurrentUserData(email : String , completion : @escaping (FireUser? , Error?) -> ()){
+        
+        FireService.users.document(email).addSnapshotListener { (snapshot, error) in
+            if let error = error{
+                completion(nil , error)
+                return
+            }
+            
+            guard let data = snapshot?.data() else {return}
+            let id = data["id"] as! Int32
+            let username = data["username"] as! String
+            let email = data["email"] as! String
+            let date = data["timecreated"] as! Timestamp
+            let finalDate = date.dateValue()
+            let fireUser = FireUser(userID: id, userName: username, userEmail: email, creationDate: finalDate)
+            completion(fireUser , nil)
+            return
+            
+        }
+        
+        }
     
     /**
      Sign up a user
@@ -69,9 +101,12 @@ class FireService {
     
     
     
-    func addData(user : FireUser , data : [String : Any] , completion : @escaping (Error? , Bool) -> ()) {
+    func addData(user : FireUser ,  completion : @escaping (Error? , Bool) -> ()) {
         
-        
+        let data = ["id" : user.id,
+                    "username":user.name,
+                    "email":user.email,
+                    "timecreated":user.timeCreated] as [String : Any]
         FireService.users.document(user.email).setData(data, merge: true) { (error) in
             
             if let error = error{

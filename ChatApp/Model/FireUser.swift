@@ -40,6 +40,10 @@ class FireUser : User {
         super.init()
     }
     
+    required init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
+    }
+    
     func isAdmin() -> Bool {
         
         self.userType == TypeOfUser.admin.rawValue ? true:false

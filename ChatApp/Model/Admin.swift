@@ -23,7 +23,11 @@ class Admin: FireUser {
         
     // We neeed a function to delete the original user, as there will two two accounts for the user, a regualar and an Admin
     }
-
+    
+    required init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
+    }
+    
     
     func becomeAdmin() -> Void {
         
