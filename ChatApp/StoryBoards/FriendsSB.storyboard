@@ -64,6 +64,11 @@
                                                 <constraint firstItem="1dg-So-b5B" firstAttribute="leading" secondItem="cQW-lL-Zgz" secondAttribute="leading" constant="30" id="upH-ly-jzX"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="FreindimageView" destination="N8n-57-KgT" id="YWr-E8-TNN"/>
+                                            <outlet property="freindLocation" destination="JXB-2D-RoQ" id="Pa1-N3-vRH"/>
+                                            <outlet property="friendName" destination="qcD-ZB-gZo" id="NQM-KJ-1hg"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="121" id="1iK-H0-8dX">
                                         <rect key="frame" x="0.0" y="149" width="414" height="121"/>

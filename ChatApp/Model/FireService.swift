@@ -25,8 +25,34 @@ class FireService {
     
     
     
-    
-    func loadAllFriends(){
+    func loadAllFriends(user : FireUser , completion : @escaping ([Friend]? , Error?) -> ()){
+        var friendList : [Friend] = []
+        let friends =         FireService.users.document(user.email).collection(FireService.firendsString)
+        
+        friends.getDocuments { (snapshot, error) in
+            if let error = error{
+                completion(nil , error)
+                return
+            }
+            
+            guard let documents = snapshot?.documents else {return}
+            for document in documents {
+              let data = document.data()
+                
+                let id = data["id"] as! Int32
+                let username = data["name"] as! String
+                let email = data["email"] as! String
+                let freind = Friend(email: email, username: username, id: id)
+                friendList.append(freind)
+                
+            }
+            
+            completion(friendList , nil)
+            
+            
+        }
+       
+        
         
     }
     
@@ -68,6 +94,7 @@ class FireService {
         query.addSnapshotListener { (snapshot, error) in
             if let error = error{
                 completion(nil , error)
+                return
             }
             
             guard let documents = snapshot?.documents else{return}
@@ -82,8 +109,14 @@ class FireService {
                 }
                 
                 
-            }else{
-                fatalError("This should not be happenening")
+            }
+            if count == 0 {
+                fatalError("email does not exists")
+            }
+            
+            else{
+                fatalError("This shouldnt be happening")
+                
             }
 
             
