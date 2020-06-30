@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Add FriendVC-->
         <scene sceneID="RVD-Fn-4FB">
             <objects>
-                <viewController id="K2B-Il-9wv" sceneMemberID="viewController">
+                <viewController id="K2B-Il-9wv" customClass="AddFriendVC" customModule="ChatApp" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Fik-gu-Fld">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -51,9 +51,12 @@
                                                     <constraint firstAttribute="width" constant="100" id="5hS-KS-GFd"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <state key="normal" title="Send Invite">
+                                                <state key="normal" title="Add">
                                                     <color key="titleColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="addFriend:" destination="K2B-Il-9wv" eventType="touchUpInside" id="mNY-RH-YsO"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -75,6 +78,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pdU-v8-nVo"/>
                     </view>
+                    <connections>
+                        <outlet property="emailTextfield" destination="P6v-oc-nC5" id="QHd-BN-vHD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kdy-WE-j5f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
