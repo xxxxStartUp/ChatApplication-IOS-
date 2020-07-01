@@ -33,8 +33,8 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="121" height="91"/>
                                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="121" id="Sdc-K0-SGm"/>
-                                                                <constraint firstAttribute="height" constant="100" id="opp-TN-eez"/>
+                                                                <constraint firstAttribute="width" priority="999" constant="121" id="DAy-YL-c1X"/>
+                                                                <constraint firstAttribute="height" priority="999" constant="100" id="opp-TN-eez"/>
                                                             </constraints>
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="-50" translatesAutoresizingMaskIntoConstraints="NO" id="nKW-iz-02h">
@@ -65,9 +65,9 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="FreindimageView" destination="N8n-57-KgT" id="YWr-E8-TNN"/>
-                                            <outlet property="freindLocation" destination="JXB-2D-RoQ" id="Pa1-N3-vRH"/>
-                                            <outlet property="friendName" destination="qcD-ZB-gZo" id="NQM-KJ-1hg"/>
+                                            <outlet property="FreindimageView" destination="N8n-57-KgT" id="Hs3-7X-eHl"/>
+                                            <outlet property="freindLocation" destination="JXB-2D-RoQ" id="94M-KD-WEO"/>
+                                            <outlet property="friendName" destination="qcD-ZB-gZo" id="ySF-r9-c32"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="121" id="1iK-H0-8dX">
@@ -83,8 +83,8 @@
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="emy-Nn-Cp7">
                                                             <rect key="frame" x="0.0" y="0.0" width="121" height="91"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="100" id="FhP-8N-f8A"/>
-                                                                <constraint firstAttribute="width" constant="121" id="osN-fX-Q6O"/>
+                                                                <constraint firstAttribute="height" priority="999" constant="100" id="FhP-8N-f8A"/>
+                                                                <constraint firstAttribute="width" priority="999" constant="121" id="osN-fX-Q6O"/>
                                                             </constraints>
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="-50" translatesAutoresizingMaskIntoConstraints="NO" id="R0X-R8-mIW">
@@ -128,8 +128,8 @@
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bYZ-fn-dSW">
                                                             <rect key="frame" x="0.0" y="0.0" width="121" height="91"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="100" id="J6k-nb-nWs"/>
-                                                                <constraint firstAttribute="width" constant="121" id="iGq-hZ-UhG"/>
+                                                                <constraint firstAttribute="height" priority="999" constant="100" id="J6k-nb-nWs"/>
+                                                                <constraint firstAttribute="width" priority="999" constant="121" id="iGq-hZ-UhG"/>
                                                             </constraints>
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="-50" translatesAutoresizingMaskIntoConstraints="NO" id="K2g-UT-a5i">
@@ -173,8 +173,8 @@
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sQD-mL-cHg">
                                                             <rect key="frame" x="0.0" y="0.0" width="121" height="91"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="100" id="DcC-8s-PS9"/>
-                                                                <constraint firstAttribute="width" constant="121" id="xn1-L3-Ybf"/>
+                                                                <constraint firstAttribute="height" priority="999" constant="100" id="DcC-8s-PS9"/>
+                                                                <constraint firstAttribute="width" priority="999" constant="121" id="xn1-L3-Ybf"/>
                                                             </constraints>
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="-50" translatesAutoresizingMaskIntoConstraints="NO" id="Srh-Uj-UyS">
@@ -218,8 +218,8 @@
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TJD-4u-fKJ">
                                                             <rect key="frame" x="0.0" y="0.0" width="121" height="91"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="121" id="3ez-3C-R3x"/>
-                                                                <constraint firstAttribute="height" constant="100" id="meJ-Rh-4DC"/>
+                                                                <constraint firstAttribute="width" priority="999" constant="121" id="3ez-3C-R3x"/>
+                                                                <constraint firstAttribute="height" priority="999" constant="100" id="meJ-Rh-4DC"/>
                                                             </constraints>
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="-50" translatesAutoresizingMaskIntoConstraints="NO" id="rVq-ab-uLo">
@@ -273,16 +273,16 @@
                         <color key="badgeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
                     <navigationItem key="navigationItem" title="Contacts" id="RQs-zD-hzC">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="pMQ-1a-vDF">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="wuM-3X-68A">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <segue destination="EeL-zI-d8a" kind="show" id="Rls-H8-axI"/>
+                                <segue destination="XiX-3y-J2w" kind="show" id="3fl-Ts-q6Y"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="contactsTable" destination="2c4-E4-iQR" id="kqK-W5-lth"/>
+                        <outlet property="contactsTable" destination="2c4-E4-iQR" id="SDW-Db-qjw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oHz-bC-axj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -290,14 +290,14 @@
             <point key="canvasLocation" x="994.20289855072474" y="146.73913043478262"/>
         </scene>
         <!--AddFriendSB-->
-        <scene sceneID="OcK-3d-YcD">
+        <scene sceneID="VuW-B2-QUa">
             <objects>
-                <viewControllerPlaceholder storyboardName="AddFriendSB" id="EeL-zI-d8a" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="rih-AK-ExI"/>
+                <viewControllerPlaceholder storyboardName="AddFriendSB" id="XiX-3y-J2w" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="dj6-RE-Jgg"/>
                 </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cjR-yT-6U0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QVf-dy-4sZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1696" y="-84"/>
+            <point key="canvasLocation" x="1703" y="75"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="l0b-w7-3BL">
