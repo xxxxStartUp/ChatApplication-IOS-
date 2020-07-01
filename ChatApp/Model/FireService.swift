@@ -249,6 +249,10 @@ class FireService {
     }
     
     
+    func createGroupRamzi (group: Group, completion: @escaping (Bool, Error?) -> () ){
+        
+    }
+    
     
     //tested
     func createGroup(group : Group ,completion : @escaping (Bool , Error?) -> () ){
