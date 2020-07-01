@@ -27,7 +27,7 @@ class FireService {
     
     func loadAllFriends(user : FireUser , completion : @escaping ([Friend]? , Error?) -> ()){
         var friendList : [Friend] = []
-        let friends =         FireService.users.document(user.email).collection(FireService.firendsString)
+        let friends =   FireService.users.document(user.email).collection(FireService.firendsString)
         
         friends.getDocuments { (snapshot, error) in
             if let error = error{
@@ -35,9 +35,10 @@ class FireService {
                 return
             }
             
+
             guard let documents = snapshot?.documents else {return}
             for document in documents {
-              let data = document.data()
+                let data = document.data()
                 
                 let id = data["id"] as! Int32
                 let username = data["name"] as! String
@@ -51,7 +52,7 @@ class FireService {
             
             
         }
-       
+        
         
         
     }
@@ -101,24 +102,26 @@ class FireService {
             let count = documents.count
             if count == 1 {
                 for document in documents{
-                   data = document.data()
+                    data = document.data()
                     let user = self.changeDictionaryToFireUser(data: data)
                     let friend = self.changeDictionaryToFriend(user: user)
                     
                     completion(friend, nil)
+                    return
                 }
                 
                 
             }
             if count == 0 {
                 fatalError("email does not exists")
+                return
             }
-            
+                
             else{
                 fatalError("This shouldnt be happening")
                 
             }
-
+            
             
             
             
@@ -150,14 +153,14 @@ class FireService {
             }
             
             guard let data = snapshot?.data() else {return}
-
+            
             let fireUser = self.changeDictionaryToFireUser(data: data)
             completion(fireUser , nil)
             return
             
         }
         
-        }
+    }
     
     /**
      Sign up a user
@@ -251,13 +254,9 @@ class FireService {
     
     
     //tested
-    func createGroup(group : Group ,completion : @escaping (Bool , Error?) -> () ){
+    func createGroup(group : Group ,completion : @escaping (Bool , Error?) -> ()){
         let data = ["grouppname":group.name, "groupadmin" : group.GroupAdmin.email]
-        
-        
-        
         FireService.users.document(group.GroupAdmin.email).collection("groups").document(group.name).collection(group.name).document(group.name).setData(data, merge: true) { (error) in
-            
             
             if let error = error {
                 completion(false , error)
@@ -278,13 +277,29 @@ class FireService {
         let data = ["name" : friend.username,
                     "email":friend.email,
                     "id": friend.id] as [String : Any]
-        FireService.users.document(User.email).collection(FireService.firendsString).document(friend.email).setData(data) { (error) in
-            if let error = error {
-                completion(false, error)
-            }else{
-                completion(true , nil)
-            }
+        
+        if friend.email == User.email {
+            fatalError("you cannot add yourself")
         }
+        
+        loadAllFriends(user: User) { (friends, error) in
+            if let freinds = friends{
+                if freinds.contains(friend){
+                    fatalError("you have already added this person")
+                }else{
+                    FireService.users.document(User.email).collection(FireService.firendsString).document(friend.email).setData(data) { (error) in
+                        if let error = error {
+                            completion(false, error)
+                        }else{
+                            completion(true , nil)
+                        }
+                    }
+                    
+                }
+            }
+            
+        }
+        
     }
     //nned to test
     func deleteFriend(User :FireUser ,friend : Friend , completion : @escaping (Bool , Error?) -> ()){
@@ -312,7 +327,7 @@ class FireService {
                         "type":message.content.type.rawValue
             ]
             
-            FireService.users.document(User.email).collection("messages").document(freind.email).collection("messages").document(freind.email).setData(data) { (error) in
+            FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document(freind.email).setData(data) { (error) in
                 if let error = error {
                     completion(false , error)
                     return
@@ -334,7 +349,7 @@ class FireService {
         
         if message.content.type == .string {
             
-            FireService.users.document(User.email).collection("messages").document(freind.email).collection("messages").document(freind.email).delete { (error) in
+            FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document(freind.email).delete { (error) in
                 if let error = error {
                     completion(false , error)
                     return
@@ -374,7 +389,7 @@ class FireService {
     
     
     func loadGroups(User : FireUser,completion : @escaping ([[String:Any]]? , Error?) -> ()){
-         var data  : [[String:Any]] = [[:]]
+        var data  : [[String:Any]] = [[:]]
         FireService.users.document(User.email).collection("groups").addSnapshotListener { (snapshots, error) in
             if let error = error{
                 completion(nil , error)

@@ -12,15 +12,28 @@ class ChatVC: UIViewController {
     
     @IBOutlet weak var ChatTable: UITableView!
     
+    @IBOutlet weak var messageStackview: UIStackView!
+    
+    @IBOutlet weak var messageView: UITextView!
+    
+    @IBOutlet weak var sendButton: UIButton!
     let identifier = "ChatCell"
     
+    var messages = [Message]()
+    
+    var r : Friend? {
+        
+        didSet {
+            
+            title = r?.username
+            
+        }
+    }
 
     override func viewDidLoad() {
+        messageView.delegate = self
         super.viewDidLoad()
         setUpTableView()
-        
-  
-        
     }
     
     
@@ -50,5 +63,16 @@ extension ChatVC : UITableViewDataSource , UITableViewDelegate {
     
     
     
+    
+}
+
+
+extension ChatVC : UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        print(textView.text)
+//
+//        let size = CGSize(width: 1000.0, height: .infinity)
+//        messageView.frame.height = size.height
+    }
     
 }

@@ -17,14 +17,20 @@ class FriendsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
-        loadFriends()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        loadFriends()
+        
     }
     
     
     
     func loadFriends(){
+        friendList.removeAll()
         guard let globalUser = globalUser else{return}
         FireService.sharedInstance.loadAllFriends(user: globalUser) { (friends, error) in
             
@@ -64,6 +70,13 @@ extension FriendsVC : UITableViewDelegate , UITableViewDataSource {
         }
         
         
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard let vc = UIStoryboard(name: "ChatSB", bundle: nil).instantiateInitialViewController() else { return}
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
     }
     
     

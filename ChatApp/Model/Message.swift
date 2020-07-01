@@ -14,10 +14,11 @@ class Message {
     var content : Content
     var sender : FireUser
     var timeStamp : Date
+    var recieved : Bool
     
-    init(id : String , content : Content , sender : FireUser , timeStamp : Date) {
-        
-        self.id = id
+    init(content : Content , sender : FireUser , timeStamp : Date , recieved : Bool) {
+        self.recieved = recieved
+        self.id = UUID().uuidString
         self.content = content
         self.sender = sender
         self.timeStamp = timeStamp
