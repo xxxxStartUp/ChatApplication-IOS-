@@ -13,7 +13,7 @@ import FirebaseFirestore
 
 
 
-// this class connects to firebase
+// this class connects to firebasexx
 class FireService {
     static let db = Firestore.firestore()
     
@@ -34,8 +34,6 @@ class FireService {
                 completion(nil , error)
                 return
             }
-            
-            
             guard let documents = snapshot?.documents else {return}
             for document in documents {
                 let data = document.data()
@@ -45,7 +43,6 @@ class FireService {
                 let email = data["email"] as! String
                 let freind = Friend(email: email, username: username, id: id)
                 friendList.append(freind)
-                
             }
             
             completion(friendList , nil)
@@ -65,7 +62,6 @@ class FireService {
         let finalDate = date.dateValue()
         let fireUser = FireUser(userID: id, userName: username, userEmail: email, creationDate: finalDate)
         return fireUser
-        
     }
     
     func changeDictionaryToFriend(data : ([String : Any])? = nil , user : FireUser? = nil) -> Friend?{
@@ -526,97 +522,43 @@ class FireService {
     
     
     func loadMessagesWithFriend2(User : FireUser, freind : Friend ,completion : @escaping ([Message]? , Error?) -> ()){
-        
-        
-        var messages : [Message] = []
-        
         let ref =           FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document(freind.email).collection(freind.email)
-        
-        //        repeat{
-        //            ref.addSnapshotListener { (snapshot, error) in
-        //
-        //                completion(messages, error)
-        //                return
-        //            }
-        //
-        //
-        //
-        //        }while(true)
-        
         ref.addSnapshotListener { (snapshot, error) in
-            
+            var messages : [Message] = []
             guard let documents = snapshot?.documents else {
                 completion(nil , error)
                 return
             }
-            
             documents.forEach { (document) in
-                
                 let id = document.documentID
                 let data = document.data()
                 let email = data["email"] as! String
                 let recived = data["recived"] as! Bool
                 let date = data["timeStamp"] as! Timestamp
                 let finalDate = date.dateValue()
-                let messageId = data["id"] as! String
-                
-                
-                
+               // let messageId = data["id"] as! String
                 ref.document(id).collection("content").addSnapshotListener { (snapshot, error) in
-                    
-                    
                     guard let contentDocuments = snapshot?.documents else {
                         completion(nil , error)
                         return
                     }
-                    
                     contentDocuments.forEach { (document) in
                        let contentData =  document.data()
                         let content = contentData["content"] as Any
                         let messagecontent = Content(type: .string, content: content)
-                        
-                        
-                        
                         self.searchOneUserWithEmail(email: email) { (user, error) in
                             guard let user = user else {return}
                              let message = Message(content: messagecontent, sender: user, timeStamp: finalDate, recieved: recived)
                             messages.append(message)
-                            
-                            
                             if messages.count == documents.count{
+                                
                                 completion(messages , nil)
                                 return
                             }
-                            
                         }
-
-                        
-                        
-                        
-                        
-                        
                     }
-                    
                 }
-            
-                
-                
-                
-                
-                
-//                let contentData = data["content"] as Any
-//                _ = data["type"]
-//                let content = Content(type: .string, content: contentData)
-                
-                
-                
             }
-            
-            
-            
-            
-            
-            
             completion(messages, error)
             return
         }
@@ -657,9 +599,7 @@ class FireService {
                         completion(nil , error)
                         return
                     }
-                    
                     for document in documents{
-                        
                         let data = document.data()
                         let contentData = data["content"] as Any
                         _ = data["type"]
@@ -671,21 +611,12 @@ class FireService {
                         
                         let date = maindata["timeStamp"] as! Timestamp
                         let finalDate = date.dateValue()
-                        
-                        
-                        
-                        
                         self.searchOneUserWithEmail(email: email) { (user, error) in
-                            
-                            
                             guard let user = user else {
                                 completion(nil , error)
                                 return
                             }
-                            
-                            
                             if recived{
-                                
                                 let message = Message(content: content, sender: user, timeStamp: finalDate, recieved: recived)
                                 messages.append(message)
                                 print(message.content.content as! String)
@@ -699,24 +630,13 @@ class FireService {
                                 print(message.content.content as! String)
                                 
                             }
-                            
-                            
-                            
-                            
-                            
                         }
-                        
-                        
-                        
                         if messages.count == documents.count{
                             completion(messages , nil)
+                            return
                         }else{
                             print(messages.count ,"this is the amount of messages avaialable")
                         }
-                        
-                        
-                        
-                        
                     }
                     
                     
