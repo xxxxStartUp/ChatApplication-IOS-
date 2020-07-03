@@ -35,7 +35,7 @@ class FireService {
                 return
             }
             
-
+            
             guard let documents = snapshot?.documents else {return}
             for document in documents {
                 let data = document.data()
@@ -88,6 +88,50 @@ class FireService {
         
     }
     
+    
+    func searchOneUserWithEmail(email : String,completion : @escaping (FireUser? , Error?) -> ()){
+        
+        var data : [String : Any] = [:]
+        let query = FireService.users.whereField("email", isEqualTo: email)
+        
+        
+        query.addSnapshotListener { (snapshot, error) in
+            if let error = error{
+                completion(nil , error)
+                return
+            }
+            
+            guard let documents = snapshot?.documents else{return}
+            let count = documents.count
+            if count == 1 {
+                for document in documents{
+                    data = document.data()
+                    let user = self.changeDictionaryToFireUser(data: data)
+                    
+                    completion(user, nil)
+                    return
+                }
+                
+                
+            }
+            if count == 0 {
+                fatalError("email does not exists")
+                return
+            }
+                
+            else{
+                fatalError("This shouldnt be happening")
+                
+            }
+            
+            
+            
+            
+            
+        }
+    }
+    
+    
     func searchOneFreindWithEmail(email : String,completion : @escaping (Friend? , Error?) -> ()){
         var data : [String : Any] = [:]
         let query = FireService.users.whereField("email", isEqualTo: email)
@@ -114,7 +158,6 @@ class FireService {
             }
             if count == 0 {
                 fatalError("email does not exists")
-                return
             }
                 
             else{
@@ -146,7 +189,7 @@ class FireService {
     
     func getCurrentUserData(email : String , completion : @escaping (FireUser? , Error?) -> ()){
         
-        FireService.users.document(email).addSnapshotListener { (snapshot, error) in
+        FireService.users.document(email).getDocument { (snapshot, error) in
             if let error = error{
                 completion(nil , error)
                 return
@@ -316,23 +359,138 @@ class FireService {
     
     
     
+    
+    func sendMessagefinal(User : FireUser, message : Message , freind : Friend ,completion : @escaping (Bool , Error?) -> ()){
+        
+        
+        let sentdata = ["id":message.id ,
+                        "timeStamp":message.timeStamp,
+                        "email":message.sender.email,
+                        "recived":false
+            ] as [String : Any]
+        
+        
+        let recicedData =  ["id":message.id ,
+                            "timeStamp":message.timeStamp,
+                            "email":message.sender.email,
+                            "recived":true
+            
+            ] as [String : Any]
+        
+        
+        
+        
+        
+        
+        let Content = ["type" : message.content.type.rawValue,
+                       "content":message.content.content] as [String : Any]
+        
+        let sendDoc =           FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document(freind.email).collection(freind.email).document()
+        
+        
+        let sendContentDoc = sendDoc.collection("content").document()
+        
+        
+        
+        
+        
+        let reciveDoc =                  FireService.users.document(freind.email).collection(FireService.firendsString).document(User.email).collection("messages").document(User.email).collection(User.email).document()
+        
+        
+        let reciveContentDoc = reciveDoc.collection("content").document()
+        
+        sendDoc.setData(sentdata) { (error) in
+            if let error = error{
+                completion(false , error)
+                fatalError()
+                
+            }
+            
+            reciveDoc.setData(recicedData, merge: false) { (error) in
+                
+                if let error = error{
+                    completion(false , error)
+                    fatalError()
+                    
+                }
+                
+                sendContentDoc.setData( Content, merge: false) { (error) in
+                    
+                    if let error = error{
+                        completion(false , error)
+                        fatalError()
+                        
+                    }
+                    
+                    reciveContentDoc.setData(Content) { (error) in
+                        
+                        if let error = error{
+                            completion(false , error)
+                            fatalError()
+                            
+                        }
+                        
+                        completion(true, nil)
+                        
+                    }
+                    
+                }
+                
+            }
+            
+            
+            
+            
+            
+            
+        }
+        
+        
+        
+        
+    }
+    
     //need to test
     func SendMessage(User : FireUser, message : Message , freind : Friend ,completion : @escaping (Bool , Error?) -> ()){
         
         if message.content.type == .string {
-            let data = ["id":message.id ,
-                        "content" : message.content.content,
-                        "timeStamp":message.timeStamp,
-                        "email":message.sender.email,
-                        "type":message.content.type.rawValue
+            let sentdata = ["id":message.id ,
+                            "content" : message.content.content,
+                            "timeStamp":message.timeStamp,
+                            "email":message.sender.email,
+                            "type":message.content.type.rawValue,
+                            "recived":true
             ]
             
-            FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document(freind.email).setData(data) { (error) in
+            let recicedData =  ["id":message.id ,
+                                "content" : message.content.content,
+                                "timeStamp":message.timeStamp,
+                                "email":message.sender.email,
+                                "type":message.content.type.rawValue,
+                                "recived":false
+                
+            ]
+            
+            FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document(freind.email).setData(sentdata) { (error) in
                 if let error = error {
                     completion(false , error)
                     return
                 }
-                completion(true , nil)
+                
+                
+                FireService.users.document(freind.email).collection(FireService.firendsString).document(User.email).collection("messages").document(User.email).setData(recicedData) { (error) in
+                    if let error = error {
+                        completion(false , error)
+                        return
+                    }
+                    
+                    completion(true , nil)
+                    
+                }
+                
+                
+                
+                
             }
             
             
@@ -359,9 +517,224 @@ class FireService {
             }
             
         }else{
-            fatalError()
             print("Not supported Yet")
+            fatalError()
+            
         }
+        
+    }
+    
+    
+    func loadMessagesWithFriend2(User : FireUser, freind : Friend ,completion : @escaping ([Message]? , Error?) -> ()){
+        
+        
+        var messages : [Message] = []
+        
+        let ref =           FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document(freind.email).collection(freind.email)
+        
+        //        repeat{
+        //            ref.addSnapshotListener { (snapshot, error) in
+        //
+        //                completion(messages, error)
+        //                return
+        //            }
+        //
+        //
+        //
+        //        }while(true)
+        
+        ref.addSnapshotListener { (snapshot, error) in
+            
+            guard let documents = snapshot?.documents else {
+                completion(nil , error)
+                return
+            }
+            
+            documents.forEach { (document) in
+                
+                let id = document.documentID
+                let data = document.data()
+                let email = data["email"] as! String
+                let recived = data["recived"] as! Bool
+                let date = data["timeStamp"] as! Timestamp
+                let finalDate = date.dateValue()
+                let messageId = data["id"] as! String
+                
+                
+                
+                ref.document(id).collection("content").addSnapshotListener { (snapshot, error) in
+                    
+                    
+                    guard let contentDocuments = snapshot?.documents else {
+                        completion(nil , error)
+                        return
+                    }
+                    
+                    contentDocuments.forEach { (document) in
+                       let contentData =  document.data()
+                        let content = contentData["content"] as Any
+                        let messagecontent = Content(type: .string, content: content)
+                        
+                        
+                        
+                        self.searchOneUserWithEmail(email: email) { (user, error) in
+                            guard let user = user else {return}
+                             let message = Message(content: messagecontent, sender: user, timeStamp: finalDate, recieved: recived)
+                            messages.append(message)
+                            
+                            
+                            if messages.count == documents.count{
+                                completion(messages , nil)
+                                return
+                            }
+                            
+                        }
+
+                        
+                        
+                        
+                        
+                        
+                    }
+                    
+                }
+            
+                
+                
+                
+                
+                
+//                let contentData = data["content"] as Any
+//                _ = data["type"]
+//                let content = Content(type: .string, content: contentData)
+                
+                
+                
+            }
+            
+            
+            
+            
+            
+            
+            completion(messages, error)
+            return
+        }
+        
+        
+    }
+    
+    
+    
+    
+    func loadMessagesWithFriend(User : FireUser, freind : Friend ,completion : @escaping ([Message]? , Error?) -> ()){
+        var messages : [Message] = []
+        
+        let ref =           FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document(freind.email).collection(freind.email)
+        
+        
+        ref.addSnapshotListener { (snapshot, error) in
+            
+            messages.removeAll()
+            guard let documents = snapshot?.documents else {
+                completion(nil , error)
+                return
+            }
+            print(documents.count , "this is the number of documents")
+            
+            for document in documents {
+                
+                
+                let maindata = document.data()
+                let id = document.documentID
+                //print(id , "the id is thisssssss")
+                
+                let contentRef =  ref.document(id).collection("content")
+                
+                contentRef.getDocuments { (snapshot, error) in
+                    
+                    guard let documents = snapshot?.documents else {
+                        completion(nil , error)
+                        return
+                    }
+                    
+                    for document in documents{
+                        
+                        let data = document.data()
+                        let contentData = data["content"] as Any
+                        _ = data["type"]
+                        let content = Content(type: .string, content: contentData)
+                        
+                        let email = maindata["email"] as! String
+                        
+                        let recived = maindata["recived"] as! Bool
+                        
+                        let date = maindata["timeStamp"] as! Timestamp
+                        let finalDate = date.dateValue()
+                        
+                        
+                        
+                        
+                        self.searchOneUserWithEmail(email: email) { (user, error) in
+                            
+                            
+                            guard let user = user else {
+                                completion(nil , error)
+                                return
+                            }
+                            
+                            
+                            if recived{
+                                
+                                let message = Message(content: content, sender: user, timeStamp: finalDate, recieved: recived)
+                                messages.append(message)
+                                print(message.content.content as! String)
+                            }
+                            else{
+                                let user = FireUser(userID: 1, userName: User.name, userEmail: User.email, creationDate: User.timeCreated)
+                                
+                                let message = Message(content: content, sender: user, timeStamp: finalDate, recieved: recived)
+                                
+                                messages.append(message)
+                                print(message.content.content as! String)
+                                
+                            }
+                            
+                            
+                            
+                            
+                            
+                        }
+                        
+                        
+                        
+                        if messages.count == documents.count{
+                            completion(messages , nil)
+                        }else{
+                            print(messages.count ,"this is the amount of messages avaialable")
+                        }
+                        
+                        
+                        
+                        
+                    }
+                    
+                    
+                    
+                    
+                }
+                
+                
+            }
+            
+            
+            
+            
+        }
+        
+        
+        
+        
         
     }
     

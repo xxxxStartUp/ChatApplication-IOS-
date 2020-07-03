@@ -10,6 +10,7 @@
 		3541292F535A21BAAC5F2C66 /* Pods_ChatApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423890E3C5130288FBA965E0 /* Pods_ChatApp.framework */; };
 		38DF35B92F050C0C26A9768B /* Pods_ChatAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50AA4DAC9ADCF9DAF516B0FE /* Pods_ChatAppTests.framework */; };
 		439F5AD82499A9DC00D06BCF /* FireService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439F5AD72499A9DB00D06BCF /* FireService.swift */; };
+		439F921E24AD469000EC9A33 /* FriendDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439F921D24AD469000EC9A33 /* FriendDelegate.swift */; };
 		43BBB40B2499D5B80024F449 /* SignUpSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4052499D5B80024F449 /* SignUpSB.storyboard */; };
 		43BBB40C2499D5B80024F449 /* WelcomeScreenSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4062499D5B80024F449 /* WelcomeScreenSB.storyboard */; };
 		43BBB40D2499D5B80024F449 /* SignInSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4072499D5B80024F449 /* SignInSB.storyboard */; };
@@ -83,6 +84,7 @@
 		30A603C1DA64CF44CDDDE161 /* Pods-ChatAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatAppTests.release.xcconfig"; path = "Target Support Files/Pods-ChatAppTests/Pods-ChatAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		423890E3C5130288FBA965E0 /* Pods_ChatApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		439F5AD72499A9DB00D06BCF /* FireService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireService.swift; sourceTree = "<group>"; };
+		439F921D24AD469000EC9A33 /* FriendDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDelegate.swift; sourceTree = "<group>"; };
 		43BBB4052499D5B80024F449 /* SignUpSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignUpSB.storyboard; sourceTree = "<group>"; };
 		43BBB4062499D5B80024F449 /* WelcomeScreenSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WelcomeScreenSB.storyboard; sourceTree = "<group>"; };
 		43BBB4072499D5B80024F449 /* SignInSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignInSB.storyboard; sourceTree = "<group>"; };
@@ -197,6 +199,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		439F921C24AD467700EC9A33 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				439F921D24AD469000EC9A33 /* FriendDelegate.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		43BBB417249A7B790024F449 /* Git */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,6 +218,7 @@
 		43BBB431249C997C0024F449 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				439F921C24AD467700EC9A33 /* Protocols */,
 				43BBB41B249ABDC50024F449 /* ChatLogVC.swift */,
 				43BBB45524A0795E0024F449 /* ChatVC.swift */,
 				43BBB44C24A064660024F449 /* SettingsVC.swift */,
@@ -669,6 +680,7 @@
 				43BBB45924A07ACC0024F449 /* ChatCell-ebuka.swift in Sources */,
 				43BBB422249ABDC60024F449 /* ChatLogCell.swift in Sources */,
 				439F5AD82499A9DC00D06BCF /* FireService.swift in Sources */,
+				439F921E24AD469000EC9A33 /* FriendDelegate.swift in Sources */,
 				43BD8A9324AA6CFE00749E2A /* Global.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

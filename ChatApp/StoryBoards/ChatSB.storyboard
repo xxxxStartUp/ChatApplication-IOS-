@@ -16,10 +16,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="TSf-no-z6S">
-                                <rect key="frame" x="10" y="88" width="394" height="788"/>
+                                <rect key="frame" x="10" y="88" width="394" height="748"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GvD-eS-lor">
-                                        <rect key="frame" x="0.0" y="0.0" width="394" height="728"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="394" height="688"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatCell" rowHeight="62" id="EEZ-Ui-0oh" customClass="ChatCell_ebuka" customModule="ChatApp" customModuleProvider="target">
@@ -34,6 +34,8 @@
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IMi-eG-oEG">
                                                                     <rect key="frame" x="0.0" y="0.0" width="52" height="52"/>
+                                                                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="0.70989216550000001" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" secondItem="IMi-eG-oEG" secondAttribute="height" multiplier="64:64" id="Zjd-im-G4x"/>
                                                                     </constraints>
@@ -41,6 +43,9 @@
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Have you eating?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PUe-bS-N3b">
                                                                     <rect key="frame" x="72" y="0.0" width="240" height="52"/>
                                                                     <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="0.70989216550000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="240" id="133-eG-i7S"/>
+                                                                    </constraints>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -66,6 +71,11 @@
                                                         <constraint firstAttribute="trailing" secondItem="jO1-ND-xza" secondAttribute="trailing" constant="5" id="wPh-J9-VlL"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="messageContent" destination="PUe-bS-N3b" id="gIN-1S-IHh"/>
+                                                    <outlet property="recieverView" destination="IMi-eG-oEG" id="bg4-6l-3rS"/>
+                                                    <outlet property="senderView" destination="hj8-HK-Kca" id="b66-dw-LWx"/>
+                                                </connections>
                                             </tableViewCell>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="74" id="mq7-2u-YuJ">
                                                 <rect key="frame" x="0.0" y="90" width="394" height="74"/>
@@ -205,7 +215,7 @@
                                         </prototypes>
                                     </tableView>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ckt-6d-52o">
-                                        <rect key="frame" x="0.0" y="738" width="394" height="50"/>
+                                        <rect key="frame" x="0.0" y="698" width="394" height="50"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="dZu-uC-DiX">
                                                 <rect key="frame" x="0.0" y="0.0" width="316" height="50"/>
@@ -225,6 +235,9 @@
                                                     <constraint firstAttribute="width" constant="70" id="jt1-iy-gg5"/>
                                                 </constraints>
                                                 <state key="normal" title="Send"/>
+                                                <connections>
+                                                    <action selector="sendMessage:" destination="dCJ-Yc-ED5" eventType="touchUpInside" id="HMM-8i-EGp"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -234,7 +247,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="TSf-no-z6S" firstAttribute="trailing" secondItem="Xds-Cd-Ep0" secondAttribute="trailing" constant="-10" id="1r2-6W-qWS"/>
-                            <constraint firstAttribute="bottom" secondItem="TSf-no-z6S" secondAttribute="bottom" constant="20" id="6Ow-TV-m5i"/>
+                            <constraint firstAttribute="bottom" secondItem="TSf-no-z6S" secondAttribute="bottom" constant="60" id="6Ow-TV-m5i"/>
                             <constraint firstItem="TSf-no-z6S" firstAttribute="top" secondItem="Xds-Cd-Ep0" secondAttribute="top" id="X1I-Rs-YvZ"/>
                             <constraint firstItem="TSf-no-z6S" firstAttribute="leading" secondItem="Xds-Cd-Ep0" secondAttribute="leading" constant="10" id="YCK-t7-W24"/>
                         </constraints>

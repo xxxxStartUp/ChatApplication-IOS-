@@ -17,6 +17,8 @@ class Message {
     var recieved : Bool
     
     init(content : Content , sender : FireUser , timeStamp : Date , recieved : Bool) {
+        
+        
         self.recieved = recieved
         self.id = UUID().uuidString
         self.content = content

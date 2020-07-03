@@ -7,16 +7,17 @@
 //
 
 import UIKit
-
 class FriendsVC: UIViewController {
     
     
     @IBOutlet weak var contactsTable: UITableView!
     var friendList : [Friend] = []
     let identifier = "ContactCell"
+    var delegate : FreindDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
+        
 
         // Do any additional setup after loading the view.
     }
@@ -74,9 +75,10 @@ extension FriendsVC : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let vc = UIStoryboard(name: "ChatSB", bundle: nil).instantiateInitialViewController() else { return}
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
+        guard let vc = UIStoryboard(name: "ChatSB", bundle: nil).instantiateInitialViewController() as? ChatVC else { return}
+        self.delegate = vc
+        delegate?.didSendFriend(freind: friendList[indexPath.row])
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     
