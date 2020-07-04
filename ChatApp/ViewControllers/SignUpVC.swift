@@ -13,13 +13,24 @@ class SignUpVC: UIViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var helloLabel: UILabel!
+    @IBOutlet weak var signupButton: UIButton!
+    @IBOutlet weak var alreadyHaveAnAccount: UILabel!
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var passwordLabel: UILabel!
+    
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let codableMessage = CodableMessage(message: "message")
         let exampleCodableUser = codableUser(name: "codableEgb", message: codableMessage)
         FireService.sharedInstance.createCodableUser(for: exampleCodableUser)
-        
+        updateViews()
         checkForUser()
     }
     
@@ -84,6 +95,14 @@ class SignUpVC: UIViewController {
         }
         
     }
+    func updateViews(){
+        helloLabel.onBoardingPageHeaderLabels()
+        emailLabel.onBoardingPageSubHeaderLabels(type: Constants.onBoardingPage.emailSubHeader)
+        nameLabel.onBoardingPageSubHeaderLabels(type: Constants.onBoardingPage.nameSubHeader)
+        passwordLabel.onBoardingPageSubHeaderLabels(type: Constants.onBoardingPage.passwordSubHeader)
+        signupButton.onBoardingPageButton(type: Constants.onBoardingPage.filledButton)
+        loginButton.onBoardingPageButton(type: Constants.onBoardingPage.notFilledButton)
+    }
     
 }
 
@@ -111,28 +130,7 @@ extension UIViewController {
         }
     }
     
-    
-//    func encodeUser(user : FireUser){
-//
-//        let data =
-//        let encodedData = try! NSKeyedArchiver.archivedData(withRootObject: user, requiringSecureCoding: false)
-//        let userDefaults = UserDefaults.standard
-//        userDefaults.set(encodedData, forKey: "user")
-//        UserDefaults.standard.set(encodedData, forKey: "user")
-//
-//    }
-//
-//    func decodeData() -> FireUser?{
-//        if let decoded  = UserDefaults.standard.object(forKey:"user") as? Data{
-//            let user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! FireUser
-//                   return user
-//        }else{
-//            return nil
-//        }
-//    }
-    
-    
-    
+
 }
 
 

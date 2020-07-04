@@ -51,6 +51,7 @@
 		9A1FD7EEF59FEFF812C86703 /* Pods_ChatApp_ChatAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2941CA96B7C8FD29FEB0C824 /* Pods_ChatApp_ChatAppUITests.framework */; };
 		CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA4249DB7C6000A8041 /* SignUpVC.swift */; };
 		CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA6249EF5BB000A8041 /* Constants.swift */; };
+		CBA262AB24AFBB5F00F81034 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA262AA24AFBB5F00F81034 /* Extensions.swift */; };
 		CBD5985B24986037000CBEBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5985A24986037000CBEBD /* AppDelegate.swift */; };
 		CBD5985D24986037000CBEBD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5985C24986037000CBEBD /* SceneDelegate.swift */; };
 		CBD5985F24986037000CBEBD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5985E24986037000CBEBD /* ViewController.swift */; };
@@ -126,7 +127,8 @@
 		50AA4DAC9ADCF9DAF516B0FE /* Pods_ChatAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B2AD9233536C88847F0E6B3 /* Pods-ChatApp-ChatAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp-ChatAppUITests.release.xcconfig"; path = "Target Support Files/Pods-ChatApp-ChatAppUITests/Pods-ChatApp-ChatAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CB381BA4249DB7C6000A8041 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
-		CB381BA6249EF5BB000A8041 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		CB381BA6249EF5BB000A8041 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../Utitliies/Constants.swift; sourceTree = "<group>"; };
+		CBA262AA24AFBB5F00F81034 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		CBD5985724986037000CBEBD /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBD5985A24986037000CBEBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CBD5985C24986037000CBEBD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -238,7 +240,6 @@
 			isa = PBXGroup;
 			children = (
 				43BBB435249C9E1C0024F449 /* Validate.swift */,
-				CB381BA6249EF5BB000A8041 /* Constants.swift */,
 			);
 			path = Utitliies;
 			sourceTree = "<group>";
@@ -322,9 +323,27 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CBA262A724AFB7C600F81034 /* Views Updates */ = {
+			isa = PBXGroup;
+			children = (
+				CBA262AA24AFBB5F00F81034 /* Extensions.swift */,
+			);
+			path = "Views Updates";
+			sourceTree = "<group>";
+		};
+		CBA262AE24AFC24800F81034 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				CB381BA6249EF5BB000A8041 /* Constants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		CBD5984E24986037000CBEBD = {
 			isa = PBXGroup;
 			children = (
+				CBA262AE24AFC24800F81034 /* Constants */,
+				CBA262A724AFB7C600F81034 /* Views Updates */,
 				43BD8A9124AA6CEE00749E2A /* Global */,
 				43BBB439249CA47F0024F449 /* Cells */,
 				43BBB434249C9E0C0024F449 /* Utitliies */,
@@ -670,6 +689,7 @@
 				43BBB44424A04DE60024F449 /* Admin.swift in Sources */,
 				CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */,
 				43BD8A8E24A81C4400749E2A /* Friend.swift in Sources */,
+				CBA262AB24AFBB5F00F81034 /* Extensions.swift in Sources */,
 				43BBB44D24A064660024F449 /* SettingsVC.swift in Sources */,
 				43BBB45424A071B20024F449 /* SettingsCell.swift in Sources */,
 				43BBB45624A0795E0024F449 /* ChatVC.swift in Sources */,

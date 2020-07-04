@@ -810,15 +810,12 @@ class FireService {
     
     
     func createCodableUser<T: Codable>(for encodableObject : T) -> Void {
-        
         do{
            let json = try encodableObject.toJson()
             FireService.db.collection("examplecodableuser").addDocument(data: json)
         }catch{
             print(error)
         }
-       
-        
     }
     
     
