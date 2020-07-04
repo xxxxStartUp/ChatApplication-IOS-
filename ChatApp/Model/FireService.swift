@@ -822,6 +822,17 @@ class FireService {
     }
     
     
+    func testActivity (){
+        var activities : [Activity] = []
+        let content = Content(type: .string, content: "yo")
+        let fireUser = FireUser(userID: 1, userName: "E", userEmail: "E", creationDate: Date())
+        let message = Message(content: content, sender: fireUser, timeStamp: Date(), recieved: false)
+        let group = Group(GroupAdmin: fireUser, id: 1, name: "BJEHD")
+        let activity = Activity(activityType: .GroupChat(group: group))
+        activities.append(activity)
+    }
+    
+    
     
     
     
@@ -832,9 +843,9 @@ class FireService {
 
 
 
-enum ChatError : Error{
+enum CodableChatError : String, Error{
     
-    case enocdingError
+    case enocdingError = "couldNotEncode"
 }
 extension Encodable {
     
@@ -842,7 +853,7 @@ extension Encodable {
         
         let objectData = try! JSONEncoder().encode(self)
         let jsonObject = try JSONSerialization.jsonObject(with: objectData, options: [])
-        guard let json = jsonObject as? [String :Any] else{ throw ChatError.enocdingError}
+        guard let json = jsonObject as? [String :Any] else{ throw CodableChatError.enocdingError}
         return json
     }
 }

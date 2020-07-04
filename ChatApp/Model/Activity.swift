@@ -8,15 +8,33 @@
 
 import Foundation
 
+protocol Messaging {
+    
+}
 
-class Activity {
+
+class Activity{
     
     var type : ActivityType
-    
+    var name : String
     
     init(activityType : ActivityType) {
         self.type = activityType
+        
+        switch type {
+      
+        case .GroupChat(group: let group):
+            self.name = group.name
+            break
+        case .FriendChat(friend: let friend):
+            self.name = friend.username
+            break
+        }
+        
     }
+    
+    
+
 }
 
 
