@@ -16,6 +16,10 @@ class SignUpVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let codableMessage = CodableMessage(message: "message")
+        let exampleCodableUser = codableUser(name: "codableEgb", message: codableMessage)
+        FireService.sharedInstance.createCodableUser(for: exampleCodableUser)
+        
         checkForUser()
     }
     

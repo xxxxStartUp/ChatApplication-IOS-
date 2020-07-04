@@ -25,6 +25,22 @@ class FireService {
     
     
     
+    func loadAllActivity(){
+        
+    }
+    
+    func loadAllChats(){
+        
+    }
+    
+    func loadAllGroups(){
+        
+    }
+    
+    
+    
+    
+    
     func loadAllFriends(user : FireUser , completion : @escaping ([Friend]? , Error?) -> ()){
         var friendList : [Friend] = []
         let friends =   FireService.users.document(user.email).collection(FireService.firendsString)
@@ -793,10 +809,42 @@ class FireService {
     }
     
     
+    func createCodableUser<T: Codable>(for encodableObject : T) -> Void {
+        
+        do{
+           let json = try encodableObject.toJson()
+            FireService.db.collection("examplecodableuser").addDocument(data: json)
+        }catch{
+            print(error)
+        }
+       
+        
+    }
     
     
     
     
+    
+    
+}
+
+/// dont worry about this here - Ebuka (this is practice for encodable and codable objects)
+
+
+
+enum ChatError : Error{
+    
+    case enocdingError
+}
+extension Encodable {
+    
+    func toJson() throws -> [String : Any] {
+        
+        let objectData = try! JSONEncoder().encode(self)
+        let jsonObject = try JSONSerialization.jsonObject(with: objectData, options: [])
+        guard let json = jsonObject as? [String :Any] else{ throw ChatError.enocdingError}
+        return json
+    }
 }
 
 

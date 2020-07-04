@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3541292F535A21BAAC5F2C66 /* Pods_ChatApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423890E3C5130288FBA965E0 /* Pods_ChatApp.framework */; };
 		38DF35B92F050C0C26A9768B /* Pods_ChatAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50AA4DAC9ADCF9DAF516B0FE /* Pods_ChatAppTests.framework */; };
+		4399AD5224AFA00100E7F0E0 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4399AD5124AFA00100E7F0E0 /* Activity.swift */; };
 		439F5AD82499A9DC00D06BCF /* FireService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439F5AD72499A9DB00D06BCF /* FireService.swift */; };
 		439F921E24AD469000EC9A33 /* FriendDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439F921D24AD469000EC9A33 /* FriendDelegate.swift */; };
 		43BBB40B2499D5B80024F449 /* SignUpSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4052499D5B80024F449 /* SignUpSB.storyboard */; };
@@ -83,6 +84,7 @@
 		2A313512E9052DFF8993A3F9 /* Pods-ChatApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp.debug.xcconfig"; path = "Target Support Files/Pods-ChatApp/Pods-ChatApp.debug.xcconfig"; sourceTree = "<group>"; };
 		30A603C1DA64CF44CDDDE161 /* Pods-ChatAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatAppTests.release.xcconfig"; path = "Target Support Files/Pods-ChatAppTests/Pods-ChatAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		423890E3C5130288FBA965E0 /* Pods_ChatApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4399AD5124AFA00100E7F0E0 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		439F5AD72499A9DB00D06BCF /* FireService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireService.swift; sourceTree = "<group>"; };
 		439F921D24AD469000EC9A33 /* FriendDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDelegate.swift; sourceTree = "<group>"; };
 		43BBB4052499D5B80024F449 /* SignUpSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignUpSB.storyboard; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				43BD8A8D24A81C4400749E2A /* Friend.swift */,
 				43BBB45A24A19CE20024F449 /* Chat.swift */,
 				43BD8A8B24A81B6200749E2A /* Group.swift */,
+				4399AD5124AFA00100E7F0E0 /* Activity.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -653,6 +656,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4399AD5224AFA00100E7F0E0 /* Activity.swift in Sources */,
 				43BD8A9924AA713D00749E2A /* AddFriendVC.swift in Sources */,
 				43BBB44B24A062150024F449 /* ContactCell.swift in Sources */,
 				CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */,
