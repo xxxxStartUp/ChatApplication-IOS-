@@ -15,9 +15,19 @@ class SignInVC: UIViewController {
     
     @IBOutlet weak var passwordTextField: UITextField!
     
+    @IBOutlet weak var loginButton: UIButton!
+    
+    @IBOutlet weak var signupButton: UIButton!
+    
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var passwordLabel: UILabel!
+    
+    @IBOutlet weak var welcomeHeader: UILabel!
+    @IBOutlet weak var alreadyHaveAnAccountLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateViews()
     }
     
     
@@ -61,9 +71,20 @@ class SignInVC: UIViewController {
             }
         }
     }
+    func updateViews(){
+        loginButton.onBoardingPageButton(type: Constants.onBoardingPage.filledButton)
+        signupButton.onBoardingPageButton(type: Constants.onBoardingPage.notFilledButton)
+        welcomeHeader.onBoardingPageHeaderLabels()
+        emailLabel.onBoardingPageSubHeaderLabels(type: Constants.onBoardingPage.emailSubHeader)
+        passwordLabel.onBoardingPageSubHeaderLabels(type: Constants.onBoardingPage.passwordSubHeader)
+        alreadyHaveAnAccountLabel.onBoardingPageSubHeaderLabels(type: Constants.onBoardingPage.alreadyHaveAnAccoutSubHeader)
+        
+    }
     
     
 }
+
+
 
 extension UIAlertController {
     

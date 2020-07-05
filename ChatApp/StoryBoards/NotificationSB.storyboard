@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2QK-GB-fvb">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Notifications-->
+        <scene sceneID="m1W-p4-3yF">
+            <objects>
+                <viewController id="2QK-GB-fvb" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zA5-qc-bRd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Y8i-mw-2yq">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Y8i-mw-2yq" firstAttribute="leading" secondItem="xet-q3-ijZ" secondAttribute="leading" id="HfR-ps-v1G"/>
+                            <constraint firstItem="Y8i-mw-2yq" firstAttribute="top" secondItem="xet-q3-ijZ" secondAttribute="top" id="Y0p-Vy-uaA"/>
+                            <constraint firstItem="xet-q3-ijZ" firstAttribute="trailing" secondItem="Y8i-mw-2yq" secondAttribute="trailing" id="evL-UO-tAX"/>
+                            <constraint firstItem="xet-q3-ijZ" firstAttribute="bottom" secondItem="Y8i-mw-2yq" secondAttribute="bottom" id="i3Z-aD-mmZ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="xet-q3-ijZ"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Notifications" selectedImage="notifcations" id="L9m-dw-PLY"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eX8-WQ-eaX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-171" y="101"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="notifcations" width="24" height="24"/>
+    </resources>
+</document>

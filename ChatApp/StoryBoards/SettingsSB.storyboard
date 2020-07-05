@@ -42,13 +42,13 @@
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="jWb-xi-Xfd">
                                                                     <rect key="frame" x="65" y="0.0" width="274" height="46.5"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ebuka Egbunam" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhM-F1-XAd">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Ebuka Egbunam" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhM-F1-XAd">
                                                                             <rect key="frame" x="0.0" y="0.0" width="155.5" height="25.5"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="21"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H4n-CT-HPD">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H4n-CT-HPD">
                                                                             <rect key="frame" x="0.0" y="30.5" width="39" height="16"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -126,7 +126,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Lxc-Cd-qDT"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Settings" image="plus" catalog="system" id="LHZ-Jq-ykQ"/>
+                    <tabBarItem key="tabBarItem" title="Settings" selectedImage="settings" id="LHZ-Jq-ykQ"/>
                     <navigationItem key="navigationItem" id="C88-tg-fZi"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -159,6 +159,6 @@
     </scenes>
     <resources>
         <image name="greaterthan" catalog="system" width="128" height="111"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="settings" width="24" height="24"/>
     </resources>
 </document>
