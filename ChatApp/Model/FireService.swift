@@ -537,6 +537,32 @@ class FireService {
     }
     
     
+    func loadAllActivities(user : FireUser, completion : @escaping ([Message]? , Error?) -> ()){
+        
+    }
+    
+    
+    func loadAllMessages(user : FireUser) {
+        
+        loadAllFriends(user: user) { (freinds, error) in
+            guard  let friends = freinds else {return}
+            
+            friends.forEach { (friend) in
+                
+                
+            }
+            
+            
+        }
+        
+        
+        
+    }
+    
+    
+    
+    
+    //works
     func loadMessagesWithFriend2(User : FireUser, freind : Friend ,completion : @escaping ([Message]? , Error?) -> ()){
         let ref =           FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document(freind.email).collection(freind.email)
         ref.addSnapshotListener { (snapshot, error) in

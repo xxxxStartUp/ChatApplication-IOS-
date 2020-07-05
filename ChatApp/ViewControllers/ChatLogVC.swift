@@ -8,34 +8,72 @@
 
 import UIKit
 
-class ChatLogVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 15
-    }
+class ChatLogVC: UIViewController{
+
     
     @IBOutlet weak var chatLogTableview: UITableView!
+
+    
+    var activities : [Activity] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         chatLogTableview.register(UINib(nibName: "ChatLogCell", bundle: nil), forCellReuseIdentifier: "ChatCellIdentifier")
         chatLogTableview.delegate = self
         chatLogTableview.dataSource = self
+        loadActivity()
+        setUpfakeActivity()
+        
     }
+    
+    
+    
+    func loadActivity(){
+        
+    }
+    
+    func setUpfakeActivity(){
+        
+        let activity3 = Activity(activityType: .GroupChat(group: Group(GroupAdmin: FireUser(userID: 1, userName: "dara", userEmail: "daraegb@gmail.com", creationDate: Date()), id: 1, name: "Group1")))
+        
+        let activity1 = Activity(activityType: .FriendChat(friend: Friend(email: "ebukafake@gmail.com", username: "ebukaegb", id: 1)))
+        let activity2 = Activity(activityType: .FriendChat(friend: Friend(email: "ebukadoublefake@gmail.com", username: "ebukaegb", id: 1)))
+        let activity4 = Activity(activityType: .GroupChat(group: Group(GroupAdmin: FireUser(userID: 1, userName: "ramzi", userEmail: "ramzi@gmail.com", creationDate: Date()), id: 1, name: "Group2")))
+        
+        activities.append(activity1)
+        activities.append(activity2)
+        activities.append(activity3)
+        activities.append(activity4)
+        
+        chatLogTableview.reloadData()
+        
+    }
+    
+
+
+}
+
+
+extension ChatLogVC : UITableViewDelegate,UITableViewDataSource{
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatCellIdentifier") as! ChatLogCell
         cell.updateViews(indexPath: indexPath.row+1)
-        
+        cell.activity = activities[indexPath.row]
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        guard let vc = UIStoryboard(name: "ChatSB", bundle: nil).instantiateInitialViewController() else {return}
-       
-        navigationController?.pushViewController(vc, animated: true)
+//
+//        guard let vc = UIStoryboard(name: "ChatSB", bundle: nil).instantiateInitialViewController() else {return}
+//
+//        navigationController?.pushViewController(vc, animated: true)
     }
     
-
-
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return activities.count
+    }
+    
 }

@@ -16,11 +16,28 @@ class ChatLogCell: UITableViewCell {
     func updateViews(indexPath: Int){
         chatNameLabel.chatLogPageLabels(type: Constants.mainPage.groupNameHeader)
         chatDateLabel.chatLogPageLabels(type: Constants.mainPage.timeStamp)
-        chatNameLabel.text = "Chat \(indexPath)"
+//        chatNameLabel.text = "Chat \(indexPath)"
         chatDateLabel.text = "9/1\(indexPath)/20"
         
         
         
+    }
+    
+    
+    var activity : Activity! {
+        
+        didSet{
+            switch activity.type {
+            case .GroupChat:
+                chatNameLabel.text =  "Group : \(activity.name)"
+                break
+            case .FriendChat:
+                chatNameLabel.text =  "Chat : \(activity.name)"
+                
+            }
+            
+            
+        }
     }
     
 }
