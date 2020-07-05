@@ -23,6 +23,9 @@ class FireService {
     
     static let sharedInstance = FireService()
     
+    static let groupString = "groups"
+    static let messagesString = "messages"
+    
     
     
     
@@ -307,6 +310,29 @@ class FireService {
         }
     }
     
+    
+    func createGroupRamzi (_ user: FireUser, _ group: Group, _ completion: @escaping (Bool, Error?) -> () ){
+        
+        var data: [String: Any] = ["Message":"I'm here"]
+        let ref = FireService.users.document(user.email).collection(FireService.groupString).document(group.name)
+        
+        ref.setData(data, merge: false) { (error) in
+            if let error = error {
+                
+                completion(false, error)
+                
+                return
+            } else {
+                
+                let message = ref.collection(FireService.messagesString)
+                message.addDocument(data: data)
+                completion (true, nil)
+            }
+        }
+        
+        
+        
+    }
     
     
     //tested
