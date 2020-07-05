@@ -13,7 +13,7 @@ protocol Messaging {
 }
 
 
-class Activity{
+class Activity {
     
     var type : ActivityType
     var name : String
