@@ -169,7 +169,7 @@
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bubble.left.and.bubble.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="tmQ-jO-XhB">
                                                         <rect key="frame" x="0.0" y="0.3333333333333286" width="398" height="118.33333333333334"/>
-                                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <color key="tintColor" red="0.078763119879999996" green="0.56403696540000003" blue="0.94189447159999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="lessThanOrEqual" priority="999" constant="150" id="03O-cE-mpO"/>
                                                         </constraints>
@@ -196,10 +196,10 @@
                                                             <constraint firstAttribute="height" constant="60" id="1By-fN-iqn"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="textColor" red="0.77638524769999995" green="0.77651971580000001" blue="0.77637678379999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Darah@gmail.com" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pJm-5C-ILa">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Dara@gmail.com" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pJm-5C-ILa">
                                                         <rect key="frame" x="0.0" y="68" width="398" height="60"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="Vb7-Ke-MvT"/>
@@ -228,7 +228,7 @@
                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Testing123*" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3tQ-Ug-Ax5">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Manchester1*" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3tQ-Ug-Ax5">
                                                         <rect key="frame" x="0.0" y="68" width="398" height="60"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="hL0-JG-MkT"/>
@@ -306,8 +306,14 @@
                         <viewLayoutGuide key="safeArea" id="au4-uM-tQe"/>
                     </view>
                     <connections>
+                        <outlet property="alreadyHaveAnAccountLabel" destination="J6Q-LD-e4X" id="A0O-CR-St3"/>
+                        <outlet property="emailLabel" destination="jbf-6t-ckZ" id="Abf-Df-tMn"/>
                         <outlet property="emailTextField" destination="pJm-5C-ILa" id="mVf-cv-gPD"/>
+                        <outlet property="loginButton" destination="u2F-WD-gOL" id="jfD-q3-0Ae"/>
+                        <outlet property="passwordLabel" destination="hYG-ZR-oxy" id="mDN-OY-KgP"/>
                         <outlet property="passwordTextField" destination="3tQ-Ug-Ax5" id="TVA-vQ-89L"/>
+                        <outlet property="signupButton" destination="nwq-nX-ws6" id="r0D-yH-egN"/>
+                        <outlet property="welcomeHeader" destination="Eyz-Dy-ZEU" id="rl1-lG-tnJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pof-1k-Mvs" sceneMemberID="firstResponder"/>
