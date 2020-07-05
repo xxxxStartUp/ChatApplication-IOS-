@@ -19,8 +19,12 @@ class FireService {
     
     static let firendsString = "friends"
     static let users = db.collection("users")
+    static let groupString  = "groups"
     
     static let sharedInstance = FireService()
+    
+    static let groupString = "groups"
+    static let messagesString = "messages"
     
     
     
@@ -307,11 +311,34 @@ class FireService {
     }
     
     
+    func createGroupRamzi (_ user: FireUser, _ group: Group, _ completion: @escaping (Bool, Error?) -> () ){
+        
+        var data: [String: Any] = ["Message":"I'm here"]
+        let ref = FireService.users.document(user.email).collection(FireService.groupString).document(group.name)
+        
+        ref.setData(data, merge: false) { (error) in
+            if let error = error {
+                
+                completion(false, error)
+                
+                return
+            } else {
+                
+                let message = ref.collection(FireService.messagesString)
+                message.addDocument(data: data)
+                completion (true, nil)
+            }
+        }
+        
+        
+        
+    }
+    
     
     //tested
     func createGroup(group : Group ,completion : @escaping (Bool , Error?) -> ()){
-        let data = ["grouppname":group.name, "groupadmin" : group.GroupAdmin.email]
-        FireService.users.document(group.GroupAdmin.email).collection("groups").document(group.name).collection(group.name).document(group.name).setData(data, merge: true) { (error) in
+        let data = ["groupname":group.name, "groupadmin" : group.GroupAdmin.email, "groupid":group.id] as [String : Any]
+        FireService.users.document(group.GroupAdmin.email).collection("groups").document(group.name).setData(data, merge: true) { (error) in
             
             if let error = error {
                 completion(false , error)
@@ -378,7 +405,7 @@ class FireService {
         let sentdata = ["id":message.id ,
                         "timeStamp":message.timeStamp,
                         "email":message.sender.email,
-                        "recived":false
+                        "recived":false //I think we need to spell check as retrieving the data later on won't work
             ] as [String : Any]
         
         
@@ -443,22 +470,37 @@ class FireService {
                         }
                         
                         completion(true, nil)
-                        
                     }
-                    
                 }
-                
+            }
+        }
+    }
+    
+    func sendMessageToGroup (user:FireUser, group: Group, message: Message, completion : @escaping (Bool , Error?) -> ()){
+        let sentdata = ["id":group.id,
+                        "email":message.sender.email,
+            ] as [String : Any]
+
+        let content = ["type" : message.content.type.rawValue,
+        "content":message.content.content] as [String : Any]
+        
+        
+        let sentDoc = FireService.users.document(user.email).collection(FireService.groupString).document(group.name).collection("messages").document() //This will create a new document
+        
+        let sentContentDoc = sentDoc.collection("content").document()
+        
+        sentDoc.setData(sentdata) { (error) in
+            if let error = error {
+                completion (false, error)
             }
             
-            
-            
-            
-            
-            
+            sentContentDoc.setData(content) { (error) in
+                if let error = error {
+                    completion (false, error)
+                }
+                completion (true, nil)
+            }
         }
-        
-        
-        
         
     }
     
@@ -575,22 +617,22 @@ class FireService {
                 let id = document.documentID
                 let data = document.data()
                 let email = data["email"] as! String
-                let recived = data["recived"] as! Bool
+                let recived = data["recived"] as! Bool // I think we need to spell check as it will not work later on once we try to retrieve data
                 let date = data["timeStamp"] as! Timestamp
                 let finalDate = date.dateValue()
-               // let messageId = data["id"] as! String
+                // let messageId = data["id"] as! String
                 ref.document(id).collection("content").addSnapshotListener { (snapshot, error) in
                     guard let contentDocuments = snapshot?.documents else {
                         completion(nil , error)
                         return
                     }
                     contentDocuments.forEach { (document) in
-                       let contentData =  document.data()
+                        let contentData =  document.data()
                         let content = contentData["content"] as Any
                         let messagecontent = Content(type: .string, content: content)
                         self.searchOneUserWithEmail(email: email) { (user, error) in
                             guard let user = user else {return}
-                             let message = Message(content: messagecontent, sender: user, timeStamp: finalDate, recieved: recived)
+                            let message = Message(content: messagecontent, sender: user, timeStamp: finalDate, recieved: recived)
                             messages.append(message)
                             if messages.count == documents.count{
                                 
@@ -598,8 +640,27 @@ class FireService {
                                 return
                             }
                         }
+                        
+                        
+                        
+                        
+                        
+                        
                     }
                 }
+                
+                
+                
+                
+                
+                
+                
+                //                let contentData = data["content"] as Any
+                //                _ = data["type"]
+                //                let content = Content(type: .string, content: contentData)
+                
+                
+                
             }
             completion(messages, error)
             return
@@ -607,6 +668,70 @@ class FireService {
         
         
     }
+    
+    
+    // Need to test
+    func loadMessagesWithGroup(user : FireUser, group: Group ,completion : @escaping ([Message]? , Error?) -> ()){
+        
+        var messages : [Message] = []
+        
+        let ref = FireService.users.document(user.email).collection(FireService.groupString).document(group.name).collection("messages")
+        
+        ref.addSnapshotListener { (snapshot, error) in
+            
+            guard let documents = snapshot?.documents else {
+                completion(nil , error)
+                return
+            }
+            
+            documents.forEach { (document) in
+                
+                let id = document.documentID
+                let data = document.data()
+                let received = data["received"] as! Bool  //We need to spell check for the properties, as some spelling in Firestore will not correspond to this
+                let date = data["timestamp"] as! Timestamp
+                let finalDate = date.dateValue()
+                let messageId = data["id"] as! String
+                
+                
+                ref.document(id).collection("content").addSnapshotListener { (snapshot, error) in
+                    
+                    
+                    guard let contentDocuments = snapshot?.documents else {
+                        completion(nil , error)
+                        return
+                    }
+                    
+                    
+                    contentDocuments.forEach { (document) in
+                        let contentData =  document.data()
+                        let content = contentData["content"] as Any
+                        let messagecontent = Content(type: .string, content: content)
+                        
+                        // Need to verify this
+                        self.searchOneUserWithEmail(email: user.email) { (user, error) in
+                            guard let tempUser = user else {return}
+                            let message = Message(content: messagecontent, sender: tempUser, timeStamp: finalDate, recieved: received)
+                            messages.append(message)
+                            
+                            
+                            if messages.count == documents.count{
+                                completion(messages , nil)
+                                return
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                }
+                
+                
+            }
+        }
+    }
+    
+    
     
     
     
@@ -641,7 +766,9 @@ class FireService {
                         completion(nil , error)
                         return
                     }
+                    
                     for document in documents{
+                        
                         let data = document.data()
                         let contentData = data["content"] as Any
                         _ = data["type"]
@@ -653,12 +780,21 @@ class FireService {
                         
                         let date = maindata["timeStamp"] as! Timestamp
                         let finalDate = date.dateValue()
+                        
+                        
+                        
+                        
                         self.searchOneUserWithEmail(email: email) { (user, error) in
+                            
+                            
                             guard let user = user else {
                                 completion(nil , error)
                                 return
                             }
+                            
+                            
                             if recived{
+                                
                                 let message = Message(content: content, sender: user, timeStamp: finalDate, recieved: recived)
                                 messages.append(message)
                                 print(message.content.content as! String)
@@ -672,13 +808,53 @@ class FireService {
                                 print(message.content.content as! String)
                                 
                             }
+                            
+                            
+                            
+                            let date = maindata["timeStamp"] as! Timestamp
+                            let finalDate = date.dateValue()
+                            self.searchOneUserWithEmail(email: email) { (user, error) in
+                                guard let user = user else {
+                                    completion(nil , error)
+                                    return
+                                }
+                                if recived{
+                                    let message = Message(content: content, sender: user, timeStamp: finalDate, recieved: recived)
+                                    messages.append(message)
+                                    print(message.content.content as! String)
+                                }
+                                else{
+                                    let user = FireUser(userID: 1, userName: User.name, userEmail: User.email, creationDate: User.timeCreated)
+                                    
+                                    
+                                    
+                                    
+                                }
+                                
+                                
+                                
+                                
+                                if messages.count == documents.count{
+                                    completion(messages , nil)
+                                }else{
+                                    print(messages.count ,"this is the amount of messages avaialable")
+                                }
+                                
+                                
+                                
+                                
+                                
+                            }
+                            if messages.count == documents.count{
+                                completion(messages , nil)
+                                return
+                            }else{
+                                print(messages.count ,"this is the amount of messages avaialable")
+                                
+                            }
                         }
-                        if messages.count == documents.count{
-                            completion(messages , nil)
-                            return
-                        }else{
-                            print(messages.count ,"this is the amount of messages avaialable")
-                        }
+                        
+                        
                     }
                     
                     
@@ -687,180 +863,188 @@ class FireService {
                 }
                 
                 
+                
+                
+                
+            }
+        }
+        
+    }
+            
+            
+            //need to test
+            func loadMessages(User : FireUser, freind : Friend ,completion : @escaping ([[String:Any]]? , Error?) -> ()){
+                var data  : [[String:Any]] = [[:]]
+                FireService.users.document(User.email).collection("messages").document(freind.email).collection("messages").addSnapshotListener { (snapshots, error) in
+                    if let error = error{
+                        completion(nil , error)
+                        return
+                    }
+                    
+                    guard let snapShots = snapshots else {return}
+                    
+                    for  document in snapShots.documents{
+                        let documentData = document.data()
+                        data.append(documentData)
+                    }
+                    
+                    completion(data , nil)
+                    
+                }
+            }
+            
+            // need to test
+            func loadGroups(User : FireUser,completion : @escaping ([Group]? , Error?) -> ()){
+                var groups  : [Group] = []
+                FireService.users.document(User.email).collection(FireService.groupString).addSnapshotListener { (snapshots, error) in
+                    if let error = error{
+                        completion(nil , error)
+                        return
+                    }
+                    
+                    guard let snapShots = snapshots else {return}
+                    
+                    for  document in snapShots.documents{
+                        let documentData = document.data()
+                        let email = documentData["groupadmin"] as! String
+                        let id = documentData["groupid"] as! Int
+                        let name = documentData["groupname"] as! String
+                        
+                        self.searchOneUserWithEmail(email: email) { (user, error) in
+                            guard let user = user else {return}
+                            
+                            let group = Group(GroupAdmin: user, id: id, name: name)
+                            groups.append(group)
+                            
+                        }
+                        
+                        if snapShots.count == groups.count {
+                            completion (groups, nil)
+                        }
+
+                    }
+                }
+                
             }
             
             
             
             
-        }
-        
-        
-        
-        
-        
-    }
-    
-    
-    //need to test
-    func loadMessages(User : FireUser, freind : Friend ,completion : @escaping ([[String:Any]]? , Error?) -> ()){
-        var data  : [[String:Any]] = [[:]]
-        FireService.users.document(User.email).collection("messages").document(freind.email).collection("messages").addSnapshotListener { (snapshots, error) in
-            if let error = error{
-                completion(nil , error)
-                return
+            
+            //need to test
+            func addFriendsToGroup (group: Group, friendsToAdd: [Friend]){
+                
+                if friendsToAdd.count == 0 {return}
+                
+                for friend in friendsToAdd{
+                    group.friends.append(friend)
+                }
+                
+                //We can delete this once we are sure if works
+                print ("\(group.friends.count) friends are in you group. They are:")
+                
+                for friend in group.friends {
+                    print("Name:", friend.username,"-", "E-mail:", friend.email)
+                }
+            }
+            //need to test
+            func deleteFriendsFromGroup(group: Group, groupID: Int, friendsToDelete: [Friend]){
+                
+                if friendsToDelete.count == 0 {return}
+                
+                for friend in friendsToDelete {
+                    
+                    // To be able to compare two Friends objects, we needed the Friend class to inherit the Equatable class. See the Friend class.
+                    if (group.friends.contains(friend)) {
+                        
+                        guard let index = group.friends.firstIndex(of: friend) else { return }
+                        
+                        group.friends.remove(at: index)
+                        
+                        print("Removed:", friend.email)
+                    }
+                }
+            }
+            //need to test
+            func addFriends (user: FireUser, friendsToAdd: [Friend]) {
+                
+                if friendsToAdd.count == 0 {return}
+                
+                for friend in friendsToAdd {
+                    if user.friends.contains(friend) {
+                        
+                        continue
+                        
+                    } else {
+                        
+                        user.friends.append(friend)
+                    }
+                }
+            }
+            //need to test
+            func removeFriends (user: FireUser, friendsToRemove: [Friend]) {
+                
+                if friendsToRemove.count == 0 {return}
+                
+                for friend in friendsToRemove {
+                    
+                    if (user.friends.contains(friend)) {
+                        
+                        guard let index = user.friends.firstIndex(of: friend) else { return }
+                        
+                        user.friends.remove(at: index)
+                        
+                        print("Removed:", friend.email)
+                    }
+                }
             }
             
-            guard let snapShots = snapshots else {return}
             
-            for  document in snapShots.documents{
-                let documentData = document.data()
-                data.append(documentData)
+            
+            
+            //Firebase does not have a Swift function for a user to delete another user in the database. Refer to this website: https://stackoverflow.com/questions/38800414/delete-a-specific-user-from-firebase
+            
+            //Also looking at the Admin SDK, which aloows a user  to delete another user, Swift is not supported. Link: https://firebase.google.com/docs/auth/admin/manage-users
+            func deleteUser (adminUser: Admin, userToDelete: FireUser){
+                // so we are waiting on this function
+                
+                if (adminUser.isAdmin()) {
+                    
+                    
+                    
+                } else {
+                    print ("\(adminUser.name) is not an admin user and therefore cannot delete a user from the database")
+                    return
+                }
+                
             }
             
-            completion(data , nil)
-            
-        }
-    }
+            func createCodableUser<T: Codable>(for encodableObject : T) -> Void {
+                       do{
+                           let json = try encodableObject.toJson()
+                           FireService.db.collection("examplecodableuser").addDocument(data: json)
+                       }catch{
+                           print(error)
+                       }
+                   }
     
     
-    func loadGroups(User : FireUser,completion : @escaping ([[String:Any]]? , Error?) -> ()){
-        var data  : [[String:Any]] = [[:]]
-        FireService.users.document(User.email).collection("groups").addSnapshotListener { (snapshots, error) in
-            if let error = error{
-                completion(nil , error)
-                return
+            func testActivity (){
+                var activities : [Activity] = []
+                let content = Content(type: .string, content: "yo")
+                let fireUser = FireUser(userID: 1, userName: "E", userEmail: "E", creationDate: Date())
+                let message = Message(content: content, sender: fireUser, timeStamp: Date(), recieved: false)
+                let group = Group(GroupAdmin: fireUser, id: 1, name: "BJEHD")
+                let activity = Activity(activityType: .GroupChat(group: group))
+                activities.append(activity)
             }
-            
-            guard let snapShots = snapshots else {return}
-            
-            for  document in snapShots.documents{
-                let documentData = document.data()
-                data.append(documentData)
-            }
-            completion(data , nil)
+
         }
         
-    }
-    
-    
-    
-    
-    
-    //need to test
-    func addFriendsToGroup (group: Group, friendsToAdd: [Friend]){
         
-        if friendsToAdd.count == 0 {return}
         
-        for friend in friendsToAdd{
-            group.friends.append(friend)
-        }
-        
-        //We can delete this once we are sure if works
-        print ("\(group.friends.count) friends are in you group. They are:")
-        
-        for friend in group.friends {
-            print("Name:", friend.username,"-", "E-mail:", friend.email)
-        }
-    }
-    //need to test
-    func deleteFriendsFromGroup(group: Group, groupID: Int, friendsToDelete: [Friend]){
-        
-        if friendsToDelete.count == 0 {return}
-        
-        for friend in friendsToDelete {
-            
-            // To be able to compare two Friends objects, we needed the Friend class to inherit the Equatable class. See the Friend class.
-            if (group.friends.contains(friend)) {
-                
-                guard let index = group.friends.firstIndex(of: friend) else { return }
-                
-                group.friends.remove(at: index)
-                
-                print("Removed:", friend.email)
-            }
-        }
-    }
-    //need to test
-    func addFriends (user: FireUser, friendsToAdd: [Friend]) {
-        
-        if friendsToAdd.count == 0 {return}
-        
-        for friend in friendsToAdd {
-            if user.friends.contains(friend) {
-                
-                continue
-                
-            } else {
-                
-                user.friends.append(friend)
-            }
-        }
-    }
-    //need to test
-    func removeFriends (user: FireUser, friendsToRemove: [Friend]) {
-        
-        if friendsToRemove.count == 0 {return}
-        
-        for friend in friendsToRemove {
-            
-            if (user.friends.contains(friend)) {
-                
-                guard let index = user.friends.firstIndex(of: friend) else { return }
-                
-                user.friends.remove(at: index)
-                
-                print("Removed:", friend.email)
-            }
-        }
-    }
-    
-    
-    
-    
-    //Firebase does not have a Swift function for a user to delete another user in the database. Refer to this website: https://stackoverflow.com/questions/38800414/delete-a-specific-user-from-firebase
-    
-    //Also looking at the Admin SDK, which aloows a user  to delete another user, Swift is not supported. Link: https://firebase.google.com/docs/auth/admin/manage-users
-    func deleteUser (adminUser: Admin, userToDelete: FireUser){
-        // so we are waiting on this function
-        
-        if (adminUser.isAdmin()) {
-            
-            
-            
-        } else {
-            print ("\(adminUser.name) is not an admin user and therefore cannot delete a user from the database")
-            return
-        }
-        
-    }
-    
-    
-    func createCodableUser<T: Codable>(for encodableObject : T) -> Void {
-        do{
-           let json = try encodableObject.toJson()
-            FireService.db.collection("examplecodableuser").addDocument(data: json)
-        }catch{
-            print(error)
-        }
-    }
-    
-    
-    func testActivity (){
-        var activities : [Activity] = []
-        let content = Content(type: .string, content: "yo")
-        let fireUser = FireUser(userID: 1, userName: "E", userEmail: "E", creationDate: Date())
-        let message = Message(content: content, sender: fireUser, timeStamp: Date(), recieved: false)
-        let group = Group(GroupAdmin: fireUser, id: 1, name: "BJEHD")
-        let activity = Activity(activityType: .GroupChat(group: group))
-        activities.append(activity)
-    }
-    
-    
-    
-    
-    
-    
-}
+
+
 
 /// dont worry about this here - Ebuka (this is practice for encodable and codable objects)
 
@@ -880,6 +1064,7 @@ extension Encodable {
         return json
     }
 }
+
 
 
 
