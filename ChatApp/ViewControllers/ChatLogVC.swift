@@ -22,13 +22,22 @@ class ChatLogVC: UIViewController{
         chatLogTableview.delegate = self
         chatLogTableview.dataSource = self
         loadActivity()
-        setUpfakeActivity()
         
     }
     
     
     
     func loadActivity(){
+        FireService.sharedInstance.loadAllActivity(User: globalUser!) { (activities, error) in
+            self.activities.removeAll()
+            guard let loadedactivities = activities else{fatalError()}
+            print(loadedactivities.count , "count of activities")
+            loadedactivities.forEach { (ac) in
+                print(ac.name)
+                self.activities.append(ac)
+            }
+            self.chatLogTableview.reloadData()
+        }
         
     }
     

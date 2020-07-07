@@ -23,17 +23,17 @@ class NewGroupVC: UIViewController {
         let dummyUser = FireUser(userID: 1, userName: "kbhwh", userEmail: "wow3@gmail.com", creationDate: Date())
         let dummyGroup = Group(GroupAdmin: dummyUser, id: 1, name: "group1")
         
-        FireService.sharedInstance.createGroupRamzi(globalUser!, dummyGroup) { (sucess, error) in
-            if let error = error {
-                fatalError("Function doesn't work")
-            } else {
-                if sucess {
-                    let controller = UIAlertController.alertUser(title: "Sucess", message: "Succesfully added the group", whatToDo: "Check Firebase")
-                    
-                    self.present(controller, animated: true, completion: nil)
-                }
-            }
-        }
+//        FireService.sharedInstance.createGroupRamzi(globalUser!, dummyGroup) { (sucess, error) in
+//            if let error = error {
+//                fatalError("Function doesn't work")
+//            } else {
+//                if sucess {
+//                    let controller = UIAlertController.alertUser(title: "Sucess", message: "Succesfully added the group", whatToDo: "Check Firebase")
+//                    
+//                    self.present(controller, animated: true, completion: nil)
+//                }
+//            }
+//        }
 //        FireService.sharedInstance.createGroup(group: dummyGroup) { (completed, error) in
 //            if let error = error{
 //                print(error.localizedDescription)

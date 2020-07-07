@@ -35,7 +35,7 @@
                                 <rect key="frame" x="20" y="7" width="92" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.078763119879999996" green="0.56403696540000003" blue="0.94189447159999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="New Chat"/>
+                                <state key="normal" title="New Group"/>
                                 <connections>
                                     <segue destination="Sbf-Rq-bE3" kind="show" id="SAB-bb-Cmp"/>
                                 </connections>
@@ -87,7 +87,7 @@
         <scene sceneID="njz-jD-Y1G">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sMJ-dg-PRO" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Chats" image="message" catalog="system" selectedImage="chat" id="jZ0-w9-uMY"/>
+                    <tabBarItem key="tabBarItem" title="Chats" image="message" catalog="system" id="jZ0-w9-uMY"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="FqY-Ro-Dg5">
@@ -105,7 +105,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="chat" width="24" height="24"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="message" catalog="system" width="128" height="113"/>
     </resources>

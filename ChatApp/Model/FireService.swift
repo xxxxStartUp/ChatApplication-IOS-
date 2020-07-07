@@ -16,24 +16,49 @@ import FirebaseFirestore
 // this class connects to firebasexx
 class FireService {
     static let db = Firestore.firestore()
-    
     static let firendsString = "friends"
     static let users = db.collection("users")
     static let groupString  = "groups"
-    
     static let sharedInstance = FireService()
-    
-    static let groupString = "groups"
     static let messagesString = "messages"
     
     
     
     
-    func loadAllActivity(){
-        
+    func loadAllActivity(User : FireUser , completion : @escaping ([Activity]? , Error?) -> ()){
+        var activities  : [Activity] = []
+        loadGroups(User: User) { (groups, error) in
+            if let error = error{
+                completion(nil , error)
+            }
+            guard let groups = groups else {fatalError()}
+            groups.forEach { (group) in
+                let activity = Activity(activityType: .GroupChat(group: group))
+                activities.append(activity)
+                
+                self.loadAllFriends(user: User) { (friends, error) in
+                    if let error = error{
+                        completion(nil , error)
+                    }
+                    guard let friends = friends else {fatalError()}
+                    friends.forEach { (freind) in
+                        let activity = Activity(activityType: .FriendChat(friend: freind))
+                        activities.append(activity)
+                        completion(activities , nil)
+                    }
+                    
+                }
+            }
+            
+            
+            
+        }
     }
     
-    func loadAllChats(){
+    func loadChats(){
+        
+        
+        
         
     }
     
@@ -310,29 +335,29 @@ class FireService {
         }
     }
     
-    
-    func createGroupRamzi (_ user: FireUser, _ group: Group, _ completion: @escaping (Bool, Error?) -> () ){
-        
-        var data: [String: Any] = ["Message":"I'm here"]
-        let ref = FireService.users.document(user.email).collection(FireService.groupString).document(group.name)
-        
-        ref.setData(data, merge: false) { (error) in
-            if let error = error {
-                
-                completion(false, error)
-                
-                return
-            } else {
-                
-                let message = ref.collection(FireService.messagesString)
-                message.addDocument(data: data)
-                completion (true, nil)
-            }
-        }
-        
-        
-        
-    }
+//
+//    func createGroupRamzi (_ user: FireUser, _ group: Group, _ completion: @escaping (Bool, Error?) -> () ){
+//
+//        var data: [String: Any] = ["Message":"I'm here"]
+//        let ref = FireService.users.document(user.email).collection(FireService.groupString).document(group.name)
+//
+//        ref.setData(data, merge: false) { (error) in
+//            if let error = error {
+//
+//                completion(false, error)
+//
+//                return
+//            } else {
+//
+//                let message = ref.collection(FireService.messagesString)
+//                message.addDocument(data: data)
+//                completion (true, nil)
+//            }
+//        }
+//
+//
+//
+//    }
     
     
     //tested
@@ -916,12 +941,14 @@ class FireService {
                             let group = Group(GroupAdmin: user, id: id, name: name)
                             groups.append(group)
                             
+                            if snapShots.count == groups.count {
+                                completion (groups, nil)
+                            }
+
+                            
                         }
                         
-                        if snapShots.count == groups.count {
-                            completion (groups, nil)
-                        }
-
+                        
                     }
                 }
                 
