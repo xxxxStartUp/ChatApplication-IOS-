@@ -31,11 +31,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="Chat Log" id="57B-W4-Cju">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="xZ9-1U-hVB">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Ra7-Ux-Yi4">
-                                <rect key="frame" x="20" y="7" width="92" height="30"/>
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Ra7-Ux-Yi4">
+                                <rect key="frame" x="20" y="0.0" width="20.666666666666671" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.078763119879999996" green="0.56403696540000003" blue="0.94189447159999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="New Chat"/>
+                                <state key="normal" image="square.and.pencil" catalog="system"/>
                                 <connections>
                                     <segue destination="Sbf-Rq-bE3" kind="show" id="SAB-bb-Cmp"/>
                                 </connections>
@@ -44,7 +44,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="jpw-hx-17B">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0JS-Vd-dl6">
-                                <rect key="frame" x="374" y="11" width="20" height="22"/>
+                                <rect key="frame" x="374.33333333333331" y="0.0" width="19.666666666666686" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.078763119879999996" green="0.56403696540000003" blue="0.94189447159999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="magnifyingglass" catalog="system"/>
@@ -93,6 +93,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="FqY-Ro-Dg5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.073764882980000002" green="0.53709983829999997" blue="0.89419823880000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -107,5 +108,6 @@
     <resources>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="message" catalog="system" width="128" height="113"/>
+        <image name="square.and.pencil" catalog="system" width="128" height="118"/>
     </resources>
 </document>

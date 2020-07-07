@@ -18,11 +18,11 @@ extension UIButton{
             self.layer.cornerRadius = 5
             self.titleLabel?.font = UIFont(name: "HelveticaNeue-Regular", size: 14)
             self.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
-            self.backgroundColor = #colorLiteral(red: 0.03921568627, green: 0.5176470588, blue: 1, alpha: 1)
+            self.backgroundColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
             
         case Constants.onBoardingPage.notFilledButton:
             self.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
-            self.setTitleColor(#colorLiteral(red: 0.03921568627, green: 0.5176470588, blue: 1, alpha: 1), for: .normal)
+            self.setTitleColor(#colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1), for: .normal)
             
         default:
             self.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 14)
@@ -34,12 +34,18 @@ extension UIButton{
         
         
     }
+    func contactsPageButton(){
+        self.layer.cornerRadius = 5
+        self.titleLabel?.font = UIFont(name: "HelveticaNeue-Regular", size: 14)
+        self.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
+        self.backgroundColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
+    }
 }
 extension UILabel{
     func onBoardingPageHeaderLabels(){
-        self.textColor = #colorLiteral(red: 0.03921568627, green: 0.5176470588, blue: 1, alpha: 1)
+        self.textColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
         self.font = UIFont(name: "HelveticaNeue-Bold", size: 40)
-
+        
     }
     func onBoardingPageSubHeaderLabels(type:String){
         
@@ -57,7 +63,7 @@ extension UILabel{
             self.textColor = #colorLiteral(red: 0.7763852477, green: 0.7765197158, blue: 0.7763767838, alpha: 1)
             self.font = UIFont(name: "HelveticaNeue-Regular", size: 16)
         }
-
+        
     }
     func chatLogPageLabels(type:String){
         
@@ -66,12 +72,86 @@ extension UILabel{
             self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
             self.font = UIFont(name: "HelveticaNeue-Medium", size: 25)
         case Constants.mainPage.timeStamp:
-            self.textColor = #colorLiteral(red: 0.03921568627, green: 0.5176470588, blue: 1, alpha: 1)
+            self.textColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
             self.font = UIFont(name: "HelveticaNeue-Light", size: 15)
         default:
             self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
             self.font = UIFont(name: "HelveticaNeue-Medium", size: 25)
         }
         
+    }
+    func newGroupPageLabels(type:String){
+        
+        switch type {
+        case Constants.newGroupPage.newGroupHeader:
+            self.textColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
+            self.font = UIFont(name: "HelveticaNeue-Bold", size: 40)
+        default:
+            self.textColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
+            self.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
+        }
+        
+    }
+    func contactsPageLabels(type:String){
+        
+        switch type {
+        case Constants.newContactsPage.newContactsHeader:
+            self.textColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
+            self.font = UIFont(name: "HelveticaNeue-Bold", size: 40)
+        default:
+            self.textColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
+            self.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
+        }
+        
+    }
+    func notificationsPageLabels(type:String){
+        
+        switch type {
+        case Constants.notificationPage.timeStampHeader:
+            self.textColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
+            self.font = UIFont(name: "HelveticaNeue-Light", size: 12.5)
+        case Constants.notificationPage.notificationMessage:
+            self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            self.font = UIFont(name: "HelveticaNeue-Light", size: 18)
+        default:
+            self.textColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
+            self.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
+        }
+    }
+    
+    func profilePageLabels(type:String){
+        
+        switch type {
+        case Constants.profilePage.headers:
+            self.textColor = #colorLiteral(red: 0.7763852477, green: 0.7765197158, blue: 0.7763767838, alpha: 1)
+            self.font = UIFont(name: "HelveticaNeue-Regular", size: 20)
+        default:
+            self.textColor = #colorLiteral(red: 0.7763852477, green: 0.7765197158, blue: 0.7763767838, alpha: 1)
+            self.font = UIFont(name: "HelveticaNeue-Regular", size: 20)
+        }
+    }
+    
+    
+}
+
+extension UITextField{
+    
+    func profilePageTextFields(type:String){
+        
+        switch type {
+        case Constants.profilePage.textfields:
+            self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            self.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
+        default:
+            self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            self.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
+        }
+    }
+}
+
+extension UIView{
+    
+    func profilePageViews(){
+        self.backgroundColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
     }
 }
