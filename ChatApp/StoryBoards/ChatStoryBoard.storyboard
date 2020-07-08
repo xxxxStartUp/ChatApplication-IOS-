@@ -15,7 +15,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="c8Q-wh-pBy">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="c8Q-wh-pBy">
                                 <rect key="frame" x="0.0" y="88" width="414" height="574"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
@@ -163,11 +163,13 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ada-N5-iGg">
                                         <rect key="frame" x="0.0" y="0.0" width="413.5" height="200"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="Enter Message" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0rG-cr-XdE">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3LL-Qd-lTz">
                                                 <rect key="frame" x="0.0" y="0.0" width="413.5" height="160"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="270" translatesAutoresizingMaskIntoConstraints="NO" id="ib9-HI-8BY">
                                                 <rect key="frame" x="0.0" y="160" width="413.5" height="40"/>
                                                 <subviews>
@@ -256,6 +258,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="chatTableView" destination="c8Q-wh-pBy" id="4tb-iM-qtX"/>
+                        <outlet property="chatTextView" destination="3LL-Qd-lTz" id="sj4-jd-pAE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ezM-W4-qvF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
