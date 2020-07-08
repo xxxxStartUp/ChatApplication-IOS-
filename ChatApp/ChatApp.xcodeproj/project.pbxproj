@@ -37,24 +37,24 @@
 		43BD8A9924AA713D00749E2A /* AddFriendVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BD8A9824AA713D00749E2A /* AddFriendVC.swift */; };
 		43C2F9FA24A315700080CD8F /* NewGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C2F9F924A315700080CD8F /* NewGroupVC.swift */; };
 		43C6C99D24B0291D003DB77E /* ChatError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C6C99C24B0291D003DB77E /* ChatError.swift */; };
-		43C6C9B524B587CB003DB77E /* ChatLogSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9A324B587CB003DB77E /* ChatLogSB.storyboard */; };
-		43C6C9B624B587CB003DB77E /* AddFriendSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9A424B587CB003DB77E /* AddFriendSB.storyboard */; };
-		43C6C9B724B587CB003DB77E /* ChatStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9A524B587CB003DB77E /* ChatStoryBoard.storyboard */; };
-		43C6C9B824B587CB003DB77E /* SignInSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9A624B587CB003DB77E /* SignInSB.storyboard */; };
-		43C6C9B924B587CB003DB77E /* SettingsSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9A724B587CB003DB77E /* SettingsSB.storyboard */; };
-		43C6C9BA24B587CB003DB77E /* SignUpSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9A824B587CB003DB77E /* SignUpSB.storyboard */; };
-		43C6C9BB24B587CB003DB77E /* NoContactData.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9AB24B587CB003DB77E /* NoContactData.storyboard */; };
-		43C6C9BC24B587CB003DB77E /* MainSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9AC24B587CB003DB77E /* MainSB.storyboard */; };
-		43C6C9BD24B587CB003DB77E /* NewGroupSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9AE24B587CB003DB77E /* NewGroupSB.storyboard */; };
-		43C6C9BE24B587CB003DB77E /* MainTabStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9AF24B587CB003DB77E /* MainTabStoryboard.storyboard */; };
-		43C6C9BF24B587CB003DB77E /* NotificationSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9B024B587CB003DB77E /* NotificationSB.storyboard */; };
-		43C6C9C024B587CB003DB77E /* FriendsSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9B124B587CB003DB77E /* FriendsSB.storyboard */; };
-		43C6C9C124B587CB003DB77E /* WelcomeScreenSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9B224B587CB003DB77E /* WelcomeScreenSB.storyboard */; };
-		43C6C9C224B587CB003DB77E /* profileStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9B324B587CB003DB77E /* profileStoryBoard.storyboard */; };
-		43C6C9C324B587CB003DB77E /* ChatSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9B424B587CB003DB77E /* ChatSB.storyboard */; };
 		43C6C9C724B58B71003DB77E /* NotificationsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9C524B58B71003DB77E /* NotificationsCell.xib */; };
 		43C6C9C824B58B71003DB77E /* NotificationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C6C9C624B58B71003DB77E /* NotificationsCell.swift */; };
 		43C6C9CA24B58B85003DB77E /* NotificationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C6C9C924B58B85003DB77E /* NotificationsVC.swift */; };
+		43C6C9DE24B58D9E003DB77E /* ChatLogSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9CC24B58D9E003DB77E /* ChatLogSB.storyboard */; };
+		43C6C9DF24B58D9E003DB77E /* AddFriendSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9CD24B58D9E003DB77E /* AddFriendSB.storyboard */; };
+		43C6C9E024B58D9E003DB77E /* ChatStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9CE24B58D9E003DB77E /* ChatStoryBoard.storyboard */; };
+		43C6C9E124B58D9E003DB77E /* SignInSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9CF24B58D9E003DB77E /* SignInSB.storyboard */; };
+		43C6C9E224B58D9E003DB77E /* SettingsSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9D024B58D9E003DB77E /* SettingsSB.storyboard */; };
+		43C6C9E324B58D9E003DB77E /* SignUpSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9D124B58D9E003DB77E /* SignUpSB.storyboard */; };
+		43C6C9E424B58D9E003DB77E /* NoContactData.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9D424B58D9E003DB77E /* NoContactData.storyboard */; };
+		43C6C9E524B58D9E003DB77E /* MainSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9D524B58D9E003DB77E /* MainSB.storyboard */; };
+		43C6C9E624B58D9E003DB77E /* NewGroupSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9D724B58D9E003DB77E /* NewGroupSB.storyboard */; };
+		43C6C9E724B58D9E003DB77E /* MainTabStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9D824B58D9E003DB77E /* MainTabStoryboard.storyboard */; };
+		43C6C9E824B58D9E003DB77E /* NotificationSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9D924B58D9E003DB77E /* NotificationSB.storyboard */; };
+		43C6C9E924B58D9E003DB77E /* FriendsSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9DA24B58D9E003DB77E /* FriendsSB.storyboard */; };
+		43C6C9EA24B58D9E003DB77E /* WelcomeScreenSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9DB24B58D9E003DB77E /* WelcomeScreenSB.storyboard */; };
+		43C6C9EB24B58D9E003DB77E /* profileStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9DC24B58D9E003DB77E /* profileStoryBoard.storyboard */; };
+		43C6C9EC24B58D9E003DB77E /* ChatSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9DD24B58D9E003DB77E /* ChatSB.storyboard */; };
 		9A1FD7EEF59FEFF812C86703 /* Pods_ChatApp_ChatAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2941CA96B7C8FD29FEB0C824 /* Pods_ChatApp_ChatAppUITests.framework */; };
 		CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA4249DB7C6000A8041 /* SignUpVC.swift */; };
 		CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA6249EF5BB000A8041 /* Constants.swift */; };
@@ -119,24 +119,24 @@
 		43BD8A9824AA713D00749E2A /* AddFriendVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendVC.swift; sourceTree = "<group>"; };
 		43C2F9F924A315700080CD8F /* NewGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupVC.swift; sourceTree = "<group>"; };
 		43C6C99C24B0291D003DB77E /* ChatError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatError.swift; sourceTree = "<group>"; };
-		43C6C9A324B587CB003DB77E /* ChatLogSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatLogSB.storyboard; sourceTree = "<group>"; };
-		43C6C9A424B587CB003DB77E /* AddFriendSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AddFriendSB.storyboard; sourceTree = "<group>"; };
-		43C6C9A524B587CB003DB77E /* ChatStoryBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatStoryBoard.storyboard; sourceTree = "<group>"; };
-		43C6C9A624B587CB003DB77E /* SignInSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignInSB.storyboard; sourceTree = "<group>"; };
-		43C6C9A724B587CB003DB77E /* SettingsSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SettingsSB.storyboard; sourceTree = "<group>"; };
-		43C6C9A824B587CB003DB77E /* SignUpSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignUpSB.storyboard; sourceTree = "<group>"; };
-		43C6C9AB24B587CB003DB77E /* NoContactData.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NoContactData.storyboard; sourceTree = "<group>"; };
-		43C6C9AD24B587CB003DB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainSB.storyboard; sourceTree = "<group>"; };
-		43C6C9AE24B587CB003DB77E /* NewGroupSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewGroupSB.storyboard; sourceTree = "<group>"; };
-		43C6C9AF24B587CB003DB77E /* MainTabStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainTabStoryboard.storyboard; sourceTree = "<group>"; };
-		43C6C9B024B587CB003DB77E /* NotificationSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NotificationSB.storyboard; sourceTree = "<group>"; };
-		43C6C9B124B587CB003DB77E /* FriendsSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FriendsSB.storyboard; sourceTree = "<group>"; };
-		43C6C9B224B587CB003DB77E /* WelcomeScreenSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WelcomeScreenSB.storyboard; sourceTree = "<group>"; };
-		43C6C9B324B587CB003DB77E /* profileStoryBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = profileStoryBoard.storyboard; sourceTree = "<group>"; };
-		43C6C9B424B587CB003DB77E /* ChatSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatSB.storyboard; sourceTree = "<group>"; };
 		43C6C9C524B58B71003DB77E /* NotificationsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationsCell.xib; sourceTree = "<group>"; };
 		43C6C9C624B58B71003DB77E /* NotificationsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsCell.swift; sourceTree = "<group>"; };
 		43C6C9C924B58B85003DB77E /* NotificationsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsVC.swift; sourceTree = "<group>"; };
+		43C6C9CC24B58D9E003DB77E /* ChatLogSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatLogSB.storyboard; sourceTree = "<group>"; };
+		43C6C9CD24B58D9E003DB77E /* AddFriendSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AddFriendSB.storyboard; sourceTree = "<group>"; };
+		43C6C9CE24B58D9E003DB77E /* ChatStoryBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatStoryBoard.storyboard; sourceTree = "<group>"; };
+		43C6C9CF24B58D9E003DB77E /* SignInSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignInSB.storyboard; sourceTree = "<group>"; };
+		43C6C9D024B58D9E003DB77E /* SettingsSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SettingsSB.storyboard; sourceTree = "<group>"; };
+		43C6C9D124B58D9E003DB77E /* SignUpSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignUpSB.storyboard; sourceTree = "<group>"; };
+		43C6C9D424B58D9E003DB77E /* NoContactData.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NoContactData.storyboard; sourceTree = "<group>"; };
+		43C6C9D624B58D9E003DB77E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainSB.storyboard; sourceTree = "<group>"; };
+		43C6C9D724B58D9E003DB77E /* NewGroupSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewGroupSB.storyboard; sourceTree = "<group>"; };
+		43C6C9D824B58D9E003DB77E /* MainTabStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainTabStoryboard.storyboard; sourceTree = "<group>"; };
+		43C6C9D924B58D9E003DB77E /* NotificationSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NotificationSB.storyboard; sourceTree = "<group>"; };
+		43C6C9DA24B58D9E003DB77E /* FriendsSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FriendsSB.storyboard; sourceTree = "<group>"; };
+		43C6C9DB24B58D9E003DB77E /* WelcomeScreenSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WelcomeScreenSB.storyboard; sourceTree = "<group>"; };
+		43C6C9DC24B58D9E003DB77E /* profileStoryBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = profileStoryBoard.storyboard; sourceTree = "<group>"; };
+		43C6C9DD24B58D9E003DB77E /* ChatSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatSB.storyboard; sourceTree = "<group>"; };
 		50AA4DAC9ADCF9DAF516B0FE /* Pods_ChatAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B2AD9233536C88847F0E6B3 /* Pods-ChatApp-ChatAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp-ChatAppUITests.release.xcconfig"; path = "Target Support Files/Pods-ChatApp-ChatAppUITests/Pods-ChatApp-ChatAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CB381BA4249DB7C6000A8041 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
@@ -312,45 +312,6 @@
 			path = Global;
 			sourceTree = "<group>";
 		};
-		43C6C9A224B587CB003DB77E /* StoryBoards */ = {
-			isa = PBXGroup;
-			children = (
-				43C6C9A324B587CB003DB77E /* ChatLogSB.storyboard */,
-				43C6C9A424B587CB003DB77E /* AddFriendSB.storyboard */,
-				43C6C9A524B587CB003DB77E /* ChatStoryBoard.storyboard */,
-				43C6C9A624B587CB003DB77E /* SignInSB.storyboard */,
-				43C6C9A724B587CB003DB77E /* SettingsSB.storyboard */,
-				43C6C9A824B587CB003DB77E /* SignUpSB.storyboard */,
-				43C6C9A924B587CB003DB77E /* BadConnection */,
-				43C6C9AC24B587CB003DB77E /* MainSB.storyboard */,
-				43C6C9AE24B587CB003DB77E /* NewGroupSB.storyboard */,
-				43C6C9AF24B587CB003DB77E /* MainTabStoryboard.storyboard */,
-				43C6C9B024B587CB003DB77E /* NotificationSB.storyboard */,
-				43C6C9B124B587CB003DB77E /* FriendsSB.storyboard */,
-				43C6C9B224B587CB003DB77E /* WelcomeScreenSB.storyboard */,
-				43C6C9B324B587CB003DB77E /* profileStoryBoard.storyboard */,
-				43C6C9B424B587CB003DB77E /* ChatSB.storyboard */,
-			);
-			name = StoryBoards;
-			path = ../../StoryBoards;
-			sourceTree = "<group>";
-		};
-		43C6C9A924B587CB003DB77E /* BadConnection */ = {
-			isa = PBXGroup;
-			children = (
-				43C6C9AA24B587CB003DB77E /* Nodata */,
-			);
-			path = BadConnection;
-			sourceTree = "<group>";
-		};
-		43C6C9AA24B587CB003DB77E /* Nodata */ = {
-			isa = PBXGroup;
-			children = (
-				43C6C9AB24B587CB003DB77E /* NoContactData.storyboard */,
-			);
-			path = Nodata;
-			sourceTree = "<group>";
-		};
 		43C6C9C424B58B71003DB77E /* NotificationsCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -358,6 +319,44 @@
 				43C6C9C624B58B71003DB77E /* NotificationsCell.swift */,
 			);
 			path = NotificationsCell;
+			sourceTree = "<group>";
+		};
+		43C6C9CB24B58D9E003DB77E /* StoryBoards */ = {
+			isa = PBXGroup;
+			children = (
+				43C6C9CC24B58D9E003DB77E /* ChatLogSB.storyboard */,
+				43C6C9CD24B58D9E003DB77E /* AddFriendSB.storyboard */,
+				43C6C9CE24B58D9E003DB77E /* ChatStoryBoard.storyboard */,
+				43C6C9CF24B58D9E003DB77E /* SignInSB.storyboard */,
+				43C6C9D024B58D9E003DB77E /* SettingsSB.storyboard */,
+				43C6C9D124B58D9E003DB77E /* SignUpSB.storyboard */,
+				43C6C9D224B58D9E003DB77E /* BadConnection */,
+				43C6C9D524B58D9E003DB77E /* MainSB.storyboard */,
+				43C6C9D724B58D9E003DB77E /* NewGroupSB.storyboard */,
+				43C6C9D824B58D9E003DB77E /* MainTabStoryboard.storyboard */,
+				43C6C9D924B58D9E003DB77E /* NotificationSB.storyboard */,
+				43C6C9DA24B58D9E003DB77E /* FriendsSB.storyboard */,
+				43C6C9DB24B58D9E003DB77E /* WelcomeScreenSB.storyboard */,
+				43C6C9DC24B58D9E003DB77E /* profileStoryBoard.storyboard */,
+				43C6C9DD24B58D9E003DB77E /* ChatSB.storyboard */,
+			);
+			path = StoryBoards;
+			sourceTree = "<group>";
+		};
+		43C6C9D224B58D9E003DB77E /* BadConnection */ = {
+			isa = PBXGroup;
+			children = (
+				43C6C9D324B58D9E003DB77E /* Nodata */,
+			);
+			path = BadConnection;
+			sourceTree = "<group>";
+		};
+		43C6C9D324B58D9E003DB77E /* Nodata */ = {
+			isa = PBXGroup;
+			children = (
+				43C6C9D424B58D9E003DB77E /* NoContactData.storyboard */,
+			);
+			path = Nodata;
 			sourceTree = "<group>";
 		};
 		5201B7049B6C551C2059AEFF /* Frameworks */ = {
@@ -389,7 +388,7 @@
 		CBD5984E24986037000CBEBD = {
 			isa = PBXGroup;
 			children = (
-				43C6C9A224B587CB003DB77E /* StoryBoards */,
+				43C6C9CB24B58D9E003DB77E /* StoryBoards */,
 				CBA262AE24AFC24800F81034 /* Constants */,
 				CBA262A724AFB7C600F81034 /* Views Updates */,
 				43BD8A9124AA6CEE00749E2A /* Global */,
@@ -558,26 +557,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43C6C9DE24B58D9E003DB77E /* ChatLogSB.storyboard in Resources */,
+				43C6C9E024B58D9E003DB77E /* ChatStoryBoard.storyboard in Resources */,
+				43C6C9EB24B58D9E003DB77E /* profileStoryBoard.storyboard in Resources */,
+				43C6C9E624B58D9E003DB77E /* NewGroupSB.storyboard in Resources */,
 				43C6C9C724B58B71003DB77E /* NotificationsCell.xib in Resources */,
 				CBD5986724986040000CBEBD /* LaunchScreen.storyboard in Resources */,
-				43C6C9BD24B587CB003DB77E /* NewGroupSB.storyboard in Resources */,
-				43C6C9BF24B587CB003DB77E /* NotificationSB.storyboard in Resources */,
-				43C6C9B624B587CB003DB77E /* AddFriendSB.storyboard in Resources */,
-				43C6C9BC24B587CB003DB77E /* MainSB.storyboard in Resources */,
+				43C6C9E224B58D9E003DB77E /* SettingsSB.storyboard in Resources */,
+				43C6C9E324B58D9E003DB77E /* SignUpSB.storyboard in Resources */,
+				43C6C9E724B58D9E003DB77E /* MainTabStoryboard.storyboard in Resources */,
 				CBD5986424986040000CBEBD /* Assets.xcassets in Resources */,
-				43C6C9B524B587CB003DB77E /* ChatLogSB.storyboard in Resources */,
-				43C6C9BB24B587CB003DB77E /* NoContactData.storyboard in Resources */,
-				43C6C9C124B587CB003DB77E /* WelcomeScreenSB.storyboard in Resources */,
-				43C6C9C224B587CB003DB77E /* profileStoryBoard.storyboard in Resources */,
+				43C6C9DF24B58D9E003DB77E /* AddFriendSB.storyboard in Resources */,
+				43C6C9EA24B58D9E003DB77E /* WelcomeScreenSB.storyboard in Resources */,
+				43C6C9E924B58D9E003DB77E /* FriendsSB.storyboard in Resources */,
+				43C6C9EC24B58D9E003DB77E /* ChatSB.storyboard in Resources */,
 				43BBB4122499D5C70024F449 /* GoogleService-Info.plist in Resources */,
-				43C6C9B724B587CB003DB77E /* ChatStoryBoard.storyboard in Resources */,
-				43C6C9C324B587CB003DB77E /* ChatSB.storyboard in Resources */,
+				43C6C9E524B58D9E003DB77E /* MainSB.storyboard in Resources */,
+				43C6C9E824B58D9E003DB77E /* NotificationSB.storyboard in Resources */,
+				43C6C9E124B58D9E003DB77E /* SignInSB.storyboard in Resources */,
+				43C6C9E424B58D9E003DB77E /* NoContactData.storyboard in Resources */,
 				43BBB421249ABDC60024F449 /* ChatLogCell.xib in Resources */,
-				43C6C9C024B587CB003DB77E /* FriendsSB.storyboard in Resources */,
-				43C6C9B824B587CB003DB77E /* SignInSB.storyboard in Resources */,
-				43C6C9B924B587CB003DB77E /* SettingsSB.storyboard in Resources */,
-				43C6C9BE24B587CB003DB77E /* MainTabStoryboard.storyboard in Resources */,
-				43C6C9BA24B587CB003DB77E /* SignUpSB.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -774,10 +773,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		43C6C9AC24B587CB003DB77E /* MainSB.storyboard */ = {
+		43C6C9D524B58D9E003DB77E /* MainSB.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				43C6C9AD24B587CB003DB77E /* Base */,
+				43C6C9D624B58D9E003DB77E /* Base */,
 			);
 			name = MainSB.storyboard;
 			sourceTree = "<group>";
