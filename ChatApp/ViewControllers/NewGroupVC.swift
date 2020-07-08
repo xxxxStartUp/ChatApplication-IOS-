@@ -25,41 +25,7 @@ class NewGroupVC: UIViewController {
         let dummyUser = FireUser(userID: 1, userName: "kbhwh", userEmail: "wow3@gmail.com", creationDate: Date())
         let dummyGroup = Group(GroupAdmin: dummyUser, id: 1, name: "group1")
         
-<<<<<<< HEAD
-//        FireService.sharedInstance.createGroupRamzi(globalUser!, dummyGroup) { (sucess, error) in
-//            if let error = error {
-//                fatalError("Function doesn't work")
-//            } else {
-//                if sucess {
-//                    let controller = UIAlertController.alertUser(title: "Sucess", message: "Succesfully added the group", whatToDo: "Check Firebase")
-//                    
-//                    self.present(controller, animated: true, completion: nil)
-//                }
-//            }
-//        }
-//        FireService.sharedInstance.createGroup(group: dummyGroup) { (completed, error) in
-//            if let error = error{
-//                print(error.localizedDescription)
-//                fatalError()
-//            }
-//
-//            if completed{
-//                if let groupName = self.groupName.text{
-//                    if groupName != "" {
-//                               //check if texfield is empty
-//                        self.performSegue(withIdentifier: "group", sender: self)
-//                    }else{
-//                       let controller = UIAlertController.alertUser(title: "Error", message: "Add a name to the groupchat", whatToDo: "Try again")
-//                        self.present(controller, animated: true, completion: nil)
-//                    }
-//
-//
-//                }
-//
-//
-//            }
-//        }
-=======
+
         //        FireService.sharedInstance.createGroup(group: dummyGroup) { (completed, error) in
         //            if let error = error{
         //                print(error.localizedDescription)
@@ -82,9 +48,8 @@ class NewGroupVC: UIViewController {
         //
         //            }
         //        }
->>>>>>> 9745eaac5bebb662a0cf0cb672a5b858f0ec9f97
         
-        FireService.sharedInstance.deleteGroup(group: dummyGroup);
+        //FireService.sharedInstance.deleteGroup(group: dummyGroup);
         
         
         
