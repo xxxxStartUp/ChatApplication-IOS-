@@ -269,7 +269,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="E5o-UH-QQP"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Friends" selectedImage="contacts" id="U1o-hw-xtz">
+                    <tabBarItem key="tabBarItem" systemItem="contacts" id="U1o-hw-xtz">
                         <color key="badgeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
                     <navigationItem key="navigationItem" title="Contacts" id="RQs-zD-hzC">
@@ -318,7 +318,4 @@
             <point key="canvasLocation" x="86.956521739130437" y="146.73913043478262"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="contacts" width="24" height="24"/>
-    </resources>
 </document>

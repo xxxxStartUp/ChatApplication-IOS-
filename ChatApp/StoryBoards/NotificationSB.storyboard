@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2QK-GB-fvb">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="UCM-Du-Dhw">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -8,36 +8,68 @@
     </dependencies>
     <scenes>
         <!--Notifications-->
-        <scene sceneID="m1W-p4-3yF">
+        <scene sceneID="DK8-jb-1gL">
             <objects>
-                <viewController id="2QK-GB-fvb" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="zA5-qc-bRd">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                <viewController interfaceStyle="light" id="CBg-02-3Kg" customClass="NotificationsVC" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CRV-6V-Ec9">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Y8i-mw-2yq">
-                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OAY-zU-boh">
+                                <rect key="frame" x="0.0" y="44" width="414" height="692"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="87" id="SGv-fv-TJW">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="87"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SGv-fv-TJW" id="hWI-0H-8yQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="87"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="Y8i-mw-2yq" firstAttribute="leading" secondItem="xet-q3-ijZ" secondAttribute="leading" id="HfR-ps-v1G"/>
-                            <constraint firstItem="Y8i-mw-2yq" firstAttribute="top" secondItem="xet-q3-ijZ" secondAttribute="top" id="Y0p-Vy-uaA"/>
-                            <constraint firstItem="xet-q3-ijZ" firstAttribute="trailing" secondItem="Y8i-mw-2yq" secondAttribute="trailing" id="evL-UO-tAX"/>
-                            <constraint firstItem="xet-q3-ijZ" firstAttribute="bottom" secondItem="Y8i-mw-2yq" secondAttribute="bottom" id="i3Z-aD-mmZ"/>
+                            <constraint firstItem="OAY-zU-boh" firstAttribute="leading" secondItem="I70-J6-48v" secondAttribute="leading" id="3ww-cu-St1"/>
+                            <constraint firstAttribute="bottom" secondItem="OAY-zU-boh" secondAttribute="bottom" id="iyn-Lr-jii"/>
+                            <constraint firstItem="OAY-zU-boh" firstAttribute="trailing" secondItem="I70-J6-48v" secondAttribute="trailing" id="qQf-eL-ph3"/>
+                            <constraint firstItem="OAY-zU-boh" firstAttribute="top" secondItem="I70-J6-48v" secondAttribute="top" id="zc8-ga-UEJ"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="xet-q3-ijZ"/>
+                        <viewLayoutGuide key="safeArea" id="I70-J6-48v"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Notifications" selectedImage="notifcations" id="L9m-dw-PLY"/>
+                    <tabBarItem key="tabBarItem" title="Notifications" image="bell" catalog="system" id="KTw-Zw-xll"/>
+                    <navigationItem key="navigationItem" id="AmH-dp-AIO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="notificationsTableView" destination="OAY-zU-boh" id="PFk-xs-MV9"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eX8-WQ-eaX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rxa-tk-w1E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-171" y="101"/>
+            <point key="canvasLocation" x="1946.376811594203" y="10.597826086956523"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="rYx-M7-IhZ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UCM-Du-Dhw" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="533-d4-kBh">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="CBg-02-3Kg" kind="relationship" relationship="rootViewController" id="RsG-fm-QcR"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FXL-si-1Rs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1039.1304347826087" y="10.597826086956523"/>
         </scene>
     </scenes>
     <resources>
-        <image name="notifcations" width="24" height="24"/>
+        <image name="bell" catalog="system" width="128" height="124"/>
     </resources>
 </document>
