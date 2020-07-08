@@ -29,10 +29,10 @@ class ChatLogCell: UITableViewCell {
         didSet{
             switch activity.type {
             case .GroupChat:
-                chatNameLabel.text =  "Group : \(activity.name)"
+                chatNameLabel.text =  activity.name
                 break
             case .FriendChat:
-                chatNameLabel.text =  "Chat : \(activity.name)"
+                chatNameLabel.text =  activity.name
                 
             }
             

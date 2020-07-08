@@ -56,6 +56,9 @@
 		43C6C9EB24B58D9E003DB77E /* profileStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9DC24B58D9E003DB77E /* profileStoryBoard.storyboard */; };
 		43C6C9EC24B58D9E003DB77E /* ChatSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9DD24B58D9E003DB77E /* ChatSB.storyboard */; };
 		43C6C9EE24B590B2003DB77E /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C6C9ED24B590B2003DB77E /* ProfileVC.swift */; };
+		43C6C9F024B595E8003DB77E /* GroupChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C6C9EF24B595E8003DB77E /* GroupChatVC.swift */; };
+		43C6C9F224B59602003DB77E /* GroupChatSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9F124B59602003DB77E /* GroupChatSB.storyboard */; };
+		43C6C9F424B59769003DB77E /* GroupDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C6C9F324B59769003DB77E /* GroupDelegate.swift */; };
 		9A1FD7EEF59FEFF812C86703 /* Pods_ChatApp_ChatAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2941CA96B7C8FD29FEB0C824 /* Pods_ChatApp_ChatAppUITests.framework */; };
 		CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA4249DB7C6000A8041 /* SignUpVC.swift */; };
 		CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA6249EF5BB000A8041 /* Constants.swift */; };
@@ -139,6 +142,9 @@
 		43C6C9DC24B58D9E003DB77E /* profileStoryBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = profileStoryBoard.storyboard; sourceTree = "<group>"; };
 		43C6C9DD24B58D9E003DB77E /* ChatSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatSB.storyboard; sourceTree = "<group>"; };
 		43C6C9ED24B590B2003DB77E /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		43C6C9EF24B595E8003DB77E /* GroupChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChatVC.swift; sourceTree = "<group>"; };
+		43C6C9F124B59602003DB77E /* GroupChatSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GroupChatSB.storyboard; sourceTree = "<group>"; };
+		43C6C9F324B59769003DB77E /* GroupDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDelegate.swift; sourceTree = "<group>"; };
 		50AA4DAC9ADCF9DAF516B0FE /* Pods_ChatAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B2AD9233536C88847F0E6B3 /* Pods-ChatApp-ChatAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp-ChatAppUITests.release.xcconfig"; path = "Target Support Files/Pods-ChatApp-ChatAppUITests/Pods-ChatApp-ChatAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CB381BA4249DB7C6000A8041 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
@@ -223,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				439F921D24AD469000EC9A33 /* FriendDelegate.swift */,
+				43C6C9F324B59769003DB77E /* GroupDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -249,6 +256,7 @@
 				43BBB432249C99B80024F449 /* SignInVC.swift */,
 				CB381BA4249DB7C6000A8041 /* SignUpVC.swift */,
 				43BD8A9824AA713D00749E2A /* AddFriendVC.swift */,
+				43C6C9EF24B595E8003DB77E /* GroupChatVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -342,6 +350,7 @@
 				43C6C9DB24B58D9E003DB77E /* WelcomeScreenSB.storyboard */,
 				43C6C9DC24B58D9E003DB77E /* profileStoryBoard.storyboard */,
 				43C6C9DD24B58D9E003DB77E /* ChatSB.storyboard */,
+				43C6C9F124B59602003DB77E /* GroupChatSB.storyboard */,
 			);
 			path = StoryBoards;
 			sourceTree = "<group>";
@@ -576,6 +585,7 @@
 				43C6C9EC24B58D9E003DB77E /* ChatSB.storyboard in Resources */,
 				43BBB4122499D5C70024F449 /* GoogleService-Info.plist in Resources */,
 				43C6C9E524B58D9E003DB77E /* MainSB.storyboard in Resources */,
+				43C6C9F224B59602003DB77E /* GroupChatSB.storyboard in Resources */,
 				43C6C9E824B58D9E003DB77E /* NotificationSB.storyboard in Resources */,
 				43C6C9E124B58D9E003DB77E /* SignInSB.storyboard in Resources */,
 				43C6C9E424B58D9E003DB77E /* NoContactData.storyboard in Resources */,
@@ -721,9 +731,11 @@
 				43BBB44824A061150024F449 /* FriendsVC.swift in Sources */,
 				43BBB44424A04DE60024F449 /* Admin.swift in Sources */,
 				CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */,
+				43C6C9F024B595E8003DB77E /* GroupChatVC.swift in Sources */,
 				43BD8A8E24A81C4400749E2A /* Friend.swift in Sources */,
 				CBA262AB24AFBB5F00F81034 /* Extensions.swift in Sources */,
 				43BBB44D24A064660024F449 /* SettingsVC.swift in Sources */,
+				43C6C9F424B59769003DB77E /* GroupDelegate.swift in Sources */,
 				43BBB45424A071B20024F449 /* SettingsCell.swift in Sources */,
 				43BBB45624A0795E0024F449 /* ChatVC.swift in Sources */,
 				43BBB44624A04DF20024F449 /* FireUser.swift in Sources */,

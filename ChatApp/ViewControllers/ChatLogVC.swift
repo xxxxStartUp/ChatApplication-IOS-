@@ -9,12 +9,14 @@
 import UIKit
 
 class ChatLogVC: UIViewController{
-
+    
     
     @IBOutlet weak var chatLogTableview: UITableView!
-
+    
     
     var activities : [Activity] = []
+    var friendDelegate : FreindDelegate?
+    var groupDelegate : GroupDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,8 +60,8 @@ class ChatLogVC: UIViewController{
         
     }
     
-
-
+    
+    
 }
 
 
@@ -74,10 +76,31 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//
-//        guard let vc = UIStoryboard(name: "ChatSB", bundle: nil).instantiateInitialViewController() else {return}
-//
-//        navigationController?.pushViewController(vc, animated: true)
+        //
+        //        guard let vc = UIStoryboard(name: "ChatSB", bundle: nil).instantiateInitialViewController() else {return}
+        //
+        //        navigationController?.pushViewController(vc, animated: true)
+        
+        let activity = activities[indexPath.row]
+        
+        switch activity.type {
+            
+        case .GroupChat(group: let group):
+            guard let vc = UIStoryboard(name: "GroupChatSB", bundle: nil).instantiateInitialViewController()  as? GroupChatVC else {return}
+            self.groupDelegate = vc
+            groupDelegate?.didSendGroup(freind: group)
+            navigationController?.pushViewController(vc, animated: true)
+            
+            return
+        case .FriendChat(friend: let friend):
+            guard let vc = UIStoryboard(name: "ChatSB", bundle: nil).instantiateInitialViewController()  as? ChatVC else {return}
+            self.friendDelegate = vc
+            friendDelegate?.didSendFriend(freind: friend)
+            navigationController?.pushViewController(vc, animated: true)
+            return
+        }
+        
+        
     }
     
     
