@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		3541292F535A21BAAC5F2C66 /* Pods_ChatApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423890E3C5130288FBA965E0 /* Pods_ChatApp.framework */; };
 		38DF35B92F050C0C26A9768B /* Pods_ChatAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50AA4DAC9ADCF9DAF516B0FE /* Pods_ChatAppTests.framework */; };
+		436213E424B647B100304FB3 /* GroupChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436213E324B647B100304FB3 /* GroupChatVC.swift */; };
+		436213E624B647D300304FB3 /* GroupChatSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 436213E524B647D300304FB3 /* GroupChatSB.storyboard */; };
+		436213E824B647F900304FB3 /* ChatVC-Dara.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436213E724B647F900304FB3 /* ChatVC-Dara.swift */; };
+		436213EA24B6484D00304FB3 /* GroupDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436213E924B6484D00304FB3 /* GroupDelegate.swift */; };
+		436213EC24B6486D00304FB3 /* ChatCell-Dara.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436213EB24B6486D00304FB3 /* ChatCell-Dara.swift */; };
 		4399AD5224AFA00100E7F0E0 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4399AD5124AFA00100E7F0E0 /* Activity.swift */; };
 		439F5AD82499A9DC00D06BCF /* FireService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439F5AD72499A9DB00D06BCF /* FireService.swift */; };
 		439F921E24AD469000EC9A33 /* FriendDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439F921D24AD469000EC9A33 /* FriendDelegate.swift */; };
@@ -56,9 +61,6 @@
 		43C6C9EB24B58D9E003DB77E /* profileStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9DC24B58D9E003DB77E /* profileStoryBoard.storyboard */; };
 		43C6C9EC24B58D9E003DB77E /* ChatSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9DD24B58D9E003DB77E /* ChatSB.storyboard */; };
 		43C6C9EE24B590B2003DB77E /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C6C9ED24B590B2003DB77E /* ProfileVC.swift */; };
-		43C6C9F024B595E8003DB77E /* GroupChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C6C9EF24B595E8003DB77E /* GroupChatVC.swift */; };
-		43C6C9F224B59602003DB77E /* GroupChatSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9F124B59602003DB77E /* GroupChatSB.storyboard */; };
-		43C6C9F424B59769003DB77E /* GroupDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C6C9F324B59769003DB77E /* GroupDelegate.swift */; };
 		9A1FD7EEF59FEFF812C86703 /* Pods_ChatApp_ChatAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2941CA96B7C8FD29FEB0C824 /* Pods_ChatApp_ChatAppUITests.framework */; };
 		CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA4249DB7C6000A8041 /* SignUpVC.swift */; };
 		CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA6249EF5BB000A8041 /* Constants.swift */; };
@@ -95,6 +97,11 @@
 		2A313512E9052DFF8993A3F9 /* Pods-ChatApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp.debug.xcconfig"; path = "Target Support Files/Pods-ChatApp/Pods-ChatApp.debug.xcconfig"; sourceTree = "<group>"; };
 		30A603C1DA64CF44CDDDE161 /* Pods-ChatAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatAppTests.release.xcconfig"; path = "Target Support Files/Pods-ChatAppTests/Pods-ChatAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		423890E3C5130288FBA965E0 /* Pods_ChatApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		436213E324B647B100304FB3 /* GroupChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatVC.swift; sourceTree = "<group>"; };
+		436213E524B647D300304FB3 /* GroupChatSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GroupChatSB.storyboard; sourceTree = "<group>"; };
+		436213E724B647F900304FB3 /* ChatVC-Dara.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ChatVC-Dara.swift"; sourceTree = "<group>"; };
+		436213E924B6484D00304FB3 /* GroupDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDelegate.swift; sourceTree = "<group>"; };
+		436213EB24B6486D00304FB3 /* ChatCell-Dara.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ChatCell-Dara.swift"; sourceTree = "<group>"; };
 		4399AD5124AFA00100E7F0E0 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		439F5AD72499A9DB00D06BCF /* FireService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireService.swift; sourceTree = "<group>"; };
 		439F921D24AD469000EC9A33 /* FriendDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDelegate.swift; sourceTree = "<group>"; };
@@ -142,9 +149,6 @@
 		43C6C9DC24B58D9E003DB77E /* profileStoryBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = profileStoryBoard.storyboard; sourceTree = "<group>"; };
 		43C6C9DD24B58D9E003DB77E /* ChatSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatSB.storyboard; sourceTree = "<group>"; };
 		43C6C9ED24B590B2003DB77E /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
-		43C6C9EF24B595E8003DB77E /* GroupChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChatVC.swift; sourceTree = "<group>"; };
-		43C6C9F124B59602003DB77E /* GroupChatSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GroupChatSB.storyboard; sourceTree = "<group>"; };
-		43C6C9F324B59769003DB77E /* GroupDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDelegate.swift; sourceTree = "<group>"; };
 		50AA4DAC9ADCF9DAF516B0FE /* Pods_ChatAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B2AD9233536C88847F0E6B3 /* Pods-ChatApp-ChatAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp-ChatAppUITests.release.xcconfig"; path = "Target Support Files/Pods-ChatApp-ChatAppUITests/Pods-ChatApp-ChatAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CB381BA4249DB7C6000A8041 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
@@ -229,7 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				439F921D24AD469000EC9A33 /* FriendDelegate.swift */,
-				43C6C9F324B59769003DB77E /* GroupDelegate.swift */,
+				436213E924B6484D00304FB3 /* GroupDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -247,16 +251,17 @@
 			children = (
 				439F921C24AD467700EC9A33 /* Protocols */,
 				43BBB41B249ABDC50024F449 /* ChatLogVC.swift */,
+				436213E724B647F900304FB3 /* ChatVC-Dara.swift */,
 				43C6C9ED24B590B2003DB77E /* ProfileVC.swift */,
 				43C6C9C924B58B85003DB77E /* NotificationsVC.swift */,
 				43BBB45524A0795E0024F449 /* ChatVC.swift */,
 				43BBB44C24A064660024F449 /* SettingsVC.swift */,
 				43C2F9F924A315700080CD8F /* NewGroupVC.swift */,
+				436213E324B647B100304FB3 /* GroupChatVC.swift */,
 				43BBB44724A061150024F449 /* FriendsVC.swift */,
 				43BBB432249C99B80024F449 /* SignInVC.swift */,
 				CB381BA4249DB7C6000A8041 /* SignUpVC.swift */,
 				43BD8A9824AA713D00749E2A /* AddFriendVC.swift */,
-				43C6C9EF24B595E8003DB77E /* GroupChatVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -311,6 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				43BBB45824A07ACC0024F449 /* ChatCell-ebuka.swift */,
+				436213EB24B6486D00304FB3 /* ChatCell-Dara.swift */,
 			);
 			path = ChatCell;
 			sourceTree = "<group>";
@@ -346,11 +352,11 @@
 				43C6C9D724B58D9E003DB77E /* NewGroupSB.storyboard */,
 				43C6C9D824B58D9E003DB77E /* MainTabStoryboard.storyboard */,
 				43C6C9D924B58D9E003DB77E /* NotificationSB.storyboard */,
+				436213E524B647D300304FB3 /* GroupChatSB.storyboard */,
 				43C6C9DA24B58D9E003DB77E /* FriendsSB.storyboard */,
 				43C6C9DB24B58D9E003DB77E /* WelcomeScreenSB.storyboard */,
 				43C6C9DC24B58D9E003DB77E /* profileStoryBoard.storyboard */,
 				43C6C9DD24B58D9E003DB77E /* ChatSB.storyboard */,
-				43C6C9F124B59602003DB77E /* GroupChatSB.storyboard */,
 			);
 			path = StoryBoards;
 			sourceTree = "<group>";
@@ -585,7 +591,7 @@
 				43C6C9EC24B58D9E003DB77E /* ChatSB.storyboard in Resources */,
 				43BBB4122499D5C70024F449 /* GoogleService-Info.plist in Resources */,
 				43C6C9E524B58D9E003DB77E /* MainSB.storyboard in Resources */,
-				43C6C9F224B59602003DB77E /* GroupChatSB.storyboard in Resources */,
+				436213E624B647D300304FB3 /* GroupChatSB.storyboard in Resources */,
 				43C6C9E824B58D9E003DB77E /* NotificationSB.storyboard in Resources */,
 				43C6C9E124B58D9E003DB77E /* SignInSB.storyboard in Resources */,
 				43C6C9E424B58D9E003DB77E /* NoContactData.storyboard in Resources */,
@@ -725,17 +731,18 @@
 				43BD8A8C24A81B6200749E2A /* Group.swift in Sources */,
 				43BBB45B24A19CE20024F449 /* Chat.swift in Sources */,
 				CBD5985B24986037000CBEBD /* AppDelegate.swift in Sources */,
+				436213EC24B6486D00304FB3 /* ChatCell-Dara.swift in Sources */,
 				43BBB420249ABDC60024F449 /* ChatLogVC.swift in Sources */,
 				43C6C9CA24B58B85003DB77E /* NotificationsVC.swift in Sources */,
+				436213EA24B6484D00304FB3 /* GroupDelegate.swift in Sources */,
 				43BBB419249A7B910024F449 /* Git.swift in Sources */,
 				43BBB44824A061150024F449 /* FriendsVC.swift in Sources */,
 				43BBB44424A04DE60024F449 /* Admin.swift in Sources */,
 				CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */,
-				43C6C9F024B595E8003DB77E /* GroupChatVC.swift in Sources */,
+				436213E424B647B100304FB3 /* GroupChatVC.swift in Sources */,
 				43BD8A8E24A81C4400749E2A /* Friend.swift in Sources */,
 				CBA262AB24AFBB5F00F81034 /* Extensions.swift in Sources */,
 				43BBB44D24A064660024F449 /* SettingsVC.swift in Sources */,
-				43C6C9F424B59769003DB77E /* GroupDelegate.swift in Sources */,
 				43BBB45424A071B20024F449 /* SettingsCell.swift in Sources */,
 				43BBB45624A0795E0024F449 /* ChatVC.swift in Sources */,
 				43BBB44624A04DF20024F449 /* FireUser.swift in Sources */,
@@ -753,6 +760,7 @@
 				439F921E24AD469000EC9A33 /* FriendDelegate.swift in Sources */,
 				43C6C99D24B0291D003DB77E /* ChatError.swift in Sources */,
 				43C6C9C824B58B71003DB77E /* NotificationsCell.swift in Sources */,
+				436213E824B647F900304FB3 /* ChatVC-Dara.swift in Sources */,
 				43BD8A9324AA6CFE00749E2A /* Global.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -76,31 +76,25 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //
-        //        guard let vc = UIStoryboard(name: "ChatSB", bundle: nil).instantiateInitialViewController() else {return}
-        //
-        //        navigationController?.pushViewController(vc, animated: true)
-        
         let activity = activities[indexPath.row]
-        
+
         switch activity.type {
-            
+
         case .GroupChat(group: let group):
             guard let vc = UIStoryboard(name: "GroupChatSB", bundle: nil).instantiateInitialViewController()  as? GroupChatVC else {return}
             self.groupDelegate = vc
             groupDelegate?.didSendGroup(freind: group)
             navigationController?.pushViewController(vc, animated: true)
-            
             return
+
         case .FriendChat(friend: let friend):
-            guard let vc = UIStoryboard(name: "ChatSB", bundle: nil).instantiateInitialViewController()  as? ChatVC else {return}
+            guard let vc = UIStoryboard(name: "ChatStoryBoard", bundle: nil).instantiateInitialViewController()  as? ChatVC_Dara else {return}
             self.friendDelegate = vc
             friendDelegate?.didSendFriend(freind: friend)
             navigationController?.pushViewController(vc, animated: true)
             return
         }
-        
-        
+
     }
     
     
