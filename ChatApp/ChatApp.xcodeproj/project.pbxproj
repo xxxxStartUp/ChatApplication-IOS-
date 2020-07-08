@@ -53,6 +53,12 @@
 		9A1FD7EEF59FEFF812C86703 /* Pods_ChatApp_ChatAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2941CA96B7C8FD29FEB0C824 /* Pods_ChatApp_ChatAppUITests.framework */; };
 		CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA4249DB7C6000A8041 /* SignUpVC.swift */; };
 		CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA6249EF5BB000A8041 /* Constants.swift */; };
+		CB45EF1F24B4188800766CFD /* profileStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB45EF1E24B4188800766CFD /* profileStoryBoard.storyboard */; };
+		CB45EF2324B42C2400766CFD /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45EF2224B42C2400766CFD /* ProfileVC.swift */; };
+		CB63C17B24B3E78C0042BCF7 /* NotificationSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB63C17A24B3E78C0042BCF7 /* NotificationSB.storyboard */; };
+		CB63C17F24B3E8A00042BCF7 /* NotificationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63C17D24B3E8A00042BCF7 /* NotificationsCell.swift */; };
+		CB63C18024B3E8A00042BCF7 /* NotificationsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB63C17E24B3E8A00042BCF7 /* NotificationsCell.xib */; };
+		CB63C18424B3F1590042BCF7 /* NotificationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63C18324B3F1590042BCF7 /* NotificationsVC.swift */; };
 		CBA262AB24AFBB5F00F81034 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA262AA24AFBB5F00F81034 /* Extensions.swift */; };
 		CBD5985B24986037000CBEBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5985A24986037000CBEBD /* AppDelegate.swift */; };
 		CBD5985D24986037000CBEBD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5985C24986037000CBEBD /* SceneDelegate.swift */; };
@@ -132,6 +138,12 @@
 		6B2AD9233536C88847F0E6B3 /* Pods-ChatApp-ChatAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp-ChatAppUITests.release.xcconfig"; path = "Target Support Files/Pods-ChatApp-ChatAppUITests/Pods-ChatApp-ChatAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CB381BA4249DB7C6000A8041 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		CB381BA6249EF5BB000A8041 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../Utitliies/Constants.swift; sourceTree = "<group>"; };
+		CB45EF1E24B4188800766CFD /* profileStoryBoard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = profileStoryBoard.storyboard; sourceTree = "<group>"; };
+		CB45EF2224B42C2400766CFD /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		CB63C17A24B3E78C0042BCF7 /* NotificationSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotificationSB.storyboard; sourceTree = "<group>"; };
+		CB63C17D24B3E8A00042BCF7 /* NotificationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsCell.swift; sourceTree = "<group>"; };
+		CB63C17E24B3E8A00042BCF7 /* NotificationsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationsCell.xib; sourceTree = "<group>"; };
+		CB63C18324B3F1590042BCF7 /* NotificationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsVC.swift; sourceTree = "<group>"; };
 		CBA262AA24AFBB5F00F81034 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		CBD5985724986037000CBEBD /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBD5985A24986037000CBEBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -237,6 +249,8 @@
 				43BBB432249C99B80024F449 /* SignInVC.swift */,
 				CB381BA4249DB7C6000A8041 /* SignUpVC.swift */,
 				43BD8A9824AA713D00749E2A /* AddFriendVC.swift */,
+				CB63C18324B3F1590042BCF7 /* NotificationsVC.swift */,
+				CB45EF2224B42C2400766CFD /* ProfileVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -252,6 +266,7 @@
 		43BBB439249CA47F0024F449 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				CB63C17C24B3E8630042BCF7 /* NotificationsCell */,
 				43BBB45724A07A780024F449 /* ChatCell */,
 				43BBB44E24A070550024F449 /* SettingsCell */,
 				43BBB44924A061CC0024F449 /* Contacts Cell */,
@@ -326,6 +341,15 @@
 				50AA4DAC9ADCF9DAF516B0FE /* Pods_ChatAppTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CB63C17C24B3E8630042BCF7 /* NotificationsCell */ = {
+			isa = PBXGroup;
+			children = (
+				CB63C17D24B3E8A00042BCF7 /* NotificationsCell.swift */,
+				CB63C17E24B3E8A00042BCF7 /* NotificationsCell.xib */,
+			);
+			path = NotificationsCell;
 			sourceTree = "<group>";
 		};
 		CBA262A724AFB7C600F81034 /* Views Updates */ = {
@@ -423,7 +447,12 @@
 				43BBB4072499D5B80024F449 /* SignInSB.storyboard */,
 				43BBB4052499D5B80024F449 /* SignUpSB.storyboard */,
 				43BBB4062499D5B80024F449 /* WelcomeScreenSB.storyboard */,
+<<<<<<< HEAD
 				43C6C99E24B1C7D4003DB77E /* NotificationSB.storyboard */,
+=======
+				CB63C17A24B3E78C0042BCF7 /* NotificationSB.storyboard */,
+				CB45EF1E24B4188800766CFD /* profileStoryBoard.storyboard */,
+>>>>>>> 9745eaac5bebb662a0cf0cb672a5b858f0ec9f97
 			);
 			path = StoryBoards;
 			sourceTree = "<group>";
@@ -539,7 +568,7 @@
 			files = (
 				43BD8A9724AA6E0F00749E2A /* NoContactData.storyboard in Resources */,
 				CBD5986724986040000CBEBD /* LaunchScreen.storyboard in Resources */,
-				43C6C99F24B1C7D4003DB77E /* NotificationSB.storyboard in Resources */,
+				CB63C17B24B3E78C0042BCF7 /* NotificationSB.storyboard in Resources */,
 				43BBB42C249C8FCF0024F449 /* ChatSB.storyboard in Resources */,
 				43BBB40F2499D5B80024F449 /* AddFriendSB.storyboard in Resources */,
 				43BBB40B2499D5B80024F449 /* SignUpSB.storyboard in Resources */,
@@ -554,6 +583,8 @@
 				43BBB421249ABDC60024F449 /* ChatLogCell.xib in Resources */,
 				43BBB42E249C980D0024F449 /* MainTabStoryboard.storyboard in Resources */,
 				43BBB40D2499D5B80024F449 /* SignInSB.storyboard in Resources */,
+				CB45EF1F24B4188800766CFD /* profileStoryBoard.storyboard in Resources */,
+				CB63C18024B3E8A00042BCF7 /* NotificationsCell.xib in Resources */,
 				43BBB438249CA1AE0024F449 /* SettingsSB.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -686,14 +717,17 @@
 				43BD8A9924AA713D00749E2A /* AddFriendVC.swift in Sources */,
 				43BBB44B24A062150024F449 /* ContactCell.swift in Sources */,
 				CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */,
+				CB63C18424B3F1590042BCF7 /* NotificationsVC.swift in Sources */,
 				CBD5985F24986037000CBEBD /* ViewController.swift in Sources */,
 				43BD8A8C24A81B6200749E2A /* Group.swift in Sources */,
 				43BBB45B24A19CE20024F449 /* Chat.swift in Sources */,
 				CBD5985B24986037000CBEBD /* AppDelegate.swift in Sources */,
 				43BBB420249ABDC60024F449 /* ChatLogVC.swift in Sources */,
+				CB45EF2324B42C2400766CFD /* ProfileVC.swift in Sources */,
 				43BBB419249A7B910024F449 /* Git.swift in Sources */,
 				43BBB44824A061150024F449 /* FriendsVC.swift in Sources */,
 				43BBB44424A04DE60024F449 /* Admin.swift in Sources */,
+				CB63C17F24B3E8A00042BCF7 /* NotificationsCell.swift in Sources */,
 				CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */,
 				43BD8A8E24A81C4400749E2A /* Friend.swift in Sources */,
 				CBA262AB24AFBB5F00F81034 /* Extensions.swift in Sources */,

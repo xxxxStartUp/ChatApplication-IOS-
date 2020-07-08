@@ -13,9 +13,12 @@ class AddFriendVC : UIViewController {
     
     @IBOutlet weak var emailTextfield: UITextField!
     
+    @IBOutlet weak var sendInviteButton: UIButton!
+    @IBOutlet weak var addContactsHeader: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateViews()
     }
     
     @IBAction func addFriend(_ sender: Any) {
@@ -24,6 +27,10 @@ class AddFriendVC : UIViewController {
             self.searchAndAddFreindWith(email: email)
         }
         
+    }
+    func updateViews(){
+        sendInviteButton.contactsPageButton()
+        addContactsHeader.contactsPageLabels(type: Constants.newContactsPage.newContactsHeader)
     }
     
     
