@@ -31,7 +31,7 @@ class ChatLogVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let vc = UIStoryboard(name: "ChatSB", bundle: nil).instantiateInitialViewController() else {return}
+        guard let vc = UIStoryboard(name: "ChatStoryBoard", bundle: nil).instantiateInitialViewController() else {return}
        
         navigationController?.pushViewController(vc, animated: true)
     }

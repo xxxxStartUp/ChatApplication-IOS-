@@ -52,6 +52,8 @@
 		CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA6249EF5BB000A8041 /* Constants.swift */; };
 		CB45EF1F24B4188800766CFD /* profileStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB45EF1E24B4188800766CFD /* profileStoryBoard.storyboard */; };
 		CB45EF2324B42C2400766CFD /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45EF2224B42C2400766CFD /* ProfileVC.swift */; };
+		CB45EF2724B5871900766CFD /* ChatCell-Dara.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45EF2624B5871900766CFD /* ChatCell-Dara.swift */; };
+		CB45EF2B24B589B400766CFD /* ChatVC-Dara.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45EF2A24B589B400766CFD /* ChatVC-Dara.swift */; };
 		CB63C17B24B3E78C0042BCF7 /* NotificationSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB63C17A24B3E78C0042BCF7 /* NotificationSB.storyboard */; };
 		CB63C17F24B3E8A00042BCF7 /* NotificationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63C17D24B3E8A00042BCF7 /* NotificationsCell.swift */; };
 		CB63C18024B3E8A00042BCF7 /* NotificationsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB63C17E24B3E8A00042BCF7 /* NotificationsCell.xib */; };
@@ -134,6 +136,8 @@
 		CB381BA6249EF5BB000A8041 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../Utitliies/Constants.swift; sourceTree = "<group>"; };
 		CB45EF1E24B4188800766CFD /* profileStoryBoard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = profileStoryBoard.storyboard; sourceTree = "<group>"; };
 		CB45EF2224B42C2400766CFD /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		CB45EF2624B5871900766CFD /* ChatCell-Dara.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatCell-Dara.swift"; sourceTree = "<group>"; };
+		CB45EF2A24B589B400766CFD /* ChatVC-Dara.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatVC-Dara.swift"; sourceTree = "<group>"; };
 		CB63C17A24B3E78C0042BCF7 /* NotificationSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotificationSB.storyboard; sourceTree = "<group>"; };
 		CB63C17D24B3E8A00042BCF7 /* NotificationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsCell.swift; sourceTree = "<group>"; };
 		CB63C17E24B3E8A00042BCF7 /* NotificationsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationsCell.xib; sourceTree = "<group>"; };
@@ -243,6 +247,7 @@
 				43BD8A9824AA713D00749E2A /* AddFriendVC.swift */,
 				CB63C18324B3F1590042BCF7 /* NotificationsVC.swift */,
 				CB45EF2224B42C2400766CFD /* ProfileVC.swift */,
+				CB45EF2A24B589B400766CFD /* ChatVC-Dara.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -297,6 +302,7 @@
 			isa = PBXGroup;
 			children = (
 				43BBB45824A07ACC0024F449 /* ChatCell-ebuka.swift */,
+				CB45EF2624B5871900766CFD /* ChatCell-Dara.swift */,
 			);
 			path = ChatCell;
 			sourceTree = "<group>";
@@ -704,6 +710,7 @@
 				43BD8A9924AA713D00749E2A /* AddFriendVC.swift in Sources */,
 				43BBB44B24A062150024F449 /* ContactCell.swift in Sources */,
 				CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */,
+				CB45EF2724B5871900766CFD /* ChatCell-Dara.swift in Sources */,
 				CB63C18424B3F1590042BCF7 /* NotificationsVC.swift in Sources */,
 				CBD5985F24986037000CBEBD /* ViewController.swift in Sources */,
 				43BD8A8C24A81B6200749E2A /* Group.swift in Sources */,
@@ -730,6 +737,7 @@
 				43BBB436249C9E1C0024F449 /* Validate.swift in Sources */,
 				43BBB428249B13EA0024F449 /* User.swift in Sources */,
 				43BBB45924A07ACC0024F449 /* ChatCell-ebuka.swift in Sources */,
+				CB45EF2B24B589B400766CFD /* ChatVC-Dara.swift in Sources */,
 				43BBB422249ABDC60024F449 /* ChatLogCell.swift in Sources */,
 				439F5AD82499A9DC00D06BCF /* FireService.swift in Sources */,
 				439F921E24AD469000EC9A33 /* FriendDelegate.swift in Sources */,
