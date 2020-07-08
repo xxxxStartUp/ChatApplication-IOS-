@@ -11,10 +11,44 @@ struct Constants{
     
     static let mainTabStoryBoardSegue = "mainTabSBIdentifier"
     static let loginTabStoryBoardSegue = "loginSBIdentifier"
+    struct onBoardingPage{
+        static let filledButton = "filled"
+        static let notFilledButton = "noFill"
+        static let emailSubHeader = "email"
+        static let nameSubHeader = "name"
+        static let passwordSubHeader = "password"
+        static let alreadyHaveAnAccoutSubHeader = "alreadyHaveAnAccount"
+    }
     
-
+    struct mainPage{
+        static let groupNameHeader = "groupNameHeader"
+        static let timeStamp = "timeStamp"
+        
+    }
+    struct newGroupPage {
+        static let newGroupHeader = "newGroupHeader"
+        static let lineSeparator = "separator"
+    }
+    struct newContactsPage {
+        static let newContactsHeader = "newContactsHeader"
+        static let filledButton = "filled"
+        static let lineSeparator = "separator"
+        
+    }
+    struct notificationPage{
+        static let timeStampHeader = "newContactsHeader"
+        static let notificationMessage = "notificationsMessage"
+        static let indicator = "indicatorView"
+    }
+    struct Identifiers{
+        static let notificationsCellIdentifier = "notificationsCell"
+        
+        
+    }
     
-    struct FStore {
+    struct profilePage {
+          static let headers = "Headers"
+          static let textfields = "Textfields"
 
     }
 }

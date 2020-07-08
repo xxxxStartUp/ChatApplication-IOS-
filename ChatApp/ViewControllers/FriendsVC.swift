@@ -7,24 +7,31 @@
 //
 
 import UIKit
-
 class FriendsVC: UIViewController {
     
     
     @IBOutlet weak var contactsTable: UITableView!
     var friendList : [Friend] = []
     let identifier = "ContactCell"
+    var delegate : FreindDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
-        loadFriends()
+        
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        loadFriends()
+        
     }
     
     
     
     func loadFriends(){
+        friendList.removeAll()
         guard let globalUser = globalUser else{return}
         FireService.sharedInstance.loadAllFriends(user: globalUser) { (friends, error) in
             
@@ -64,6 +71,14 @@ extension FriendsVC : UITableViewDelegate , UITableViewDataSource {
         }
         
         
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard let vc = UIStoryboard(name: "ChatSB", bundle: nil).instantiateInitialViewController() as? ChatVC else { return}
+        self.delegate = vc
+        delegate?.didSendFriend(freind: friendList[indexPath.row])
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     
