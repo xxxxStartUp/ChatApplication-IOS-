@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="K2B-Il-9wv">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Add FriendVC-->
+        <scene sceneID="RVD-Fn-4FB">
+            <objects>
+                <viewController id="K2B-Il-9wv" customClass="AddFriendVC" customModule="ChatApp" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Fik-gu-Fld">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="38" translatesAutoresizingMaskIntoConstraints="NO" id="kcA-17-gD3">
+                                <rect key="frame" x="20" y="68.999999999999986" width="374" height="198.66666666666663"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Contact" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t5T-HH-T9V">
+                                        <rect key="frame" x="0.0" y="0.0" width="250.33333333333334" height="51.333333333333336"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="43"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="2Um-h9-7te">
+                                        <rect key="frame" x="0.0" y="89.333333333333343" width="374" height="41.333333333333343"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P6v-oc-nC5">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="25.666666666666668"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                                <textInputTraits key="textInputTraits" textContentType="email"/>
+                                            </textField>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nxr-5H-RYG">
+                                                <rect key="frame" x="0.0" y="40.666666666666657" width="374" height="0.6666666666666643"/>
+                                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="0.5" id="KYp-Zp-zm9"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="V4I-CR-Nwe">
+                                        <rect key="frame" x="0.0" y="168.66666666666666" width="374" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="spatial" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nPm-Yg-jNu">
+                                                <rect key="frame" x="274" y="0.0" width="100" height="30"/>
+                                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="100" id="5hS-KS-GFd"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" title="Add">
+                                                    <color key="titleColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="addFriend:" destination="K2B-Il-9wv" eventType="touchUpInside" id="mNY-RH-YsO"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="V4I-CR-Nwe" firstAttribute="leading" secondItem="kcA-17-gD3" secondAttribute="leading" id="PwD-sq-2MD"/>
+                                    <constraint firstAttribute="trailing" secondItem="2Um-h9-7te" secondAttribute="trailing" id="U3c-Ro-S2h"/>
+                                    <constraint firstAttribute="trailing" secondItem="V4I-CR-Nwe" secondAttribute="trailing" id="cde-3B-udJ"/>
+                                    <constraint firstItem="2Um-h9-7te" firstAttribute="leading" secondItem="kcA-17-gD3" secondAttribute="leading" id="fg1-k1-eR7"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="kcA-17-gD3" firstAttribute="top" secondItem="pdU-v8-nVo" secondAttribute="top" constant="69" id="USM-g3-1jA"/>
+                            <constraint firstItem="kcA-17-gD3" firstAttribute="leading" secondItem="pdU-v8-nVo" secondAttribute="leading" constant="20" id="VpN-Ie-av1"/>
+                            <constraint firstItem="pdU-v8-nVo" firstAttribute="trailing" secondItem="kcA-17-gD3" secondAttribute="trailing" constant="20" id="go9-SQ-eNU"/>
+                            <constraint firstItem="kcA-17-gD3" firstAttribute="centerX" secondItem="pdU-v8-nVo" secondAttribute="centerX" id="oyg-1X-pbx"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="pdU-v8-nVo"/>
+                    </view>
+                    <connections>
+                        <outlet property="emailTextfield" destination="P6v-oc-nC5" id="QHd-BN-vHD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kdy-WE-j5f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-271.01449275362319" y="207.88043478260872"/>
+        </scene>
+    </scenes>
+</document>
