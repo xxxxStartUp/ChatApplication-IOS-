@@ -52,6 +52,9 @@
 		43C6C9C124B587CB003DB77E /* WelcomeScreenSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9B224B587CB003DB77E /* WelcomeScreenSB.storyboard */; };
 		43C6C9C224B587CB003DB77E /* profileStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9B324B587CB003DB77E /* profileStoryBoard.storyboard */; };
 		43C6C9C324B587CB003DB77E /* ChatSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9B424B587CB003DB77E /* ChatSB.storyboard */; };
+		43C6C9C724B58B71003DB77E /* NotificationsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9C524B58B71003DB77E /* NotificationsCell.xib */; };
+		43C6C9C824B58B71003DB77E /* NotificationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C6C9C624B58B71003DB77E /* NotificationsCell.swift */; };
+		43C6C9CA24B58B85003DB77E /* NotificationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C6C9C924B58B85003DB77E /* NotificationsVC.swift */; };
 		9A1FD7EEF59FEFF812C86703 /* Pods_ChatApp_ChatAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2941CA96B7C8FD29FEB0C824 /* Pods_ChatApp_ChatAppUITests.framework */; };
 		CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA4249DB7C6000A8041 /* SignUpVC.swift */; };
 		CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA6249EF5BB000A8041 /* Constants.swift */; };
@@ -131,6 +134,9 @@
 		43C6C9B224B587CB003DB77E /* WelcomeScreenSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WelcomeScreenSB.storyboard; sourceTree = "<group>"; };
 		43C6C9B324B587CB003DB77E /* profileStoryBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = profileStoryBoard.storyboard; sourceTree = "<group>"; };
 		43C6C9B424B587CB003DB77E /* ChatSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatSB.storyboard; sourceTree = "<group>"; };
+		43C6C9C524B58B71003DB77E /* NotificationsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationsCell.xib; sourceTree = "<group>"; };
+		43C6C9C624B58B71003DB77E /* NotificationsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsCell.swift; sourceTree = "<group>"; };
+		43C6C9C924B58B85003DB77E /* NotificationsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsVC.swift; sourceTree = "<group>"; };
 		50AA4DAC9ADCF9DAF516B0FE /* Pods_ChatAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B2AD9233536C88847F0E6B3 /* Pods-ChatApp-ChatAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp-ChatAppUITests.release.xcconfig"; path = "Target Support Files/Pods-ChatApp-ChatAppUITests/Pods-ChatApp-ChatAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CB381BA4249DB7C6000A8041 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
@@ -232,6 +238,7 @@
 			children = (
 				439F921C24AD467700EC9A33 /* Protocols */,
 				43BBB41B249ABDC50024F449 /* ChatLogVC.swift */,
+				43C6C9C924B58B85003DB77E /* NotificationsVC.swift */,
 				43BBB45524A0795E0024F449 /* ChatVC.swift */,
 				43BBB44C24A064660024F449 /* SettingsVC.swift */,
 				43C2F9F924A315700080CD8F /* NewGroupVC.swift */,
@@ -254,6 +261,7 @@
 		43BBB439249CA47F0024F449 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				43C6C9C424B58B71003DB77E /* NotificationsCell */,
 				43BBB45724A07A780024F449 /* ChatCell */,
 				43BBB44E24A070550024F449 /* SettingsCell */,
 				43BBB44924A061CC0024F449 /* Contacts Cell */,
@@ -341,6 +349,15 @@
 				43C6C9AB24B587CB003DB77E /* NoContactData.storyboard */,
 			);
 			path = Nodata;
+			sourceTree = "<group>";
+		};
+		43C6C9C424B58B71003DB77E /* NotificationsCell */ = {
+			isa = PBXGroup;
+			children = (
+				43C6C9C524B58B71003DB77E /* NotificationsCell.xib */,
+				43C6C9C624B58B71003DB77E /* NotificationsCell.swift */,
+			);
+			path = NotificationsCell;
 			sourceTree = "<group>";
 		};
 		5201B7049B6C551C2059AEFF /* Frameworks */ = {
@@ -541,6 +558,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43C6C9C724B58B71003DB77E /* NotificationsCell.xib in Resources */,
 				CBD5986724986040000CBEBD /* LaunchScreen.storyboard in Resources */,
 				43C6C9BD24B587CB003DB77E /* NewGroupSB.storyboard in Resources */,
 				43C6C9BF24B587CB003DB77E /* NotificationSB.storyboard in Resources */,
@@ -696,6 +714,7 @@
 				43BBB45B24A19CE20024F449 /* Chat.swift in Sources */,
 				CBD5985B24986037000CBEBD /* AppDelegate.swift in Sources */,
 				43BBB420249ABDC60024F449 /* ChatLogVC.swift in Sources */,
+				43C6C9CA24B58B85003DB77E /* NotificationsVC.swift in Sources */,
 				43BBB419249A7B910024F449 /* Git.swift in Sources */,
 				43BBB44824A061150024F449 /* FriendsVC.swift in Sources */,
 				43BBB44424A04DE60024F449 /* Admin.swift in Sources */,
@@ -718,6 +737,7 @@
 				439F5AD82499A9DC00D06BCF /* FireService.swift in Sources */,
 				439F921E24AD469000EC9A33 /* FriendDelegate.swift in Sources */,
 				43C6C99D24B0291D003DB77E /* ChatError.swift in Sources */,
+				43C6C9C824B58B71003DB77E /* NotificationsCell.swift in Sources */,
 				43BD8A9324AA6CFE00749E2A /* Global.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
