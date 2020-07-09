@@ -60,6 +60,9 @@
 		CB45EF4524B6D2F600766CFD /* AppSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45EF3F24B6D2F500766CFD /* AppSettingsCell.swift */; };
 		CB45EF4624B6D2F600766CFD /* ChatInfoCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45EF4024B6D2F500766CFD /* ChatInfoCells.swift */; };
 		CB45EF4724B6D2F600766CFD /* ProfileInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB45EF4124B6D2F500766CFD /* ProfileInfoCell.xib */; };
+		CB45EF4924B6D80200766CFD /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45EF4824B6D80200766CFD /* Activity.swift */; };
+		CB45EF4B24B6D86700766CFD /* GroupDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45EF4A24B6D86600766CFD /* GroupDelegate.swift */; };
+		CB45EF4D24B6D88100766CFD /* GroupChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45EF4C24B6D88100766CFD /* GroupChatVC.swift */; };
 		CB63C17B24B3E78C0042BCF7 /* NotificationSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB63C17A24B3E78C0042BCF7 /* NotificationSB.storyboard */; };
 		CB63C17F24B3E8A00042BCF7 /* NotificationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63C17D24B3E8A00042BCF7 /* NotificationsCell.swift */; };
 		CB63C18024B3E8A00042BCF7 /* NotificationsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB63C17E24B3E8A00042BCF7 /* NotificationsCell.xib */; };
@@ -150,6 +153,9 @@
 		CB45EF3F24B6D2F500766CFD /* AppSettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsCell.swift; sourceTree = "<group>"; };
 		CB45EF4024B6D2F500766CFD /* ChatInfoCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatInfoCells.swift; sourceTree = "<group>"; };
 		CB45EF4124B6D2F500766CFD /* ProfileInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileInfoCell.xib; sourceTree = "<group>"; };
+		CB45EF4824B6D80200766CFD /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
+		CB45EF4A24B6D86600766CFD /* GroupDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDelegate.swift; sourceTree = "<group>"; };
+		CB45EF4C24B6D88100766CFD /* GroupChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatVC.swift; sourceTree = "<group>"; };
 		CB63C17A24B3E78C0042BCF7 /* NotificationSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotificationSB.storyboard; sourceTree = "<group>"; };
 		CB63C17D24B3E8A00042BCF7 /* NotificationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsCell.swift; sourceTree = "<group>"; };
 		CB63C17E24B3E8A00042BCF7 /* NotificationsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationsCell.xib; sourceTree = "<group>"; };
@@ -217,6 +223,7 @@
 		439F5AD62499A91200D06BCF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CB45EF4824B6D80200766CFD /* Activity.swift */,
 				439F5AD72499A9DB00D06BCF /* FireService.swift */,
 				43BBB44324A04DE60024F449 /* Admin.swift */,
 				43BBB44524A04DF20024F449 /* FireUser.swift */,
@@ -233,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				439F921D24AD469000EC9A33 /* FriendDelegate.swift */,
+				CB45EF4A24B6D86600766CFD /* GroupDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -252,6 +260,7 @@
 				43BBB41B249ABDC50024F449 /* ChatLogVC.swift */,
 				43BBB45524A0795E0024F449 /* ChatVC.swift */,
 				43BBB44C24A064660024F449 /* SettingsVC.swift */,
+				CB45EF4C24B6D88100766CFD /* GroupChatVC.swift */,
 				43C2F9F924A315700080CD8F /* NewGroupVC.swift */,
 				43BBB44724A061150024F449 /* FriendsVC.swift */,
 				43BBB432249C99B80024F449 /* SignInVC.swift */,
@@ -750,9 +759,11 @@
 				CB45EF2324B42C2400766CFD /* ProfileVC.swift in Sources */,
 				43BBB419249A7B910024F449 /* Git.swift in Sources */,
 				CB45EF4624B6D2F600766CFD /* ChatInfoCells.swift in Sources */,
+				CB45EF4B24B6D86700766CFD /* GroupDelegate.swift in Sources */,
 				43BBB44824A061150024F449 /* FriendsVC.swift in Sources */,
 				43BBB44424A04DE60024F449 /* Admin.swift in Sources */,
 				CB63C17F24B3E8A00042BCF7 /* NotificationsCell.swift in Sources */,
+				CB45EF4D24B6D88100766CFD /* GroupChatVC.swift in Sources */,
 				CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */,
 				43BD8A8E24A81C4400749E2A /* Friend.swift in Sources */,
 				CB45EF4224B6D2F500766CFD /* ProfileInfoCell.swift in Sources */,
@@ -760,6 +771,7 @@
 				43BBB44D24A064660024F449 /* SettingsVC.swift in Sources */,
 				43BBB45424A071B20024F449 /* SettingsCell.swift in Sources */,
 				43BBB45624A0795E0024F449 /* ChatVC.swift in Sources */,
+				CB45EF4924B6D80200766CFD /* Activity.swift in Sources */,
 				43BBB44624A04DF20024F449 /* FireUser.swift in Sources */,
 				43BBB433249C99B80024F449 /* SignInVC.swift in Sources */,
 				43BBB45224A070BD0024F449 /* SettingsProfileCell.swift in Sources */,

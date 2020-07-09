@@ -65,6 +65,7 @@ class SignUpVC: UIViewController {
                             
                             
                             if sucess{
+                                globalUser = user
                                 let controller =  UIAlertController.alertUser( title: "Sucess", message: "you are signed up", whatToDo: "good job!")
                                 self.present(controller, animated: true) {
                                     self.goToTab()

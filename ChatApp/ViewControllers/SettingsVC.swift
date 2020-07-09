@@ -25,8 +25,6 @@ class SettingsVC: UIViewController {
         title = "Settings"
         //navigationController?.navigationBar.backgroundColor = .lightGray
         setUpTableView()
-        
-        
         // Do any additional setup after loading the view.
     }
     
