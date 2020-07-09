@@ -54,6 +54,12 @@
 		CB45EF2324B42C2400766CFD /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45EF2224B42C2400766CFD /* ProfileVC.swift */; };
 		CB45EF2724B5871900766CFD /* ChatCell-Dara.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45EF2624B5871900766CFD /* ChatCell-Dara.swift */; };
 		CB45EF2B24B589B400766CFD /* ChatVC-Dara.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45EF2A24B589B400766CFD /* ChatVC-Dara.swift */; };
+		CB45EF2F24B6951900766CFD /* ProfileInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45EF2D24B6951900766CFD /* ProfileInfoCell.swift */; };
+		CB45EF3024B6951900766CFD /* ProfileInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB45EF2E24B6951900766CFD /* ProfileInfoCell.xib */; };
+		CB45EF3324B695F900766CFD /* ChatInfoCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45EF3124B695F900766CFD /* ChatInfoCells.swift */; };
+		CB45EF3424B695F900766CFD /* ChatInfoCells.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB45EF3224B695F900766CFD /* ChatInfoCells.xib */; };
+		CB45EF3724B6968900766CFD /* AppSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB45EF3524B6968900766CFD /* AppSettingsCell.swift */; };
+		CB45EF3824B6968900766CFD /* AppSettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB45EF3624B6968900766CFD /* AppSettingsCell.xib */; };
 		CB63C17B24B3E78C0042BCF7 /* NotificationSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB63C17A24B3E78C0042BCF7 /* NotificationSB.storyboard */; };
 		CB63C17F24B3E8A00042BCF7 /* NotificationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB63C17D24B3E8A00042BCF7 /* NotificationsCell.swift */; };
 		CB63C18024B3E8A00042BCF7 /* NotificationsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB63C17E24B3E8A00042BCF7 /* NotificationsCell.xib */; };
@@ -138,6 +144,12 @@
 		CB45EF2224B42C2400766CFD /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		CB45EF2624B5871900766CFD /* ChatCell-Dara.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatCell-Dara.swift"; sourceTree = "<group>"; };
 		CB45EF2A24B589B400766CFD /* ChatVC-Dara.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatVC-Dara.swift"; sourceTree = "<group>"; };
+		CB45EF2D24B6951900766CFD /* ProfileInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoCell.swift; sourceTree = "<group>"; };
+		CB45EF2E24B6951900766CFD /* ProfileInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileInfoCell.xib; sourceTree = "<group>"; };
+		CB45EF3124B695F900766CFD /* ChatInfoCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInfoCells.swift; sourceTree = "<group>"; };
+		CB45EF3224B695F900766CFD /* ChatInfoCells.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatInfoCells.xib; sourceTree = "<group>"; };
+		CB45EF3524B6968900766CFD /* AppSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsCell.swift; sourceTree = "<group>"; };
+		CB45EF3624B6968900766CFD /* AppSettingsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppSettingsCell.xib; sourceTree = "<group>"; };
 		CB63C17A24B3E78C0042BCF7 /* NotificationSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NotificationSB.storyboard; sourceTree = "<group>"; };
 		CB63C17D24B3E8A00042BCF7 /* NotificationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsCell.swift; sourceTree = "<group>"; };
 		CB63C17E24B3E8A00042BCF7 /* NotificationsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationsCell.xib; sourceTree = "<group>"; };
@@ -263,6 +275,7 @@
 		43BBB439249CA47F0024F449 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				CB45EF2C24B6940900766CFD /* SettingsCell-Dara */,
 				CB63C17C24B3E8630042BCF7 /* NotificationsCell */,
 				43BBB45724A07A780024F449 /* ChatCell */,
 				43BBB44E24A070550024F449 /* SettingsCell */,
@@ -339,6 +352,19 @@
 				50AA4DAC9ADCF9DAF516B0FE /* Pods_ChatAppTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CB45EF2C24B6940900766CFD /* SettingsCell-Dara */ = {
+			isa = PBXGroup;
+			children = (
+				CB45EF2D24B6951900766CFD /* ProfileInfoCell.swift */,
+				CB45EF2E24B6951900766CFD /* ProfileInfoCell.xib */,
+				CB45EF3124B695F900766CFD /* ChatInfoCells.swift */,
+				CB45EF3224B695F900766CFD /* ChatInfoCells.xib */,
+				CB45EF3524B6968900766CFD /* AppSettingsCell.swift */,
+				CB45EF3624B6968900766CFD /* AppSettingsCell.xib */,
+			);
+			path = "SettingsCell-Dara";
 			sourceTree = "<group>";
 		};
 		CB63C17C24B3E8630042BCF7 /* NotificationsCell */ = {
@@ -568,14 +594,17 @@
 				43BBB40B2499D5B80024F449 /* SignUpSB.storyboard in Resources */,
 				43BBB40C2499D5B80024F449 /* WelcomeScreenSB.storyboard in Resources */,
 				CBD5986424986040000CBEBD /* Assets.xcassets in Resources */,
+				CB45EF3024B6951900766CFD /* ProfileInfoCell.xib in Resources */,
 				43BBB40E2499D5B80024F449 /* NewGroupSB.storyboard in Resources */,
 				43BBB4102499D5B80024F449 /* ChatLogSB.storyboard in Resources */,
+				CB45EF3424B695F900766CFD /* ChatInfoCells.xib in Resources */,
 				43BBB4122499D5C70024F449 /* GoogleService-Info.plist in Resources */,
 				43BBB43E249D6EFD0024F449 /* ChatStoryBoard.storyboard in Resources */,
 				CBD5986224986037000CBEBD /* MainSB.storyboard in Resources */,
 				43BBB42A249C42280024F449 /* FriendsSB.storyboard in Resources */,
 				43BBB421249ABDC60024F449 /* ChatLogCell.xib in Resources */,
 				43BBB42E249C980D0024F449 /* MainTabStoryboard.storyboard in Resources */,
+				CB45EF3824B6968900766CFD /* AppSettingsCell.xib in Resources */,
 				43BBB40D2499D5B80024F449 /* SignInSB.storyboard in Resources */,
 				CB45EF1F24B4188800766CFD /* profileStoryBoard.storyboard in Resources */,
 				CB63C18024B3E8A00042BCF7 /* NotificationsCell.xib in Resources */,
@@ -710,6 +739,7 @@
 				43BD8A9924AA713D00749E2A /* AddFriendVC.swift in Sources */,
 				43BBB44B24A062150024F449 /* ContactCell.swift in Sources */,
 				CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */,
+				CB45EF3324B695F900766CFD /* ChatInfoCells.swift in Sources */,
 				CB45EF2724B5871900766CFD /* ChatCell-Dara.swift in Sources */,
 				CB63C18424B3F1590042BCF7 /* NotificationsVC.swift in Sources */,
 				CBD5985F24986037000CBEBD /* ViewController.swift in Sources */,
@@ -724,6 +754,7 @@
 				CB63C17F24B3E8A00042BCF7 /* NotificationsCell.swift in Sources */,
 				CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */,
 				43BD8A8E24A81C4400749E2A /* Friend.swift in Sources */,
+				CB45EF2F24B6951900766CFD /* ProfileInfoCell.swift in Sources */,
 				CBA262AB24AFBB5F00F81034 /* Extensions.swift in Sources */,
 				43BBB44D24A064660024F449 /* SettingsVC.swift in Sources */,
 				43BBB45424A071B20024F449 /* SettingsCell.swift in Sources */,
@@ -731,6 +762,7 @@
 				43BBB44624A04DF20024F449 /* FireUser.swift in Sources */,
 				43BBB433249C99B80024F449 /* SignInVC.swift in Sources */,
 				43BBB45224A070BD0024F449 /* SettingsProfileCell.swift in Sources */,
+				CB45EF3724B6968900766CFD /* AppSettingsCell.swift in Sources */,
 				43C2F9FA24A315700080CD8F /* NewGroupVC.swift in Sources */,
 				43BBB426249B0EE70024F449 /* Message.swift in Sources */,
 				CBD5985D24986037000CBEBD /* SceneDelegate.swift in Sources */,
