@@ -71,12 +71,15 @@ extension UILabel{
         case Constants.mainPage.groupNameHeader:
             self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
             self.font = UIFont(name: "HelveticaNeue-Medium", size: 25)
+            self.adjustsFontSizeToFitWidth = true
         case Constants.mainPage.timeStamp:
             self.textColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
             self.font = UIFont(name: "HelveticaNeue-Light", size: 15)
+             self.adjustsFontSizeToFitWidth = true
         default:
             self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
             self.font = UIFont(name: "HelveticaNeue-Medium", size: 25)
+             self.adjustsFontSizeToFitWidth = true
         }
         
     }

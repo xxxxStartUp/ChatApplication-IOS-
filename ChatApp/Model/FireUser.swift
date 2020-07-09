@@ -20,7 +20,7 @@ class FireUser : User {
     let email: String
     let timeCreated: Date
     
-    var messages: [String: Any]
+    var messages: [Chat]
     var group: [String]
     var friends: [Friend]
     var userType: Int
@@ -33,7 +33,7 @@ class FireUser : User {
         name = userName
         email = userEmail
         timeCreated = creationDate
-        messages = [:]
+        messages = []
         group = []
         friends = []
         userType = TypeOfUser.regular.rawValue // I created an enum where 0 would be a regular user and 1 would be an admin user.

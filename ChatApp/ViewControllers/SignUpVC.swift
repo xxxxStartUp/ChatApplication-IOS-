@@ -27,6 +27,9 @@ class SignUpVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let codableMessage = CodableMessage(message: "message")
+        let exampleCodableUser = codableUser(name: "codableEgb", message: codableMessage)
+        FireService.sharedInstance.createCodableUser(for: exampleCodableUser)
         updateViews()
         checkForUser()
     }
@@ -99,9 +102,6 @@ class SignUpVC: UIViewController {
         passwordLabel.onBoardingPageSubHeaderLabels(type: Constants.onBoardingPage.passwordSubHeader)
         signupButton.onBoardingPageButton(type: Constants.onBoardingPage.filledButton)
         loginButton.onBoardingPageButton(type: Constants.onBoardingPage.notFilledButton)
-        
-        
-        
     }
     
 }
@@ -130,28 +130,7 @@ extension UIViewController {
         }
     }
     
-    
-//    func encodeUser(user : FireUser){
-//
-//        let data =
-//        let encodedData = try! NSKeyedArchiver.archivedData(withRootObject: user, requiringSecureCoding: false)
-//        let userDefaults = UserDefaults.standard
-//        userDefaults.set(encodedData, forKey: "user")
-//        UserDefaults.standard.set(encodedData, forKey: "user")
-//
-//    }
-//
-//    func decodeData() -> FireUser?{
-//        if let decoded  = UserDefaults.standard.object(forKey:"user") as? Data{
-//            let user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! FireUser
-//                   return user
-//        }else{
-//            return nil
-//        }
-//    }
-    
-    
-    
+
 }
 
 

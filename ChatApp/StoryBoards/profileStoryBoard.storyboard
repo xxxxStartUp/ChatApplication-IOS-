@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BNt-oD-ZhB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BNt-oD-ZhB">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -120,8 +120,7 @@
         <!--Profile-->
         <scene sceneID="fXA-m8-q2u">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FGx-JQ-oQc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <viewController id="BNt-oD-ZhB" customClass="ProfileVC" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BNt-oD-ZhB" customClass="ProfileVC" customModule="ChatApp" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eJV-5b-UFN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -308,6 +307,7 @@
                         <outlet property="statusView" destination="ixw-sv-OUZ" id="qdj-HV-1WR"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FGx-JQ-oQc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="837.68115942028987" y="-96.195652173913047"/>
         </scene>

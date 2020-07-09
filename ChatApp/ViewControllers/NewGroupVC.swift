@@ -25,6 +25,7 @@ class NewGroupVC: UIViewController {
         let dummyUser = FireUser(userID: 1, userName: "kbhwh", userEmail: "wow3@gmail.com", creationDate: Date())
         let dummyGroup = Group(GroupAdmin: dummyUser, id: 1, name: "group1")
         
+
         //        FireService.sharedInstance.createGroup(group: dummyGroup) { (completed, error) in
         //            if let error = error{
         //                print(error.localizedDescription)
@@ -48,7 +49,7 @@ class NewGroupVC: UIViewController {
         //            }
         //        }
         
-        FireService.sharedInstance.deleteGroup(group: dummyGroup);
+        //FireService.sharedInstance.deleteGroup(group: dummyGroup);
         
         
         

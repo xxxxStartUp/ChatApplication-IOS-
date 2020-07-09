@@ -10,32 +10,58 @@ import UIKit
 
 class ChatCell_Dara: UITableViewCell {
 
-    @IBOutlet weak var leftStackView: UIStackView!
-    @IBOutlet weak var rightStackView: UIStackView!
-    @IBOutlet weak var rightLabel: UILabel!
-    @IBOutlet weak var rightTimeStamp: UILabel!
-    @IBOutlet weak var rightNameHeader: UILabel!
-    @IBOutlet weak var rightChatBubble: UIView!
-    @IBOutlet weak var leftNameHeader: UILabel!
-    @IBOutlet weak var leftChatBubbl: UIView!
-    @IBOutlet weak var leftTimeStamp: UILabel!
-    @IBOutlet weak var leftLabel: UILabel!
+    @IBOutlet weak var userEmail: UILabel!
+    
+
+    @IBOutlet weak var messageContentLabel: UILabel!
+    
+    @IBOutlet weak var timeLabel: UILabel!
+    
+    @IBOutlet weak var RecivedViewOn: UIView!
+    
+    
+    @IBOutlet weak var SentViewOn: UIView!
     
     func updateViews(){
-        
-        rightLabel.text = "HAHAHAHAHHAHAHA"
-        rightNameHeader.text = "Daramfon Akpan"
-        rightTimeStamp.text = "10.44PM"
-        leftLabel.text = "Nope you got me"
-        leftNameHeader.text = "Ebuka EGB"
-        leftTimeStamp.text = "10.55PM"
-        
-        leftStackView.isHidden = false
-        rightChatBubble.layer.cornerRadius = 10
-        leftChatBubbl.layer.cornerRadius = 10
+        messageContentLabel.layer.cornerRadius = 12
+     
         
     }
     
+    
+    var message : Message! {
+
+         didSet {
+            messageContentLabel.text = message.content.content as? String
+            userEmail.text = message.sender.name
+            if message.recieved{
+                handleRecviedMessage()
+            }else{
+                hanldleSentMessage()
+            }
+        }
+        
+    }
+    
+    func handleRecviedMessage(){
+      //  user recived the message
+        
+        userEmail.textAlignment = .left
+        RecivedViewOn.backgroundColor = .red
+        SentViewOn.backgroundColor = .clear
+        timeLabel.textAlignment = .left
+        
+        
+    }
+    
+    func hanldleSentMessage(){
+        //user sent the message
+        userEmail.textAlignment = .right
+        SentViewOn.backgroundColor = .black
+        RecivedViewOn.backgroundColor = .clear
+        timeLabel.textAlignment = .right
+        
+    }
     
     
     
