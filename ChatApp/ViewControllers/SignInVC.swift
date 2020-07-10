@@ -45,9 +45,10 @@ class SignInVC: UIViewController {
         if let email = emailTextField.text, let password = passwordTextField.text{
             //Need to complete validate class and functions in class before using it
             if Validate.isPasswordValid(password) && Validate.isValidEmail(email){
-                
+                 let user = FireUser(userID: 1, userName: "jhh", userEmail: email, creationDate: Date())
                 FireService.sharedInstance.signIn(email: email, password: password) { (completed) in
                     if completed{
+                        globalUser = user
                         print("Signed In Successfully")
                         let controller =  UIAlertController.alertUser( title: "Sucess", message: "you signed in sucesfully", whatToDo: "Go to home screen")
                         self.present(controller, animated: true) {

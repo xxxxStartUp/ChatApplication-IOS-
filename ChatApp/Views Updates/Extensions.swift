@@ -13,6 +13,8 @@ extension UIButton{
     
     func onBoardingPageButton(type:String){
         
+        
+        
         switch type {
         case Constants.onBoardingPage.filledButton:
             self.layer.cornerRadius = 5
@@ -75,11 +77,11 @@ extension UILabel{
         case Constants.mainPage.timeStamp:
             self.textColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
             self.font = UIFont(name: "HelveticaNeue-Light", size: 15)
-             self.adjustsFontSizeToFitWidth = true
+            self.adjustsFontSizeToFitWidth = true
         default:
             self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
             self.font = UIFont(name: "HelveticaNeue-Medium", size: 25)
-             self.adjustsFontSizeToFitWidth = true
+            self.adjustsFontSizeToFitWidth = true
         }
         
     }
@@ -108,17 +110,31 @@ extension UILabel{
         
     }
     func notificationsPageLabels(type:String){
-        
-        switch type {
-        case Constants.notificationPage.timeStampHeader:
-            self.textColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
-            self.font = UIFont(name: "HelveticaNeue-Light", size: 12.5)
-        case Constants.notificationPage.notificationMessage:
-            self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-            self.font = UIFont(name: "HelveticaNeue-Light", size: 18)
-        default:
-            self.textColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
-            self.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
+        if Constants.settingsPage.displayModeSwitch == false{
+            switch type {
+            case Constants.notificationPage.timeStampHeader:
+                self.textColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 12.5)
+            case Constants.notificationPage.notificationMessage:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 18)
+            default:
+                self.textColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
+            }
+        }
+        else{
+            switch type {
+            case Constants.notificationPage.timeStampHeader:
+                self.textColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 12.5)
+            case Constants.notificationPage.notificationMessage:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 18)
+            default:
+                self.textColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
+            }
         }
     }
     
@@ -132,6 +148,44 @@ extension UILabel{
             self.textColor = #colorLiteral(red: 0.7763852477, green: 0.7765197158, blue: 0.7763767838, alpha: 1)
             self.font = UIFont(name: "HelveticaNeue-Regular", size: 20)
         }
+    }
+    
+    func settingsPageLabels(type:String){
+        
+        if Constants.settingsPage.displayModeSwitch == false{
+            switch type {
+            case Constants.settingsPage.userNameHeader:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
+            case Constants.settingsPage.labelTitles:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Regular", size: 10)
+            case Constants.settingsPage.statusTitleLabel:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 14)
+            default:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 14)
+            }
+        }
+        else{
+            switch type {
+            case Constants.settingsPage.userNameHeader:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
+            case Constants.settingsPage.labelTitles:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Regular", size: 10)
+            case Constants.settingsPage.statusTitleLabel:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 14)
+            default:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 14)
+            }
+            
+        }
+        
     }
     
     
@@ -150,6 +204,7 @@ extension UITextField{
             self.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
         }
     }
+    
 }
 
 extension UIView{
@@ -157,4 +212,24 @@ extension UIView{
     func profilePageViews(){
         self.backgroundColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
     }
+    
+    func darkmodeBackground(){
+        if Constants.settingsPage.displayModeSwitch {
+            self.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        }
+        else{
+            self.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        }
+    }
+    func navbar(){
+        if Constants.settingsPage.displayModeSwitch {
+            self.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        }
+        else{
+            self.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        }
+    }
 }
+
+
+

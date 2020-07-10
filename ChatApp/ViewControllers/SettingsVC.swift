@@ -25,7 +25,15 @@ class SettingsVC: UIViewController {
         title = "Settings"
         //navigationController?.navigationBar.backgroundColor = .lightGray
         setUpTableView()
+        
+        self.updateBackgroundViews()
+            
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        updateBackgroundViews()
     }
     
     
@@ -37,6 +45,11 @@ class SettingsVC: UIViewController {
         SettingsTable.register(UINib(nibName: "ChatInfoCells", bundle: nil), forCellReuseIdentifier: "ChatActionsCellsIdentifier")
         SettingsTable.register(UINib(nibName: "AppSettingsCell", bundle: nil), forCellReuseIdentifier: "AppSettingsCellIdentifier")
         SettingsTable.tableFooterView = UIView()
+        // SettingsTable.settingsPage()
+        
+        
+        
+        
         
     }
     
@@ -99,39 +112,39 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
             break
         }
         
-//        if indexPath.section == 0 {
-//            if let cell = SettingsTable.dequeueReusableCell(withIdentifier: identifier) as?  ProfileInfoCell {
-//                cell.backgroundColor = .clear
-//                return cell
-//            }
-//        }
-//        else {
-//            if let cell = SettingsTable.dequeueReusableCell(withIdentifier: identifier2) as?  ChatInfoCells {
-//                cell.backgroundColor = .clear
-//                return cell
-//            }
-//        }
-//
-//        //        if indexPath.section == 1 {
-//        //            let cell = UITableViewCell()
-//        //            cell.textLabel?.text = "section1"
-//        //            return cell
-//        //        }
-//        //
-//        //        if indexPath.section == 2 {
-//        //            let cell = UITableViewCell()
-//        //            cell.textLabel?.text = "section2"
-//        //            return cell
-//        //        }
-//        //
-//        //        if indexPath.section == 3 {
-//        //            let cell = UITableViewCell()
-//        //            cell.textLabel?.text = "section3"
-//        //            return cell
-//        //        }
-//
-//
-//
+        //        if indexPath.section == 0 {
+        //            if let cell = SettingsTable.dequeueReusableCell(withIdentifier: identifier) as?  ProfileInfoCell {
+        //                cell.backgroundColor = .clear
+        //                return cell
+        //            }
+        //        }
+        //        else {
+        //            if let cell = SettingsTable.dequeueReusableCell(withIdentifier: identifier2) as?  ChatInfoCells {
+        //                cell.backgroundColor = .clear
+        //                return cell
+        //            }
+        //        }
+        //
+        //        //        if indexPath.section == 1 {
+        //        //            let cell = UITableViewCell()
+        //        //            cell.textLabel?.text = "section1"
+        //        //            return cell
+        //        //        }
+        //        //
+        //        //        if indexPath.section == 2 {
+        //        //            let cell = UITableViewCell()
+        //        //            cell.textLabel?.text = "section2"
+        //        //            return cell
+        //        //        }
+        //        //
+        //        //        if indexPath.section == 3 {
+        //        //            let cell = UITableViewCell()
+        //        //            cell.textLabel?.text = "section3"
+        //        //            return cell
+        //        //        }
+        //
+        //
+        //
         return UITableViewCell()
     }
     
@@ -143,19 +156,19 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
         
         if section == 1 {
             let view = UIView()
-            view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            view.darkmodeBackground()
             return view
         }
         
         if section == 2 {
             let view = UIView()
-            view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            view.darkmodeBackground()
             return view
         }
         
         if section == 3 {
             let view = UIView()
-            view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            view.darkmodeBackground()
             return view
         }
         
@@ -183,5 +196,45 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
         }
         return 0
     }
+    
+    //updates the background color for the tableview and nav bar.
+    func updateBackgroundViews(){
+        DispatchQueue.main.async {
+            self.SettingsTable.darkmodeBackground()
+            self.navigationController?.navigationBar.darkmodeBackground()
+            self.navigationBarBackgroundHandler()
+            self.SettingsTable.reloadData()
+            //self.navigationController?.navigationBar.settingsPage()
+            
+            
+        }
+    }
+    //handles the text color, background color and appearance of the nav bar
+      func navigationBarBackgroundHandler(){
+          
+          if Constants.settingsPage.displayModeSwitch{
+              let navBarAppearance = UINavigationBarAppearance()
+               navBarAppearance.configureWithOpaqueBackground()
+               navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+               navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+               navBarAppearance.backgroundColor = .black
+               self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+               self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+               self.navigationController?.navigationBar.setNeedsLayout()
+    
+          }
+          else{
+              let navBarAppearance = UINavigationBarAppearance()
+              navBarAppearance.configureWithOpaqueBackground()
+              navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+              navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+              navBarAppearance.backgroundColor = .white
+              self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+              self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+              self.navigationController?.navigationBar.setNeedsLayout()
+          }
+      }
+    
+    
     
 }

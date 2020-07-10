@@ -23,8 +23,14 @@ class ChatLogVC: UIViewController{
         chatLogTableview.register(UINib(nibName: "ChatLogCell", bundle: nil), forCellReuseIdentifier: "ChatCellIdentifier")
         chatLogTableview.delegate = self
         chatLogTableview.dataSource = self
-        loadActivity()
         
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        loadActivity()
+        setUpfakeActivity()
     }
     
     
