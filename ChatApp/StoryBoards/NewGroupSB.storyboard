@@ -206,6 +206,7 @@
                     </view>
                     <connections>
                         <outlet property="newGroupLabel" destination="lCY-ED-uyz" id="zQ6-hv-Hjf"/>
+                        <outlet property="textField" destination="7mo-ep-sYO" id="1Sh-Gz-fdV"/>
                         <segue destination="SFk-lM-sDc" kind="show" id="Fa8-2e-ZhQ"/>
                     </connections>
                 </viewController>

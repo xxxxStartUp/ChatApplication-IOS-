@@ -27,12 +27,16 @@ class SettingsVC: UIViewController {
         setUpTableView()
         
         self.updateBackgroundViews()
-            
+        
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        updateBackgroundViews()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
         updateBackgroundViews()
     }
     
@@ -93,6 +97,7 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
                 cell.backgroundColor = .clear
                 
                 cell.updateViews()
+                
                 return cell
             }
         case 1:
@@ -210,30 +215,38 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
         }
     }
     //handles the text color, background color and appearance of the nav bar
-      func navigationBarBackgroundHandler(){
-          
-          if Constants.settingsPage.displayModeSwitch{
-              let navBarAppearance = UINavigationBarAppearance()
-               navBarAppearance.configureWithOpaqueBackground()
-               navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-               navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-               navBarAppearance.backgroundColor = .black
-               self.navigationController?.navigationBar.standardAppearance = navBarAppearance
-               self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-               self.navigationController?.navigationBar.setNeedsLayout()
-    
-          }
-          else{
-              let navBarAppearance = UINavigationBarAppearance()
-              navBarAppearance.configureWithOpaqueBackground()
-              navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
-              navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
-              navBarAppearance.backgroundColor = .white
-              self.navigationController?.navigationBar.standardAppearance = navBarAppearance
-              self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-              self.navigationController?.navigationBar.setNeedsLayout()
-          }
-      }
+    func navigationBarBackgroundHandler(){
+        
+        if Constants.settingsPage.displayModeSwitch{
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.backgroundColor = .black
+            self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+            self.navigationController?.navigationBar.setNeedsLayout()
+            //handles TabBar
+            self.tabBarController?.tabBar.barTintColor = .black
+            tabBarController?.tabBar.isTranslucent = false
+            
+        }
+        else{
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.backgroundColor = .white
+            self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+            self.navigationController?.navigationBar.setNeedsLayout()
+            
+            //handles TabBar
+            self.tabBarController?.tabBar.barTintColor = .white
+            self.tabBarController?.tabBar.backgroundColor = .white
+            tabBarController?.tabBar.isTranslucent = true
+        }
+    }
     
     
     

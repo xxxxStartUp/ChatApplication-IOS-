@@ -26,6 +26,10 @@ class ChatLogVC: UIViewController{
         
         
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        updateBackgroundViews()
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -78,21 +82,22 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatCellIdentifier") as! ChatLogCell
         cell.updateViews(indexPath: indexPath.row+1)
         cell.activity = activities[indexPath.row]
+        cell.backgroundColor = .clear
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let activity = activities[indexPath.row]
-
+        
         switch activity.type {
-
+            
         case .GroupChat(group: let group):
             guard let vc = UIStoryboard(name: "GroupChatSB", bundle: nil).instantiateInitialViewController()  as? GroupChatVC else {return}
             self.groupDelegate = vc
             groupDelegate?.didSendGroup(freind: group)
             navigationController?.pushViewController(vc, animated: true)
             return
-
+            
         case .FriendChat(friend: let friend):
             guard let vc = UIStoryboard(name: "ChatStoryBoard", bundle: nil).instantiateInitialViewController()  as? ChatVC_Dara else {return}
             self.friendDelegate = vc
@@ -100,7 +105,7 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource{
             navigationController?.pushViewController(vc, animated: true)
             return
         }
-
+        
     }
     
     
@@ -108,4 +113,50 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource{
         return activities.count
     }
     
+    func updateBackgroundViews(){
+        
+        DispatchQueue.main.async {
+            self.chatLogTableview.darkmodeBackground()
+            self.navigationBarBackgroundHandler()
+            
+            
+            
+        }
+        
+    }
+    //handles the text color, background color and appearance of the nav bar
+    func navigationBarBackgroundHandler(){
+        
+        if Constants.settingsPage.displayModeSwitch{
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.backgroundColor = .black
+            self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+            self.navigationController?.navigationBar.setNeedsLayout()
+            self.tabBarController?.tabBar.backgroundColor = .black
+            
+            //handles TabBar
+             self.tabBarController?.tabBar.barTintColor = .black
+             tabBarController?.tabBar.isTranslucent = false
+            
+        }
+        else{
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.backgroundColor = .white
+            self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+            self.navigationController?.navigationBar.setNeedsLayout()
+            
+            //handles TabBar
+             self.tabBarController?.tabBar.barTintColor = .white
+             tabBarController?.tabBar.isTranslucent = false
+            
+        }
+    }
 }

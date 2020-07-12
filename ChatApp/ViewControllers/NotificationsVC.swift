@@ -71,6 +71,10 @@ class NotificationsVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
             //lets it update instantly
             self.navigationController?.navigationBar.setNeedsLayout()
             
+            //handles TabBar
+             self.tabBarController?.tabBar.barTintColor = .black
+             tabBarController?.tabBar.isTranslucent = false
+            
         }
         else{
             let navBarAppearance = UINavigationBarAppearance()
@@ -81,6 +85,10 @@ class NotificationsVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
             self.navigationController?.navigationBar.standardAppearance = navBarAppearance
             self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
             self.navigationController?.navigationBar.setNeedsLayout()
+            
+            //handles TabBar
+             self.tabBarController?.tabBar.barTintColor = .white
+             tabBarController?.tabBar.isTranslucent = false
         }
     }
     
