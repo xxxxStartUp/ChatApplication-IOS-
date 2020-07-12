@@ -20,6 +20,7 @@ class ChatLogVC: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         chatLogTableview.register(UINib(nibName: "ChatLogCell", bundle: nil), forCellReuseIdentifier: "ChatCellIdentifier")
         chatLogTableview.delegate = self
         chatLogTableview.dataSource = self
@@ -29,6 +30,7 @@ class ChatLogVC: UIViewController{
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+         self.tabBarController?.tabBar.isHidden = false
          loadActivity()
     }
     

@@ -85,8 +85,7 @@ class ChatVC: UIViewController {
     
     
     @IBAction func sendMessage(_ sender: UIButton) {
-        let messageContent = Content(type: .string, content: messageView.text
-        )
+        let messageContent = Content(type: .string, content: messageView.text)
         let dummyMessage = Message(content: messageContent, sender: globalUser!, timeStamp: Date(), recieved: false)
         
         FireService.sharedInstance.sendMessagefinal(User: globalUser!, message: dummyMessage, freind: r!) { (sucess, error) in
@@ -106,19 +105,6 @@ class ChatVC: UIViewController {
             
         }
         
-        
-        //        FireService.sharedInstance.SendMessage(User: globalUser!, message: dummyMessage, freind: r!) { (sucess, error) in
-        //
-        //
-        //            if let error = error {
-        //                fatalError(error.localizedDescription)
-        //            }
-        //
-        //            if sucess{
-        //                let controller = UIAlertController.alertUser(title: "you sent a message", message: "sucess", whatToDo: "check firebase")
-        //                self.present(controller, animated: true, completion: nil)
-        //            }
-        //        }
     }
     
     

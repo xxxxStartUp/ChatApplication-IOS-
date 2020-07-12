@@ -11,7 +11,8 @@ import UIKit
 class NewGroupVC: UIViewController {
     
     
-    @IBOutlet weak var groupName: UITextField!
+    @IBOutlet weak var groupNameTextField: UITextField!
+    
     @IBOutlet weak var newGroupLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,38 +21,36 @@ class NewGroupVC: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    
-    @IBAction func Done(_ sender: Any) {
-        let dummyUser = FireUser(userID: 1, userName: "kbhwh", userEmail: "wow3@gmail.com", creationDate: Date())
-        let dummyGroup = Group(GroupAdmin: dummyUser, id: 1, name: "group1")
-        
 
-        //        FireService.sharedInstance.createGroup(group: dummyGroup) { (completed, error) in
-        //            if let error = error{
-        //                print(error.localizedDescription)
-        //                fatalError()
-        //            }
-        //
-        //            if completed{
-        //                if let groupName = self.groupName.text{
-        //                    if groupName != "" {
-        //                               //check if texfield is empty
-        //                        self.performSegue(withIdentifier: "group", sender: self)
-        //                    }else{
-        //                       let controller = UIAlertController.alertUser(title: "Error", message: "Add a name to the groupchat", whatToDo: "Try again")
-        //                        self.present(controller, animated: true, completion: nil)
-        //                    }
-        //
-        //
-        //                }
-        //
-        //
-        //            }
-        //        }
-        
-        //FireService.sharedInstance.deleteGroup(group: dummyGroup);
-        
-        
+    
+    func createGroup() {
+        if let groupName = self.groupNameTextField.text{
+            if groupName == "" {
+                let controller = UIAlertController.alertUser(title: "Error", message: "Add a name to the groupchat", whatToDo: "Try again")
+                self.present(controller, animated: true, completion: nil)
+                return
+            }
+            
+            
+            let newGroup = Group(GroupAdmin: globalUser!, id: 1, name: groupName)
+            
+            FireService.sharedInstance.createGroup(group: newGroup) { (completed, error) in
+                if let error = error{
+                    print(error.localizedDescription)
+                    fatalError()
+                }
+                
+                if completed{
+                    self.goToTab()
+                                      
+                }
+                
+                
+                
+            }
+            
+            
+        }
         
         
     }
@@ -84,7 +83,8 @@ class NewGroupVC: UIViewController {
     }
     
     @objc func rightBarButtonPressed(){
-        navigationController?.popToRootViewController(animated: true)
+        createGroup()
+       // navigationController?.popToRootViewController(animated: true)
     }
     
 }

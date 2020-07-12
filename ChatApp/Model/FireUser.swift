@@ -40,6 +40,11 @@ class FireUser : User {
         super.init()
     }
     
+    var asAFriend : Friend {
+        
+        return Friend(email: self.email, username: self.name, id: self.id)
+    }
+    
     required init(from decoder: Decoder) throws {
         fatalError("init(from:) has not been implemented")
     }
@@ -48,6 +53,9 @@ class FireUser : User {
         
         self.userType == TypeOfUser.admin.rawValue ? true:false
     }
+    
+    
+    
 }
 
 enum TypeOfUser: Int {

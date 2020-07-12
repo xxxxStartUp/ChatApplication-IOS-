@@ -23,6 +23,7 @@ class FriendsVC: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = false
         super.viewDidAppear(true)
         loadFriends()
         
@@ -75,7 +76,7 @@ extension FriendsVC : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let vc = UIStoryboard(name: "ChatSB", bundle: nil).instantiateInitialViewController() as? ChatVC else { return}
+        guard let vc = UIStoryboard(name: "ChatStoryBoard", bundle: nil).instantiateInitialViewController()  as? ChatVC_Dara else {return}
         self.delegate = vc
         delegate?.didSendFriend(freind: friendList[indexPath.row])
         navigationController?.pushViewController(vc, animated: true)

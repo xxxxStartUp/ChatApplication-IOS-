@@ -10,11 +10,8 @@ import Foundation
 
 
  protocol TexterViewDelegate {
-    
-     func didClickSend()
-    
+    func didClickSend()
     func didClickFile()
-    
     func didClickCamera()
 }
 

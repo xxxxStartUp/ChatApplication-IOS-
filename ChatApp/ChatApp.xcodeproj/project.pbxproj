@@ -63,6 +63,7 @@
 		43C6C9EE24B590B2003DB77E /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C6C9ED24B590B2003DB77E /* ProfileVC.swift */; };
 		43E1A25924BAA3AA00511642 /* TexterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E1A25824BAA3AA00511642 /* TexterView.swift */; };
 		43E1A25B24BAA77300511642 /* TexterViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E1A25A24BAA77300511642 /* TexterViewDelegate.swift */; };
+		43E1A25D24BACA5A00511642 /* ChatCellProgrammatic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E1A25C24BACA5A00511642 /* ChatCellProgrammatic.swift */; };
 		9A1FD7EEF59FEFF812C86703 /* Pods_ChatApp_ChatAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2941CA96B7C8FD29FEB0C824 /* Pods_ChatApp_ChatAppUITests.framework */; };
 		CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA4249DB7C6000A8041 /* SignUpVC.swift */; };
 		CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA6249EF5BB000A8041 /* Constants.swift */; };
@@ -153,6 +154,7 @@
 		43C6C9ED24B590B2003DB77E /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		43E1A25824BAA3AA00511642 /* TexterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TexterView.swift; sourceTree = "<group>"; };
 		43E1A25A24BAA77300511642 /* TexterViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TexterViewDelegate.swift; sourceTree = "<group>"; };
+		43E1A25C24BACA5A00511642 /* ChatCellProgrammatic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCellProgrammatic.swift; sourceTree = "<group>"; };
 		50AA4DAC9ADCF9DAF516B0FE /* Pods_ChatAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B2AD9233536C88847F0E6B3 /* Pods-ChatApp-ChatAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp-ChatAppUITests.release.xcconfig"; path = "Target Support Files/Pods-ChatApp-ChatAppUITests/Pods-ChatApp-ChatAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CB381BA4249DB7C6000A8041 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 			children = (
 				43BBB45824A07ACC0024F449 /* ChatCell-ebuka.swift */,
 				436213EB24B6486D00304FB3 /* ChatCell-Dara.swift */,
+				43E1A25C24BACA5A00511642 /* ChatCellProgrammatic.swift */,
 			);
 			path = ChatCell;
 			sourceTree = "<group>";
@@ -744,6 +747,7 @@
 				CBD5985F24986037000CBEBD /* ViewController.swift in Sources */,
 				43BD8A8C24A81B6200749E2A /* Group.swift in Sources */,
 				43BBB45B24A19CE20024F449 /* Chat.swift in Sources */,
+				43E1A25D24BACA5A00511642 /* ChatCellProgrammatic.swift in Sources */,
 				CBD5985B24986037000CBEBD /* AppDelegate.swift in Sources */,
 				436213EC24B6486D00304FB3 /* ChatCell-Dara.swift in Sources */,
 				43BBB420249ABDC60024F449 /* ChatLogVC.swift in Sources */,

@@ -59,13 +59,11 @@ class TexterView : UIView, UITextViewDelegate {
     
     
     @objc func handlefileSelection() -> Void {
-        
         delegate?.didClickFile()
     }
     
     
     @objc func handleCameraSelecation() -> Void {
-        
         delegate?.didClickCamera()
     }
     
@@ -90,14 +88,11 @@ class TexterView : UIView, UITextViewDelegate {
             stackView.topAnchor.constraint(equalTo: self.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
-            
-            
             textingView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 25),
             textingView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
             textingView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
             textingView.trailingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: -25),
             textingView.heightAnchor.constraint(equalToConstant: 35),
-            
             
             backgroundView.leadingAnchor.constraint(equalTo: textingView.leadingAnchor , constant: -25),
             backgroundView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 16),
@@ -122,6 +117,8 @@ class TexterView : UIView, UITextViewDelegate {
             }
         }
     }
+    
+
 }
 
 

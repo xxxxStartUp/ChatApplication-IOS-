@@ -9,11 +9,9 @@
 import UIKit
 
 class ChatVC_Dara: UIViewController  {
-    @IBOutlet weak var chatTextView: UITextView!
     var messages = [Message]()
-
      var hasScrolled : Bool = false
-    
+    var cellId = "id"
      var r : Friend?{
          didSet {
             title = r?.username
@@ -29,20 +27,9 @@ class ChatVC_Dara: UIViewController  {
         super.viewDidLoad()
         chatTableView.delegate = self
         chatTableView.dataSource = self
-        chatTextView.layer.borderWidth = 0.5
-        chatTextView.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        chatTableView.rowHeight = UITableView.automaticDimension
-        chatTableView.estimatedRowHeight = 150
-        texterView.translatesAutoresizingMaskIntoConstraints = false
-        texterView.delegate = self
-        //hides tab bar
-        self.tabBarController?.tabBar.isHidden = true
+        chatTableView.register(MessgaeCell.self, forCellReuseIdentifier: cellId)
         
-        //adding programmatic texterView 
-        view.addSubview(texterView)
-        texterView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        texterView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-        texterView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        self.setUptexter(texterView: texterView, controller: self)
         
     }
     
@@ -54,7 +41,7 @@ class ChatVC_Dara: UIViewController  {
     }
     
     func sendMessage(){
-        let messageContent = Content(type: .string, content: chatTextView.text ?? "No Value")
+        let messageContent = Content(type: .string, content: texterView.textingView.text ?? "No Value")
         let dummyMessage = Message(content: messageContent, sender: globalUser!, timeStamp: Date(), recieved: false)
         FireService.sharedInstance.sendMessagefinal(User: globalUser!, message: dummyMessage, freind: r!) { (sucess, error) in
             if let error = error {
@@ -99,6 +86,8 @@ class ChatVC_Dara: UIViewController  {
     
     
     
+    
+    
 }
 
 
@@ -110,8 +99,7 @@ extension ChatVC_Dara :UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "messagecell", for: indexPath) as! ChatCell_Dara
-        cell.updateViews()
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! MessgaeCell
         cell.message = messages[indexPath.row]
         return cell
         
@@ -136,9 +124,87 @@ extension ChatVC_Dara : TexterViewDelegate {
     }
     
     func didClickCamera() {
-        print("camera")
+        sendMessage()
     }
 }
+
+
+extension UIViewController {
+    
+    
+    
+    func setUptexter<T : UIViewController>(texterView : TexterView , controller : T  ) -> Void where T : TexterViewDelegate  {
+        texterView.translatesAutoresizingMaskIntoConstraints = false
+        let view = controller.view!
+        texterView.translatesAutoresizingMaskIntoConstraints = false
+        texterView.delegate = controller
+        //hides tab bar
+        self.tabBarController?.tabBar.isHidden = true
+        //adding programmatic texterView
+        view.addSubview(texterView)
+        texterView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        texterView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        texterView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        
+    }
+}
+
+
+//class MessageView : UIView {
+//
+//    lazy var messageBubble : UIView = {
+//        let view = UIView()
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.backgroundColor = .black
+//        return view
+//    }()
+//
+//
+//    lazy var  messageText : UILabel = {
+//        let label = UILabel()
+//        label.translatesAutoresizingMaskIntoConstraints = true
+//        label.text = "This is a message"
+//        label.backgroundColor = .red
+//        return label
+//    }()
+//
+//
+//
+//
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        self.layer.cornerRadius = 12
+//        self.backgroundColor = .green
+//        self.addSubview(messageBubble)
+//        self.addSubview(messageText)
+//
+//        let constraints  =
+//        [
+//            messageBubble.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
+//            messageBubble.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
+//            messageBubble.bottomAnchor.constraint(equalTo: self.bottomAnchor , constant: 0),
+//            messageBubble.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
+//
+//            messageText.topAnchor.constraint(equalToSystemSpacingBelow: messageBubble.topAnchor, multiplier: 20),
+//            messageText.leadingAnchor.constraint(equalTo: messageBubble.leadingAnchor, constant: 10),
+//            messageText.bottomAnchor.constraint(equalTo: messageBubble.bottomAnchor, constant: 10)
+//
+//
+//
+//        ]
+//
+//
+//
+//
+//
+//    }
+//
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+//    }
+//
+//
+//}
 
 
 

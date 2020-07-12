@@ -48,6 +48,12 @@ class SignInVC: UIViewController {
                 
                 FireService.sharedInstance.signIn(email: email, password: password) { (completed) in
                     if completed{
+                    
+                        
+                        FireService.sharedInstance.searchOneUserWithEmail(email: email) { (user, error) in
+                            
+                            globalUser = user
+                        }
                         print("Signed In Successfully")
                         let controller =  UIAlertController.alertUser( title: "Sucess", message: "you signed in sucesfully", whatToDo: "Go to home screen")
                         self.present(controller, animated: true) {
