@@ -9,6 +9,14 @@
 import UIKit
 
 class GroupChatVC: UIViewController {
+    
+    var groupMessages : [Message] = []
+    var group : Group? {
+        didSet{
+            
+            
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,21 +24,21 @@ class GroupChatVC: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func loadAllGroupInfo(){
+        
+        title = group?.name
+        
+        
     }
-    */
+    
+
 
 }
 
 extension GroupChatVC : GroupDelegate {
-    func didSendGroup(freind: Group) {
+    func didSendGroup(group: Group) {
+        self.group = group
         return
     }
     

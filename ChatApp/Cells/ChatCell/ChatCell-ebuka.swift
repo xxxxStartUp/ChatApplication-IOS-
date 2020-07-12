@@ -9,8 +9,6 @@
 import UIKit
 
 class ChatCell_ebuka: UITableViewCell {
-    
-    
     @IBOutlet weak var messageContent: UILabel!
     
     @IBOutlet weak var senderView: UIView!

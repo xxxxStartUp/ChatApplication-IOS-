@@ -61,6 +61,8 @@
 		43C6C9EB24B58D9E003DB77E /* profileStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9DC24B58D9E003DB77E /* profileStoryBoard.storyboard */; };
 		43C6C9EC24B58D9E003DB77E /* ChatSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C6C9DD24B58D9E003DB77E /* ChatSB.storyboard */; };
 		43C6C9EE24B590B2003DB77E /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C6C9ED24B590B2003DB77E /* ProfileVC.swift */; };
+		43E1A25924BAA3AA00511642 /* TexterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E1A25824BAA3AA00511642 /* TexterView.swift */; };
+		43E1A25B24BAA77300511642 /* TexterViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E1A25A24BAA77300511642 /* TexterViewDelegate.swift */; };
 		9A1FD7EEF59FEFF812C86703 /* Pods_ChatApp_ChatAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2941CA96B7C8FD29FEB0C824 /* Pods_ChatApp_ChatAppUITests.framework */; };
 		CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA4249DB7C6000A8041 /* SignUpVC.swift */; };
 		CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA6249EF5BB000A8041 /* Constants.swift */; };
@@ -149,6 +151,8 @@
 		43C6C9DC24B58D9E003DB77E /* profileStoryBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = profileStoryBoard.storyboard; sourceTree = "<group>"; };
 		43C6C9DD24B58D9E003DB77E /* ChatSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatSB.storyboard; sourceTree = "<group>"; };
 		43C6C9ED24B590B2003DB77E /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		43E1A25824BAA3AA00511642 /* TexterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TexterView.swift; sourceTree = "<group>"; };
+		43E1A25A24BAA77300511642 /* TexterViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TexterViewDelegate.swift; sourceTree = "<group>"; };
 		50AA4DAC9ADCF9DAF516B0FE /* Pods_ChatAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B2AD9233536C88847F0E6B3 /* Pods-ChatApp-ChatAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp-ChatAppUITests.release.xcconfig"; path = "Target Support Files/Pods-ChatApp-ChatAppUITests/Pods-ChatApp-ChatAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CB381BA4249DB7C6000A8041 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
@@ -234,6 +238,7 @@
 			children = (
 				439F921D24AD469000EC9A33 /* FriendDelegate.swift */,
 				436213E924B6484D00304FB3 /* GroupDelegate.swift */,
+				43E1A25A24BAA77300511642 /* TexterViewDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -377,6 +382,14 @@
 			path = Nodata;
 			sourceTree = "<group>";
 		};
+		43E1A25724BAA36600511642 /* ProgrammaticViews */ = {
+			isa = PBXGroup;
+			children = (
+				43E1A25824BAA3AA00511642 /* TexterView.swift */,
+			);
+			path = ProgrammaticViews;
+			sourceTree = "<group>";
+		};
 		5201B7049B6C551C2059AEFF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -406,6 +419,7 @@
 		CBD5984E24986037000CBEBD = {
 			isa = PBXGroup;
 			children = (
+				43E1A25724BAA36600511642 /* ProgrammaticViews */,
 				43C6C9CB24B58D9E003DB77E /* StoryBoards */,
 				CBA262AE24AFC24800F81034 /* Constants */,
 				CBA262A724AFB7C600F81034 /* Views Updates */,
@@ -741,6 +755,7 @@
 				CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */,
 				436213E424B647B100304FB3 /* GroupChatVC.swift in Sources */,
 				43BD8A8E24A81C4400749E2A /* Friend.swift in Sources */,
+				43E1A25924BAA3AA00511642 /* TexterView.swift in Sources */,
 				CBA262AB24AFBB5F00F81034 /* Extensions.swift in Sources */,
 				43BBB44D24A064660024F449 /* SettingsVC.swift in Sources */,
 				43BBB45424A071B20024F449 /* SettingsCell.swift in Sources */,
@@ -752,6 +767,7 @@
 				43BBB426249B0EE70024F449 /* Message.swift in Sources */,
 				CBD5985D24986037000CBEBD /* SceneDelegate.swift in Sources */,
 				43BBB436249C9E1C0024F449 /* Validate.swift in Sources */,
+				43E1A25B24BAA77300511642 /* TexterViewDelegate.swift in Sources */,
 				43BBB428249B13EA0024F449 /* User.swift in Sources */,
 				43BBB45924A07ACC0024F449 /* ChatCell-ebuka.swift in Sources */,
 				43BBB422249ABDC60024F449 /* ChatLogCell.swift in Sources */,

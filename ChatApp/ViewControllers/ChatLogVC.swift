@@ -23,10 +23,14 @@ class ChatLogVC: UIViewController{
         chatLogTableview.register(UINib(nibName: "ChatLogCell", bundle: nil), forCellReuseIdentifier: "ChatCellIdentifier")
         chatLogTableview.delegate = self
         chatLogTableview.dataSource = self
-        loadActivity()
+       
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+         loadActivity()
+    }
     
     
     func loadActivity(){
@@ -83,7 +87,7 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource{
         case .GroupChat(group: let group):
             guard let vc = UIStoryboard(name: "GroupChatSB", bundle: nil).instantiateInitialViewController()  as? GroupChatVC else {return}
             self.groupDelegate = vc
-            groupDelegate?.didSendGroup(freind: group)
+            groupDelegate?.didSendGroup(group: group)
             navigationController?.pushViewController(vc, animated: true)
             return
 

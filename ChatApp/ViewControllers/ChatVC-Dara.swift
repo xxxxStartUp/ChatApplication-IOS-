@@ -8,10 +8,11 @@
 
 import UIKit
 
-class ChatVC_Dara: UIViewController {
+class ChatVC_Dara: UIViewController  {
     @IBOutlet weak var chatTextView: UITextView!
     var messages = [Message]()
 
+     var hasScrolled : Bool = false
     
      var r : Friend?{
          didSet {
@@ -20,6 +21,9 @@ class ChatVC_Dara: UIViewController {
              
          }
      }
+    
+    let texterView = TexterView()
+    
     @IBOutlet weak var chatTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +33,17 @@ class ChatVC_Dara: UIViewController {
         chatTextView.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         chatTableView.rowHeight = UITableView.automaticDimension
         chatTableView.estimatedRowHeight = 150
+        texterView.translatesAutoresizingMaskIntoConstraints = false
+        texterView.delegate = self
+        //hides tab bar
+        self.tabBarController?.tabBar.isHidden = true
+        
+        //adding programmatic texterView 
+        view.addSubview(texterView)
+        texterView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        texterView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        texterView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -57,29 +72,29 @@ class ChatVC_Dara: UIViewController {
     
     
     func loadMessages(){
-            FireService.sharedInstance.loadMessagesWithFriend2(User: globalUser!,  freind: r!) { (messages, error) in
-                self.messages.removeAll()
-                self.chatTableView.reloadData()
-                guard let messages = messages else {return}
-                
-                messages.forEach { (message) in
-                    self.messages.append(message)
-                    print(message.content.content as! String)
-                }
-                
-                
-                self.messages.sort { (message1, message2) -> Bool in
-                    return message1.timeStamp < message2.timeStamp
-                }
-                if !messages.isEmpty{
-                    self.chatTableView.reloadData()
-                    let indexPath = IndexPath(row: self.messages.count-1, section: 0)
-                    self.chatTableView.scrollToRow(at:indexPath, at: .top, animated: true)
-                    
-                }
-                
+        
+        FireService.sharedInstance.loadMessagesWithFriend2(User: globalUser!,  freind: r!) { (messages, error) in
+            self.messages.removeAll()
+            self.chatTableView.reloadData()
+            guard let messages = messages else {return}
+            
+            messages.forEach { (message) in
+                self.messages.append(message)
+                print(message.content.content as! String)
             }
+            
+            
+            self.messages.sort { (message1, message2) -> Bool in
+                return message1.timeStamp < message2.timeStamp
+            }
+            if !messages.isEmpty{
+                self.chatTableView.reloadData()
+                let indexPath = IndexPath(row: self.messages.count-1, section: 0)
+                self.chatTableView.scrollToRow(at:indexPath, at: .bottom, animated: true)
+            }
+            
         }
+    }
     
     
     
@@ -101,10 +116,6 @@ extension ChatVC_Dara :UITableViewDelegate,UITableViewDataSource {
         return cell
         
     }
-    
-    //need to work on tap and hold cell
-    
-    
 }
 
 
@@ -113,3 +124,25 @@ extension ChatVC_Dara : FreindDelegate {
         r = freind
     }
 }
+
+
+extension ChatVC_Dara : TexterViewDelegate {
+    func didClickSend() {
+        print("send")
+    }
+    
+    func didClickFile() {
+        print("file")
+    }
+    
+    func didClickCamera() {
+        print("camera")
+    }
+}
+
+
+
+
+
+
+

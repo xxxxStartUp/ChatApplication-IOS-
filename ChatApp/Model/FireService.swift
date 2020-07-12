@@ -512,6 +512,7 @@ class FireService {
     //works
     func loadMessagesWithFriend2(User : FireUser, freind : Friend ,completion : @escaping ([Message]? , Error?) -> ()){
         let ref =           FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document(freind.email).collection(freind.email)
+        
         ref.addSnapshotListener { (snapshot, error) in
             var messages : [Message] = []
             guard let documents = snapshot?.documents else {
