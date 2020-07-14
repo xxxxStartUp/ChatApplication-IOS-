@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 struct Constants{
     
     static let mainTabStoryBoardSegue = "mainTabSBIdentifier"
@@ -49,12 +50,16 @@ struct Constants{
     struct profilePage {
         static let headers = "Headers"
         static let textfields = "Textfields"
+        static var profileImageState = false
+        static var globalProfileImage:UIImage? = nil
+        
 
     }
     struct settingsPage {
         static let userNameHeader = "userNameHeader"
         static let labelTitles = "labelTitle"
         static let statusTitleLabel = "statusTitleLabel"
+    
         static var displayModeSwitch = false
     }
 }

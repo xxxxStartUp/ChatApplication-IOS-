@@ -73,6 +73,8 @@ class NewGroupVC: UIViewController {
         }
     }
     func updateViews(){
+        
+        navigationController?.navigationBar.prefersLargeTitles = false
         //adding rightBarButton
         let rightBarButton = UIButton(type: .system)
         
