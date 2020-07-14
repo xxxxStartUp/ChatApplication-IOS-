@@ -9,5 +9,5 @@
 import Foundation
 
 protocol GroupDelegate {
-    func didSendGroup(freind : Group) -> Void
+    func didSendGroup(group : Group) -> Void
 }

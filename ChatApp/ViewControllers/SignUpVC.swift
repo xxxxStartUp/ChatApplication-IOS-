@@ -35,9 +35,7 @@ class SignUpVC: UIViewController {
     }
     
     @IBAction func loginButtonTapped(_ sender: Any) {
-        
         performSegue(withIdentifier: Constants.loginTabStoryBoardSegue, sender: self)
-        
     }
     @IBAction func signUpButtonTapped(_ sender: Any) {
         signUp()
@@ -65,9 +63,11 @@ class SignUpVC: UIViewController {
                             
                             
                             if sucess{
+                                globalUser = user
                                 let controller =  UIAlertController.alertUser( title: "Sucess", message: "you are signed up", whatToDo: "good job!")
                                 self.present(controller, animated: true) {
                                     self.goToTab()
+                                    
                                 }
                                 
                             }else{

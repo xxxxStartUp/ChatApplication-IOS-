@@ -16,6 +16,7 @@ class Group : Messaging {
     let id : Int
     var name : String
     var image :Data
+    var messages : [Message]?
     
     init(GroupAdmin : FireUser , id : Int , name : String ) {
         

@@ -39,13 +39,20 @@ class ChatVC: UIViewController {
     
     
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         loadMessages()
     }
     
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        //loadMessages()
+    }
+    
     func loadMessages(){
-        
+
         FireService.sharedInstance.loadMessagesWithFriend2(User: globalUser!,  freind: r!) { (messages, error) in
             self.messages.removeAll()
             self.ChatTable.reloadData()
@@ -63,8 +70,8 @@ class ChatVC: UIViewController {
             if !messages.isEmpty{
                 self.ChatTable.reloadData()
                 let indexPath = IndexPath(row: self.messages.count-1, section: 0)
-                self.ChatTable.scrollToRow(at:indexPath, at: .top, animated: true)
-                
+               self.ChatTable.scrollToRow(at:indexPath, at: .top, animated: true)
+                return
             }
             
         }
@@ -78,8 +85,7 @@ class ChatVC: UIViewController {
     
     
     @IBAction func sendMessage(_ sender: UIButton) {
-        let messageContent = Content(type: .string, content: messageView.text
-        )
+        let messageContent = Content(type: .string, content: messageView.text)
         let dummyMessage = Message(content: messageContent, sender: globalUser!, timeStamp: Date(), recieved: false)
         
         FireService.sharedInstance.sendMessagefinal(User: globalUser!, message: dummyMessage, freind: r!) { (sucess, error) in
@@ -99,19 +105,6 @@ class ChatVC: UIViewController {
             
         }
         
-        
-        //        FireService.sharedInstance.SendMessage(User: globalUser!, message: dummyMessage, freind: r!) { (sucess, error) in
-        //
-        //
-        //            if let error = error {
-        //                fatalError(error.localizedDescription)
-        //            }
-        //
-        //            if sucess{
-        //                let controller = UIAlertController.alertUser(title: "you sent a message", message: "sucess", whatToDo: "check firebase")
-        //                self.present(controller, animated: true, completion: nil)
-        //            }
-        //        }
     }
     
     

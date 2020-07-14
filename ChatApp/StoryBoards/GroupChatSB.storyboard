@@ -16,20 +16,33 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JHH-wi-0xB">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="744"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="121" id="ogk-Ll-6W2" customClass="ChatCell_Dara" customModule="ChatApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="121"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ogk-Ll-6W2" id="iLh-AQ-WHx">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="121"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="JHH-wi-0xB" firstAttribute="top" secondItem="IE3-p3-3ze" secondAttribute="top" id="7qn-0O-hH7"/>
                             <constraint firstItem="IE3-p3-3ze" firstAttribute="trailing" secondItem="JHH-wi-0xB" secondAttribute="trailing" id="8ng-ow-LnP"/>
-                            <constraint firstItem="IE3-p3-3ze" firstAttribute="bottom" secondItem="JHH-wi-0xB" secondAttribute="bottom" id="qKA-Xf-6eZ"/>
+                            <constraint firstItem="IE3-p3-3ze" firstAttribute="bottom" secondItem="JHH-wi-0xB" secondAttribute="bottom" constant="30" id="qKA-Xf-6eZ"/>
                             <constraint firstItem="JHH-wi-0xB" firstAttribute="leading" secondItem="IE3-p3-3ze" secondAttribute="leading" id="qhq-oc-nc3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="IE3-p3-3ze"/>
                     </view>
                     <navigationItem key="navigationItem" id="d81-gX-o7h"/>
+                    <connections>
+                        <outlet property="groupChatTable" destination="JHH-wi-0xB" id="STU-YN-zfr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pwz-UQ-DhG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

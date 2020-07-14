@@ -9,7 +9,7 @@
 import Foundation
 
 
-class Message  : Messaging{
+class Message  : Messaging  {
     var id : String
     var content : Content
     var sender : FireUser
@@ -17,8 +17,6 @@ class Message  : Messaging{
     var recieved : Bool
     
     init(content : Content , sender : FireUser , timeStamp : Date , recieved : Bool) {
-        
-        
         self.recieved = recieved
         self.id = UUID().uuidString
         self.content = content
@@ -31,14 +29,15 @@ class Message  : Messaging{
 }
 
 
-    
-struct Content {
+struct Content  {
     
     var type : ContentType
     var content : Any
 }
 
-enum ContentType {
+enum ContentType  {
+
+    
     case string
     case video
     case file

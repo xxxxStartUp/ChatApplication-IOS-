@@ -11,47 +11,54 @@ import UIKit
 class NewGroupVC: UIViewController {
     
     
-    @IBOutlet weak var groupName: UITextField!
+    @IBOutlet weak var groupNameTextField: UITextField!
+    
     @IBOutlet weak var newGroupLabel: UILabel!
+    @IBOutlet weak var textField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
+        updateBackgroundViews()
         
         // Do any additional setup after loading the view.
     }
-    
-    
-    @IBAction func Done(_ sender: Any) {
-        let dummyUser = FireUser(userID: 1, userName: "kbhwh", userEmail: "wow3@gmail.com", creationDate: Date())
-        let dummyGroup = Group(GroupAdmin: dummyUser, id: 1, name: "group1")
-        
 
-        //        FireService.sharedInstance.createGroup(group: dummyGroup) { (completed, error) in
-        //            if let error = error{
-        //                print(error.localizedDescription)
-        //                fatalError()
-        //            }
-        //
-        //            if completed{
-        //                if let groupName = self.groupName.text{
-        //                    if groupName != "" {
-        //                               //check if texfield is empty
-        //                        self.performSegue(withIdentifier: "group", sender: self)
-        //                    }else{
-        //                       let controller = UIAlertController.alertUser(title: "Error", message: "Add a name to the groupchat", whatToDo: "Try again")
-        //                        self.present(controller, animated: true, completion: nil)
-        //                    }
-        //
-        //
-        //                }
-        //
-        //
-        //            }
-        //        }
-        
-        //FireService.sharedInstance.deleteGroup(group: dummyGroup);
-        
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        updateViews()
+        updateBackgroundViews()
+    }
+
+    
+    func createGroup() {
+        if let groupName = self.groupNameTextField.text{
+            if groupName == "" {
+                let controller = UIAlertController.alertUser(title: "Error", message: "Add a name to the groupchat", whatToDo: "Try again")
+                self.present(controller, animated: true, completion: nil)
+                return
+            }
+            
+            
+            let newGroup = Group(GroupAdmin: globalUser!, id: 1, name: groupName)
+            
+            FireService.sharedInstance.createGroup(group: newGroup) { (completed, error) in
+                if let error = error{
+                    print(error.localizedDescription)
+                    fatalError()
+                }
+                
+                if completed{
+                    self.goToTab()
+                                      
+                }
+                
+                
+                
+            }
+            
+            
+        }
         
         
     }
@@ -84,7 +91,63 @@ class NewGroupVC: UIViewController {
     }
     
     @objc func rightBarButtonPressed(){
-        navigationController?.popToRootViewController(animated: true)
+        createGroup()
+       // navigationController?.popToRootViewController(animated: true)
     }
     
+    //updates the background color for the tableview and nav bar.
+       func updateBackgroundViews(){
+           DispatchQueue.main.async {
+               self.view.darkmodeBackground()
+               self.navigationController?.navigationBar.darkmodeBackground()
+               self.navigationBarBackgroundHandler()
+            self.textField.newGroupPageTextField()
+               
+               
+               //self.navigationController?.navigationBar.settingsPage()
+               
+               
+           }
+       }
+       //handles the text color, background color and appearance of the nav bar
+         func navigationBarBackgroundHandler(){
+             
+             if Constants.settingsPage.displayModeSwitch{
+                 let navBarAppearance = UINavigationBarAppearance()
+                  navBarAppearance.configureWithOpaqueBackground()
+                  navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+                  navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+                  navBarAppearance.backgroundColor = .black
+//                  textField.attributedPlaceholder = NSAttributedString(string: "Enter Group Name",
+//                  attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+                  self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+                  self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+                  self.navigationController?.navigationBar.setNeedsLayout()
+                
+                //handles TabBar
+                 self.tabBarController?.tabBar.barTintColor = .black
+                 tabBarController?.tabBar.isTranslucent = false
+       
+             }
+             else{
+                 let navBarAppearance = UINavigationBarAppearance()
+                 navBarAppearance.configureWithOpaqueBackground()
+                 navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+                 navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+                 navBarAppearance.backgroundColor = .white
+//                textField.attributedPlaceholder = NSAttributedString(string: "Enter Group Name",
+//                attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+                 self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+                 self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+                 self.navigationController?.navigationBar.setNeedsLayout()
+                
+                //handles TabBar
+                 self.tabBarController?.tabBar.barTintColor = .white
+                 tabBarController?.tabBar.isTranslucent = false
+             }
+         }
+       
+    
 }
+
+

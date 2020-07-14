@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DfT-VV-z8q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DfT-VV-z8q">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -7,142 +7,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--New GroupVC-->
-        <scene sceneID="i1d-g4-zR2">
-            <objects>
-                <viewController id="4aI-da-1V8" customClass="NewGroupVC" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="qtV-Gg-6Tl">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="42" translatesAutoresizingMaskIntoConstraints="NO" id="H07-I1-pk9">
-                                <rect key="frame" x="40" y="20" width="394" height="392"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="216" translatesAutoresizingMaskIntoConstraints="NO" id="Nyz-Y3-KHo">
-                                        <rect key="frame" x="0.0" y="0.0" width="394" height="50"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C6v-Ni-UHs">
-                                                <rect key="frame" x="0.0" y="0.0" width="89" height="50"/>
-                                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="ean-lL-8qP"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <state key="normal" title="Cancel">
-                                                    <color key="titleColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                                </state>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCs-wS-qjM">
-                                                <rect key="frame" x="305" y="0.0" width="89" height="50"/>
-                                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <state key="normal" title="Done">
-                                                    <color key="titleColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="Done:" destination="315-es-G77" eventType="touchUpInside" id="EKD-yJ-QCp"/>
-                                                    <action selector="Done:" destination="4aI-da-1V8" eventType="touchUpInside" id="P5a-VO-Bkb"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="C6v-Ni-UHs" firstAttribute="width" secondItem="sCs-wS-qjM" secondAttribute="width" id="AiV-4G-dQr"/>
-                                            <constraint firstItem="C6v-Ni-UHs" firstAttribute="height" secondItem="sCs-wS-qjM" secondAttribute="height" id="RxA-Qc-UYr"/>
-                                        </constraints>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="9Nx-hT-2ru">
-                                        <rect key="frame" x="0.0" y="92.000000000000014" width="394" height="206.33333333333337"/>
-                                        <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="42" translatesAutoresizingMaskIntoConstraints="NO" id="gVw-SQ-K3m">
-                                                <rect key="frame" x="0.0" y="0.0" width="394" height="143.33333333333334"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Group" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hF2-97-Ahd">
-                                                        <rect key="frame" x="86.333333333333329" y="0.0" width="221.66666666666669" height="51.333333333333336"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="51.329999999999998" id="wuH-MM-twW"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="43"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tfo-iO-KcX">
-                                                        <rect key="frame" x="103" y="93.333333333333343" width="188" height="50"/>
-                                                    </imageView>
-                                                </subviews>
-                                            </stackView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bdh-0x-Z8R">
-                                                <rect key="frame" x="156.66666666666666" y="163.33333333333331" width="81" height="43"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <state key="normal" title="Add Photo">
-                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                </state>
-                                            </button>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="gVw-SQ-K3m" secondAttribute="trailing" id="Rrx-LX-wDg"/>
-                                            <constraint firstItem="gVw-SQ-K3m" firstAttribute="leading" secondItem="9Nx-hT-2ru" secondAttribute="leading" id="mU5-p2-yGk"/>
-                                        </constraints>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="drr-rA-FgZ">
-                                        <rect key="frame" x="0.0" y="340.33333333333331" width="394" height="51.666666666666686"/>
-                                        <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Group Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4zq-hJ-Th6">
-                                                <rect key="frame" x="0.0" y="0.0" width="394" height="25.666666666666668"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="335" id="rbM-wB-fKX"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                                <textInputTraits key="textInputTraits" textContentType="email"/>
-                                            </textField>
-                                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vHY-hk-ZXm">
-                                                <rect key="frame" x="0.0" y="49.666666666666686" width="394" height="2"/>
-                                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="335" id="EPg-gH-4mp"/>
-                                                    <constraint firstAttribute="height" constant="2" id="Jk1-LT-dDo"/>
-                                                </constraints>
-                                            </view>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="9Nx-hT-2ru" secondAttribute="trailing" id="1qZ-85-l7P"/>
-                                    <constraint firstItem="Nyz-Y3-KHo" firstAttribute="leading" secondItem="H07-I1-pk9" secondAttribute="leading" id="GXM-gi-lDk"/>
-                                    <constraint firstItem="9Nx-hT-2ru" firstAttribute="leading" secondItem="H07-I1-pk9" secondAttribute="leading" id="bR1-aC-HyI"/>
-                                    <constraint firstItem="9Nx-hT-2ru" firstAttribute="width" secondItem="H07-I1-pk9" secondAttribute="height" multiplier="197:196" id="lbW-kU-IvK"/>
-                                    <constraint firstAttribute="trailing" secondItem="drr-rA-FgZ" secondAttribute="trailing" id="urR-83-lUA"/>
-                                    <constraint firstAttribute="trailing" secondItem="Nyz-Y3-KHo" secondAttribute="trailing" id="yuK-2j-zbN"/>
-                                </constraints>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="H07-I1-pk9" firstAttribute="top" secondItem="YPx-3b-F6V" secondAttribute="top" constant="20" id="JRV-W9-sZW"/>
-                            <constraint firstItem="YPx-3b-F6V" firstAttribute="trailing" secondItem="H07-I1-pk9" secondAttribute="trailing" constant="-20" id="sQq-dS-Izf"/>
-                            <constraint firstItem="H07-I1-pk9" firstAttribute="leading" secondItem="YPx-3b-F6V" secondAttribute="leading" constant="40" id="vCk-XJ-v0a"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="YPx-3b-F6V"/>
-                    </view>
-                    <connections>
-                        <outlet property="groupName" destination="4zq-hJ-Th6" id="fpe-U3-32a"/>
-                        <segue destination="SFk-lM-sDc" kind="show" identifier="group" id="puu-qb-6PQ"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Pgb-Re-smk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="315-es-G77" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="-281" y="82"/>
-        </scene>
-        <!--ChatSB-->
-        <scene sceneID="yhu-IW-VKB">
-            <objects>
-                <viewControllerPlaceholder storyboardName="ChatSB" id="SFk-lM-sDc" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="VfC-lN-VLL"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wLZ-aA-P7s" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="439" y="-189"/>
-        </scene>
         <!--New GroupVC-->
         <scene sceneID="0H3-Oe-prv">
             <objects>
@@ -205,8 +69,9 @@
                         <viewLayoutGuide key="safeArea" id="FUF-tL-3Av"/>
                     </view>
                     <connections>
+                        <outlet property="groupNameTextField" destination="7mo-ep-sYO" id="TJt-at-fAb"/>
                         <outlet property="newGroupLabel" destination="lCY-ED-uyz" id="zQ6-hv-Hjf"/>
-                        <segue destination="SFk-lM-sDc" kind="show" id="Fa8-2e-ZhQ"/>
+                        <outlet property="textField" destination="7mo-ep-sYO" id="1Sh-Gz-fdV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RM3-vQ-gh5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -214,9 +79,6 @@
             <point key="canvasLocation" x="1161" y="-33"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="Fa8-2e-ZhQ"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="person.3.fill" catalog="system" width="128" height="61"/>
     </resources>
