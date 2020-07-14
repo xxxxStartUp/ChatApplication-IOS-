@@ -245,6 +245,26 @@ extension UILabel{
             self.backgroundColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
         }
         
+        func profilePageImageView(){
+            self.layer.borderWidth = 1
+            self.layer.borderColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+            self.layer.masksToBounds = false
+            self.layer.cornerRadius = self.layer.frame.size.height/2
+            self.clipsToBounds = true
+            self.contentMode = .scaleAspectFill
+    
+            
+        }
+        func settingsPageImageView(){
+  
+                self.layer.borderWidth = 1
+                self.layer.borderColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+                self.layer.masksToBounds = false
+                self.layer.cornerRadius = self.layer.frame.size.height/2
+                self.clipsToBounds = true
+                self.contentMode = .scaleAspectFill
+        
+        }
         func darkmodeBackground(){
             if Constants.settingsPage.displayModeSwitch {
                 self.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
@@ -262,6 +282,7 @@ extension UILabel{
             }
         }
 }
+
 
 
 

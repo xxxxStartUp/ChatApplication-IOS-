@@ -10,9 +10,9 @@ import UIKit
 
 class ChatVC_Dara: UIViewController  {
     var messages = [Message]()
-     var hasScrolled : Bool = false
+    var hasScrolled : Bool = false
     var cellId = "id"
-     var r : Friend?{
+    var r : Friend?{
          didSet {
             title = r?.username
             loadMessages()
@@ -62,7 +62,9 @@ class ChatVC_Dara: UIViewController  {
     
     func loadMessages(){
         FireService.sharedInstance.loadMessagesWithFriend2(User: globalUser!,  freind: r!) { (messages, error) in
+            
             self.messages.removeAll()
+            
             self.chatTableView.reloadData()
             guard let messages = messages else {return}
             
