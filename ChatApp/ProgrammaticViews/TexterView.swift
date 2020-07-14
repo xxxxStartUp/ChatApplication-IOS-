@@ -34,6 +34,18 @@ class TexterView : UIView, UITextViewDelegate {
     }()
     
     
+    lazy var sendButton : UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .clear
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitle("Send", for: .normal)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.addTarget(self, action: #selector(send), for: .touchUpInside)
+        return button
+    }()
+    
+    
     
     lazy var pictureButton : UIButton = {
         let button = UIButton()
@@ -54,6 +66,7 @@ class TexterView : UIView, UITextViewDelegate {
         button.setImage(UIImage(named: "file"), for: .normal)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.addTarget(self, action: #selector(handlefileSelection), for: .touchUpInside)
+    
         return button
     }()
     
@@ -61,6 +74,11 @@ class TexterView : UIView, UITextViewDelegate {
     @objc func handlefileSelection() -> Void {
         delegate?.didClickFile()
     }
+    
+    @objc func send() -> Void {
+        delegate?.didClickSend()
+    }
+    
     
     
     @objc func handleCameraSelecation() -> Void {
@@ -71,9 +89,9 @@ class TexterView : UIView, UITextViewDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let stackView = UIStackView(arrangedSubviews: [pictureButton , filesButton])
+        let stackView = UIStackView(arrangedSubviews: [sendButton, pictureButton , filesButton])
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.alignment = .leading
+        stackView.alignment = .center
         stackView.distribution = .fillEqually
         stackView.axis = .horizontal
         
@@ -83,7 +101,7 @@ class TexterView : UIView, UITextViewDelegate {
         addSubview(stackView)
         
         let constaints = [
-            stackView.widthAnchor.constraint(equalToConstant: 80),
+            stackView.widthAnchor.constraint(equalToConstant: 130),
             stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
             stackView.topAnchor.constraint(equalTo: self.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
@@ -117,6 +135,8 @@ class TexterView : UIView, UITextViewDelegate {
             }
         }
     }
+    
+
     
 
 }

@@ -47,8 +47,14 @@ struct Constants{
     }
     
     struct profilePage {
-          static let headers = "Headers"
-          static let textfields = "Textfields"
+        static let headers = "Headers"
+        static let textfields = "Textfields"
 
+    }
+    struct settingsPage {
+        static let userNameHeader = "userNameHeader"
+        static let labelTitles = "labelTitle"
+        static let statusTitleLabel = "statusTitleLabel"
+        static var displayModeSwitch = false
     }
 }

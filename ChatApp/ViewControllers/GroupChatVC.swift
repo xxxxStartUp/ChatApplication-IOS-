@@ -12,12 +12,13 @@ class GroupChatVC: UIViewController {
     
     @IBOutlet weak var groupChatTable: UITableView!
     var cellID = "id"
+    var loaded  = false
     var groupMessages : [Message] = []
     var group : Group? {
         didSet{
+            title = group?.name
+            loaded = true
             
-            print("group was set")
-            loadAllGroupInfo()
         }
     }
     
@@ -29,14 +30,16 @@ class GroupChatVC: UIViewController {
         groupChatTable.dataSource = self
         groupChatTable.register(MessgaeCell.self, forCellReuseIdentifier: cellID)
         self.setUptexter(texterView: texterView, controller: self)
+        groupChatTable.separatorStyle = .none
 
        
     }
     
+  
     
-    func loadAllGroupInfo(){
-         title = group?.name
-       loadMessages()
+    override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
+           loadMessages()
         
         
     }
@@ -44,20 +47,36 @@ class GroupChatVC: UIViewController {
     
     
     func sendMessage(){
+        print("sending message to group")
+        
+        let content = Content(type: .string, content: "This is\(globalUser?.name ?? "no user")" + (texterView.textingView.text ?? ""))
+        let message = Message(content: content, sender: globalUser!, timeStamp: Date(), recieved: false)
+        FireService.sharedInstance.sendMessageToGroup(message: message, group: group!) { (result) in
+            
+            switch result{
+                
+            case .success( let bool):
+                if bool {
+                    print("messeage was sent ")
+                }
+            case .failure(_):
+                fatalError()
+            }
+        }
+       
         
     }
     
     
     func loadMessages (){
-        self.groupMessages.removeAll()
         FireService.sharedInstance.loadMessagesWithGroup(user: globalUser!, group: group!) { (messages, error) in
            self.groupMessages.removeAll()
            self.groupChatTable.reloadData()
             guard let messages = messages else {return}
-            
+            print(messages.count , "this is printing is in groupvc")
             messages.forEach { (message) in
                 self.groupMessages.append(message)
-                print(message.content.content as! String)
+                print(message.content.content as! String, "this is printing in group vc")
             }
             
             
@@ -66,7 +85,7 @@ class GroupChatVC: UIViewController {
             }
             
             if !messages.isEmpty{
-                //self.chatTableView.reloadData()
+                self.groupChatTable.reloadData()
                 let indexPath = IndexPath(row: self.groupMessages.count-1, section: 0)
                 self.groupChatTable.scrollToRow(at:indexPath, at: .bottom, animated: true)
             }
@@ -92,6 +111,7 @@ extension GroupChatVC : GroupDelegate {
 extension GroupChatVC : TexterViewDelegate {
     func didClickSend() {
         print("send")
+        sendMessage()
     }
     
     func didClickFile() {
@@ -100,7 +120,7 @@ extension GroupChatVC : TexterViewDelegate {
     
     func didClickCamera() {
         print("camera")
-        sendMessage()
+        
     }
     
     

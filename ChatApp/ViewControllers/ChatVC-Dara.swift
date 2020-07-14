@@ -48,8 +48,9 @@ class ChatVC_Dara: UIViewController  {
                 fatalError(error.localizedDescription)
             }
             if sucess{
-                let controller = UIAlertController.alertUser(title: "you sent a message", message: "sucess", whatToDo: "check firebase")
-                self.present(controller, animated: true, completion: nil)
+//                let controller = UIAlertController.alertUser(title: "you sent a message", message: "sucess", whatToDo: "check firebase")
+//                self.present(controller, animated: true, completion: nil)
+                print("sent message in chat_vc dara")
             }
         }
     }
@@ -117,6 +118,7 @@ extension ChatVC_Dara : FreindDelegate {
 extension ChatVC_Dara : TexterViewDelegate {
     func didClickSend() {
         print("send")
+        sendMessage()
     }
     
     func didClickFile() {
@@ -124,7 +126,7 @@ extension ChatVC_Dara : TexterViewDelegate {
     }
     
     func didClickCamera() {
-        sendMessage()
+        print("open camera")
     }
 }
 
@@ -139,7 +141,7 @@ extension UIViewController {
         texterView.translatesAutoresizingMaskIntoConstraints = false
         texterView.delegate = controller
         //hides tab bar
-        self.tabBarController?.tabBar.isHidden = true
+        //self.tabBarController?.tabBar.isHidden = true
         //adding programmatic texterView
         view.addSubview(texterView)
         texterView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true

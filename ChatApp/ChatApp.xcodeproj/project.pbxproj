@@ -17,6 +17,14 @@
 		4399AD5224AFA00100E7F0E0 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4399AD5124AFA00100E7F0E0 /* Activity.swift */; };
 		439F5AD82499A9DC00D06BCF /* FireService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439F5AD72499A9DB00D06BCF /* FireService.swift */; };
 		439F921E24AD469000EC9A33 /* FriendDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439F921D24AD469000EC9A33 /* FriendDelegate.swift */; };
+		43A747FE24BB80A100281A07 /* ChatCellProgrammatic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A747FD24BB80A100281A07 /* ChatCellProgrammatic.swift */; };
+		43A7480624BB811400281A07 /* ProfileInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A7480024BB811400281A07 /* ProfileInfoCell.swift */; };
+		43A7480724BB811400281A07 /* ChatInfoCells.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43A7480124BB811400281A07 /* ChatInfoCells.xib */; };
+		43A7480824BB811400281A07 /* AppSettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43A7480224BB811400281A07 /* AppSettingsCell.xib */; };
+		43A7480924BB811400281A07 /* AppSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A7480324BB811400281A07 /* AppSettingsCell.swift */; };
+		43A7480A24BB811400281A07 /* ChatInfoCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A7480424BB811400281A07 /* ChatInfoCells.swift */; };
+		43A7480B24BB811400281A07 /* ProfileInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43A7480524BB811400281A07 /* ProfileInfoCell.xib */; };
+		43A7480D24BB8A6100281A07 /* ProfileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A7480C24BB8A6100281A07 /* ProfileInfoView.swift */; };
 		43BBB4122499D5C70024F449 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43BBB4112499D5C70024F449 /* GoogleService-Info.plist */; };
 		43BBB419249A7B910024F449 /* Git.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB418249A7B910024F449 /* Git.swift */; };
 		43BBB420249ABDC60024F449 /* ChatLogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43BBB41B249ABDC50024F449 /* ChatLogVC.swift */; };
@@ -63,7 +71,6 @@
 		43C6C9EE24B590B2003DB77E /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C6C9ED24B590B2003DB77E /* ProfileVC.swift */; };
 		43E1A25924BAA3AA00511642 /* TexterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E1A25824BAA3AA00511642 /* TexterView.swift */; };
 		43E1A25B24BAA77300511642 /* TexterViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E1A25A24BAA77300511642 /* TexterViewDelegate.swift */; };
-		43E1A25D24BACA5A00511642 /* ChatCellProgrammatic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E1A25C24BACA5A00511642 /* ChatCellProgrammatic.swift */; };
 		9A1FD7EEF59FEFF812C86703 /* Pods_ChatApp_ChatAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2941CA96B7C8FD29FEB0C824 /* Pods_ChatApp_ChatAppUITests.framework */; };
 		CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA4249DB7C6000A8041 /* SignUpVC.swift */; };
 		CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA6249EF5BB000A8041 /* Constants.swift */; };
@@ -108,6 +115,14 @@
 		4399AD5124AFA00100E7F0E0 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		439F5AD72499A9DB00D06BCF /* FireService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireService.swift; sourceTree = "<group>"; };
 		439F921D24AD469000EC9A33 /* FriendDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDelegate.swift; sourceTree = "<group>"; };
+		43A747FD24BB80A100281A07 /* ChatCellProgrammatic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatCellProgrammatic.swift; sourceTree = "<group>"; };
+		43A7480024BB811400281A07 /* ProfileInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileInfoCell.swift; sourceTree = "<group>"; };
+		43A7480124BB811400281A07 /* ChatInfoCells.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatInfoCells.xib; sourceTree = "<group>"; };
+		43A7480224BB811400281A07 /* AppSettingsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppSettingsCell.xib; sourceTree = "<group>"; };
+		43A7480324BB811400281A07 /* AppSettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsCell.swift; sourceTree = "<group>"; };
+		43A7480424BB811400281A07 /* ChatInfoCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatInfoCells.swift; sourceTree = "<group>"; };
+		43A7480524BB811400281A07 /* ProfileInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileInfoCell.xib; sourceTree = "<group>"; };
+		43A7480C24BB8A6100281A07 /* ProfileInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoView.swift; sourceTree = "<group>"; };
 		43BBB4112499D5C70024F449 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		43BBB418249A7B910024F449 /* Git.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Git.swift; sourceTree = "<group>"; };
 		43BBB41B249ABDC50024F449 /* ChatLogVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLogVC.swift; sourceTree = "<group>"; };
@@ -154,7 +169,6 @@
 		43C6C9ED24B590B2003DB77E /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		43E1A25824BAA3AA00511642 /* TexterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TexterView.swift; sourceTree = "<group>"; };
 		43E1A25A24BAA77300511642 /* TexterViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TexterViewDelegate.swift; sourceTree = "<group>"; };
-		43E1A25C24BACA5A00511642 /* ChatCellProgrammatic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCellProgrammatic.swift; sourceTree = "<group>"; };
 		50AA4DAC9ADCF9DAF516B0FE /* Pods_ChatAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B2AD9233536C88847F0E6B3 /* Pods-ChatApp-ChatAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp-ChatAppUITests.release.xcconfig"; path = "Target Support Files/Pods-ChatApp-ChatAppUITests/Pods-ChatApp-ChatAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CB381BA4249DB7C6000A8041 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
@@ -245,6 +259,19 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		43A747FF24BB811400281A07 /* SettingsCell-Dara */ = {
+			isa = PBXGroup;
+			children = (
+				43A7480024BB811400281A07 /* ProfileInfoCell.swift */,
+				43A7480124BB811400281A07 /* ChatInfoCells.xib */,
+				43A7480224BB811400281A07 /* AppSettingsCell.xib */,
+				43A7480324BB811400281A07 /* AppSettingsCell.swift */,
+				43A7480424BB811400281A07 /* ChatInfoCells.swift */,
+				43A7480524BB811400281A07 /* ProfileInfoCell.xib */,
+			);
+			path = "SettingsCell-Dara";
+			sourceTree = "<group>";
+		};
 		43BBB417249A7B790024F449 /* Git */ = {
 			isa = PBXGroup;
 			children = (
@@ -313,6 +340,7 @@
 		43BBB44E24A070550024F449 /* SettingsCell */ = {
 			isa = PBXGroup;
 			children = (
+				43A747FF24BB811400281A07 /* SettingsCell-Dara */,
 				43BBB45124A070BD0024F449 /* SettingsProfileCell.swift */,
 				43BBB45324A071B10024F449 /* SettingsCell.swift */,
 			);
@@ -322,9 +350,9 @@
 		43BBB45724A07A780024F449 /* ChatCell */ = {
 			isa = PBXGroup;
 			children = (
+				43A747FD24BB80A100281A07 /* ChatCellProgrammatic.swift */,
 				43BBB45824A07ACC0024F449 /* ChatCell-ebuka.swift */,
 				436213EB24B6486D00304FB3 /* ChatCell-Dara.swift */,
-				43E1A25C24BACA5A00511642 /* ChatCellProgrammatic.swift */,
 			);
 			path = ChatCell;
 			sourceTree = "<group>";
@@ -389,6 +417,7 @@
 			isa = PBXGroup;
 			children = (
 				43E1A25824BAA3AA00511642 /* TexterView.swift */,
+				43A7480C24BB8A6100281A07 /* ProfileInfoView.swift */,
 			);
 			path = ProgrammaticViews;
 			sourceTree = "<group>";
@@ -603,12 +632,15 @@
 				43C6C9E724B58D9E003DB77E /* MainTabStoryboard.storyboard in Resources */,
 				CBD5986424986040000CBEBD /* Assets.xcassets in Resources */,
 				43C6C9DF24B58D9E003DB77E /* AddFriendSB.storyboard in Resources */,
+				43A7480724BB811400281A07 /* ChatInfoCells.xib in Resources */,
 				43C6C9EA24B58D9E003DB77E /* WelcomeScreenSB.storyboard in Resources */,
 				43C6C9E924B58D9E003DB77E /* FriendsSB.storyboard in Resources */,
 				43C6C9EC24B58D9E003DB77E /* ChatSB.storyboard in Resources */,
 				43BBB4122499D5C70024F449 /* GoogleService-Info.plist in Resources */,
 				43C6C9E524B58D9E003DB77E /* MainSB.storyboard in Resources */,
+				43A7480B24BB811400281A07 /* ProfileInfoCell.xib in Resources */,
 				436213E624B647D300304FB3 /* GroupChatSB.storyboard in Resources */,
+				43A7480824BB811400281A07 /* AppSettingsCell.xib in Resources */,
 				43C6C9E824B58D9E003DB77E /* NotificationSB.storyboard in Resources */,
 				43C6C9E124B58D9E003DB77E /* SignInSB.storyboard in Resources */,
 				43C6C9E424B58D9E003DB77E /* NoContactData.storyboard in Resources */,
@@ -747,7 +779,8 @@
 				CBD5985F24986037000CBEBD /* ViewController.swift in Sources */,
 				43BD8A8C24A81B6200749E2A /* Group.swift in Sources */,
 				43BBB45B24A19CE20024F449 /* Chat.swift in Sources */,
-				43E1A25D24BACA5A00511642 /* ChatCellProgrammatic.swift in Sources */,
+				43A7480D24BB8A6100281A07 /* ProfileInfoView.swift in Sources */,
+				43A747FE24BB80A100281A07 /* ChatCellProgrammatic.swift in Sources */,
 				CBD5985B24986037000CBEBD /* AppDelegate.swift in Sources */,
 				436213EC24B6486D00304FB3 /* ChatCell-Dara.swift in Sources */,
 				43BBB420249ABDC60024F449 /* ChatLogVC.swift in Sources */,
@@ -773,6 +806,8 @@
 				43BBB436249C9E1C0024F449 /* Validate.swift in Sources */,
 				43E1A25B24BAA77300511642 /* TexterViewDelegate.swift in Sources */,
 				43BBB428249B13EA0024F449 /* User.swift in Sources */,
+				43A7480624BB811400281A07 /* ProfileInfoCell.swift in Sources */,
+				43A7480A24BB811400281A07 /* ChatInfoCells.swift in Sources */,
 				43BBB45924A07ACC0024F449 /* ChatCell-ebuka.swift in Sources */,
 				43BBB422249ABDC60024F449 /* ChatLogCell.swift in Sources */,
 				439F5AD82499A9DC00D06BCF /* FireService.swift in Sources */,
@@ -781,6 +816,7 @@
 				43C6C99D24B0291D003DB77E /* ChatError.swift in Sources */,
 				43C6C9C824B58B71003DB77E /* NotificationsCell.swift in Sources */,
 				436213E824B647F900304FB3 /* ChatVC-Dara.swift in Sources */,
+				43A7480924BB811400281A07 /* AppSettingsCell.swift in Sources */,
 				43BD8A9324AA6CFE00749E2A /* Global.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

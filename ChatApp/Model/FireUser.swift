@@ -20,7 +20,7 @@ class FireUser : User {
     let email: String
     let timeCreated: Date
     
-    var messages: [Chat]
+    var messages: [Message]
     var group: [String]
     var friends: [Friend]
     var userType: Int

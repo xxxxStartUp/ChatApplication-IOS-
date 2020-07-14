@@ -13,7 +13,7 @@ import FirebaseFirestore
 
 
 
-// this class connects to firebasexx
+// this class connects to firebase
 class FireService {
     static let db = Firestore.firestore()
     static let firendsString = "friends"
@@ -54,7 +54,6 @@ class FireService {
             
         }
     }
-    
     
     
     
@@ -328,6 +327,45 @@ class FireService {
         }
     }
     
+    
+    func sendMessageToGroup(message : Message ,group :  Group , completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+        
+        
+        let sentdata = ["id":message.id ,
+                        "timeStamp":message.timeStamp,
+                        "email":message.sender.email,
+                        "recived":false //I think we need to spell check as retrieving the data later on won't work
+            ] as [String : Any]
+        
+        let Content = ["type" : message.content.type.rawValue,
+                       "content":message.content.content] as [String : Any]
+        
+        let ref =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.name).collection("messages").document()
+        
+          ref.setData(sentdata) { (error) in
+            if let error = error{
+                completionHandler(.failure(error))
+                return
+            }
+            
+                ref.collection("content").document().setData(Content) { (error) in
+                
+                if let error = error{
+                    completionHandler(.failure(error))
+                    return
+                }
+                
+                completionHandler(.success(true))
+                
+            }
+            
+            
+            
+        }
+        
+        
+        
+    }
     
     
     
@@ -603,7 +641,7 @@ class FireService {
         
         var messages : [Message] = []
         
-        let ref = FireService.users.document(user.email).collection(FireService.groupString).document(group.name).collection("messages")
+        let ref = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.name).collection("messages")
         
         ref.addSnapshotListener { (snapshot, error) in
             
@@ -616,10 +654,11 @@ class FireService {
                 
                 let id = document.documentID
                 let data = document.data()
-                let received = data["received"] as! Bool  //We need to spell check for the properties, as some spelling in Firestore will not correspond to this
-                let date = data["timestamp"] as! Timestamp
+                let received = data["recived"] as! Bool  //We need to spell check for the properties, as some spelling in Firestore will not correspond to this
+                let date = data["timeStamp"] as! Timestamp
                 let finalDate = date.dateValue()
                 let messageId = data["id"] as! String
+                let sender = data["email"] as! String
                 
                 
                 ref.document(id).collection("content").addSnapshotListener { (snapshot, error) in
@@ -637,9 +676,11 @@ class FireService {
                         let messagecontent = Content(type: .string, content: content)
                         
                         // Need to verify this
-                        self.searchOneUserWithEmail(email: user.email) { (user, error) in
+                        
+                        self.searchOneUserWithEmail(email: sender) { (user, error) in
                             guard let tempUser = user else {return}
                             let message = Message(content: messagecontent, sender: tempUser, timeStamp: finalDate, recieved: received)
+                            print(message.content.content as! String , "this is printing in loadmessages" )
                             messages.append(message)
                             
                             
@@ -671,7 +712,7 @@ class FireService {
             }
             
             guard let snapShots = snapshots else {return}
-            
+            print(snapShots.documents.count)
             for  document in snapShots.documents{
                 let documentData = document.data()
                 let email = documentData["groupadmin"] as! String

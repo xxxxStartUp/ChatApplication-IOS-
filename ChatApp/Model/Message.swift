@@ -9,7 +9,7 @@
 import Foundation
 
 
-class Message  : Messaging {
+class Message  : Messaging  {
     var id : String
     var content : Content
     var sender : FireUser
@@ -29,13 +29,15 @@ class Message  : Messaging {
 }
 
 
-struct Content {
+struct Content  {
     
     var type : ContentType
     var content : Any
 }
 
-enum ContentType {
+enum ContentType  {
+
+    
     case string
     case video
     case file

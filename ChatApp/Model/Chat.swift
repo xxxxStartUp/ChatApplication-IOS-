@@ -9,13 +9,4 @@
 import Foundation
 
 
-struct Chat  {
-    
-    var chatType : ChatType
-    var ChatInfo : String
-}
 
-enum ChatType {
-    case user
-    case group
-}

@@ -25,6 +25,8 @@ class ProfileVC: UIViewController {
         super.viewDidLoad()
         updateViews()
         // Do any additional setup after loading the view.
+        nameHeader.text = globalUser?.name
+        emailHeader.text = globalUser?.email
     }
     
     func updateViews(){
@@ -56,5 +58,13 @@ class ProfileVC: UIViewController {
         statusView.profilePageViews()
        
     }
+    
+    
+    @IBAction func signOut(_ sender: Any) {
+        
+     
+        
+    }
+    
 
 }
