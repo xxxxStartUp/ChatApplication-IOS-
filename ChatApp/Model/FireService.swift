@@ -149,7 +149,6 @@ class FireService {
             }
             if count == 0 {
                 fatalError("email does not exists")
-                return
             }
                 
             else{
@@ -246,9 +245,6 @@ class FireService {
      // Need to add a function to let user know there was an error
      */
     func signIn(email: String, password: String, completion : @escaping (Bool) -> ()) {
-        
-        
-        
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             
             if error != nil{
@@ -295,7 +291,6 @@ class FireService {
                 return
             }
             //UserDefaults.standard.set(user, forKey: "user")
-            
             completion(nil , true)
         }
         
@@ -436,7 +431,7 @@ class FireService {
     
     
     
-    func sendMessagefinal(User : FireUser, message : Message , freind : Friend ,completion : @escaping (Bool , Error?) -> ()){
+    func sendMessageToFriend(User : FireUser, message : Message , freind : Friend ,completion : @escaping (Bool , Error?) -> ()){
         
         
         let sentdata = ["id":message.id ,
@@ -452,9 +447,6 @@ class FireService {
                             "recived":true
             
             ] as [String : Any]
-        
-        
-        
         
         
         
@@ -495,7 +487,6 @@ class FireService {
                     if let error = error{
                         completion(false , error)
                         fatalError()
-                        
                     }
                     
                     if sucess{
@@ -706,6 +697,7 @@ class FireService {
     func loadGroups(User : FireUser,completion : @escaping ([Group]? , Error?) -> ()){
         var groups  : [Group] = []
         FireService.users.document(User.email).collection(FireService.groupString).addSnapshotListener { (snapshots, error) in
+            
             if let error = error{
                 completion(nil , error)
                 return
@@ -776,22 +768,7 @@ class FireService {
             }
         }
     }
-    //need to test
-    func addFriends (user: FireUser, friendsToAdd: [Friend]) {
-        
-        if friendsToAdd.count == 0 {return}
-        
-        for friend in friendsToAdd {
-            if user.friends.contains(friend) {
-                
-                continue
-                
-            } else {
-                
-                user.friends.append(friend)
-            }
-        }
-    }
+
     //need to test
     func removeFriends (user: FireUser, friendsToRemove: [Friend]) {
         

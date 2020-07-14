@@ -31,6 +31,8 @@ class GroupChatVC: UIViewController {
         groupChatTable.register(MessgaeCell.self, forCellReuseIdentifier: cellID)
         self.setUptexter(texterView: texterView, controller: self)
         groupChatTable.separatorStyle = .none
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
+        self.groupChatTable.contentInset = insets
 
        
     }
@@ -58,6 +60,7 @@ class GroupChatVC: UIViewController {
             case .success( let bool):
                 if bool {
                     print("messeage was sent ")
+                    self.loadMessages()
                 }
             case .failure(_):
                 fatalError()

@@ -28,8 +28,9 @@ class ChatVC_Dara: UIViewController  {
         chatTableView.delegate = self
         chatTableView.dataSource = self
         chatTableView.register(MessgaeCell.self, forCellReuseIdentifier: cellId)
-        
         self.setUptexter(texterView: texterView, controller: self)
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
+        self.chatTableView.contentInset = insets
         
     }
     
@@ -43,7 +44,7 @@ class ChatVC_Dara: UIViewController  {
     func sendMessage(){
         let messageContent = Content(type: .string, content: texterView.textingView.text ?? "No Value")
         let dummyMessage = Message(content: messageContent, sender: globalUser!, timeStamp: Date(), recieved: false)
-        FireService.sharedInstance.sendMessagefinal(User: globalUser!, message: dummyMessage, freind: r!) { (sucess, error) in
+        FireService.sharedInstance.sendMessageToFriend(User: globalUser!, message: dummyMessage, freind: r!) { (sucess, error) in
             if let error = error {
                 fatalError(error.localizedDescription)
             }
@@ -60,7 +61,6 @@ class ChatVC_Dara: UIViewController  {
     
     
     func loadMessages(){
-        
         FireService.sharedInstance.loadMessagesWithFriend2(User: globalUser!,  freind: r!) { (messages, error) in
             self.messages.removeAll()
             self.chatTableView.reloadData()
@@ -127,6 +127,7 @@ extension ChatVC_Dara : TexterViewDelegate {
     
     func didClickCamera() {
         print("open camera")
+        
     }
 }
 

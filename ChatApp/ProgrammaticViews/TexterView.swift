@@ -13,6 +13,7 @@ class TexterView : UIView, UITextViewDelegate {
     
     var delegate : TexterViewDelegate?
     
+    
     let backgroundView : UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 0.95, alpha: 1)
@@ -111,6 +112,7 @@ class TexterView : UIView, UITextViewDelegate {
             textingView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0),
             textingView.trailingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: -25),
             textingView.heightAnchor.constraint(equalToConstant: 35),
+            
             
             backgroundView.leadingAnchor.constraint(equalTo: textingView.leadingAnchor , constant: -25),
             backgroundView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 16),
