@@ -29,10 +29,10 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     }
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         defaultImage = profileImageView.image
         profilePictureGestureSetup()
+       
         
         // Do any additional setup after loading the view.
         
@@ -155,14 +155,16 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
             case .success(let url):
 //                self.profileImageView.af_setImage(withURL: url)
                 
-                self.profileImageView.af.setImage(withURL: url, cacheKey: nil, placeholderImage: UIImage(named: "profile"), serializer: nil, filter: nil, progress: nil, progressQueue: DispatchQueue.global(), imageTransition: .crossDissolve(0.1), runImageTransitionIfCached: true) { (reponse) in
+                self.profileImageView.af.setImage(withURL: url, cacheKey: nil, placeholderImage: self.defaultImage, serializer: nil, filter: nil, progress: nil, progressQueue: DispatchQueue.global(), imageTransition: .crossDissolve(0.1), runImageTransitionIfCached: true) { (reponse) in
 
                     switch reponse.result {
                     case .success(let image):
                         Constants.profilePage.globalProfileImage = image
                         Constants.profilePage.profileImageState = true
+                        self.profileImageView.isUserInteractionEnabled = true
                     case .failure(let error):
                         print(error.localizedDescription)
+                         self.profileImageView.isUserInteractionEnabled = true
                     }
 
                 }
@@ -177,20 +179,22 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     
     
     func deleteProfilePicture(){
-        
+         profileImageView.isUserInteractionEnabled = false
         FireService.sharedInstance.DeleteProfilePicture(user: globalUser!) { (result) in
             switch result{
                 
             case .success(let bool):
                 if bool{
                     Constants.profilePage.globalProfileImage = self.defaultImage
-                    Constants.profilePage.profileImageState = false
+                    Constants.profilePage.profileImageState = true
+                    self.profileImageView.isUserInteractionEnabled = true
                     return
                 }
             case .failure(let error):
                 let alert = UIAlertController(title: "Could not delete", message: error.localizedDescription, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Try Again", style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
+                 self.profileImageView.isUserInteractionEnabled = true
             }
         }
         
@@ -199,6 +203,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     }
     
     func saveProfilePicture(data : Data){
+         self.profileImageView.isUserInteractionEnabled = false
         FireService.sharedInstance.saveProfilePicture(data: data, user: globalUser!) { (result) in
             switch result {
             case .success(_):
@@ -206,6 +211,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
                 let image = UIImage(data: data)!
                 Constants.profilePage.globalProfileImage = image
                 Constants.profilePage.profileImageState = true
+                 self.profileImageView.isUserInteractionEnabled = true
             case .failure(_):
                 print("falure")
             }
