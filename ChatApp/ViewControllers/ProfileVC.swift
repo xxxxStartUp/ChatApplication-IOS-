@@ -22,7 +22,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     @IBOutlet weak var emailView: UIView!
     @IBOutlet weak var profileImageView: UIImageView!
     var defaultImage : UIImage?
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setImage()
         updateViews()
@@ -37,6 +37,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         // Do any additional setup after loading the view.
         
     }
+    
     //handles the updating of the views ....color, font, size etc.
     func updateViews(){
         
