@@ -148,7 +148,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     
     
     func setImage(){
-        FireService.sharedInstance.getMediaData(user: globalUser!) { (result) in
+        FireService.sharedInstance.getProfilePicture(user: globalUser!) { (result) in
             switch result{
                 
             case .success(let url):
@@ -177,18 +177,34 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     
     func deleteProfilePicture(){
         
+        FireService.sharedInstance.DeleteProfilePicture(user: globalUser!) { (result) in
+            switch result{
+                
+            case .success(let bool):
+                if bool{
+                    Constants.profilePage.globalProfileImage = self.defaultImage
+                    Constants.profilePage.profileImageState = false
+                    return
+                }
+            case .failure(let error):
+                let alert = UIAlertController(title: "Could not delete", message: error.localizedDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Try Again", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+        
+        
         
     }
     
     func saveProfilePicture(data : Data){
-        FireService.sharedInstance.saveMediaData(data: data, user: globalUser!) { (result) in
+        FireService.sharedInstance.saveProfilePicture(data: data, user: globalUser!) { (result) in
             switch result {
             case .success(_):
                 print("sucess")
-                let imageCache = AutoPurgingImageCache()
-                let avatarImage = UIImage(data: data)!
-                imageCache.add(avatarImage, withIdentifier: "profileImage")
-                Constants.profilePage.globalProfileImage = avatarImage
+                let image = UIImage(data: data)!
+                Constants.profilePage.globalProfileImage = image
+                Constants.profilePage.profileImageState = true
             case .failure(_):
                 print("falure")
             }

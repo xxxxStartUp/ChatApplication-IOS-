@@ -25,8 +25,36 @@ class FireService {
     static let storage = Storage.storage()
     static let storageRef = storage.reference()
     
+     func DeleteProfilePicture(user : FireUser , completionHandler : @escaping (Result<Bool , Error>)-> ()){
+        let refName = "\(user.email)/profileImage.png"
+        let ref = FireService.storageRef.child(refName)
+        ref.delete { (error) in
+            if let error = error{
+                completionHandler(.failure(error))
+                return
+            }
+            FireService.users.document(user.email).updateData(["profileImageUrl":FieldValue.delete()]) { (error) in
+                
+                if let error = error{
+                    completionHandler(.failure(error))
+                    return
+                }
+                completionHandler(.success(true))
+                           return
+                
+                
+            }
+            
+           
+            
+        }
 
-    func getMediaData(user : FireUser , completionHandler : @escaping (Result<URL , Error>)-> ()){
+    }
+    
+    
+    
+
+    func getProfilePicture(user : FireUser , completionHandler : @escaping (Result<URL , Error>)-> ()){
         
         FireService.users.document(user.email).getDocument { (documents, error) in
             
@@ -52,7 +80,7 @@ class FireService {
     
     
     
-    func saveMediaData(data : Data , user : FireUser , completionHandler: @escaping (Result<Bool, Error>) -> Void){
+    func saveProfilePicture(data : Data , user : FireUser , completionHandler: @escaping (Result<Bool, Error>) -> Void){
         let refName = "\(user.email)/profileImage.png"
         let ref = FireService.storageRef.child(refName)
         let newMetadata = StorageMetadata()
