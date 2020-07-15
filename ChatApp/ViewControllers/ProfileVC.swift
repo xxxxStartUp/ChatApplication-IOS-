@@ -23,14 +23,15 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     @IBOutlet weak var profileImageView: UIImageView!
     var defaultImage : UIImage?
     override func viewDidAppear(_ animated: Bool) {
-         defaultImage = profileImageView.image
         super.viewDidAppear(animated)
         setImage()
         updateViews()
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        defaultImage = profileImageView.image
         profilePictureGestureSetup()
         
         // Do any additional setup after loading the view.
@@ -113,7 +114,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     
     func deleteImage (sender : UIAlertAction!){
         profileImageView.image = defaultImage
-        Constants.profilePage.globalProfileImage = nil
+        //Constants.profilePage.globalProfileImage = nil
         //remove image from firebase
         deleteProfilePicture()
         
