@@ -156,7 +156,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
             case .success(let url):
 //                self.profileImageView.af_setImage(withURL: url)
                 
-                self.profileImageView.af.setImage(withURL: url, cacheKey: nil, placeholderImage: self.defaultImage, serializer: nil, filter: nil, progress: nil, progressQueue: DispatchQueue.global(), imageTransition: .crossDissolve(0.1), runImageTransitionIfCached: true) { (reponse) in
+                self.profileImageView.af.setImage(withURL: url, cacheKey: nil, placeholderImage: nil, serializer: nil, filter: nil, progress: nil, progressQueue: DispatchQueue.global(), imageTransition: .crossDissolve(0.1), runImageTransitionIfCached: true) { (reponse) in
 
                     switch reponse.result {
                     case .success(let image):
