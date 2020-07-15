@@ -32,6 +32,8 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         super.viewDidLoad()
         defaultImage = profileImageView.image
         profilePictureGestureSetup()
+        updateViews()
+        statusTextFieldGestureSetup()
        
         
         // Do any additional setup after loading the view.
@@ -55,12 +57,15 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         nameTextField.rightView = textFieldIcon
         nameTextField.rightViewMode = UITextField.ViewMode.unlessEditing
         
+        //statusTextField.isUserInteractionEnabled = false
+        statusTextField.allowsEditingTextAttributes = false
         statusTextField.rightView = textFieldIcon2
         statusTextField.rightViewMode = UITextField.ViewMode.unlessEditing
         statusTextField.profilePageTextFields(type: Constants.profilePage.textfields)
         
+        emailTextField.isUserInteractionEnabled = false
         emailTextField.rightView = textFieldIcon3
-        emailTextField.rightViewMode = UITextField.ViewMode.unlessEditing
+//        emailTextField.rightViewMode = UITextField.ViewMode.unlessEditing
         emailTextField.profilePageTextFields(type: Constants.profilePage.textfields)
         
         nameView.profilePageViews()
@@ -83,6 +88,14 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         profileImageView.profilePageImageView()
     }
     
+    //handles the gesture recognizer for when the status textfield is tapped
+    func statusTextFieldGestureSetup(){
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(statusTextFieldTapped))
+        statusTextField.isUserInteractionEnabled = true
+        statusTextField.addGestureRecognizer(gesture)
+       
+    }
+    
     @objc func profileImageTapped(){
         
         let alertController = UIAlertController(title: "What do you want to do?", message: "", preferredStyle: .actionSheet)
@@ -99,6 +112,10 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         self.present(alertController, animated: true, completion: nil)
         
         
+    }
+    
+    @objc func statusTextFieldTapped(textfield:UITextField){
+        print("status Textfield Tapped")
     }
     
     
