@@ -20,6 +20,8 @@ class AppSettingsCell: UITableViewCell {
 
         switch indexPath {
         case 0:
+            let notifictaion = Notification(name: .displayOn)
+            NotificationCenter.default.post(notifictaion)
             settingsSwitch.tag = 0
             label.text = "Display Mode"
             label.settingsPageLabels(type: Constants.settingsPage.labelTitles)
@@ -51,8 +53,9 @@ class AppSettingsCell: UITableViewCell {
         
         if settingsSwitch.tag == 0{
         if settingsSwitch.isOn{
+            let notifictaion = Notification(name: .displayOn)
+            NotificationCenter.default.post(notifictaion)
         
-            
             Constants.settingsPage.displayModeSwitch = true
             
             
@@ -60,6 +63,8 @@ class AppSettingsCell: UITableViewCell {
             
         }
         else{
+            let notifictaion = Notification(name: .displayOff)
+            NotificationCenter.default.post(notifictaion)
             
             Constants.settingsPage.displayModeSwitch = false
             print(Constants.settingsPage.displayModeSwitch)

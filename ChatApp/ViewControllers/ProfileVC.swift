@@ -9,7 +9,7 @@
 import UIKit
 import AlamofireImage
 
-class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate ,  UITextFieldDelegate {
     
     @IBOutlet weak var nameHeader: UILabel!
     @IBOutlet weak var emailHeader: UILabel!
@@ -22,6 +22,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     @IBOutlet weak var emailView: UIView!
     @IBOutlet weak var profileImageView: UIImageView!
     var defaultImage : UIImage?
+    var name : String = ""
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setImage()
@@ -34,12 +35,64 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         profilePictureGestureSetup()
         updateViews()
         statusTextFieldGestureSetup()
+        nameTextField.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide), name: UIResponder.keyboardDidHideNotification, object: nil)
+        
+                NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
        
         
         // Do any additional setup after loading the view.
         
     }
     
+    @objc func keyboardWillShow(){
+        name = nameTextField.text ?? ""
+        print("inserted name" , name)
+       }
+       
+    
+    @objc func keyboardDidHide(){
+        
+        if name == "" {return}
+        
+        if nameTextField.text != ""{
+            if let newName = nameTextField.text {
+                if newName == name {
+                    return
+                }
+                name = newName
+                
+                let alert = UIAlertController(title: "Changing your name", message: "Are you sure you want to chnage your name?", preferredStyle: .actionSheet)
+                
+                let action = UIAlertAction(title: "Yes", style: .default, handler: changeName(sender:))
+                
+                let action2 = UIAlertAction(title: "No", style: .cancel, handler: nil)
+                
+                alert.addAction(action)
+                alert.addAction(action2)
+                present(alert, animated: true, completion: nil)
+            }
+            
+            
+
+        }
+       
+    }
+    
+    
+    func changeName(sender : UIAlertAction){
+        FireService.sharedInstance.addCustomData(data: ["username":name], user: globalUser!) { (error, sucess) in
+            if sucess {
+                print("name was chnaged")
+                FireService.sharedInstance.refreshUserInfo(email: globalUser!.email)
+            }
+            
+        }
+        
+    }
+    
+  
     //handles the updating of the views ....color, font, size etc.
     func updateViews(){
         
@@ -102,7 +155,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         
         let action1 = UIAlertAction(title: "Delete Photo", style: .destructive, handler: deleteImage(sender:))
         let action2 = UIAlertAction(title: "Choose Photo", style: .default, handler: presentCameraRoll(sender:))
-        let action3 = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        let action3 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let actions = [action1,action2,action3]
         
         for action in actions{

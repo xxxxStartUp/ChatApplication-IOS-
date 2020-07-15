@@ -25,11 +25,26 @@ class SettingsVC: UIViewController {
         title = "Settings"
         //navigationController?.navigationBar.backgroundColor = .lightGray
         setUpTableView()
+        NotificationCenter.default.addObserver(self, selector: #selector(on), name: .displayOn, object: nil)
+                NotificationCenter.default.addObserver(self, selector: #selector(off), name: .displayOff, object: nil)
+        
         
         self.updateBackgroundViews()
         
         // Do any additional setup after loading the view.
     }
+    
+    @objc func on (){
+    NotificationCenter.default.removeObserver(self, name: .displayOff, object: nil)
+        print("switch is on")
+        self.updateBackgroundViews()
+    }
+    
+    @objc func off (){
+        NotificationCenter.default.removeObserver(self, name: .displayOn, object: nil)
+           print("switch is off")
+        self.updateBackgroundViews()
+       }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -260,6 +275,15 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
         }
     }
     
+    
+    
+}
+
+extension Notification.Name {
+    static let displayOn
+                = NSNotification.Name("displayOn")
+    static let displayOff
+                  = NSNotification.Name("displayOff")
     
     
 }

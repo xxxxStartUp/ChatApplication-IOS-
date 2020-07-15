@@ -210,6 +210,18 @@ class FireService {
     }
     
     
+    func refreshUserInfo(email : String){
+        self.searchOneUserWithEmail(email: email) { (user, error) in
+            guard user != nil else {
+                globalUser = nil
+                print(error?.localizedDescription ?? "no error but user was nil")
+                fatalError()
+            }
+            globalUser = user
+        }
+    }
+    
+    
     func searchOneUserWithEmail(email : String,completion : @escaping (FireUser? , Error?) -> ()){
         
         var data : [String : Any] = [:]
