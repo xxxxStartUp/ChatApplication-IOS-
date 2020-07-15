@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
@@ -20,14 +21,20 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var emailView: UIView!
     @IBOutlet weak var profileImageView: UIImageView!
-    
+    var defaultImage : UIImage?
+    override func viewDidAppear(_ animated: Bool) {
+         defaultImage = profileImageView.image
+        super.viewDidAppear(animated)
+        setImage()
+        updateViews()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         profilePictureGestureSetup()
-        updateViews()
+        
         // Do any additional setup after loading the view.
-      
+        
     }
     //handles the updating of the views ....color, font, size etc.
     func updateViews(){
@@ -53,7 +60,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         emailTextField.rightView = textFieldIcon3
         emailTextField.rightViewMode = UITextField.ViewMode.unlessEditing
         emailTextField.profilePageTextFields(type: Constants.profilePage.textfields)
-    
+        
         nameView.profilePageViews()
         emailView.profilePageViews()
         statusView.profilePageViews()
@@ -75,13 +82,42 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     }
     
     @objc func profileImageTapped(){
+        
+        let alertController = UIAlertController(title: "What do you want to do?", message: "", preferredStyle: .actionSheet)
+        
+        let action1 = UIAlertAction(title: "Delete Photo", style: .destructive, handler: deleteImage(sender:))
+        let action2 = UIAlertAction(title: "Choose Photo", style: .default, handler: presentCameraRoll(sender:))
+        let action3 = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        let actions = [action1,action2,action3]
+        
+        for action in actions{
+            alertController.addAction(action)
+        }
+        
+        self.present(alertController, animated: true, completion: nil)
+        
+        
+    }
+    
+    
+    func presentCameraRoll (sender : UIAlertAction!){
         let cameraRoll = UIImagePickerController()
         cameraRoll.delegate = self
         cameraRoll.sourceType = .photoLibrary
         cameraRoll.allowsEditing = false
         self.present(cameraRoll, animated: true, completion: nil)
         
-
+        
+    }
+    
+    
+    func deleteImage (sender : UIAlertAction!){
+        profileImageView.image = defaultImage
+        Constants.profilePage.globalProfileImage = nil
+        //remove image from firebase
+        deleteProfilePicture()
+        
+        
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -89,16 +125,75 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
             profileImageView.image = image
             Constants.profilePage.profileImageState = true
             Constants.profilePage.globalProfileImage = image
-           // profileImageView.contentMode = .scaleAspectFit
             
             dismiss(animated: true, completion: nil)
             
             
         }
+        
+        let data = Constants.profilePage.globalProfileImage!.pngData()!
+        saveProfilePicture(data: data)
+        
+
+
+        
+        
+        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
+    func setImage(){
+        FireService.sharedInstance.getMediaData(user: globalUser!) { (result) in
+            switch result{
+                
+            case .success(let url):
+//                self.profileImageView.af_setImage(withURL: url)
+                
+                self.profileImageView.af.setImage(withURL: url, cacheKey: nil, placeholderImage: UIImage(named: "profile"), serializer: nil, filter: nil, progress: nil, progressQueue: DispatchQueue.global(), imageTransition: .crossDissolve(0.1), runImageTransitionIfCached: true) { (reponse) in
+
+                    switch reponse.result {
+                    case .success(let image):
+                        Constants.profilePage.globalProfileImage = image
+                        Constants.profilePage.profileImageState = true
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+
+                }
+                
+                
+            case .failure(_):
+                print("failed to set image url")
+            }
+            
+        }
+    }
+    
+    
+    func deleteProfilePicture(){
+        
+        
+    }
+    
+    func saveProfilePicture(data : Data){
+        FireService.sharedInstance.saveMediaData(data: data, user: globalUser!) { (result) in
+            switch result {
+            case .success(_):
+                print("sucess")
+                let imageCache = AutoPurgingImageCache()
+                let avatarImage = UIImage(data: data)!
+                imageCache.add(avatarImage, withIdentifier: "profileImage")
+                Constants.profilePage.globalProfileImage = avatarImage
+            case .failure(_):
+                print("falure")
+            }
+        }
+        
     }
     
     

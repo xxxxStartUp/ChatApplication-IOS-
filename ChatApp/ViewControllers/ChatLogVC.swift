@@ -53,7 +53,11 @@ class ChatLogVC: UIViewController {
                 print(ac.name)
                 self.activities.append(ac)
             }
-            self.chatLogTableview.reloadData()
+            
+            DispatchQueue.main.async {
+                self.chatLogTableview.reloadData()
+            }
+            
         }
         
     }

@@ -10,7 +10,8 @@ import Foundation
 import Firebase
 import FirebaseFirestoreSwift
 import FirebaseFirestore
-
+import FirebaseStorage
+import UIKit
 
 
 // this class connects to firebase
@@ -21,9 +22,68 @@ class FireService {
     static let groupString  = "groups"
     static let sharedInstance = FireService()
     static let messagesString = "messages"
+    static let storage = Storage.storage()
+    static let storageRef = storage.reference()
+    
+
+    func getMediaData(user : FireUser , completionHandler : @escaping (Result<URL , Error>)-> ()){
+        
+        FireService.users.document(user.email).getDocument { (documents, error) in
+            
+            guard let data = documents?.data() else {return}
+            
+            if let url = data["profileImageUrl"] as? String {
+                if  let finalUrl = URL(string: url){
+                    completionHandler(.success(finalUrl))
+                }else{
+                   print("couldnt cast to url")
+                }
+                
+                
+            }else{
+                print("couldnt cast to string")
+            }
+            
+        }
+        
+        
+    }
     
     
     
+    
+    func saveMediaData(data : Data , user : FireUser , completionHandler: @escaping (Result<Bool, Error>) -> Void){
+        let refName = "\(user.email)/profileImage.png"
+        let ref = FireService.storageRef.child(refName)
+        let newMetadata = StorageMetadata()
+        newMetadata.contentType = "image/png"
+        
+        ref.putData(data, metadata: newMetadata) { (metadata, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                completionHandler(.failure(error))
+            }
+            ref.downloadURL(completion: { (url, error) in
+                guard let url = url else {
+                    completionHandler(.failure(error!))
+                    return
+                }
+                let data = ["profileImageUrl" : url.absoluteString]
+                
+                self.addCustomData(data: data, user: user) { (error, sucess) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        completionHandler(.failure(error))
+                    }
+                    if sucess{
+                        print("sucessful completion of profile image upload ")
+                        completionHandler(.success(true))
+                    }
+                    
+                }
+            })
+        }
+    }
     
     func loadAllActivity(User : FireUser , completion : @escaping ([Activity]? , Error?) -> ()){
         var activities  : [Activity] = []
@@ -286,6 +346,18 @@ class FireService {
                     "timecreated":user.timeCreated] as [String : Any]
         FireService.users.document(user.email).setData(data, merge: true) { (error) in
             
+            if let error = error{
+                completion(error , false)
+                return
+            }
+            //UserDefaults.standard.set(user, forKey: "user")
+            completion(nil , true)
+        }
+        
+    }
+    
+    func addCustomData(data : [String : Any] ,user : FireUser ,  completion : @escaping (Error? , Bool) -> ()) {
+        FireService.users.document(user.email).setData(data, merge: true) { (error) in
             if let error = error{
                 completion(error , false)
                 return

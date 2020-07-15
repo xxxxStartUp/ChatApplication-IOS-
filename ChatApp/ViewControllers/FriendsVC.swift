@@ -18,7 +18,7 @@ class FriendsVC: UIViewController {
         super.viewDidLoad()
         setUpTableView()
         
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -40,7 +40,15 @@ class FriendsVC: UIViewController {
                 for friend in friends{
                     self.friendList.append(friend)
                 }
-                self.contactsTable.reloadData()
+                
+                DispatchQueue.main.async {
+                    
+                    self.contactsTable.reloadData()
+                    
+                    
+                    
+                }
+                
             }
             
         }
@@ -50,9 +58,9 @@ class FriendsVC: UIViewController {
         contactsTable.delegate = self
         contactsTable.dataSource = self
     }
-
-
-
+    
+    
+    
 }
 
 

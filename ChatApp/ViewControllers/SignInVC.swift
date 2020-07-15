@@ -108,10 +108,15 @@ extension UIViewController {
     
     
     func goToTab(){
+        DispatchQueue.main.async {
+            
+            let vc = UIStoryboard(name: "MainTabStoryboard", bundle: nil).instantiateInitialViewController()!
+            self.view.window?.rootViewController = vc
+            self.view.window?.makeKeyAndVisible()
 
-    let vc = UIStoryboard(name: "MainTabStoryboard", bundle: nil).instantiateInitialViewController()!
-      view.window?.rootViewController = vc
-       view.window?.makeKeyAndVisible()
+        }
+
+  
         
         
 //        self.dismiss(animated: true) {
