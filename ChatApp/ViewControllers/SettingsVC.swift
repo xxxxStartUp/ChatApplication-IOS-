@@ -26,7 +26,7 @@ class SettingsVC: UIViewController {
         //navigationController?.navigationBar.backgroundColor = .lightGray
         setUpTableView()
         NotificationCenter.default.addObserver(self, selector: #selector(on), name: .displayOn, object: nil)
-                NotificationCenter.default.addObserver(self, selector: #selector(off), name: .displayOff, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(off), name: .displayOff, object: nil)
         
         
         self.updateBackgroundViews()
@@ -35,13 +35,11 @@ class SettingsVC: UIViewController {
     }
     
     @objc func on (){
-    NotificationCenter.default.removeObserver(self, name: .displayOff, object: nil)
-        print("switch is on")
         self.updateBackgroundViews()
     }
     
     @objc func off (){
-        NotificationCenter.default.removeObserver(self, name: .displayOn, object: nil)
+       
            print("switch is off")
         self.updateBackgroundViews()
        }
@@ -85,6 +83,12 @@ class SettingsVC: UIViewController {
     }
     
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .displayOn, object: nil)
+         NotificationCenter.default.removeObserver(self, name: .displayOff, object: nil)
+    }
+    
+    
 }
 
 
@@ -96,8 +100,6 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
         return 3
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        
         if section == 0 {
             return 1
         }
@@ -143,40 +145,6 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
         default:
             break
         }
-        
-        //        if indexPath.section == 0 {
-        //            if let cell = SettingsTable.dequeueReusableCell(withIdentifier: identifier) as?  ProfileInfoCell {
-        //                cell.backgroundColor = .clear
-        //                return cell
-        //            }
-        //        }
-        //        else {
-        //            if let cell = SettingsTable.dequeueReusableCell(withIdentifier: identifier2) as?  ChatInfoCells {
-        //                cell.backgroundColor = .clear
-        //                return cell
-        //            }
-        //        }
-        //
-        //        //        if indexPath.section == 1 {
-        //        //            let cell = UITableViewCell()
-        //        //            cell.textLabel?.text = "section1"
-        //        //            return cell
-        //        //        }
-        //        //
-        //        //        if indexPath.section == 2 {
-        //        //            let cell = UITableViewCell()
-        //        //            cell.textLabel?.text = "section2"
-        //        //            return cell
-        //        //        }
-        //        //
-        //        //        if indexPath.section == 3 {
-        //        //            let cell = UITableViewCell()
-        //        //            cell.textLabel?.text = "section3"
-        //        //            return cell
-        //        //        }
-        //
-        //
-        //
         return UITableViewCell()
     }
     
@@ -274,6 +242,8 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
             tabBarController?.tabBar.isTranslucent = true
         }
     }
+    
+
     
     
     
