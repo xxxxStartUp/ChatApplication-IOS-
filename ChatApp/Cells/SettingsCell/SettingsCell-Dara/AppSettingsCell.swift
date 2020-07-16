@@ -15,9 +15,10 @@ class AppSettingsCell: UITableViewCell {
     override class func awakeFromNib() {
         super.awakeFromNib()
         
+        
     }
     func updateViews(indexPath:Int){
-
+        
         switch indexPath {
         case 0:
             let notifictaion = Notification(name: .displayOn)
@@ -26,6 +27,7 @@ class AppSettingsCell: UITableViewCell {
             label.text = "Display Mode"
             label.settingsPageLabels(type: Constants.settingsPage.labelTitles)
             if settingsSwitch.isOn{
+                
                 print("Display mode On")
             }
             else{
@@ -43,39 +45,39 @@ class AppSettingsCell: UITableViewCell {
             }
         default:
             label.text = "Error"
-        
-        
-    }
+            
+            
+        }
         
     }
     
     @IBAction func switchPressed(_ sender: UISwitch) {
-        
+
         if settingsSwitch.tag == 0{
-        if settingsSwitch.isOn{
-            let notifictaion = Notification(name: .displayOn)
-            NotificationCenter.default.post(notifictaion)
-        
-            Constants.settingsPage.displayModeSwitch = true
+            if settingsSwitch.isOn{
+                let notifictaion = Notification(name: .displayOn)
+                NotificationCenter.default.post(notifictaion)
+                
+                Constants.settingsPage.displayModeSwitch = true
+                
+                
+                print(Constants.settingsPage.displayModeSwitch)
+                
+            }
+            else{
+                let notifictaion = Notification(name: .displayOff)
+                NotificationCenter.default.post(notifictaion)
+                
+                Constants.settingsPage.displayModeSwitch = false
+                print(Constants.settingsPage.displayModeSwitch)
+            }
             
-            
-            print(Constants.settingsPage.displayModeSwitch)
             
         }
-        else{
-            let notifictaion = Notification(name: .displayOff)
-            NotificationCenter.default.post(notifictaion)
-            
-            Constants.settingsPage.displayModeSwitch = false
-            print(Constants.settingsPage.displayModeSwitch)
-        }
-            
-        
-    }
         else if(settingsSwitch.tag == 1){
             if settingsSwitch.isOn{
-            print("Sound Switch is On")
-        }
+                print("Sound Switch is On")
+            }
             else{
                 print("Sound Switch is OFF")
             }

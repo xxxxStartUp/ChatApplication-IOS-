@@ -11,6 +11,7 @@ import UIKit
 class SettingsVC: UIViewController {
     
     @IBOutlet weak var SettingsTable: UITableView!
+    @IBOutlet weak var signOutButton: UIButton!
     
     //let identifier = "SettingsProfileCell"
     let identifier = "profileInfoCellIdentifier"
@@ -19,6 +20,7 @@ class SettingsVC: UIViewController {
     
     let identifier3 = "AppSettingsCellIdentifier"
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -26,7 +28,7 @@ class SettingsVC: UIViewController {
         //navigationController?.navigationBar.backgroundColor = .lightGray
         setUpTableView()
         NotificationCenter.default.addObserver(self, selector: #selector(on), name: .displayOn, object: nil)
-                NotificationCenter.default.addObserver(self, selector: #selector(off), name: .displayOff, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(off), name: .displayOff, object: nil)
         
         
         self.updateBackgroundViews()
@@ -35,16 +37,18 @@ class SettingsVC: UIViewController {
     }
     
     @objc func on (){
-    NotificationCenter.default.removeObserver(self, name: .displayOff, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .displayOff, object: nil)
         print("switch is on")
         self.updateBackgroundViews()
+        
+        
     }
     
     @objc func off (){
         NotificationCenter.default.removeObserver(self, name: .displayOn, object: nil)
-           print("switch is off")
+        print("switch is off")
         self.updateBackgroundViews()
-       }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -59,10 +63,10 @@ class SettingsVC: UIViewController {
     @IBAction func signOut(_ sender: Any) {
         
         FireService.sharedInstance.signOut()
-             globalUser = nil
-             let vc = UIStoryboard(name: "SignUpSB", bundle: nil).instantiateInitialViewController()!
-             vc.modalPresentationStyle = .fullScreen
-             self.present(vc, animated: true, completion: nil)
+        globalUser = nil
+        let vc = UIStoryboard(name: "SignUpSB", bundle: nil).instantiateInitialViewController()!
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
         
         
     }
@@ -234,6 +238,7 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
         DispatchQueue.main.async {
             self.SettingsTable.darkmodeBackground()
             self.navigationController?.navigationBar.darkmodeBackground()
+            self.signOutButton.settingsPageButtons()
             self.navigationBarBackgroundHandler()
             self.SettingsTable.reloadData()
             //self.navigationController?.navigationBar.settingsPage()
@@ -281,9 +286,9 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
 
 extension Notification.Name {
     static let displayOn
-                = NSNotification.Name("displayOn")
+        = NSNotification.Name("displayOn")
     static let displayOff
-                  = NSNotification.Name("displayOff")
+        = NSNotification.Name("displayOff")
     
     
 }
