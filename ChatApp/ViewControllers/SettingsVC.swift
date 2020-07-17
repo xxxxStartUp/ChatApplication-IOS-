@@ -56,8 +56,8 @@ class SettingsVC: UIViewController {
         super.viewWillDisappear(true)
         updateBackgroundViews()
     }
-    
-    
+
+
     @IBAction func signOut(_ sender: Any) {
         
         FireService.sharedInstance.signOut()
@@ -200,6 +200,19 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
         }
         return 0
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        switch indexPath.section {
+        case 0:
+            performSegue(withIdentifier: Constants.settingsToProfileIdentifer, sender: self)
+               
+            
+        default:
+               break
+           
+            
+    }
+    }
     
     //updates the background color for the tableview and nav bar.
     func updateBackgroundViews(){
@@ -223,6 +236,7 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
             navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
             navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
             navBarAppearance.backgroundColor = .black
+            self.navigationController?.navigationBar.isTranslucent = false
             self.navigationController?.navigationBar.standardAppearance = navBarAppearance
             self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
             self.navigationController?.navigationBar.setNeedsLayout()
@@ -237,6 +251,7 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
             navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
             navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
             navBarAppearance.backgroundColor = .white
+            self.navigationController?.navigationBar.isTranslucent = true
             self.navigationController?.navigationBar.standardAppearance = navBarAppearance
             self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
             self.navigationController?.navigationBar.setNeedsLayout()

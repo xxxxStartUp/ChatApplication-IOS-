@@ -151,9 +151,9 @@ class FireService {
     
     func loadAllFriends(user : FireUser , completion : @escaping ([Friend]? , Error?) -> ()){
         var friendList : [Friend] = []
-        let friends =   FireService.users.document(user.email).collection(FireService.firendsString).order(by: "name", descending: true)
+        let friends =   FireService.users.document(user.email).collection(FireService.firendsString)
         
-        friends.addSnapshotListener { (snapshot, error) in
+        friends.order(by: "name", descending: true).addSnapshotListener { (snapshot, error) in
             if let error = error{
                 completion(nil , error)
                 return

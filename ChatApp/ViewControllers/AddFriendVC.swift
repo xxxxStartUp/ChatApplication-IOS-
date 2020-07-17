@@ -17,12 +17,20 @@ class AddFriendVC : UIViewController {
     @IBOutlet weak var addContactsHeader: UILabel!
     
     override func viewDidLoad() {
+        navigationItem.largeTitleDisplayMode = .never
         super.viewDidLoad()
         updateViews()
         updateBackgroundViews()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        navigationItem.largeTitleDisplayMode = .never
+        updateViews()
+        updateBackgroundViews()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        navigationItem.largeTitleDisplayMode = .never
         updateViews()
         updateBackgroundViews()
     }
@@ -73,6 +81,7 @@ class AddFriendVC : UIViewController {
                navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
                navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
                navBarAppearance.backgroundColor = .white
+               self.navigationController?.navigationBar.isTranslucent = true
                self.navigationController?.navigationBar.standardAppearance = navBarAppearance
                self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
                self.navigationController?.navigationBar.setNeedsLayout()

@@ -75,7 +75,7 @@ class NewGroupVC: UIViewController {
     }
     func updateViews(){
         
-        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .never
         //adding rightBarButton
         let rightBarButton = UIButton(type: .system)
         
@@ -121,6 +121,7 @@ class NewGroupVC: UIViewController {
                   navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
                   navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
                   navBarAppearance.backgroundColor = .black
+                 self.navigationController?.navigationBar.isTranslucent = false
 //                  textField.attributedPlaceholder = NSAttributedString(string: "Enter Group Name",
 //                  attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
                   self.navigationController?.navigationBar.standardAppearance = navBarAppearance
@@ -138,6 +139,7 @@ class NewGroupVC: UIViewController {
                  navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
                  navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
                  navBarAppearance.backgroundColor = .white
+                self.navigationController?.navigationBar.isTranslucent = true
 //                textField.attributedPlaceholder = NSAttributedString(string: "Enter Group Name",
 //                attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
                  self.navigationController?.navigationBar.standardAppearance = navBarAppearance

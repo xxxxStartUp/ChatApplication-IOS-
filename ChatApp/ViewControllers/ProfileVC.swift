@@ -32,6 +32,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.largeTitleDisplayMode = .never
         defaultImage = profileImageView.image
         profilePictureGestureSetup()
         updateViews()
@@ -47,6 +48,12 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         // Do any additional setup after loading the view.
         
     }
+//    override func viewDidDisappear(_ animated: Bool) {
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//    }
     
     @objc func keyboardWillShow(){
         name = nameTextField.text ?? ""
@@ -314,6 +321,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
             navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
             navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
             navBarAppearance.backgroundColor = .black
+            self.navigationController?.navigationBar.isTranslucent = false
             self.navigationController?.navigationBar.standardAppearance = navBarAppearance
             self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
             self.navigationController?.navigationBar.setNeedsLayout()
@@ -328,6 +336,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
             navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
             navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
             navBarAppearance.backgroundColor = .white
+            self.navigationController?.navigationBar.isTranslucent = true
             self.navigationController?.navigationBar.standardAppearance = navBarAppearance
             self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
             self.navigationController?.navigationBar.setNeedsLayout()

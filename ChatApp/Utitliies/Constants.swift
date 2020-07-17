@@ -9,9 +9,12 @@
 import Foundation
 import UIKit
 struct Constants{
+    //identifiers
     
     static let mainTabStoryBoardSegue = "mainTabSBIdentifier"
     static let loginTabStoryBoardSegue = "loginSBIdentifier"
+    static let settingsToProfileIdentifer = "settingstoprofileIdentifier"
+    
     struct onBoardingPage{
         static let filledButton = "filled"
         static let notFilledButton = "noFill"
