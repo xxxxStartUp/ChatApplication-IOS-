@@ -102,6 +102,7 @@ class SignUpVC: UIViewController {
         passwordLabel.onBoardingPageSubHeaderLabels(type: Constants.onBoardingPage.passwordSubHeader)
         signupButton.onBoardingPageButton(type: Constants.onBoardingPage.filledButton)
         loginButton.onBoardingPageButton(type: Constants.onBoardingPage.notFilledButton)
+        alreadyHaveAnAccount.onBoardingPageSubHeaderLabels(type: Constants.onBoardingPage.alreadyHaveAnAccoutSubHeader)
     }
     
 }

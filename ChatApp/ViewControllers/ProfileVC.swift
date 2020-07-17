@@ -27,6 +27,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         super.viewDidAppear(animated)
         setImage()
         updateViews()
+        updateBackgroundViews()
     }
     
     override func viewDidLoad() {
@@ -34,6 +35,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         defaultImage = profileImageView.image
         profilePictureGestureSetup()
         updateViews()
+        updateBackgroundViews()
         statusTextFieldGestureSetup()
         nameTextField.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide), name: UIResponder.keyboardDidHideNotification, object: nil)
@@ -109,6 +111,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         
         nameTextField.rightView = textFieldIcon
         nameTextField.rightViewMode = UITextField.ViewMode.unlessEditing
+        nameTextField.profilePageTextFields(type: Constants.profilePage.textfields)
         
         //statusTextField.isUserInteractionEnabled = false
         statusTextField.allowsEditingTextAttributes = false
@@ -288,6 +291,52 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
             }
         }
         
+    }
+    //updates the background color for the tableview and nav bar.
+    func updateBackgroundViews(){
+        DispatchQueue.main.async {
+            self.view.darkmodeBackground()
+            self.navigationController?.navigationBar.darkmodeBackground()
+    
+            self.navigationBarBackgroundHandler()
+            //self.navigationController?.navigationBar.settingsPage()
+            
+            
+        }
+    }
+
+    //handles the text color, background color and appearance of the nav bar
+    func navigationBarBackgroundHandler(){
+        
+        if Constants.settingsPage.displayModeSwitch{
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.backgroundColor = .black
+            self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+            self.navigationController?.navigationBar.setNeedsLayout()
+            //handles TabBar
+            self.tabBarController?.tabBar.barTintColor = .black
+            tabBarController?.tabBar.isTranslucent = false
+            
+        }
+        else{
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.backgroundColor = .white
+            self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+            self.navigationController?.navigationBar.setNeedsLayout()
+            
+            //handles TabBar
+            self.tabBarController?.tabBar.barTintColor = .white
+            self.tabBarController?.tabBar.backgroundColor = .white
+            tabBarController?.tabBar.isTranslucent = true
+        }
     }
     
     

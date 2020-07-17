@@ -34,4 +34,5 @@ class ProfileInfoCell: UITableViewCell {
         
     }
     }
+    
 }

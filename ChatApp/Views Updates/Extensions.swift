@@ -32,7 +32,7 @@ extension UIButton{
             
             
         }
-
+        
     }
     func contactsPageButton(){
         self.layer.cornerRadius = 5
@@ -132,6 +132,34 @@ extension UILabel{
         
     }
     func contactsPageLabels(type:String){
+        if Constants.settingsPage.displayModeSwitch == false{
+            switch type {
+            case Constants.contactsPage.UserNameHeader:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
+            case Constants.contactsPage.emailSubHeader:
+                self.textColor = #colorLiteral(red: 0.7763852477, green: 0.7765197158, blue: 0.7763767838, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Regular", size: 14)
+            default:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
+            }
+        }else{
+            switch type {
+            case Constants.contactsPage.UserNameHeader:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
+            case Constants.contactsPage.emailSubHeader:
+                self.textColor = #colorLiteral(red: 0.7763852477, green: 0.7765197158, blue: 0.7763767838, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Regular", size: 14)
+            default:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Medium", size: 18)
+            }
+            
+        }
+    }
+    func addContactsPageLabels(type:String){
         
         switch type {
         case Constants.newContactsPage.newContactsHeader:
@@ -143,6 +171,7 @@ extension UILabel{
         }
         
     }
+    
     func notificationsPageLabels(type:String){
         if Constants.settingsPage.displayModeSwitch == false{
             switch type {
@@ -173,16 +202,29 @@ extension UILabel{
     }
     
     func profilePageLabels(type:String){
-        
-        switch type {
-        case Constants.profilePage.headers:
-            self.textColor = #colorLiteral(red: 0.7763852477, green: 0.7765197158, blue: 0.7763767838, alpha: 1)
-            self.font = UIFont(name: "HelveticaNeue-Regular", size: 20)
-        default:
-            self.textColor = #colorLiteral(red: 0.7763852477, green: 0.7765197158, blue: 0.7763767838, alpha: 1)
-            self.font = UIFont(name: "HelveticaNeue-Regular", size: 20)
+        if Constants.settingsPage.displayModeSwitch == false{
+            switch type {
+            case Constants.profilePage.headers:
+                self.textColor = #colorLiteral(red: 0.7763852477, green: 0.7765197158, blue: 0.7763767838, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Regular", size: 20)
+            default:
+                self.textColor = #colorLiteral(red: 0.7763852477, green: 0.7765197158, blue: 0.7763767838, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Regular", size: 20)
+            }
+        }
+        else{
+            switch type {
+            case Constants.profilePage.headers:
+                self.textColor = #colorLiteral(red: 0.7763852477, green: 0.7765197158, blue: 0.7763767838, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Regular", size: 20)
+            default:
+                self.textColor = #colorLiteral(red: 0.7763852477, green: 0.7765197158, blue: 0.7763767838, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Regular", size: 20)
+            }
+            
         }
     }
+    
     
     func settingsPageLabels(type:String){
         
@@ -228,14 +270,28 @@ extension UILabel{
 extension UITextField{
     
     func profilePageTextFields(type:String){
-        
-        switch type {
-        case Constants.profilePage.textfields:
-            self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-            self.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
-        default:
-            self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-            self.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
+        if Constants.settingsPage.displayModeSwitch == false{
+            switch type {
+                
+            case Constants.profilePage.textfields:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
+            default:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
+            }
+        }
+        else{
+            switch type {
+                
+            case Constants.profilePage.textfields:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
+            default:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
+                
+            }
         }
     }
     func newGroupPageTextField(){
@@ -249,18 +305,21 @@ extension UITextField{
             self.font = UIFont(name: "HelveticaNeue-Medium", size: 14)
         }
     }
+    func addContactPage(){
+        newGroupPageTextField()
+    }
     
 }
 
 extension UIView{
     
     func profilePageViews(){
-        self.backgroundColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
+        self.backgroundColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
     }
     
     func profilePageImageView(){
         self.layer.borderWidth = 1
-        self.layer.borderColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+        self.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         self.layer.masksToBounds = false
         self.layer.cornerRadius = self.layer.frame.size.height/2
         self.clipsToBounds = true
@@ -271,7 +330,7 @@ extension UIView{
     func settingsPageImageView(){
         
         self.layer.borderWidth = 1
-        self.layer.borderColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+        self.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         self.layer.masksToBounds = false
         self.layer.cornerRadius = self.layer.frame.size.height/2
         self.clipsToBounds = true

@@ -21,8 +21,8 @@ class AppSettingsCell: UITableViewCell {
         
         switch indexPath {
         case 0:
-            let notifictaion = Notification(name: .displayOn)
-            NotificationCenter.default.post(notifictaion)
+//            let notifictaion = Notification(name: .displayOn)
+//            NotificationCenter.default.post(notifictaion)
             settingsSwitch.tag = 0
             label.text = "Display Mode"
             label.settingsPageLabels(type: Constants.settingsPage.labelTitles)
@@ -54,26 +54,26 @@ class AppSettingsCell: UITableViewCell {
     @IBAction func switchPressed(_ sender: UISwitch) {
 
         if settingsSwitch.tag == 0{
-            if settingsSwitch.isOn{
-                let notifictaion = Notification(name: .displayOn)
-                NotificationCenter.default.post(notifictaion)
-                
-                Constants.settingsPage.displayModeSwitch = true
-                
-                
-                print(Constants.settingsPage.displayModeSwitch)
-                
-            }
-            else{
-                let notifictaion = Notification(name: .displayOff)
-                NotificationCenter.default.post(notifictaion)
-                
-                Constants.settingsPage.displayModeSwitch = false
-                print(Constants.settingsPage.displayModeSwitch)
-            }
-            
-            
-        }
+
+     if settingsSwitch.isOn{
+         let notifictaion = Notification(name: .displayOn)
+         NotificationCenter.default.post(notifictaion)
+         Constants.settingsPage.displayModeSwitch = true
+         print(Constants.settingsPage.displayModeSwitch)
+         
+     }
+     else{
+
+         let notifictaion = Notification(name: .displayOff)
+         NotificationCenter.default.post(notifictaion)
+         print("off view")
+         Constants.settingsPage.displayModeSwitch = false
+         print(Constants.settingsPage.displayModeSwitch)
+     }
+         
+     
+ }
+
         else if(settingsSwitch.tag == 1){
             if settingsSwitch.isOn{
                 print("Sound Switch is On")

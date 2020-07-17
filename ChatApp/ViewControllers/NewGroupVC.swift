@@ -15,6 +15,7 @@ class NewGroupVC: UIViewController {
     
     @IBOutlet weak var newGroupLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var newGroupImageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,7 +75,7 @@ class NewGroupVC: UIViewController {
     }
     func updateViews(){
         
-        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.prefersLargeTitles = true
         //adding rightBarButton
         let rightBarButton = UIButton(type: .system)
         

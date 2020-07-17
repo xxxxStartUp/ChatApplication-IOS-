@@ -62,4 +62,9 @@ struct Constants{
     
         static var displayModeSwitch = false
     }
+    struct contactsPage{
+        static let UserNameHeader = "userNameHeader"
+        static let emailSubHeader = "emailSubHeader"
+        
+    }
 }
