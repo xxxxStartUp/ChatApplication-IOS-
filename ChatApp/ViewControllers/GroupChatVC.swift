@@ -11,6 +11,8 @@ import UIKit
 class GroupChatVC: UIViewController {
     
     @IBOutlet weak var groupChatTable: UITableView!
+    @IBOutlet weak var infoButton: UIButton!
+    
     var cellID = "id"
     var loaded  = false
     var groupMessages : [Message] = []
@@ -95,7 +97,11 @@ class GroupChatVC: UIViewController {
             
         }
     }
-
+    
+    @IBAction func infoButtonPressed(_ sender: Any) {
+        performSegue(withIdentifier: Constants.groupchatSBToGroupInfoIdentifier, sender: self)
+    }
+    
 
 }
 

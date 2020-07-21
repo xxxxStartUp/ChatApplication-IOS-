@@ -58,7 +58,7 @@
                 <outlet property="label" destination="BRI-Kp-ovX" id="Qjb-lx-Kpb"/>
                 <outlet property="settingsSwitch" destination="pAm-0I-0WH" id="vgi-hr-tY5"/>
             </connections>
-            <point key="canvasLocation" x="-60" y="57"/>
+            <point key="canvasLocation" x="-60.14492753623189" y="56.584821428571423"/>
         </tableViewCell>
     </objects>
 </document>

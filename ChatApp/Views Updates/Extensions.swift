@@ -259,7 +259,43 @@ extension UILabel{
                 self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
                 self.font = UIFont(name: "HelveticaNeue-Light", size: 14)
             }
+        }
+        
+    }
+    func GroupInfoPageLabels(type:String){
+        if Constants.settingsPage.displayModeSwitch == false{
+            switch type {
+            case Constants.settingsPage.userNameHeader:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
+            case Constants.settingsPage.labelTitles:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Regular", size: 14)
+            case Constants.settingsPage.statusTitleLabel:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 14)
+            default:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 14)
+            }
             
+            
+        }
+        else{
+            switch type {
+            case Constants.settingsPage.userNameHeader:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
+            case Constants.settingsPage.labelTitles:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Regular", size: 10)
+            case Constants.settingsPage.statusTitleLabel:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 14)
+            default:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 14)
+            }
         }
         
     }

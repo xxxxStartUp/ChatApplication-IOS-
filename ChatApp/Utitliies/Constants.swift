@@ -14,6 +14,7 @@ struct Constants{
     static let mainTabStoryBoardSegue = "mainTabSBIdentifier"
     static let loginTabStoryBoardSegue = "loginSBIdentifier"
     static let settingsToProfileIdentifer = "settingstoprofileIdentifier"
+    static let groupchatSBToGroupInfoIdentifier = "GroupInfoIdentifier"
     
     struct onBoardingPage{
         static let filledButton = "filled"
@@ -69,5 +70,11 @@ struct Constants{
         static let UserNameHeader = "userNameHeader"
         static let emailSubHeader = "emailSubHeader"
         
+    }
+    struct groupInfoPage{
+        static let settingsHeader = "settingsHeader"
+        static let groupMemberTitleHeader = "groupMemberTitleHeader"
+        static let userNameHeader = "UserNameHeader"
+        static let emailHeader = "emailHeader"
     }
 }

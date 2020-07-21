@@ -150,7 +150,6 @@ extension UIViewController {
         texterView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         texterView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
         texterView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
-        
     }
 }
 

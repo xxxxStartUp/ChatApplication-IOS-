@@ -25,7 +25,7 @@ class TexterView : UIView, UITextViewDelegate {
         let textView = UITextView()
         textView.backgroundColor = .white
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.text = "Hey this is a textView"
+        textView.text = ""
         textView.textColor = .black
         textView.isEditable = true
         textView.layer.cornerRadius = 12
