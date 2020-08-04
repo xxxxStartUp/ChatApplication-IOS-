@@ -101,6 +101,11 @@ class GroupChatVC: UIViewController {
     @IBAction func infoButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: Constants.groupchatSBToGroupInfoIdentifier, sender: self)
     }
+    @IBAction func addcontactsButtonPressed(_ sender: Any) {
+        performSegue(withIdentifier: "chatToContactsIdentifier", sender: self)
+        Constants.chatPage.chatToContactsSegueSignal = true
+    }
+    
     
 
 }

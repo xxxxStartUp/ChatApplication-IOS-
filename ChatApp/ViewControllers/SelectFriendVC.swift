@@ -1,21 +1,20 @@
 //
-//  ContactsVC.swift
+//  SelectFriendVC.swift
 //  ChatApp
 //
-//  Created by Ebuka Egbunam on 6/21/20.
+//  Created by Daramfon Akpan on 7/26/20.
 //  Copyright © 2020 Daramfon Akpan. All rights reserved.
 //
 
 import UIKit
-class FriendsVC: UIViewController {
-    
-    
-    @IBOutlet weak var contactsTable: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet var addButton: UIBarButtonItem!
-    
+
+class SelectFriendVC: UIViewController {
+    @IBOutlet var contactsTable: UITableView!
+    @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet var newGroupBtn: UIButton!
     
     var friendList : [Friend] = []
+    var friendListEmail: [String] = []
     let identifier = "ContactCell"
     var delegate : FreindDelegate?
     var filteredFriendList = [Friend]()
@@ -25,9 +24,12 @@ class FriendsVC: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
         updateBackgroundViews()
-        rightBarButtonItemTrick()
+        //rightBarButtonItemTrick()
         setUpTableView()
-        //contactsTable.allowsMultipleSelection = true
+        contactsTable.allowsMultipleSelection = true
+        Constants.chatLogPage.chatLogToContactsSegueSignal = true
+        
+       
         
         
         
@@ -36,7 +38,9 @@ class FriendsVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         updateBackgroundViews()
-                
+        Constants.chatLogPage.chatLogToContactsSegueSignal = true
+        friendListEmail.removeAll()
+        
         
         
     }
@@ -45,6 +49,9 @@ class FriendsVC: UIViewController {
         super.viewDidAppear(true)
         loadFriends()
         
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        Constants.chatLogPage.chatLogToContactsSegueSignal = false
     }
     
     
@@ -73,15 +80,15 @@ class FriendsVC: UIViewController {
         performSegue(withIdentifier: "contactsToAddFriends", sender: self)
     }
     //handles hiding the rightbar button when contactstable appears from segueing from the chatscreen. The reason for this is so you can only add contacts from the contacts tab
-    func rightBarButtonItemTrick(){
-        if Constants.chatPage.chatToContactsSegueSignal{
-            self.navigationItem.rightBarButtonItem = nil
-        }
-        else{
-            self.navigationItem.rightBarButtonItem = addButton
-        }
-    }
-
+    //    func rightBarButtonItemTrick(){
+    //        if Constants.chatPage.chatToContactsSegueSignal{
+    //            self.navigationItem.rightBarButtonItem = nil
+    //        }
+    //        else{
+    //            self.navigationItem.rightBarButtonItem = addButton
+    //        }
+    //    }
+    
     
     func setUpTableView() -> Void {
         contactsTable.delegate = self
@@ -100,6 +107,7 @@ class FriendsVC: UIViewController {
             
         }
     }
+
     //handles the text color, background color and appearance of the nav bar
     func navigationBarBackgroundHandler(){
         
@@ -139,6 +147,17 @@ class FriendsVC: UIViewController {
             
         }
     }
+    @IBAction func newGroupPressed(_ sender: Any) {
+        
+        if friendListEmail.isEmpty{
+            let controller = UIAlertController.alertUser(title: "No Contacts Selected", message: "Select the contacts that will be invited to the new group", whatToDo: "OK")
+            self.present(controller, animated: true, completion: nil)
+        }else{
+            
+             performSegue(withIdentifier: "contactsToNewGroupSB", sender: self)
+        }
+    }
+    
     
     
     
@@ -146,7 +165,7 @@ class FriendsVC: UIViewController {
 }
 
 
-extension FriendsVC : UITableViewDelegate , UITableViewDataSource, UISearchBarDelegate{
+extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearchBarDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searching{
             return filteredFriendList.count
@@ -170,6 +189,7 @@ extension FriendsVC : UITableViewDelegate , UITableViewDataSource, UISearchBarDe
                 return cell
             }
         }else{
+            
             let cell = UITableViewCell()
             cell.textLabel?.text = "cell isnt working"
             return cell
@@ -177,15 +197,37 @@ extension FriendsVC : UITableViewDelegate , UITableViewDataSource, UISearchBarDe
         
         
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? NewGroupVC{
+            destination.selectedFriendsListEmail = friendListEmail       
+        }
+    }
     
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        if Constants.chatLogPage.chatLogToContactsSegueSignal == false{
             guard let vc = UIStoryboard(name: "ChatStoryBoard", bundle: nil).instantiateInitialViewController()  as? ChatVC_Dara else {return}
             self.delegate = vc
             delegate?.didSendFriend(freind: friendList[indexPath.row])
             navigationController?.pushViewController(vc, animated: true)
+        }
+        else{
+            friendListEmail.append(friendList[indexPath.row].email)
+            print(friendListEmail)
+            print(indexPath.row)
+            print(friendList[indexPath.row].email)
+
+        }
+    }
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        
+        let friendToRemove = friendList[indexPath.row].email
+        let index = friendListEmail.firstIndex(of: friendToRemove)
+        friendListEmail.remove(at: index!)
+        print(friendListEmail)
+        print(indexPath.row)
+
     }
     
     
@@ -207,3 +249,8 @@ extension FriendsVC : UITableViewDelegate , UITableViewDataSource, UISearchBarDe
     
     
 }
+
+
+
+
+

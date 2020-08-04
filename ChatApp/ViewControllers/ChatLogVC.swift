@@ -20,27 +20,28 @@ class ChatLogVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
         chatLogTableview.register(UINib(nibName: "ChatLogCell", bundle: nil), forCellReuseIdentifier: "ChatCellIdentifier")
         chatLogTableview.delegate = self
         chatLogTableview.dataSource = self
         navigationController?.navigationBar.prefersLargeTitles = true
         chatLogTableview.separatorStyle = .none
-
+        
         
         
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         updateBackgroundViews()
+        
     }
     
-
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-         self.tabBarController?.tabBar.isHidden = false
-         loadActivity()
+        self.tabBarController?.tabBar.isHidden = false
+        loadActivity()
     }
     
     
@@ -73,14 +74,22 @@ class ChatLogVC: UIViewController {
         activities.append(activity1)
         activities.append(activity2)
         activities.append(activity3)
-        activities.append(activity4)
         
-        chatLogTableview.reloadData()
         
     }
     
     
+    @IBAction func newGroupButtonPressed(_ sender: Any) {
+        print("new groupButton Clicked")
+        performSegue(withIdentifier: "chatLogToContactsIdentifier", sender: self)
+        
+        Constants.chatLogPage.chatLogToContactsSegueSignal = true
+    }
+    @IBAction func contactButtonPressed(_ sender: Any) {
+        performSegue(withIdentifier: "chatLogToContactsIdentifier", sender: self)
+    }
     
+  
 }
 
 
@@ -150,8 +159,8 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource{
             self.tabBarController?.tabBar.backgroundColor = .black
             
             //handles TabBar
-             self.tabBarController?.tabBar.barTintColor = .black
-             tabBarController?.tabBar.isTranslucent = false
+            self.tabBarController?.tabBar.barTintColor = .black
+            tabBarController?.tabBar.isTranslucent = false
             
         }
         else{
@@ -166,8 +175,8 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource{
             self.navigationController?.navigationBar.setNeedsLayout()
             
             //handles TabBar
-             self.tabBarController?.tabBar.barTintColor = .white
-             tabBarController?.tabBar.isTranslucent = false
+            self.tabBarController?.tabBar.barTintColor = .white
+            tabBarController?.tabBar.isTranslucent = false
             
         }
     }

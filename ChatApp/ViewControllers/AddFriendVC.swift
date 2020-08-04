@@ -15,7 +15,7 @@ class AddFriendVC : UIViewController {
     
     @IBOutlet weak var sendInviteButton: UIButton!
     @IBOutlet weak var addContactsHeader: UILabel!
-    
+   
     override func viewDidLoad() {
         navigationItem.largeTitleDisplayMode = .never
         super.viewDidLoad()
@@ -35,12 +35,21 @@ class AddFriendVC : UIViewController {
         updateBackgroundViews()
     }
     
+
+    
     @IBAction func addFriend(_ sender: Any) {
         
         if let email = emailTextfield.text{
             self.searchAndAddFreindWith(email: email)
         }
         
+    }
+    
+    func dynamicLinkSetup(){
+        var component = URLComponents()
+        component.scheme = "https"
+        component.host = "www.example.com"
+        //component.path = "\()"
     }
     func updateViews(){
         sendInviteButton.contactsPageButton()

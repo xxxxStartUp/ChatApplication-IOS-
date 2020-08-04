@@ -28,6 +28,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         setImage()
         updateViews()
         updateBackgroundViews()
+        
     }
     
     override func viewDidLoad() {
@@ -139,6 +140,10 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         //sets the email textfield name and name textfield.
         nameTextField.text = globalUser?.name
         emailTextField.text = globalUser?.email
+        
+        nameView.layer.cornerRadius = 10
+        emailView.layer.cornerRadius = 10
+        statusView.layer.cornerRadius = 10
         
     }
     

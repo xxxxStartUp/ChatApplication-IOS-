@@ -10,6 +10,8 @@ target 'ChatApp' do
     pod 'Firebase/Auth'
     pod 'Firebase/Firestore'
     pod 'FirebaseFirestoreSwift'
+    pod 'Firebase/DynamicLinks'
+    pod 'Firebase/Core'
     pod 'IQKeyboardManager'
     pod 'Firebase/Storage'
     pod 'AlamofireImage'

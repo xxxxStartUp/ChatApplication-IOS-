@@ -488,6 +488,38 @@ class FireService {
             completion(true, nil)
         }
     }
+    func searchForMaxGroupId(group:Group,completion: @escaping (Bool, Error?) -> ()) -> Int{
+        var data:[Int] = []
+        var maxID:Int = 0
+        FireService.users.document(group.GroupAdmin.email).collection("groups").whereField("groupid", isGreaterThanOrEqualTo: 0).getDocuments { (querySnapshot, error) in
+            if let error = error{
+                print("completion is false")
+                completion(false, error)
+                return
+            }
+                for document in querySnapshot!.documents {
+                    print("\(document.documentID) => \(document.data())")
+                    let groupidData = document.data()["groupid"] as! Int
+                    data.append(groupidData)
+                   
+                    
+            }
+            print(data)
+            
+            if let maxid = data.max(){
+                maxID = maxid
+                print("Max ID = \(maxid), \(data.max())")
+
+            }
+            else{
+                print("No max ID")
+            }
+             completion(true, nil)
+        }
+        
+            return maxID
+
+    }
     //need to test
     func deleteGroup (group: Group){
         FireService.users.document(group.GroupAdmin.email).collection("groups").document(group.name).delete()

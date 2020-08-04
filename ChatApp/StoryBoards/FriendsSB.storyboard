@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8Dy-Jr-zS6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8Dy-Jr-zS6">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -96,14 +96,16 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="wuM-3X-68A">
                             <color key="tintColor" red="0.1333333333" green="0.57647058819999997" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="XiX-3y-J2w" kind="show" id="3fl-Ts-q6Y"/>
+                                <action selector="addButtonPressed:" destination="EA7-x8-64S" id="YkS-Zy-w2q"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="addButton" destination="wuM-3X-68A" id="HoB-wj-mrz"/>
                         <outlet property="contactsTable" destination="2c4-E4-iQR" id="SDW-Db-qjw"/>
                         <outlet property="searchBar" destination="Dhv-RK-ukW" id="0o8-3V-yDQ"/>
+                        <segue destination="XiX-3y-J2w" kind="show" identifier="contactsToAddFriends" id="Z1b-k0-aVm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oHz-bC-axj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

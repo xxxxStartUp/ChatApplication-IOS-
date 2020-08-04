@@ -76,5 +76,12 @@ struct Constants{
         static let groupMemberTitleHeader = "groupMemberTitleHeader"
         static let userNameHeader = "UserNameHeader"
         static let emailHeader = "emailHeader"
+        static let admin = "admin"
+    }
+    struct chatPage{
+        static var chatToContactsSegueSignal = false
+    }
+    struct chatLogPage{
+        static var chatLogToContactsSegueSignal = false
     }
 }

@@ -16,7 +16,6 @@ class ChatVC_Dara: UIViewController  {
          didSet {
             title = r?.username
             loadMessages()
-             
          }
      }
     

@@ -251,7 +251,7 @@ extension UILabel{
                 self.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
             case Constants.settingsPage.labelTitles:
                 self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-                self.font = UIFont(name: "HelveticaNeue-Regular", size: 10)
+                self.font = UIFont(name: "HelveticaNeue-Regular", size: 14)
             case Constants.settingsPage.statusTitleLabel:
                 self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
                 self.font = UIFont(name: "HelveticaNeue-Light", size: 14)
@@ -265,15 +265,21 @@ extension UILabel{
     func GroupInfoPageLabels(type:String){
         if Constants.settingsPage.displayModeSwitch == false{
             switch type {
-            case Constants.settingsPage.userNameHeader:
-                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-                self.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
-            case Constants.settingsPage.labelTitles:
+            case Constants.groupInfoPage.settingsHeader:
                 self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
                 self.font = UIFont(name: "HelveticaNeue-Regular", size: 14)
-            case Constants.settingsPage.statusTitleLabel:
+            case Constants.groupInfoPage.userNameHeader:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Regular", size: 14)
+            case Constants.groupInfoPage.groupMemberTitleHeader:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
+            case Constants.groupInfoPage.emailHeader:
                 self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
                 self.font = UIFont(name: "HelveticaNeue-Light", size: 14)
+            case Constants.groupInfoPage.admin:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 10)
             default:
                 self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
                 self.font = UIFont(name: "HelveticaNeue-Light", size: 14)
@@ -283,15 +289,21 @@ extension UILabel{
         }
         else{
             switch type {
-            case Constants.settingsPage.userNameHeader:
+            case Constants.groupInfoPage.settingsHeader:
                 self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-                self.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
-            case Constants.settingsPage.labelTitles:
+                self.font = UIFont(name: "HelveticaNeue-Regular", size: 14)
+            case Constants.groupInfoPage.userNameHeader:
                 self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-                self.font = UIFont(name: "HelveticaNeue-Regular", size: 10)
-            case Constants.settingsPage.statusTitleLabel:
+                self.font = UIFont(name: "HelveticaNeue-Regular", size: 14)
+            case Constants.groupInfoPage.groupMemberTitleHeader:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
+            case Constants.groupInfoPage.emailHeader:
                 self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
                 self.font = UIFont(name: "HelveticaNeue-Light", size: 14)
+            case Constants.groupInfoPage.admin:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 10)
             default:
                 self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
                 self.font = UIFont(name: "HelveticaNeue-Light", size: 14)
@@ -343,6 +355,17 @@ extension UITextField{
     }
     func addContactPage(){
         newGroupPageTextField()
+    }
+    func groupInfoTextField(){
+        if Constants.settingsPage.displayModeSwitch == false{
+            self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            self.font = UIFont(name: "HelveticaNeue-Regular", size: 14)
+            
+        }else{
+            self.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            self.font = UIFont(name: "HelveticaNeue-Regular", size: 14)
+        }
+        
     }
     
 }
