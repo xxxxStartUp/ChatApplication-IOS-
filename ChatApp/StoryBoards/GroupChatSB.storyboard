@@ -97,7 +97,7 @@
         <!--Navigation Controller-->
         <scene sceneID="lrF-vG-2op">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="tUJ-Rs-r2X" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="GroupChat-nav" automaticallyAdjustsScrollViewInsets="NO" id="tUJ-Rs-r2X" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="rOx-rB-vnF">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

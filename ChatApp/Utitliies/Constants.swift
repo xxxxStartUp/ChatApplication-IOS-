@@ -80,8 +80,11 @@ struct Constants{
     }
     struct chatPage{
         static var chatToContactsSegueSignal = false
+        static let leftChatBubblev = "LeftChatBubble"
+        static let rightchatBubble = "RightChatBubble"
     }
     struct chatLogPage{
         static var chatLogToContactsSegueSignal = false
     }
+    
 }

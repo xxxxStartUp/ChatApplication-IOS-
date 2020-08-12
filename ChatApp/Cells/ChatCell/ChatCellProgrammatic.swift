@@ -18,14 +18,16 @@ class MessgaeCell: UITableViewCell {
     var message : Message! {
         didSet{
             messageLabel.text = message.content.content as! String
-            messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
+//            messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
             
             if  message.recieved{
                 leadingContstraints?.isActive = true
                 tarilingConstraints?.isActive = false
+                messageBackgroundView.chatPageViews(type: Constants.chatPage.leftChatBubblev)
             }else{
                 leadingContstraints?.isActive = false
                 tarilingConstraints?.isActive = true
+                messageBackgroundView.chatPageViews(type: Constants.chatPage.rightchatBubble)
             }
             
             
@@ -85,5 +87,6 @@ class MessgaeCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+  
 }
 

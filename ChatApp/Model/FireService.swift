@@ -771,6 +771,7 @@ class FireService {
     }
     
     
+    
     // Need to test
     func loadMessagesWithGroup(user : FireUser, group: Group ,completion : @escaping ([Message]? , Error?) -> ()){
         

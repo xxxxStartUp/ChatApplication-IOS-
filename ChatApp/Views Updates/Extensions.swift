@@ -404,6 +404,26 @@ extension UIView{
             self.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }
     }
+    func texterViewBackground(){
+        if Constants.settingsPage.displayModeSwitch {
+            self.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        }
+        else{
+            self.backgroundColor = #colorLiteral(red: 0.9761944413, green: 0.976330936, blue: 0.9761514068, alpha: 1)
+        }
+    }
+    func chatPageViews(type:String){
+        
+        switch type {
+        case Constants.chatPage.leftChatBubblev:
+            self.backgroundColor = #colorLiteral(red: 0.7176470588, green: 0.9333333333, blue: 0.1333333333, alpha: 1)
+        case Constants.chatPage.rightchatBubble:
+            self.backgroundColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+        default:
+             self.backgroundColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+        }
+        
+    }
     func navbar(){
         if Constants.settingsPage.displayModeSwitch {
             self.backgroundColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)

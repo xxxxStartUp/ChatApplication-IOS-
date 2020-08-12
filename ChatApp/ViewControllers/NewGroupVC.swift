@@ -115,21 +115,21 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
     
     @objc func rightBarButtonPressed(){
         //createDynamicLink()
-        if let groupName = self.groupNameTextField.text{
-        let newGroup = Group(GroupAdmin: globalUser!, id: 1, name: groupName)
-        let result = FireService.sharedInstance.searchForMaxGroupId(group: newGroup) { (completed, error) in
-                if let error = error{
-                    print(error.localizedDescription)
-                    fatalError()
-                }
-                if completed{
-
-                    print("searchformaxgroupID initiated")
-                }
-            }
-            print("The Max Result is ==> \(result)")
- }
-        //createGroup()
+//        if let groupName = self.groupNameTextField.text{
+//        let newGroup = Group(GroupAdmin: globalUser!, id: 1, name: groupName)
+//        let result = FireService.sharedInstance.searchForMaxGroupId(group: newGroup) { (completed, error) in
+//                if let error = error{
+//                    print(error.localizedDescription)
+//                    fatalError()
+//                }
+//                if completed{
+//
+//                    print("searchformaxgroupID initiated")
+//                }
+//            }
+//            print("The Max Result is ==> \(result)")
+// }
+        createGroup()
 
        // navigationController?.popToRootViewController(animated: true)
     }
@@ -142,7 +142,7 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
         components.host = "www.example.com"
         components.path = "/groups"
         
-        let recipeIDQueryItem = URLQueryItem(name: "recipeID", value: "rcp_apple_pie")
+        let recipeIDQueryItem = URLQueryItem(name: "groupID", value: "rcp_apple_pie")
         components.queryItems = [recipeIDQueryItem]
         
         guard let linkParameter = components.url else {return}

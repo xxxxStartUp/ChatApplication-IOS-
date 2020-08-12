@@ -16,6 +16,7 @@ class TexterView : UIView, UITextViewDelegate {
     
     let backgroundView : UIView = {
         let view = UIView()
+//        view.darkmodeBackground()
         view.backgroundColor = UIColor(white: 0.95, alpha: 1)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -39,8 +40,9 @@ class TexterView : UIView, UITextViewDelegate {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .clear
-        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(#colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1), for: .normal)
         button.setTitle("Send", for: .normal)
+        button.tintColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.addTarget(self, action: #selector(send), for: .touchUpInside)
         return button
@@ -53,7 +55,9 @@ class TexterView : UIView, UITextViewDelegate {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .clear
         button.setTitleColor(.systemBlue, for: .normal)
-        button.setImage(UIImage(named: "camera"), for: .normal)
+        let image = UIImage(systemName: "camera")
+        button.setImage(image, for: .normal)
+        button.tintColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.addTarget(self, action: #selector(handleCameraSelecation), for: .touchUpInside)
         return button
@@ -64,7 +68,9 @@ class TexterView : UIView, UITextViewDelegate {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .clear
         button.setTitleColor(.systemBlue, for: .normal)
-        button.setImage(UIImage(named: "file"), for: .normal)
+        let image = UIImage(systemName: "doc")
+        button.setImage(image, for: .normal)
+        button.tintColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.addTarget(self, action: #selector(handlefileSelection), for: .touchUpInside)
     
