@@ -24,6 +24,43 @@ class FireService {
     static let messagesString = "messages"
     static let storage = Storage.storage()
     static let storageRef = storage.reference()
+    static let savedMessages = "savedMessages"
+    
+    /**
+    Saves a message for the current user
+    
+    - Parameter user:  the current user trying to save a message
+    - Parameter messageToSave: the message to be saved
+    - Returns: Void
+    */
+    func saveMessages(user : FireUser, messageToSave: Message, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+        
+        let Content = ["type" : messageToSave.content.type.rawValue,
+                       "content": messageToSave.content.content,
+                       "sender": messageToSave.sender.email] as [String : Any]
+                        
+        let ref =         FireService.users.document(user.email).collection(FireService.savedMessages).document()
+        
+        
+        
+      ref.setData(Content) { (error) in
+            
+            if let error = error{
+                completionHandler(.failure(error))
+                return
+            }
+            
+            completionHandler(.success(true))
+            
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
     
      func DeleteProfilePicture(user : FireUser , completionHandler : @escaping (Result<Bool , Error>)-> ()){
         let refName = "\(user.email)/profileImage.png"

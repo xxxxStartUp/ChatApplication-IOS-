@@ -19,6 +19,23 @@ class ChatVC_Dara: UIViewController  {
          }
      }
     
+    /*func dummy() {
+        
+        let content = Content(type: .string, content: "first saved message")
+        let message = Message(content: content, sender: globalUser!, timeStamp: Date(), recieved: true)
+        
+        FireService.sharedInstance.saveMessages(user: globalUser!, messageToSave: message) { (result) in
+            switch result{
+                
+            case .success(_):
+                print("Successfully saved messages")
+            case .failure(_):
+                fatalError()
+            }
+        }
+    }*/
+    
+
     let texterView = TexterView()
     
     @IBOutlet weak var chatTableView: UITableView!
@@ -30,6 +47,7 @@ class ChatVC_Dara: UIViewController  {
         self.setUptexter(texterView: texterView, controller: self)
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         self.chatTableView.contentInset = insets
+        //dummy()
         
     }
     

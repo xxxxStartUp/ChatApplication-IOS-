@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		1A4CAF22F581A07E461693D6 /* Pods_ChatApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8CCFD2A7F535B81E81349B /* Pods_ChatApp.framework */; };
+		2DAABEFC24E2490B00CA8177 /* GroupchatinfoCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAABEF324E2490900CA8177 /* GroupchatinfoCells.swift */; };
+		2DAABEFD24E2490B00CA8177 /* GroupSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DAABEF424E2490A00CA8177 /* GroupSettingCell.xib */; };
+		2DAABEFE24E2490B00CA8177 /* GroupSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAABEF524E2490A00CA8177 /* GroupSettingCell.swift */; };
+		2DAABEFF24E2490B00CA8177 /* participantsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DAABEF624E2490A00CA8177 /* participantsHeaderCell.xib */; };
+		2DAABF0024E2490B00CA8177 /* participantsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DAABEF724E2490A00CA8177 /* participantsCell.xib */; };
+		2DAABF0124E2490B00CA8177 /* GroupchatinfoCells.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DAABEF824E2490A00CA8177 /* GroupchatinfoCells.xib */; };
+		2DAABF0224E2490B00CA8177 /* participantsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAABEF924E2490A00CA8177 /* participantsHeaderCell.swift */; };
+		2DAABF0324E2490B00CA8177 /* chatinfoCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAABEFA24E2490A00CA8177 /* chatinfoCells.swift */; };
+		2DAABF0424E2490B00CA8177 /* participantsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAABEFB24E2490A00CA8177 /* participantsCell.swift */; };
 		33A3306B172758900C12E9B7 /* Pods_ChatApp_ChatAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED541EBE12DD8E82354991 /* Pods_ChatApp_ChatAppUITests.framework */; };
 		436213E424B647B100304FB3 /* GroupChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436213E324B647B100304FB3 /* GroupChatVC.swift */; };
 		436213E624B647D300304FB3 /* GroupChatSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 436213E524B647D300304FB3 /* GroupChatSB.storyboard */; };
@@ -74,14 +83,6 @@
 		CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA4249DB7C6000A8041 /* SignUpVC.swift */; };
 		CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB381BA6249EF5BB000A8041 /* Constants.swift */; };
 		CB584D2424C524AC00F863AF /* GroupInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB584D2324C524AC00F863AF /* GroupInfoVC.swift */; };
-		CB584D2824C52DEC00F863AF /* GroupchatinfoCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB584D2624C52DEC00F863AF /* GroupchatinfoCells.swift */; };
-		CB584D2924C52DEC00F863AF /* GroupchatinfoCells.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB584D2724C52DEC00F863AF /* GroupchatinfoCells.xib */; };
-		CB584D3024C52FD900F863AF /* participantsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB584D2E24C52FD900F863AF /* participantsCell.swift */; };
-		CB584D3124C52FD900F863AF /* participantsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB584D2F24C52FD900F863AF /* participantsCell.xib */; };
-		CB584D3824C53BE100F863AF /* GroupSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB584D3624C53BE100F863AF /* GroupSettingCell.swift */; };
-		CB584D3924C53BE100F863AF /* GroupSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB584D3724C53BE100F863AF /* GroupSettingCell.xib */; };
-		CB584D3C24C67BFC00F863AF /* participantsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB584D3A24C67BFC00F863AF /* participantsHeaderCell.swift */; };
-		CB584D3D24C67BFC00F863AF /* participantsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CB584D3B24C67BFC00F863AF /* participantsHeaderCell.xib */; };
 		CB85DDF024CE771D00E94353 /* selectFriendSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB85DDEF24CE771D00E94353 /* selectFriendSB.storyboard */; };
 		CB85DDF224CE77BA00E94353 /* SelectFriendVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB85DDF124CE77BA00E94353 /* SelectFriendVC.swift */; };
 		CBA262AB24AFBB5F00F81034 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA262AA24AFBB5F00F81034 /* Extensions.swift */; };
@@ -114,6 +115,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2DAABEF324E2490900CA8177 /* GroupchatinfoCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupchatinfoCells.swift; sourceTree = "<group>"; };
+		2DAABEF424E2490A00CA8177 /* GroupSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupSettingCell.xib; sourceTree = "<group>"; };
+		2DAABEF524E2490A00CA8177 /* GroupSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupSettingCell.swift; sourceTree = "<group>"; };
+		2DAABEF624E2490A00CA8177 /* participantsHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = participantsHeaderCell.xib; sourceTree = "<group>"; };
+		2DAABEF724E2490A00CA8177 /* participantsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = participantsCell.xib; sourceTree = "<group>"; };
+		2DAABEF824E2490A00CA8177 /* GroupchatinfoCells.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupchatinfoCells.xib; sourceTree = "<group>"; };
+		2DAABEF924E2490A00CA8177 /* participantsHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = participantsHeaderCell.swift; sourceTree = "<group>"; };
+		2DAABEFA24E2490A00CA8177 /* chatinfoCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = chatinfoCells.swift; sourceTree = "<group>"; };
+		2DAABEFB24E2490A00CA8177 /* participantsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = participantsCell.swift; sourceTree = "<group>"; };
 		32EAEBF7AB3C5A962A4A38CA /* Pods-ChatAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatAppTests.debug.xcconfig"; path = "Target Support Files/Pods-ChatAppTests/Pods-ChatAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		436213E324B647B100304FB3 /* GroupChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatVC.swift; sourceTree = "<group>"; };
 		436213E524B647D300304FB3 /* GroupChatSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GroupChatSB.storyboard; sourceTree = "<group>"; };
@@ -186,14 +196,6 @@
 		CB381BA4249DB7C6000A8041 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		CB381BA6249EF5BB000A8041 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../Utitliies/Constants.swift; sourceTree = "<group>"; };
 		CB584D2324C524AC00F863AF /* GroupInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupInfoVC.swift; sourceTree = "<group>"; };
-		CB584D2624C52DEC00F863AF /* GroupchatinfoCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupchatinfoCells.swift; sourceTree = "<group>"; };
-		CB584D2724C52DEC00F863AF /* GroupchatinfoCells.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupchatinfoCells.xib; sourceTree = "<group>"; };
-		CB584D2E24C52FD900F863AF /* participantsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = participantsCell.swift; sourceTree = "<group>"; };
-		CB584D2F24C52FD900F863AF /* participantsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = participantsCell.xib; sourceTree = "<group>"; };
-		CB584D3624C53BE100F863AF /* GroupSettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSettingCell.swift; sourceTree = "<group>"; };
-		CB584D3724C53BE100F863AF /* GroupSettingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupSettingCell.xib; sourceTree = "<group>"; };
-		CB584D3A24C67BFC00F863AF /* participantsHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = participantsHeaderCell.swift; sourceTree = "<group>"; };
-		CB584D3B24C67BFC00F863AF /* participantsHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = participantsHeaderCell.xib; sourceTree = "<group>"; };
 		CB584D3E24CC7F1400F863AF /* ChatApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ChatApp.entitlements; sourceTree = "<group>"; };
 		CB85DDEF24CE771D00E94353 /* selectFriendSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = selectFriendSB.storyboard; sourceTree = "<group>"; };
 		CB85DDF124CE77BA00E94353 /* SelectFriendVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFriendVC.swift; sourceTree = "<group>"; };
@@ -265,6 +267,22 @@
 				5349DA9F49FEB0F108816F4B /* Pods_ChatAppTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2DAABEF224E248D200CA8177 /* GroupInfoCells-E */ = {
+			isa = PBXGroup;
+			children = (
+				2DAABEFA24E2490A00CA8177 /* chatinfoCells.swift */,
+				2DAABEF324E2490900CA8177 /* GroupchatinfoCells.swift */,
+				2DAABEF824E2490A00CA8177 /* GroupchatinfoCells.xib */,
+				2DAABEF524E2490A00CA8177 /* GroupSettingCell.swift */,
+				2DAABEF424E2490A00CA8177 /* GroupSettingCell.xib */,
+				2DAABEFB24E2490A00CA8177 /* participantsCell.swift */,
+				2DAABEF724E2490A00CA8177 /* participantsCell.xib */,
+				2DAABEF924E2490A00CA8177 /* participantsHeaderCell.swift */,
+				2DAABEF624E2490A00CA8177 /* participantsHeaderCell.xib */,
+			);
+			path = "GroupInfoCells-E";
 			sourceTree = "<group>";
 		};
 		439F5AD62499A91200D06BCF /* Model */ = {
@@ -348,7 +366,7 @@
 		43BBB439249CA47F0024F449 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				CB584D2524C52CBC00F863AF /* GroupInfoCells */,
+				2DAABEF224E248D200CA8177 /* GroupInfoCells-E */,
 				43C6C9C424B58B71003DB77E /* NotificationsCell */,
 				43BBB45724A07A780024F449 /* ChatCell */,
 				43BBB44E24A070550024F449 /* SettingsCell */,
@@ -460,21 +478,6 @@
 				43A7480C24BB8A6100281A07 /* ProfileInfoView.swift */,
 			);
 			path = ProgrammaticViews;
-			sourceTree = "<group>";
-		};
-		CB584D2524C52CBC00F863AF /* GroupInfoCells */ = {
-			isa = PBXGroup;
-			children = (
-				CB584D2624C52DEC00F863AF /* GroupchatinfoCells.swift */,
-				CB584D2724C52DEC00F863AF /* GroupchatinfoCells.xib */,
-				CB584D2E24C52FD900F863AF /* participantsCell.swift */,
-				CB584D2F24C52FD900F863AF /* participantsCell.xib */,
-				CB584D3624C53BE100F863AF /* GroupSettingCell.swift */,
-				CB584D3724C53BE100F863AF /* GroupSettingCell.xib */,
-				CB584D3A24C67BFC00F863AF /* participantsHeaderCell.swift */,
-				CB584D3B24C67BFC00F863AF /* participantsHeaderCell.xib */,
-			);
-			path = GroupInfoCells;
 			sourceTree = "<group>";
 		};
 		CBA262A724AFB7C600F81034 /* Views Updates */ = {
@@ -670,13 +673,13 @@
 				43C6C9DE24B58D9E003DB77E /* ChatLogSB.storyboard in Resources */,
 				43C6C9E024B58D9E003DB77E /* ChatStoryBoard.storyboard in Resources */,
 				43C6C9EB24B58D9E003DB77E /* profileStoryBoard.storyboard in Resources */,
+				2DAABF0024E2490B00CA8177 /* participantsCell.xib in Resources */,
 				43C6C9E624B58D9E003DB77E /* NewGroupSB.storyboard in Resources */,
-				CB584D3924C53BE100F863AF /* GroupSettingCell.xib in Resources */,
-				CB584D3D24C67BFC00F863AF /* participantsHeaderCell.xib in Resources */,
+				2DAABEFD24E2490B00CA8177 /* GroupSettingCell.xib in Resources */,
+				2DAABEFF24E2490B00CA8177 /* participantsHeaderCell.xib in Resources */,
 				43C6C9C724B58B71003DB77E /* NotificationsCell.xib in Resources */,
 				CBD5986724986040000CBEBD /* LaunchScreen.storyboard in Resources */,
 				43C6C9E224B58D9E003DB77E /* SettingsSB.storyboard in Resources */,
-				CB584D3124C52FD900F863AF /* participantsCell.xib in Resources */,
 				43C6C9E324B58D9E003DB77E /* SignUpSB.storyboard in Resources */,
 				CB85DDF024CE771D00E94353 /* selectFriendSB.storyboard in Resources */,
 				43C6C9E724B58D9E003DB77E /* MainTabStoryboard.storyboard in Resources */,
@@ -688,10 +691,10 @@
 				43C6C9E924B58D9E003DB77E /* FriendsSB.storyboard in Resources */,
 				43C6C9EC24B58D9E003DB77E /* ChatSB.storyboard in Resources */,
 				43BBB4122499D5C70024F449 /* GoogleService-Info.plist in Resources */,
-				CB584D2924C52DEC00F863AF /* GroupchatinfoCells.xib in Resources */,
 				43C6C9E524B58D9E003DB77E /* MainSB.storyboard in Resources */,
 				43A7480B24BB811400281A07 /* ProfileInfoCell.xib in Resources */,
 				436213E624B647D300304FB3 /* GroupChatSB.storyboard in Resources */,
+				2DAABF0124E2490B00CA8177 /* GroupchatinfoCells.xib in Resources */,
 				43A7480824BB811400281A07 /* AppSettingsCell.xib in Resources */,
 				43C6C9E824B58D9E003DB77E /* NotificationSB.storyboard in Resources */,
 				43C6C9E124B58D9E003DB77E /* SignInSB.storyboard in Resources */,
@@ -829,7 +832,6 @@
 				43BBB44B24A062150024F449 /* ContactCell.swift in Sources */,
 				CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */,
 				CBD5985F24986037000CBEBD /* ViewController.swift in Sources */,
-				CB584D3824C53BE100F863AF /* GroupSettingCell.swift in Sources */,
 				43BD8A8C24A81B6200749E2A /* Group.swift in Sources */,
 				43BBB45B24A19CE20024F449 /* Chat.swift in Sources */,
 				43A7480D24BB8A6100281A07 /* ProfileInfoView.swift in Sources */,
@@ -837,9 +839,8 @@
 				CBD5985B24986037000CBEBD /* AppDelegate.swift in Sources */,
 				436213EC24B6486D00304FB3 /* ChatCell-Dara.swift in Sources */,
 				43BBB420249ABDC60024F449 /* ChatLogVC.swift in Sources */,
-				CB584D3C24C67BFC00F863AF /* participantsHeaderCell.swift in Sources */,
 				43C6C9CA24B58B85003DB77E /* NotificationsVC.swift in Sources */,
-				CB584D2824C52DEC00F863AF /* GroupchatinfoCells.swift in Sources */,
+				2DAABF0224E2490B00CA8177 /* participantsHeaderCell.swift in Sources */,
 				436213EA24B6484D00304FB3 /* GroupDelegate.swift in Sources */,
 				43BBB419249A7B910024F449 /* Git.swift in Sources */,
 				43BBB44824A061150024F449 /* FriendsVC.swift in Sources */,
@@ -847,24 +848,27 @@
 				CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */,
 				436213E424B647B100304FB3 /* GroupChatVC.swift in Sources */,
 				43BD8A8E24A81C4400749E2A /* Friend.swift in Sources */,
+				2DAABF0324E2490B00CA8177 /* chatinfoCells.swift in Sources */,
 				43E1A25924BAA3AA00511642 /* TexterView.swift in Sources */,
 				CBA262AB24AFBB5F00F81034 /* Extensions.swift in Sources */,
 				43BBB44D24A064660024F449 /* SettingsVC.swift in Sources */,
+				2DAABEFC24E2490B00CA8177 /* GroupchatinfoCells.swift in Sources */,
 				43BBB45424A071B20024F449 /* SettingsCell.swift in Sources */,
 				43BBB45624A0795E0024F449 /* ChatVC.swift in Sources */,
 				43BBB44624A04DF20024F449 /* FireUser.swift in Sources */,
 				43BBB433249C99B80024F449 /* SignInVC.swift in Sources */,
 				43BBB45224A070BD0024F449 /* SettingsProfileCell.swift in Sources */,
 				43C2F9FA24A315700080CD8F /* NewGroupVC.swift in Sources */,
+				2DAABEFE24E2490B00CA8177 /* GroupSettingCell.swift in Sources */,
 				43BBB426249B0EE70024F449 /* Message.swift in Sources */,
 				CBD5985D24986037000CBEBD /* SceneDelegate.swift in Sources */,
 				43BBB436249C9E1C0024F449 /* Validate.swift in Sources */,
 				43E1A25B24BAA77300511642 /* TexterViewDelegate.swift in Sources */,
-				CB584D3024C52FD900F863AF /* participantsCell.swift in Sources */,
 				43BBB428249B13EA0024F449 /* User.swift in Sources */,
 				43A7480624BB811400281A07 /* ProfileInfoCell.swift in Sources */,
 				43A7480A24BB811400281A07 /* ChatInfoCells.swift in Sources */,
 				CB85DDF224CE77BA00E94353 /* SelectFriendVC.swift in Sources */,
+				2DAABF0424E2490B00CA8177 /* participantsCell.swift in Sources */,
 				43BBB45924A07ACC0024F449 /* ChatCell-ebuka.swift in Sources */,
 				43BBB422249ABDC60024F449 /* ChatLogCell.swift in Sources */,
 				439F5AD82499A9DC00D06BCF /* FireService.swift in Sources */,
