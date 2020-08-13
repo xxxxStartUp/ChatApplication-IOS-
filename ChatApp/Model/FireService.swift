@@ -14,7 +14,8 @@ import FirebaseStorage
 import UIKit
 
 
-// this class connects to firebase
+
+/// <#Description#>
 class FireService {
     static let db = Firestore.firestore()
     static let firendsString = "friends"
@@ -26,13 +27,12 @@ class FireService {
     static let storageRef = storage.reference()
     static let savedMessages = "savedMessages"
     
-    /**
-    Saves a message for the current user
     
-    - Parameter user:  the current user trying to save a message
-    - Parameter messageToSave: the message to be saved
-    - Returns: Void
-    */
+    /// Backend function to  save  a message. This  creates a document (a message) in FireBase in the user's 'savedMessages' collection.
+    /// - Parameters:
+    ///   - user: The current user sqving the message
+    ///   - messageToSave: Message to be saved
+    ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
     func saveMessages(user : FireUser, messageToSave: Message, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
         
         let Content = ["type" : messageToSave.content.type.rawValue,
@@ -55,13 +55,13 @@ class FireService {
         }
     }
     
+
     
-    
-    
-    
-    
-    
-    
+    /// Deletes the profile picture of a user
+    /// - Parameters:
+    ///   - user: User whose profile picture is to be deleted
+    ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
+    /// - Returns: <#description#>
      func DeleteProfilePicture(user : FireUser , completionHandler : @escaping (Result<Bool , Error>)-> ()){
         let refName = "\(user.email)/profileImage.png"
         let ref = FireService.storageRef.child(refName)
@@ -90,7 +90,11 @@ class FireService {
     
     
     
-
+    /// Retrieves the profile picture of a user.
+    /// - Parameters:
+    ///   - user: User whose profile picture is to be retrieved
+    ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
+    /// - Returns: <#description#>
     func getProfilePicture(user : FireUser , completionHandler : @escaping (Result<URL , Error>)-> ()){
         
         FireService.users.document(user.email).getDocument { (documents, error) in
@@ -117,6 +121,11 @@ class FireService {
     
     
     
+    /// Uploads the profile picture of a user
+    /// - Parameters:
+    ///   - data: <#data description#>
+    ///   - user: User who profile picture is to be uploaded
+    ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
     func saveProfilePicture(data : Data , user : FireUser , completionHandler: @escaping (Result<Bool, Error>) -> Void){
         let refName = "\(user.email)/profileImage.png"
         let ref = FireService.storageRef.child(refName)
@@ -150,6 +159,12 @@ class FireService {
         }
     }
     
+    
+    /// Loads all the activity from a user.
+    /// - Parameters:
+    ///   - User: User whose activity is to be loaded
+    ///   - completion: Completion handler to determine if the function completed correctly or with errors
+    /// - Returns: <#description#>
     func loadAllActivity(User : FireUser , completion : @escaping ([Activity]? , Error?) -> ()){
         var activities  : [Activity] = []
         loadGroups(User: User) { (groups, error) in
@@ -181,11 +196,11 @@ class FireService {
     }
     
     
-    
-    
-    
-    
-    
+    /// Function to get all the friends of a user. It stores the retrieved friends of the user in an array.
+    /// - Parameters:
+    ///   - user: The user for whom the friends are  to be retrieved
+    ///   - completion: Completion handler to determine if the function completed correctly or with errors
+    /// - Returns: <#description#>
     func loadAllFriends(user : FireUser , completion : @escaping ([Friend]? , Error?) -> ()){
         var friendList : [Friend] = []
         let friends =   FireService.users.document(user.email).collection(FireService.firendsString)
@@ -216,6 +231,10 @@ class FireService {
         
     }
     
+    
+    /// Function to turn the provided data to create a FireUser
+    /// - Parameter data: Data inputted in the form of dictionary that will be used to create a FireUser
+    /// - Returns: Created FireUser with the data that was provided in the function's parameter
     func changeDictionaryToFireUser(data : ([String : Any])) -> FireUser{
         let id = data["id"] as! Int32
         let username = data["username"] as! String
@@ -226,6 +245,12 @@ class FireService {
         return fireUser
     }
     
+    
+    /// Function to turn the provided data to create a Friend
+    /// - Parameters:
+    ///   - data: Data inputted in the form of dictionary that will be used to create a Friend.
+    ///   - user: FireUser provided in the function to turn a FireUser info into a Friend. If user is null, the parameter data will be used instead to create the Friend
+    /// - Returns: Created Friend. Returns null if inputted data and user are null
     func changeDictionaryToFriend(data : ([String : Any])? = nil , user : FireUser? = nil) -> Friend?{
         
         if let user = user {
@@ -247,6 +272,8 @@ class FireService {
     }
     
     
+    /// Refreshes the  information of a user to the globalUser variable
+    /// - Parameter email: Email address used to refresh the information of the globalUser variable
     func refreshUserInfo(email : String){
         self.searchOneUserWithEmail(email: email) { (user, error) in
             guard user != nil else {
@@ -259,6 +286,11 @@ class FireService {
     }
     
     
+    /// Function to determine if a FireUser is associated to an email address
+    /// - Parameters:
+    ///   - email: Email used to determine if a FireUser is associated with this email address
+    ///   - completion: Completion handler to determine if the function completed correctly or with errors
+    /// - Returns: <#description#>
     func searchOneUserWithEmail(email : String,completion : @escaping (FireUser? , Error?) -> ()){
         
         var data : [String : Any] = [:]
@@ -301,6 +333,11 @@ class FireService {
     }
     
     
+    /// Function to determine if a Friend is associated to an email address
+    /// - Parameters:
+    ///   - email: Email used to determine if a Friend  is associated with this email address
+    ///   - completion: Completion handler to determine if the function completed correctly or with errors
+    /// - Returns: <#description#>
     func searchOneFreindWithEmail(email : String,completion : @escaping (Friend? , Error?) -> ()){
         var data : [String : Any] = [:]
         let query = FireService.users.whereField("email", isEqualTo: email)
@@ -344,6 +381,9 @@ class FireService {
     
     
     
+    /// Gets the current user that is logged in
+    /// - Parameter completion: Completion handler to determine if the function completed correctly or with errors
+    /// - Returns: <#description#>
     func getCurrentUser(completion : @escaping (FirebaseAuth.User?) -> ()){
         let user = Auth.auth().currentUser
         
