@@ -44,16 +44,14 @@ class FireService {
                 
                 
             }
-            
-           
-            
+ 
         }
 
     }
     
     
     
-
+    
     func getProfilePicture(user : FireUser , completionHandler : @escaping (Result<URL , Error>)-> ()){
         
         FireService.users.document(user.email).getDocument { (documents, error) in

@@ -128,20 +128,68 @@ class TexterView : UIView, UITextViewDelegate {
     
     
     func textViewDidChange(_ textView: UITextView) {
-        
+        print("editing")
+        var width : CGFloat = 0
+        textView.isScrollEnabled = false
         let size = CGSize(width: frame.width, height: .infinity)
         let estimatedSize = textView.sizeThatFits(size)
+        guard let text = textView.text  else {return}
+        textView.constraints.forEach { (c) in
+            if c.firstAttribute == .width{
+                width = c.constant
+            }
+        }
+        var height = text.height(withConstrainedWidth: width + 10, font: textView.font!)
+        
+        
         textView.constraints.forEach { (c) in
             if c.firstAttribute == .height{
-                c.constant = estimatedSize.height + 5
+                if c.constant < 100{
+                    c.constant = height + 30//estimatedSize.height + 5
+                    textView.isScrollEnabled = false
+                }else{
+                    textView.isScrollEnabled = true
+                }
+                
+                
             }
         }
     }
     
 
-    
 
 }
 
+extension String {
+    func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+
+        return ceil(boundingBox.height)
+    }
+
+    func width(withConstrainedHeight height: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+
+        return ceil(boundingBox.width)
+    }
+}
+
+extension NSAttributedString {
+    func height(withConstrainedWidth width: CGFloat) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let boundingBox = boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)
+
+        return ceil(boundingBox.height)
+    }
+
+    func width(withConstrainedHeight height: CGFloat) -> CGFloat {
+        let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
+        let boundingBox = boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)
+
+        return ceil(boundingBox.width)
+    }
+}
 
 

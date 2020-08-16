@@ -19,18 +19,44 @@ class MessgaeCell: UITableViewCell {
         didSet{
             messageLabel.text = message.content.content as! String
             messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
-            
+            nameLabel.text = message.sender.name
+            timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
             if  message.recieved{
                 leadingContstraints?.isActive = true
                 tarilingConstraints?.isActive = false
+                nameLabel.textAlignment = .left
+                timeLabel.textAlignment = .right
             }else{
                 leadingContstraints?.isActive = false
                 tarilingConstraints?.isActive = true
+                nameLabel.textAlignment = .right
+                timeLabel.textAlignment = .left
             }
             
             
         }
     }
+    
+    var nameLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Ebuka"
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 14)
+        return label
+    }()
+    
+    var timeLabel : UILabel = {
+         let label = UILabel()
+         label.text = "10:10"
+         label.backgroundColor = .clear
+         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 14)
+         
+         return label
+     }()
+    
+    
 
     
     var messageBackgroundView : UIView = {
@@ -50,29 +76,46 @@ class MessgaeCell: UITableViewCell {
                """
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
+        label.backgroundColor = .clear
         return label
     }()
+     lazy var stackView = UIStackView(arrangedSubviews: [nameLabel,messageBackgroundView , timeLabel])
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.addSubview(messageBackgroundView)
+        setUpView()
+    }
+
+    
+    
+    
+    func setUpView(){
+        nameLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        timeLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        self.addSubview(stackView)
         self.addSubview(messageLabel)
-        self.backgroundColor = .clear
-        messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 32).isActive = true
-        messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor , constant: -32).isActive = true
-        messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant:  250).isActive = true
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        stackView.axis = .vertical
+        stackView.spacing = 4
         
         
-        messageBackgroundView.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -16).isActive = true
-        messageBackgroundView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor , constant: 16).isActive = true
-        messageBackgroundView.trailingAnchor.constraint(equalTo: messageLabel.trailingAnchor , constant: 16).isActive = true
-        messageBackgroundView.leadingAnchor.constraint(equalTo: messageLabel.leadingAnchor, constant: -16).isActive = true
+        stackView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
         
+        leadingContstraints = stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
         
-        //working with message constrains for incoming
+        tarilingConstraints = stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
         
-          leadingContstraints =  messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32)
-          tarilingConstraints =  messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
+       // stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
+        stackView.widthAnchor.constraint(equalToConstant: 250).isActive = true
+        
+        messageLabel.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 16).isActive = true
+        messageLabel.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: -16).isActive = true
+        messageLabel.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 16).isActive = true
+         messageLabel.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -16).isActive = true
+        
         
         
     }
