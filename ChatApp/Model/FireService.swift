@@ -162,7 +162,7 @@ class FireService {
             for document in documents {
                 let data = document.data()
                 
-                let id = data["id"] as! Int32
+                let id = data["id"] as! String
                 let username = data["name"] as! String
                 print(username)
                 let email = data["email"] as! String
@@ -180,7 +180,7 @@ class FireService {
     }
     
     func changeDictionaryToFireUser(data : ([String : Any])) -> FireUser{
-        let id = data["id"] as! Int32
+        let id = data["id"] as! String
         let username = data["username"] as! String
         let email = data["email"] as! String
         let date = data["timecreated"] as! Timestamp
@@ -195,7 +195,7 @@ class FireService {
             let freind = Friend(email: user.email, username: user.name, id: user.id)
             return freind
         }else if let data = data{
-            let id = data["id"] as! Int32
+            let id = data["id"] as! String
             let username = data["username"] as! String
             let email = data["email"] as! String
             let freind = Friend(email: email, username: username, id: id)
@@ -477,24 +477,45 @@ class FireService {
     
     
     //tested
-    func createGroup(group : Group ,completion : @escaping (Bool , Error?) -> ()){
-        let data = ["groupname":group.name, "groupadmin" : group.GroupAdmin.email, "groupid":group.id] as [String : Any]
-        FireService.users.document(group.GroupAdmin.email).collection("groups").document(group.name).setData(data, merge: true) { (error) in
+    func createGroup(group : Group ,completion : @escaping (Bool, Error?) -> ()){
+   
+        let data = ["groupname":group.name, "groupadmin" : group.GroupAdmin.email, "groupid": group.id] as [String : Any]
+            FireService.users.document(group.GroupAdmin.email).collection("groups").document(group.name).setData(data, merge: true) { (error) in
+                
+                if let error = error {
+                    completion(false, error)
+                    return
+                }
+                completion(true, nil)
             
-            if let error = error {
-                completion(false , error)
-                return
             }
-            completion(true, nil)
-        }
+
     }
-    func searchForMaxGroupId(group:Group,completion: @escaping (Bool, Error?) -> ()) -> Int{
+     //tested
+    func createGroupFromReceivingDynamicLink(groupname:String,groupID:String,groupAdmin:String,currentUserEmail:String,completion : @escaping (Bool, Error?) -> ()){
+    
+         let data = ["groupname":groupname, "groupadmin" : groupAdmin, "groupid": groupID] as [String : Any]
+             FireService.users.document(currentUserEmail).collection("groups").document(groupname).setData(data, merge: true) { (error) in
+                 
+                 if let error = error {
+                     completion(false, error)
+                     return
+                 }
+                 completion(true, nil)
+             
+             }
+
+     }
+
+    
+    //Function that searches for the max groupID.
+    func searchForMaxGroupId(group:Group,completion: @escaping (Bool,Int,Error?) -> ()){
         var data:[Int] = []
-        var maxID:Int = 0
+        var maxIDplusone:Int = 0
         FireService.users.document(group.GroupAdmin.email).collection("groups").whereField("groupid", isGreaterThanOrEqualTo: 0).getDocuments { (querySnapshot, error) in
             if let error = error{
                 print("completion is false")
-                completion(false, error)
+                completion(false,0, error)
                 return
             }
                 for document in querySnapshot!.documents {
@@ -507,17 +528,18 @@ class FireService {
             print(data)
             
             if let maxid = data.max(){
-                maxID = maxid
-                print("Max ID = \(maxid), \(data.max())")
+                maxIDplusone = maxid + 1
+                print("Max ID = \(maxIDplusone), \(data.max())")
+                completion(true,maxIDplusone,nil)
 
             }
             else{
-                print("No max ID")
+                completion(true,maxIDplusone,nil)
             }
-             completion(true, nil)
+             
         }
         
-            return maxID
+    
 
     }
     //need to test
@@ -853,7 +875,7 @@ class FireService {
             for  document in snapShots.documents{
                 let documentData = document.data()
                 let email = documentData["groupadmin"] as! String
-                let id = documentData["groupid"] as! Int
+                let id = documentData["groupid"] as! String
                 let name = documentData["groupname"] as! String
                 
                 self.searchOneUserWithEmail(email: email) { (user, error) in
@@ -965,9 +987,9 @@ class FireService {
     func testActivity (){
         var activities : [Activity] = []
         let content = Content(type: .string, content: "yo")
-        let fireUser = FireUser(userID: 1, userName: "E", userEmail: "E", creationDate: Date())
+        let fireUser = FireUser(userID: "1", userName: "E", userEmail: "E", creationDate: Date())
         let message = Message(content: content, sender: fireUser, timeStamp: Date(), recieved: false)
-        let group = Group(GroupAdmin: fireUser, id: 1, name: "BJEHD")
+        let group = Group(GroupAdmin: fireUser, id: "1", name: "BJEHD")
         let activity = Activity(activityType: .GroupChat(group: group))
         activities.append(activity)
     }

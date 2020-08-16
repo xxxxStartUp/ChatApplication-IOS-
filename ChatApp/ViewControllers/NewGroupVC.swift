@@ -29,13 +29,13 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
         updateViews()
         updateBackgroundViews()
         print("Selected Friend Email: \(selectedFriendsListEmail)")
-        createDynamicLink()
+//        createDynamicLink()
         
         
         
         // Do any additional setup after loading the view.
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         updateViews()
@@ -45,7 +45,7 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
         super.viewDidDisappear(true)
         selectedFriendsListEmail.removeAll()
     }
-
+    
     
     func createGroup() {
         if let groupName = self.groupNameTextField.text{
@@ -54,28 +54,25 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
                 self.present(controller, animated: true, completion: nil)
                 return
             }
-            
-            
-            let newGroup = Group(GroupAdmin: globalUser!, id: 1, name: groupName)
-            
+
+            //new group is created and temp id is passed.
+            let id = UUID().uuidString
+            let newGroup = Group(GroupAdmin: globalUser!, id: id, name: groupName)
+            //added final id to completion to get the latest id from backend and use for creating dynamic link.
             FireService.sharedInstance.createGroup(group: newGroup) { (completed, error) in
                 if let error = error{
                     print(error.localizedDescription)
                     fatalError()
                 }
-                
                 if completed{
-
-                    self.goToTab()
-                                      
+                    self.createDynamicLink(admin: globalUser!, groupID: id, groupName: groupName)
+                   // self.goToTab()
+                    
                 }
-
+                
             }
-
-            
             
         }
-        
         
     }
     
@@ -115,47 +112,34 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
     
     @objc func rightBarButtonPressed(){
         //createDynamicLink()
-//        if let groupName = self.groupNameTextField.text{
-//        let newGroup = Group(GroupAdmin: globalUser!, id: 1, name: groupName)
-//        let result = FireService.sharedInstance.searchForMaxGroupId(group: newGroup) { (completed, error) in
-//                if let error = error{
-//                    print(error.localizedDescription)
-//                    fatalError()
-//                }
-//                if completed{
-//
-//                    print("searchformaxgroupID initiated")
-//                }
-//            }
-//            print("The Max Result is ==> \(result)")
-// }
         createGroup()
-
-       // navigationController?.popToRootViewController(animated: true)
+        
     }
-    func createDynamicLink(){
+    func createDynamicLink(admin:FireUser,groupID:String,groupName:String){
         print("this dynamic link func has been called")
-
+        
         var components = URLComponents()
         
         components.scheme = "https"
         components.host = "www.example.com"
         components.path = "/groups"
         
-        let recipeIDQueryItem = URLQueryItem(name: "groupID", value: "rcp_apple_pie")
-        components.queryItems = [recipeIDQueryItem]
+        let groupIDQueryItem = URLQueryItem(name: "groupID", value: groupID)
+        let adminQueryItem = URLQueryItem(name: "admin", value: admin.email)
+        let groupName = URLQueryItem(name: "groupName", value: groupName)
+        components.queryItems = [groupIDQueryItem,adminQueryItem,groupName]
         
         guard let linkParameter = components.url else {return}
-
+        
         print("I am sharing \(linkParameter.absoluteString)")
-
+        
         //create the big dynamic link
         guard let shareLink = DynamicLinkComponents.init(link: linkParameter, domainURIPrefix: dynamicLinkDomain) else{
             print("Couldn't create FDL components")
             return
         }
         if let myBundleId = Bundle.main.bundleIdentifier{
-        shareLink.iOSParameters = DynamicLinkIOSParameters(bundleID: myBundleId)
+            shareLink.iOSParameters = DynamicLinkIOSParameters(bundleID: myBundleId)
         }
         shareLink.iOSParameters?.appStoreID = "962194608"
         shareLink.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
@@ -164,7 +148,7 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
         
         guard let longURL = shareLink.url else{return}
         print("This is the dynamiclink is \(longURL.absoluteString)")
-
+        
         shareLink.shorten { (url, warnings, error) in
             if let error = error {
                 print("Shortening Link Error:\(error)")
@@ -179,7 +163,7 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
             self.shareURL = url
             self.composeMail(url:url)
             
-//            self.showSheet(url: url)
+            //            self.showSheet(url: url)
         }
         
     }
@@ -188,61 +172,61 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
         let activityVC = UIActivityViewController(activityItems: [promoText,url], applicationActivities: nil)
         present(activityVC,animated: true)
     }
-
+    
     //updates the background color for the tableview and nav bar.
-       func updateBackgroundViews(){
-           DispatchQueue.main.async {
-               self.view.darkmodeBackground()
-               self.navigationController?.navigationBar.darkmodeBackground()
-               self.navigationBarBackgroundHandler()
+    func updateBackgroundViews(){
+        DispatchQueue.main.async {
+            self.view.darkmodeBackground()
+            self.navigationController?.navigationBar.darkmodeBackground()
+            self.navigationBarBackgroundHandler()
             self.textField.newGroupPageTextField()
-               
-               
-               //self.navigationController?.navigationBar.settingsPage()
-               
-               
-           }
-       }
-       //handles the text color, background color and appearance of the nav bar
-         func navigationBarBackgroundHandler(){
-             
-             if Constants.settingsPage.displayModeSwitch{
-                 let navBarAppearance = UINavigationBarAppearance()
-                  navBarAppearance.configureWithOpaqueBackground()
-                  navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-                  navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-                  navBarAppearance.backgroundColor = .black
-                 self.navigationController?.navigationBar.isTranslucent = false
-//                  textField.attributedPlaceholder = NSAttributedString(string: "Enter Group Name",
-//                  attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
-                  self.navigationController?.navigationBar.standardAppearance = navBarAppearance
-                  self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-                  self.navigationController?.navigationBar.setNeedsLayout()
-                
-                //handles TabBar
-                 self.tabBarController?.tabBar.barTintColor = .black
-                 tabBarController?.tabBar.isTranslucent = false
-       
-             }
-             else{
-                 let navBarAppearance = UINavigationBarAppearance()
-                 navBarAppearance.configureWithOpaqueBackground()
-                 navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
-                 navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
-                 navBarAppearance.backgroundColor = .white
-                self.navigationController?.navigationBar.isTranslucent = true
-//                textField.attributedPlaceholder = NSAttributedString(string: "Enter Group Name",
-//                attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
-                 self.navigationController?.navigationBar.standardAppearance = navBarAppearance
-                 self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-                 self.navigationController?.navigationBar.setNeedsLayout()
-                
-                //handles TabBar
-                 self.tabBarController?.tabBar.barTintColor = .white
-                 tabBarController?.tabBar.isTranslucent = false
-             }
-         }
-       
+            
+            
+            //self.navigationController?.navigationBar.settingsPage()
+            
+            
+        }
+    }
+    //handles the text color, background color and appearance of the nav bar
+    func navigationBarBackgroundHandler(){
+        
+        if Constants.settingsPage.displayModeSwitch{
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.backgroundColor = .black
+            self.navigationController?.navigationBar.isTranslucent = false
+            //                  textField.attributedPlaceholder = NSAttributedString(string: "Enter Group Name",
+            //                  attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+            self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+            self.navigationController?.navigationBar.setNeedsLayout()
+            
+            //handles TabBar
+            self.tabBarController?.tabBar.barTintColor = .black
+            tabBarController?.tabBar.isTranslucent = false
+            
+        }
+        else{
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.backgroundColor = .white
+            self.navigationController?.navigationBar.isTranslucent = true
+            //                textField.attributedPlaceholder = NSAttributedString(string: "Enter Group Name",
+            //                attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+            self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+            self.navigationController?.navigationBar.setNeedsLayout()
+            
+            //handles TabBar
+            self.tabBarController?.tabBar.barTintColor = .white
+            tabBarController?.tabBar.isTranslucent = false
+        }
+    }
+    
     
 }
 extension NewGroupVC: MFMessageComposeViewControllerDelegate{
@@ -263,17 +247,19 @@ extension NewGroupVC: MFMessageComposeViewControllerDelegate{
             fatalError()
         }
         switch result {
-     
+            
         case .sent:
             DispatchQueue.main.async {
-            // create the alert
-            let alert = UIAlertController(title: "Invite Sent", message: "The invite has been sent to the selected contacts", preferredStyle: UIAlertController.Style.alert)
-            // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-            // show the alert
-            self.present(alert, animated: true, completion: nil)
+                // create the alert
+                let alert = UIAlertController(title: "Invite Sent", message: "The invite has been sent to the selected contacts", preferredStyle: UIAlertController.Style.alert)
+                // add an action (button)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                // show the alert
+                self.present(alert, animated: true, completion: nil)
+                 self.goToTab()
             }
         case .cancelled:
+            self.goToTab()
             print("The cancel button has been clicked")
         case .failed:
             // create the alert
@@ -282,8 +268,10 @@ extension NewGroupVC: MFMessageComposeViewControllerDelegate{
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             // show the alert
             self.present(alert, animated: true, completion: nil)
+            self.goToTab()
         default:
             print("not sure")
+            self.goToTab()
         }
         controller.dismiss(animated: true, completion: nil)
     }
@@ -301,7 +289,7 @@ extension NewGroupVC: MFMessageComposeViewControllerDelegate{
         composer.setToRecipients(selectedFriendsListEmail)
         composer.setSubject("Dara has invited you to join the group")
         composer.setMessageBody("Use the link below to join the app...\(url)", isHTML: true)
-       
+        
         present(composer, animated: true, completion: nil)
         
     }

@@ -16,7 +16,7 @@ class FireUser : User {
     Variables for 'messages', 'group', 'friends', 'userType' property as they will likely change.
      */
     let name: String
-    let id: Int32 // I think this should be an Int as it would be easier to use an ID that is a number to quickly find or refer to a user.
+    let id: String // I think this should be an Int as it would be easier to use an ID that is a number to quickly find or refer to a user.
     let email: String
     let timeCreated: Date
     
@@ -27,7 +27,7 @@ class FireUser : User {
     
     
     // When creating a user, these properties will need to be provided
-    init(userID: Int32, userName: String, userEmail: String, creationDate: Date) {
+    init(userID: String, userName: String, userEmail: String, creationDate: Date) {
         
         id = userID
         name = userName
