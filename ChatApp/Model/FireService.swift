@@ -25,7 +25,8 @@ class FireService {
     static let storage = Storage.storage()
     static let storageRef = storage.reference()
     
-     func DeleteProfilePicture(user : FireUser , completionHandler : @escaping (Result<Bool , Error>)-> ()){
+    
+    func DeleteProfilePicture(user : FireUser , completionHandler : @escaping (Result<Bool , Error>)-> ()){
         let refName = "\(user.email)/profileImage.png"
         let ref = FireService.storageRef.child(refName)
         ref.delete { (error) in
@@ -40,20 +41,20 @@ class FireService {
                     return
                 }
                 completionHandler(.success(true))
-                           return
+                return
                 
                 
             }
             
-           
+            
             
         }
-
+        
     }
     
     
     
-
+    
     func getProfilePicture(user : FireUser , completionHandler : @escaping (Result<URL , Error>)-> ()){
         
         FireService.users.document(user.email).getDocument { (documents, error) in
@@ -64,7 +65,7 @@ class FireService {
                 if  let finalUrl = URL(string: url){
                     completionHandler(.success(finalUrl))
                 }else{
-                   print("couldnt cast to url")
+                    print("couldnt cast to url")
                 }
                 
                 
@@ -178,6 +179,56 @@ class FireService {
         
         
     }
+    func changeFriendToDictionary( _ friend : Friend) -> [String:Any]{
+        
+        return ["id" : friend.id,
+                "username":friend.username,
+                "email":friend.email
+        ]
+        
+    }
+    func changeUserToDictionary( _ user : FireUser) -> [String:Any]{
+        
+        return ["id" : user.id,
+                "username":user.name,
+                "email":user.email,
+                "timecreated":user.timeCreated
+        ]
+        
+    }
+    
+    func chnageContentToDictionary( _ content : Content) -> [String : Any]{
+        switch  content.type {
+        case .string:
+            return [ "type": "string",
+                            "content": content.content]
+        case .video:
+            return [ "type": "video",
+                            "content": content.content]
+        case .file:
+            return [ "type": "file",
+                            "content": content.content]
+        case .image:
+            return [ "type": "image",
+                            "content": content.content]
+        }
+    }
+    
+    func changeDictionaryToContent( dictionary : [String: Any]) -> Content{
+        return Content(type: .string, content: "NOT YET FINISHED(FIX FUNCTION)")
+    }
+    
+    func changeMessageToDictionary( _ message: Message) -> [String : Any]{
+
+        return [ "Content" :self.chnageContentToDictionary(message.content),
+                 "user":self.changeUserToDictionary(message.sender),
+                 "timeStamp": message.timeStamp,
+                 "recived": message.recieved
+        ]
+    }
+    
+    
+    
     
     func changeDictionaryToFireUser(data : ([String : Any])) -> FireUser{
         let id = data["id"] as! String
@@ -449,13 +500,13 @@ class FireService {
         
         let ref =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.name).collection("messages").document()
         
-          ref.setData(sentdata) { (error) in
+        ref.setData(sentdata) { (error) in
             if let error = error{
                 completionHandler(.failure(error))
                 return
             }
             
-                ref.collection("content").document().setData(Content) { (error) in
+            ref.collection("content").document().setData(Content) { (error) in
                 
                 if let error = error{
                     completionHandler(.failure(error))
@@ -478,35 +529,35 @@ class FireService {
     
     //tested
     func createGroup(group : Group ,completion : @escaping (Bool, Error?) -> ()){
-   
+        
         let data = ["groupname":group.name, "groupadmin" : group.GroupAdmin.email, "groupid": group.id] as [String : Any]
-            FireService.users.document(group.GroupAdmin.email).collection("groups").document(group.name).setData(data, merge: true) { (error) in
-                
-                if let error = error {
-                    completion(false, error)
-                    return
-                }
-                completion(true, nil)
+        FireService.users.document(group.GroupAdmin.email).collection("groups").document(group.name).setData(data, merge: true) { (error) in
             
+            if let error = error {
+                completion(false, error)
+                return
             }
-
+            completion(true, nil)
+            
+        }
+        
     }
-     //tested
+    //tested
     func createGroupFromReceivingDynamicLink(groupname:String,groupID:String,groupAdmin:String,currentUserEmail:String,completion : @escaping (Bool, Error?) -> ()){
+        
+        let data = ["groupname":groupname, "groupadmin" : groupAdmin, "groupid": groupID] as [String : Any]
+        FireService.users.document(currentUserEmail).collection("groups").document(groupname).setData(data, merge: true) { (error) in
+            
+            if let error = error {
+                completion(false, error)
+                return
+            }
+            completion(true, nil)
+            
+        }
+        
+    }
     
-         let data = ["groupname":groupname, "groupadmin" : groupAdmin, "groupid": groupID] as [String : Any]
-             FireService.users.document(currentUserEmail).collection("groups").document(groupname).setData(data, merge: true) { (error) in
-                 
-                 if let error = error {
-                     completion(false, error)
-                     return
-                 }
-                 completion(true, nil)
-             
-             }
-
-     }
-
     
     //Function that searches for the max groupID.
     func searchForMaxGroupId(group:Group,completion: @escaping (Bool,Int,Error?) -> ()){
@@ -518,12 +569,12 @@ class FireService {
                 completion(false,0, error)
                 return
             }
-                for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
-                    let groupidData = document.data()["groupid"] as! Int
-                    data.append(groupidData)
-                   
-                    
+            for document in querySnapshot!.documents {
+                print("\(document.documentID) => \(document.data())")
+                let groupidData = document.data()["groupid"] as! Int
+                data.append(groupidData)
+                
+                
             }
             print(data)
             
@@ -531,16 +582,16 @@ class FireService {
                 maxIDplusone = maxid + 1
                 print("Max ID = \(maxIDplusone), \(data.max())")
                 completion(true,maxIDplusone,nil)
-
+                
             }
             else{
                 completion(true,maxIDplusone,nil)
             }
-             
+            
         }
         
-    
-
+        
+        
     }
     //need to test
     func deleteGroup (group: Group){
@@ -733,11 +784,11 @@ class FireService {
     
     //works
     func loadMessagesWithFriend2(User : FireUser, freind : Friend ,completion : @escaping ([Message]? , Error?) -> ()){
-       
+        
         let ref =           FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document(freind.email).collection(freind.email)
         
         ref.addSnapshotListener { (snapshot, error) in
-             var messages : [Message] = []
+            var messages : [Message] = []
             guard let documents = snapshot?.documents else {
                 completion(nil , error)
                 return
@@ -771,22 +822,114 @@ class FireService {
                         }
                     }
                 }
-                
-                
-                
-                
-                
-                
-                
-                //                let contentData = data["content"] as Any
-                //                _ = data["type"]
-                //                let content = Content(type: .string, content: contentData)
-                
-                
-                
+
             }
             completion(messages, error)
             return
+        }
+        
+        
+    }
+    //need testing
+    /// Gets Friends froma  group return empty list if there are no friends , fails if it cant
+    /// cast document to friend
+    /// - Parameters:
+    ///   - user: The user currently using the application
+    ///   - group: The group the user is in
+    ///   - completionHandler: comlets with a list of friends or error
+    /// - Returns: None
+    func getFriendsInGroup(user : FireUser , group : Group , completionHandler : @escaping (Result<[Friend] , Error>)-> ()){
+        var Finalfriends : [Friend] = []
+        //refreence to final List of friends that the function will be completing with
+        let groupRef =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.name)
+        
+        //ref to freinds in group
+        let groupFreindsRef = groupRef.collection("Freinds")
+        // getting all friends from collection
+        groupFreindsRef.getDocuments { (snapShot, error) in
+            if let error = error{
+                completionHandler(.failure(error))
+            }
+            //if the unwrapping failing this means there was no friends
+            guard let documents = snapShot?.documents else {
+                print("no error but there was no friends yet")
+                completionHandler(.success(Finalfriends))
+                return
+            }
+            // looks through the documents and gets all friends3
+            documents.forEach { (document) in
+                let data = document.data()
+                let singleFriend = self.changeDictionaryToFriend(data: data)
+                Finalfriends.append(singleFriend!)
+                // completes the function when we are sure all documents have been chnaged to freinds
+                if Finalfriends.count == documents.count {
+                    completionHandler(.success(Finalfriends))
+                    return
+                }
+            }
+        }
+        
+        
+    }
+    
+    //need testing
+    /// Add Freinds to a roup by making  network call. Completes with true if it was sucessful
+    /// - Parameters:
+    ///   - user: The user currently using the application
+    ///   - group: The group the user is in
+    ///   - completionHandler: completes with true if the network call was sucessful, or faliure if the etwork call was unsucesfull
+    /// - Returns: None
+    func addFriendToGroup(user : FireUser , group : Group ,freind : Friend, completionHandler : @escaping (Result<Bool , Error>)-> ()){
+         let groupRef =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.name)
+        let frieindAsData = self.changeFriendToDictionary(freind)
+        
+        groupRef.collection("Freinds").addDocument(data: frieindAsData) { (error) in
+            if let error = error{
+                completionHandler(.failure(error))
+            }
+            
+            completionHandler(.success(true))
+        }
+          
+    }
+    
+    
+    //need testing
+    func sendMessgeToAllFriendsInGroup(message : Message , user : FireUser , group : Group , completionHandler : @escaping (Result<Bool , Error>)-> ()){
+        //gets all the friends in current group
+        var count = 0
+        self.getFriendsInGroup(user: user, group: group) { (result) in
+            switch result{
+                
+            case .success(let friends):
+                count = friends.count
+                if friends.isEmpty {return}
+                //sends the same message to every person in the group
+                friends.forEach { (friend) in
+                    let groupRef =         FireService.users.document(friend.email).collection(FireService.groupString).document(group.name).collection("messages").document()
+                    let message = self.changeMessageToDictionary(message)
+                    groupRef.setData(message) { (error) in
+                        if let error = error {
+                            print("failed while senidng to friends")
+                            completionHandler(.failure(error))
+                            
+                        }
+                        count -= 1
+                        if count == 0 {
+                            print("sent all messages")
+                            completionHandler(.success(true))
+                        }
+                    }
+                    
+                }
+                
+                
+                
+                
+            case .failure(let error):
+                completionHandler(.failure(error))
+                return
+            }
         }
         
         
@@ -857,6 +1000,7 @@ class FireService {
             }
         }
     }
+    
     
     
     
@@ -935,7 +1079,7 @@ class FireService {
             }
         }
     }
-
+    
     //need to test
     func removeFriends (user: FireUser, friendsToRemove: [Friend]) {
         
