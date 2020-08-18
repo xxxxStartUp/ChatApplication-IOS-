@@ -60,7 +60,6 @@ class HeaderView: UIView {
         stackView.axis = .horizontal
         
         //constarints
-        
         stackView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
         stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
         stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true

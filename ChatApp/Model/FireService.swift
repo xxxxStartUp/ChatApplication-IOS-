@@ -14,7 +14,8 @@ import FirebaseStorage
 import UIKit
 
 
-// this class connects to firebase
+
+/// <#Description#>
 class FireService {
     static let db = Firestore.firestore()
     static let firendsString = "friends"
@@ -24,7 +25,140 @@ class FireService {
     static let messagesString = "messages"
     static let storage = Storage.storage()
     static let storageRef = storage.reference()
+    static let savedMessages = "savedMessages"
     
+    
+    
+    /// Deletes a temporary image URL to send
+    /// - Parameters:
+    ///   - user: The user  from whom the temporary image URL is deleted
+    ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
+    /// - Returns: Nothing
+    func DeleteImageToSend(user : FireUser , completionHandler : @escaping (Result<Bool , Error>)-> ()){
+        let refName = "\(user.email)/selectedImage.png"
+        let ref = FireService.storageRef.child(refName)
+        ref.delete { (error) in
+            if let error = error{
+                completionHandler(.failure(error))
+                return
+            }
+            FireService.users.document(user.email).updateData(["selectedImageUrl":FieldValue.delete()]) { (error) in
+                
+                if let error = error{
+                    completionHandler(.failure(error))
+                    return
+                }
+                completionHandler(.success(true))
+                           return
+            }
+        }
+    }
+    
+    
+    
+    /// Retrieves a temporary selected image URL to send
+    /// - Parameters:
+    ///   - user: The user who is sending the image
+    ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
+    /// - Returns: Nothing
+    func getImageToSend(user : FireUser , completionHandler : @escaping (Result<URL , Error>)-> ()){
+        
+        FireService.users.document(user.email).getDocument { (documents, error) in
+            
+            guard let data = documents?.data() else {return}
+            
+            if let url = data["selectedImageUrl"] as? String {
+                if  let finalUrl = URL(string: url){
+                    completionHandler(.success(finalUrl))
+                }else{
+                   print("couldnt cast to url")
+                }
+                
+                
+            }else{
+                print("couldnt cast to string")
+            }
+            
+        }
+        
+        
+    }
+    
+    /// Uploads a temporary image to send
+    /// - Parameters:
+    ///   - data: The data containing image to be sent
+    ///   - user: User sending the image to be uploaded
+    ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
+    func saveImageToSend(data : Data , user : FireUser, completionHandler: @escaping (Result<Bool, Error>) -> Void){
+        
+        
+        let refName = "\(user.email)/selectedImage.png"
+        let ref = FireService.storageRef.child(refName)
+        let newMetadata = StorageMetadata()
+        newMetadata.contentType = "image/png"
+        
+        ref.putData(data, metadata: newMetadata) { (metadata, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                completionHandler(.failure(error))
+            }
+            ref.downloadURL(completion: { (url, error) in
+                guard let url = url else {
+                    completionHandler(.failure(error!))
+                    return
+                }
+                let data = ["selectedImageUrl" : url.absoluteString]
+                
+                self.addCustomData(data: data, user: user) { (error, sucess) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        completionHandler(.failure(error))
+                    }
+                    if sucess{
+                        print("sucessful completion of selected image upload ")
+                        completionHandler(.success(true))
+                    }
+                }
+            })
+        }
+        
+        
+    }
+    
+    /// Backend function to  save  a message. This  creates a document (a message) in FireBase in the user's 'savedMessages' collection.
+    /// - Parameters:
+    ///   - user: The current user sqving the message
+    ///   - messageToSave: Message to be saved
+    ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
+    func saveMessages(user : FireUser, messageToSave: Message, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+        
+        let Content = ["type" : messageToSave.content.type.rawValue,
+                       "content": messageToSave.content.content,
+                       "sender": messageToSave.sender.email] as [String : Any]
+                        
+        let ref =         FireService.users.document(user.email).collection(FireService.savedMessages).document()
+        
+        
+        
+      ref.setData(Content) { (error) in
+            
+            if let error = error{
+                completionHandler(.failure(error))
+                return
+            }
+            
+            completionHandler(.success(true))
+            
+        }
+    }
+    
+
+    
+    /// Deletes the profile picture of a user
+    /// - Parameters:
+    ///   - user: User whose profile picture is to be deleted
+    ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
+    /// - Returns: Nothing
      func DeleteProfilePicture(user : FireUser , completionHandler : @escaping (Result<Bool , Error>)-> ()){
         let refName = "\(user.email)/profileImage.png"
         let ref = FireService.storageRef.child(refName)
@@ -51,7 +185,13 @@ class FireService {
     
     
     
-    
+
+    /// Retrieves the profile picture of a user.
+    /// - Parameters:
+    ///   - user: User whose profile picture is to be retrieved
+    ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
+    /// - Returns: <#description#>
+
     func getProfilePicture(user : FireUser , completionHandler : @escaping (Result<URL , Error>)-> ()){
         
         FireService.users.document(user.email).getDocument { (documents, error) in
@@ -78,6 +218,11 @@ class FireService {
     
     
     
+    /// Uploads the profile picture of a user
+    /// - Parameters:
+    ///   - data: The data containing image to be saved
+    ///   - user: User whose profile picture is to be uploaded
+    ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
     func saveProfilePicture(data : Data , user : FireUser , completionHandler: @escaping (Result<Bool, Error>) -> Void){
         let refName = "\(user.email)/profileImage.png"
         let ref = FireService.storageRef.child(refName)
@@ -111,6 +256,12 @@ class FireService {
         }
     }
     
+    
+    /// Loads all the activity from a user.
+    /// - Parameters:
+    ///   - User: User whose activity is to be loaded
+    ///   - completion: Completion handler to determine if the function completed correctly or with errors
+    /// - Returns: Nothing
     func loadAllActivity(User : FireUser , completion : @escaping ([Activity]? , Error?) -> ()){
         var activities  : [Activity] = []
         loadGroups(User: User) { (groups, error) in
@@ -142,11 +293,11 @@ class FireService {
     }
     
     
-    
-    
-    
-    
-    
+    /// Function to get all the friends of a user. It stores the retrieved friends of the user in an array.
+    /// - Parameters:
+    ///   - user: The user for whom the friends are  to be retrieved
+    ///   - completion: Completion handler to determine if the function completed correctly or with errors
+    /// - Returns: Nothing
     func loadAllFriends(user : FireUser , completion : @escaping ([Friend]? , Error?) -> ()){
         var friendList : [Friend] = []
         let friends =   FireService.users.document(user.email).collection(FireService.firendsString)
@@ -177,6 +328,10 @@ class FireService {
         
     }
     
+    
+    /// Function to turn the provided data to create a FireUser
+    /// - Parameter data: Data inputted in the form of dictionary that will be used to create a FireUser
+    /// - Returns: Created FireUser with the data that was provided in the function's parameter
     func changeDictionaryToFireUser(data : ([String : Any])) -> FireUser{
         let id = data["id"] as! Int32
         let username = data["username"] as! String
@@ -187,6 +342,12 @@ class FireService {
         return fireUser
     }
     
+    
+    /// Function to turn the provided data to create a Friend
+    /// - Parameters:
+    ///   - data: Data inputted in the form of dictionary that will be used to create a Friend.
+    ///   - user: FireUser provided in the function to turn a FireUser info into a Friend. If user is null, the parameter data will be used instead to create the Friend
+    /// - Returns: Created Friend. Returns null if inputted data and user are null
     func changeDictionaryToFriend(data : ([String : Any])? = nil , user : FireUser? = nil) -> Friend?{
         
         if let user = user {
@@ -208,6 +369,8 @@ class FireService {
     }
     
     
+    /// Refreshes the  information of a user to the globalUser variable
+    /// - Parameter email: Email address used to refresh the information of the globalUser variable
     func refreshUserInfo(email : String){
         self.searchOneUserWithEmail(email: email) { (user, error) in
             guard user != nil else {
@@ -220,6 +383,11 @@ class FireService {
     }
     
     
+    /// Function to determine if a FireUser is associated to an email address
+    /// - Parameters:
+    ///   - email: Email used to determine if a FireUser is associated with this email address
+    ///   - completion: Completion handler to determine if the function completed correctly or with errors
+    /// - Returns: Nothing
     func searchOneUserWithEmail(email : String,completion : @escaping (FireUser? , Error?) -> ()){
         
         var data : [String : Any] = [:]
@@ -237,6 +405,7 @@ class FireService {
             if count == 1 {
                 for document in documents{
                     data = document.data()
+                    print(data, "data is here")
                     let user = self.changeDictionaryToFireUser(data: data)
                     
                     completion(user, nil)
@@ -262,6 +431,11 @@ class FireService {
     }
     
     
+    /// Function to determine if a Friend is associated to an email address
+    /// - Parameters:
+    ///   - email: Email used to determine if a Friend  is associated with this email address
+    ///   - completion: Completion handler to determine if the function completed correctly or with errors
+    /// - Returns: Nothing
     func searchOneFreindWithEmail(email : String,completion : @escaping (Friend? , Error?) -> ()){
         var data : [String : Any] = [:]
         let query = FireService.users.whereField("email", isEqualTo: email)
@@ -305,6 +479,9 @@ class FireService {
     
     
     
+    /// Gets the current user that is logged in
+    /// - Parameter completion: Completion handler to determine if the function completed correctly or with errors
+    /// - Returns: Nothing
     func getCurrentUser(completion : @escaping (FirebaseAuth.User?) -> ()){
         let user = Auth.auth().currentUser
         
@@ -747,19 +924,6 @@ class FireService {
                         }
                     }
                 }
-                
-                
-                
-                
-                
-                
-                
-                //                let contentData = data["content"] as Any
-                //                _ = data["type"]
-                //                let content = Content(type: .string, content: contentData)
-                
-                
-                
             }
             completion(messages, error)
             return

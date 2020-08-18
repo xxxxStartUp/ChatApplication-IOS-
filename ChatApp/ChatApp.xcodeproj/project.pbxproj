@@ -8,17 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		1A4CAF22F581A07E461693D6 /* Pods_ChatApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8CCFD2A7F535B81E81349B /* Pods_ChatApp.framework */; };
-		2728E81324E5FA520026B664 /* ChatDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2728E81224E5FA510026B664 /* ChatDate.swift */; };
-		2728E81524E623CB0026B664 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2728E81424E623CB0026B664 /* HeaderView.swift */; };
-		27EB94B024E23BFD0081BBAB /* GroupchatinfoCells.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27EB94A724E23BFA0081BBAB /* GroupchatinfoCells.xib */; };
-		27EB94B124E23BFD0081BBAB /* GroupSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EB94A824E23BFA0081BBAB /* GroupSettingCell.swift */; };
-		27EB94B224E23BFD0081BBAB /* chatinfoCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EB94A924E23BFB0081BBAB /* chatinfoCells.swift */; };
-		27EB94B324E23BFD0081BBAB /* participantsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EB94AA24E23BFB0081BBAB /* participantsCell.swift */; };
-		27EB94B424E23BFD0081BBAB /* GroupchatinfoCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EB94AB24E23BFB0081BBAB /* GroupchatinfoCells.swift */; };
-		27EB94B524E23BFD0081BBAB /* participantsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EB94AC24E23BFC0081BBAB /* participantsHeaderCell.swift */; };
-		27EB94B624E23BFD0081BBAB /* participantsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27EB94AD24E23BFC0081BBAB /* participantsCell.xib */; };
-		27EB94B724E23BFD0081BBAB /* participantsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27EB94AE24E23BFC0081BBAB /* participantsHeaderCell.xib */; };
-		27EB94B824E23BFD0081BBAB /* GroupSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27EB94AF24E23BFD0081BBAB /* GroupSettingCell.xib */; };
+		2758031B24EB97F800057807 /* GroupchatinfoCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758031224EB97F700057807 /* GroupchatinfoCells.swift */; };
+		2758031C24EB97F800057807 /* participantsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758031324EB97F700057807 /* participantsCell.swift */; };
+		2758031D24EB97F800057807 /* chatinfoCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758031424EB97F700057807 /* chatinfoCells.swift */; };
+		2758031E24EB97F800057807 /* participantsHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758031524EB97F700057807 /* participantsHeaderCell.swift */; };
+		2758031F24EB97F800057807 /* participantsHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2758031624EB97F700057807 /* participantsHeaderCell.xib */; };
+		2758032024EB97F800057807 /* participantsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2758031724EB97F700057807 /* participantsCell.xib */; };
+		2758032124EB97F800057807 /* GroupSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758031824EB97F700057807 /* GroupSettingCell.swift */; };
+		2758032224EB97F800057807 /* GroupSettingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2758031924EB97F700057807 /* GroupSettingCell.xib */; };
+		2758032324EB97F800057807 /* GroupchatinfoCells.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2758031A24EB97F800057807 /* GroupchatinfoCells.xib */; };
+		2758032524EB987900057807 /* ChatDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758032424EB987900057807 /* ChatDate.swift */; };
 		33A3306B172758900C12E9B7 /* Pods_ChatApp_ChatAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED541EBE12DD8E82354991 /* Pods_ChatApp_ChatAppUITests.framework */; };
 		436213E424B647B100304FB3 /* GroupChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436213E324B647B100304FB3 /* GroupChatVC.swift */; };
 		436213E624B647D300304FB3 /* GroupChatSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 436213E524B647D300304FB3 /* GroupChatSB.storyboard */; };
@@ -117,17 +116,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2728E81224E5FA510026B664 /* ChatDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDate.swift; sourceTree = "<group>"; };
-		2728E81424E623CB0026B664 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
-		27EB94A724E23BFA0081BBAB /* GroupchatinfoCells.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupchatinfoCells.xib; sourceTree = "<group>"; };
-		27EB94A824E23BFA0081BBAB /* GroupSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupSettingCell.swift; sourceTree = "<group>"; };
-		27EB94A924E23BFB0081BBAB /* chatinfoCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = chatinfoCells.swift; sourceTree = "<group>"; };
-		27EB94AA24E23BFB0081BBAB /* participantsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = participantsCell.swift; sourceTree = "<group>"; };
-		27EB94AB24E23BFB0081BBAB /* GroupchatinfoCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupchatinfoCells.swift; sourceTree = "<group>"; };
-		27EB94AC24E23BFC0081BBAB /* participantsHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = participantsHeaderCell.swift; sourceTree = "<group>"; };
-		27EB94AD24E23BFC0081BBAB /* participantsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = participantsCell.xib; sourceTree = "<group>"; };
-		27EB94AE24E23BFC0081BBAB /* participantsHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = participantsHeaderCell.xib; sourceTree = "<group>"; };
-		27EB94AF24E23BFD0081BBAB /* GroupSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupSettingCell.xib; sourceTree = "<group>"; };
+		2758031224EB97F700057807 /* GroupchatinfoCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupchatinfoCells.swift; path = "Cells/GroupInfoCells-E/GroupchatinfoCells.swift"; sourceTree = SOURCE_ROOT; };
+		2758031324EB97F700057807 /* participantsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = participantsCell.swift; path = "Cells/GroupInfoCells-E/participantsCell.swift"; sourceTree = SOURCE_ROOT; };
+		2758031424EB97F700057807 /* chatinfoCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = chatinfoCells.swift; path = "Cells/GroupInfoCells-E/chatinfoCells.swift"; sourceTree = SOURCE_ROOT; };
+		2758031524EB97F700057807 /* participantsHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = participantsHeaderCell.swift; path = "Cells/GroupInfoCells-E/participantsHeaderCell.swift"; sourceTree = SOURCE_ROOT; };
+		2758031624EB97F700057807 /* participantsHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = participantsHeaderCell.xib; path = "Cells/GroupInfoCells-E/participantsHeaderCell.xib"; sourceTree = SOURCE_ROOT; };
+		2758031724EB97F700057807 /* participantsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = participantsCell.xib; path = "Cells/GroupInfoCells-E/participantsCell.xib"; sourceTree = SOURCE_ROOT; };
+		2758031824EB97F700057807 /* GroupSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupSettingCell.swift; path = "Cells/GroupInfoCells-E/GroupSettingCell.swift"; sourceTree = SOURCE_ROOT; };
+		2758031924EB97F700057807 /* GroupSettingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupSettingCell.xib; path = "Cells/GroupInfoCells-E/GroupSettingCell.xib"; sourceTree = SOURCE_ROOT; };
+		2758031A24EB97F800057807 /* GroupchatinfoCells.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupchatinfoCells.xib; path = "Cells/GroupInfoCells-E/GroupchatinfoCells.xib"; sourceTree = SOURCE_ROOT; };
+		2758032424EB987900057807 /* ChatDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatDate.swift; sourceTree = "<group>"; };
 		32EAEBF7AB3C5A962A4A38CA /* Pods-ChatAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatAppTests.debug.xcconfig"; path = "Target Support Files/Pods-ChatAppTests/Pods-ChatAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		436213E324B647B100304FB3 /* GroupChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupChatVC.swift; sourceTree = "<group>"; };
 		436213E524B647D300304FB3 /* GroupChatSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = GroupChatSB.storyboard; sourceTree = "<group>"; };
@@ -273,27 +271,12 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		27EB94A624E23BD50081BBAB /* GroupInfoCells-E */ = {
-			isa = PBXGroup;
-			children = (
-				27EB94A924E23BFB0081BBAB /* chatinfoCells.swift */,
-				27EB94AB24E23BFB0081BBAB /* GroupchatinfoCells.swift */,
-				27EB94A724E23BFA0081BBAB /* GroupchatinfoCells.xib */,
-				27EB94A824E23BFA0081BBAB /* GroupSettingCell.swift */,
-				27EB94AF24E23BFD0081BBAB /* GroupSettingCell.xib */,
-				27EB94AA24E23BFB0081BBAB /* participantsCell.swift */,
-				27EB94AD24E23BFC0081BBAB /* participantsCell.xib */,
-				27EB94AC24E23BFC0081BBAB /* participantsHeaderCell.swift */,
-				27EB94AE24E23BFC0081BBAB /* participantsHeaderCell.xib */,
-			);
-			path = "GroupInfoCells-E";
-			sourceTree = "<group>";
-		};
 		439F5AD62499A91200D06BCF /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				439F5AD72499A9DB00D06BCF /* FireService.swift */,
 				43BBB44324A04DE60024F449 /* Admin.swift */,
+				2758032424EB987900057807 /* ChatDate.swift */,
 				43BBB44524A04DF20024F449 /* FireUser.swift */,
 				43BBB425249B0EE70024F449 /* Message.swift */,
 				43BBB427249B13EA0024F449 /* User.swift */,
@@ -302,7 +285,6 @@
 				43BD8A8B24A81B6200749E2A /* Group.swift */,
 				4399AD5124AFA00100E7F0E0 /* Activity.swift */,
 				43C6C99C24B0291D003DB77E /* ChatError.swift */,
-				2728E81224E5FA510026B664 /* ChatDate.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -371,7 +353,7 @@
 		43BBB439249CA47F0024F449 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				27EB94A624E23BD50081BBAB /* GroupInfoCells-E */,
+				CB584D2524C52CBC00F863AF /* GroupInfoCells */,
 				43C6C9C424B58B71003DB77E /* NotificationsCell */,
 				43BBB45724A07A780024F449 /* ChatCell */,
 				43BBB44E24A070550024F449 /* SettingsCell */,
@@ -481,9 +463,24 @@
 			children = (
 				43E1A25824BAA3AA00511642 /* TexterView.swift */,
 				43A7480C24BB8A6100281A07 /* ProfileInfoView.swift */,
-				2728E81424E623CB0026B664 /* HeaderView.swift */,
 			);
 			path = ProgrammaticViews;
+			sourceTree = "<group>";
+		};
+		CB584D2524C52CBC00F863AF /* GroupInfoCells */ = {
+			isa = PBXGroup;
+			children = (
+				2758031424EB97F700057807 /* chatinfoCells.swift */,
+				2758031224EB97F700057807 /* GroupchatinfoCells.swift */,
+				2758031A24EB97F800057807 /* GroupchatinfoCells.xib */,
+				2758031824EB97F700057807 /* GroupSettingCell.swift */,
+				2758031924EB97F700057807 /* GroupSettingCell.xib */,
+				2758031324EB97F700057807 /* participantsCell.swift */,
+				2758031724EB97F700057807 /* participantsCell.xib */,
+				2758031524EB97F700057807 /* participantsHeaderCell.swift */,
+				2758031624EB97F700057807 /* participantsHeaderCell.xib */,
+			);
+			path = GroupInfoCells;
 			sourceTree = "<group>";
 		};
 		CBA262A724AFB7C600F81034 /* Views Updates */ = {
@@ -676,12 +673,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2758031F24EB97F800057807 /* participantsHeaderCell.xib in Resources */,
 				43C6C9DE24B58D9E003DB77E /* ChatLogSB.storyboard in Resources */,
 				43C6C9E024B58D9E003DB77E /* ChatStoryBoard.storyboard in Resources */,
 				43C6C9EB24B58D9E003DB77E /* profileStoryBoard.storyboard in Resources */,
+				2758032224EB97F800057807 /* GroupSettingCell.xib in Resources */,
 				43C6C9E624B58D9E003DB77E /* NewGroupSB.storyboard in Resources */,
 				43C6C9C724B58B71003DB77E /* NotificationsCell.xib in Resources */,
 				CBD5986724986040000CBEBD /* LaunchScreen.storyboard in Resources */,
+				2758032024EB97F800057807 /* participantsCell.xib in Resources */,
 				43C6C9E224B58D9E003DB77E /* SettingsSB.storyboard in Resources */,
 				43C6C9E324B58D9E003DB77E /* SignUpSB.storyboard in Resources */,
 				CB85DDF024CE771D00E94353 /* selectFriendSB.storyboard in Resources */,
@@ -689,17 +689,14 @@
 				CBD5986424986040000CBEBD /* Assets.xcassets in Resources */,
 				43C6C9DF24B58D9E003DB77E /* AddFriendSB.storyboard in Resources */,
 				43A7480724BB811400281A07 /* ChatInfoCells.xib in Resources */,
-				27EB94B824E23BFD0081BBAB /* GroupSettingCell.xib in Resources */,
 				CBF45C7F24C5117000E5AFA3 /* GroupInfoSB.storyboard in Resources */,
 				43C6C9EA24B58D9E003DB77E /* WelcomeScreenSB.storyboard in Resources */,
 				43C6C9E924B58D9E003DB77E /* FriendsSB.storyboard in Resources */,
+				2758032324EB97F800057807 /* GroupchatinfoCells.xib in Resources */,
 				43C6C9EC24B58D9E003DB77E /* ChatSB.storyboard in Resources */,
 				43BBB4122499D5C70024F449 /* GoogleService-Info.plist in Resources */,
-				27EB94B724E23BFD0081BBAB /* participantsHeaderCell.xib in Resources */,
 				43C6C9E524B58D9E003DB77E /* MainSB.storyboard in Resources */,
-				27EB94B024E23BFD0081BBAB /* GroupchatinfoCells.xib in Resources */,
 				43A7480B24BB811400281A07 /* ProfileInfoCell.xib in Resources */,
-				27EB94B624E23BFD0081BBAB /* participantsCell.xib in Resources */,
 				436213E624B647D300304FB3 /* GroupChatSB.storyboard in Resources */,
 				43A7480824BB811400281A07 /* AppSettingsCell.xib in Resources */,
 				43C6C9E824B58D9E003DB77E /* NotificationSB.storyboard in Resources */,
@@ -834,7 +831,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4399AD5224AFA00100E7F0E0 /* Activity.swift in Sources */,
-				27EB94B224E23BFD0081BBAB /* chatinfoCells.swift in Sources */,
 				43BD8A9924AA713D00749E2A /* AddFriendVC.swift in Sources */,
 				43BBB44B24A062150024F449 /* ContactCell.swift in Sources */,
 				CB381BA5249DB7C6000A8041 /* SignUpVC.swift in Sources */,
@@ -842,13 +838,12 @@
 				43BD8A8C24A81B6200749E2A /* Group.swift in Sources */,
 				43BBB45B24A19CE20024F449 /* Chat.swift in Sources */,
 				43A7480D24BB8A6100281A07 /* ProfileInfoView.swift in Sources */,
-				27EB94B124E23BFD0081BBAB /* GroupSettingCell.swift in Sources */,
 				43A747FE24BB80A100281A07 /* ChatCellProgrammatic.swift in Sources */,
 				CBD5985B24986037000CBEBD /* AppDelegate.swift in Sources */,
 				436213EC24B6486D00304FB3 /* ChatCell-Dara.swift in Sources */,
 				43BBB420249ABDC60024F449 /* ChatLogVC.swift in Sources */,
+				2758032124EB97F800057807 /* GroupSettingCell.swift in Sources */,
 				43C6C9CA24B58B85003DB77E /* NotificationsVC.swift in Sources */,
-				27EB94B424E23BFD0081BBAB /* GroupchatinfoCells.swift in Sources */,
 				436213EA24B6484D00304FB3 /* GroupDelegate.swift in Sources */,
 				43BBB419249A7B910024F449 /* Git.swift in Sources */,
 				43BBB44824A061150024F449 /* FriendsVC.swift in Sources */,
@@ -859,9 +854,10 @@
 				43E1A25924BAA3AA00511642 /* TexterView.swift in Sources */,
 				CBA262AB24AFBB5F00F81034 /* Extensions.swift in Sources */,
 				43BBB44D24A064660024F449 /* SettingsVC.swift in Sources */,
+				2758031B24EB97F800057807 /* GroupchatinfoCells.swift in Sources */,
 				43BBB45424A071B20024F449 /* SettingsCell.swift in Sources */,
-				2728E81324E5FA520026B664 /* ChatDate.swift in Sources */,
 				43BBB45624A0795E0024F449 /* ChatVC.swift in Sources */,
+				2758032524EB987900057807 /* ChatDate.swift in Sources */,
 				43BBB44624A04DF20024F449 /* FireUser.swift in Sources */,
 				43BBB433249C99B80024F449 /* SignInVC.swift in Sources */,
 				43BBB45224A070BD0024F449 /* SettingsProfileCell.swift in Sources */,
@@ -870,17 +866,17 @@
 				CBD5985D24986037000CBEBD /* SceneDelegate.swift in Sources */,
 				43BBB436249C9E1C0024F449 /* Validate.swift in Sources */,
 				43E1A25B24BAA77300511642 /* TexterViewDelegate.swift in Sources */,
+				2758031E24EB97F800057807 /* participantsHeaderCell.swift in Sources */,
+				2758031D24EB97F800057807 /* chatinfoCells.swift in Sources */,
 				43BBB428249B13EA0024F449 /* User.swift in Sources */,
-				27EB94B324E23BFD0081BBAB /* participantsCell.swift in Sources */,
+				2758031C24EB97F800057807 /* participantsCell.swift in Sources */,
 				43A7480624BB811400281A07 /* ProfileInfoCell.swift in Sources */,
-				2728E81524E623CB0026B664 /* HeaderView.swift in Sources */,
 				43A7480A24BB811400281A07 /* ChatInfoCells.swift in Sources */,
 				CB85DDF224CE77BA00E94353 /* SelectFriendVC.swift in Sources */,
 				43BBB45924A07ACC0024F449 /* ChatCell-ebuka.swift in Sources */,
 				43BBB422249ABDC60024F449 /* ChatLogCell.swift in Sources */,
 				439F5AD82499A9DC00D06BCF /* FireService.swift in Sources */,
 				43C6C9EE24B590B2003DB77E /* ProfileVC.swift in Sources */,
-				27EB94B524E23BFD0081BBAB /* participantsHeaderCell.swift in Sources */,
 				439F921E24AD469000EC9A33 /* FriendDelegate.swift in Sources */,
 				43C6C99D24B0291D003DB77E /* ChatError.swift in Sources */,
 				43C6C9C824B58B71003DB77E /* NotificationsCell.swift in Sources */,
@@ -1064,13 +1060,13 @@
 				CODE_SIGN_ENTITLEMENTS = ChatApp/ChatApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2KZUJXWT6Z;
+				DEVELOPMENT_TEAM = 9BEUBEN9L7;
 				INFOPLIST_FILE = ChatApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ebukaegb.ChatApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.DaramfonAkpan.ChatApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1086,13 +1082,13 @@
 				CODE_SIGN_ENTITLEMENTS = ChatApp/ChatApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2KZUJXWT6Z;
+				DEVELOPMENT_TEAM = 9BEUBEN9L7;
 				INFOPLIST_FILE = ChatApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ebukaegb.ChatApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.DaramfonAkpan.ChatApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
