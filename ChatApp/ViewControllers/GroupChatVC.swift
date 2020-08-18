@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GroupChatVC: UIViewController {
+class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     @IBOutlet weak var groupChatTable: UITableView!
     @IBOutlet weak var infoButton: UIButton!
@@ -22,6 +22,40 @@ class GroupChatVC: UIViewController {
             loaded = true
             
         }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {return}
+        
+        
+        let selectedImage = image
+        
+        let data = selectedImage.pngData()!
+        
+        saveImageToSend(data: data)
+    }
+    
+    
+    /// Function that saves the image to send to Firebase
+    /// - Parameter data: Data containing the image to send
+    func saveImageToSend(data : Data){
+       
+        FireService.sharedInstance.saveImageToSend(data: data, user: globalUser!) { (result) in
+            switch result {
+            case .success(_):
+                print("sucess")
+                self.dismiss(animated: true, completion: nil)
+                //let image = UIImage(data: data)!
+                //Constants.profilePage.globalProfileImage = image
+                //Constants.profilePage.profileImageState = true
+                 //self.profileImageView.isUserInteractionEnabled = true
+            case .failure(_):
+                print("falure")
+            }
+        }
+        
     }
     
     let texterView = TexterView()
@@ -133,6 +167,12 @@ extension GroupChatVC : TexterViewDelegate {
     }
     
     func didClickCamera() {
+        
+        let cameraRoll = UIImagePickerController()
+        cameraRoll.delegate = self
+        cameraRoll.sourceType = .photoLibrary
+        cameraRoll.allowsEditing = false
+        self.present(cameraRoll, animated: true, completion: nil)
         print("camera")
         
     }
