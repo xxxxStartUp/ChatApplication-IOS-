@@ -13,12 +13,12 @@ class Group : Messaging {
     var GroupAdmin : FireUser
     var friends : [Friend]
     let timeCreated : Date
-    let id : Int
+    let id : String
     var name : String
     var image :Data
     var messages : [Message]?
     
-    init(GroupAdmin : FireUser , id : Int , name : String ) {
+    init(GroupAdmin : FireUser , id : String , name : String ) {
         
         self.GroupAdmin = GroupAdmin
         self.friends = []

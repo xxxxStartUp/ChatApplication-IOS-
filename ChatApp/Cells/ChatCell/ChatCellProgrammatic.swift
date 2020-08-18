@@ -18,6 +18,7 @@ class MessgaeCell: UITableViewCell {
     var message : Message! {
         didSet{
             messageLabel.text = message.content.content as! String
+
             messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
             nameLabel.text = message.sender.name
             timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
@@ -26,13 +27,15 @@ class MessgaeCell: UITableViewCell {
                 tarilingConstraints?.isActive = false
                 nameLabel.textAlignment = .left
                 timeLabel.textAlignment = .right
+                 messageBackgroundView.chatPageViews(type: Constants.chatPage.leftChatBubblev)
             }else{
                 leadingContstraints?.isActive = false
                 tarilingConstraints?.isActive = true
                 nameLabel.textAlignment = .right
                 timeLabel.textAlignment = .left
+                 messageBackgroundView.chatPageViews(type: Constants.chatPage.rightchatBubble)
             }
-            
+      
             
         }
     }
@@ -128,5 +131,6 @@ class MessgaeCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+  
 }
 
