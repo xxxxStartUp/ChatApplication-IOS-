@@ -7,10 +7,15 @@
 //
 
 import Foundation
+import UIKit
 struct Constants{
+    //identifiers
     
     static let mainTabStoryBoardSegue = "mainTabSBIdentifier"
     static let loginTabStoryBoardSegue = "loginSBIdentifier"
+    static let settingsToProfileIdentifer = "settingstoprofileIdentifier"
+    static let groupchatSBToGroupInfoIdentifier = "GroupInfoIdentifier"
+    
     struct onBoardingPage{
         static let filledButton = "filled"
         static let notFilledButton = "noFill"
@@ -49,12 +54,37 @@ struct Constants{
     struct profilePage {
         static let headers = "Headers"
         static let textfields = "Textfields"
+        static var profileImageState = false
+        static var globalProfileImage:UIImage? = nil
+        
 
     }
     struct settingsPage {
         static let userNameHeader = "userNameHeader"
         static let labelTitles = "labelTitle"
         static let statusTitleLabel = "statusTitleLabel"
+    
         static var displayModeSwitch = false
     }
+    struct contactsPage{
+        static let UserNameHeader = "userNameHeader"
+        static let emailSubHeader = "emailSubHeader"
+        
+    }
+    struct groupInfoPage{
+        static let settingsHeader = "settingsHeader"
+        static let groupMemberTitleHeader = "groupMemberTitleHeader"
+        static let userNameHeader = "UserNameHeader"
+        static let emailHeader = "emailHeader"
+        static let admin = "admin"
+    }
+    struct chatPage{
+        static var chatToContactsSegueSignal = false
+        static let leftChatBubblev = "LeftChatBubble"
+        static let rightchatBubble = "RightChatBubble"
+    }
+    struct chatLogPage{
+        static var chatLogToContactsSegueSignal = false
+    }
+    
 }

@@ -15,11 +15,27 @@ class AddFriendVC : UIViewController {
     
     @IBOutlet weak var sendInviteButton: UIButton!
     @IBOutlet weak var addContactsHeader: UILabel!
-    
+   
     override func viewDidLoad() {
+        navigationItem.largeTitleDisplayMode = .never
         super.viewDidLoad()
         updateViews()
+        updateBackgroundViews()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        navigationItem.largeTitleDisplayMode = .never
+        updateViews()
+        updateBackgroundViews()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        navigationItem.largeTitleDisplayMode = .never
+        updateViews()
+        updateBackgroundViews()
+    }
+    
+
     
     @IBAction func addFriend(_ sender: Any) {
         
@@ -28,11 +44,64 @@ class AddFriendVC : UIViewController {
         }
         
     }
+    
+    func dynamicLinkSetup(){
+        var component = URLComponents()
+        component.scheme = "https"
+        component.host = "www.example.com"
+        //component.path = "\()"
+    }
     func updateViews(){
         sendInviteButton.contactsPageButton()
-        addContactsHeader.contactsPageLabels(type: Constants.newContactsPage.newContactsHeader)
+        addContactsHeader.addContactsPageLabels(type: Constants.newContactsPage.newContactsHeader)
+        emailTextfield.addContactPage()
     }
-    
+    func updateBackgroundViews(){
+           DispatchQueue.main.async {
+               self.view.darkmodeBackground()
+               self.navigationController?.navigationBar.darkmodeBackground()
+               self.navigationBarBackgroundHandler()
+
+               
+               
+           }
+       }
+       //handles the text color, background color and appearance of the nav bar
+       func navigationBarBackgroundHandler(){
+           
+           if Constants.settingsPage.displayModeSwitch{
+               let navBarAppearance = UINavigationBarAppearance()
+               navBarAppearance.configureWithOpaqueBackground()
+               navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+               navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+               navBarAppearance.backgroundColor = .black
+               self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+               self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+               self.navigationController?.navigationBar.setNeedsLayout()
+               //handles TabBar
+               self.tabBarController?.tabBar.barTintColor = .black
+               tabBarController?.tabBar.isTranslucent = false
+               
+               
+           }
+           else{
+               let navBarAppearance = UINavigationBarAppearance()
+               navBarAppearance.configureWithOpaqueBackground()
+               navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+               navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+               navBarAppearance.backgroundColor = .white
+               self.navigationController?.navigationBar.isTranslucent = true
+               self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+               self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+               self.navigationController?.navigationBar.setNeedsLayout()
+               
+               //handles TabBar
+               self.tabBarController?.tabBar.barTintColor = .white
+               self.tabBarController?.tabBar.backgroundColor = .white
+               tabBarController?.tabBar.isTranslucent = true
+               
+           }
+       }
     
     
     

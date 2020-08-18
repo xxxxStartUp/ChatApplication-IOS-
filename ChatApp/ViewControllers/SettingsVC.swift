@@ -11,6 +11,7 @@ import UIKit
 class SettingsVC: UIViewController {
     
     @IBOutlet weak var SettingsTable: UITableView!
+    @IBOutlet weak var signOutButton: UIButton!
     
     //let identifier = "SettingsProfileCell"
     let identifier = "profileInfoCellIdentifier"
@@ -19,16 +20,32 @@ class SettingsVC: UIViewController {
     
     let identifier3 = "AppSettingsCellIdentifier"
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Settings"
         //navigationController?.navigationBar.backgroundColor = .lightGray
         setUpTableView()
+        NotificationCenter.default.addObserver(self, selector: #selector(on), name: .displayOn, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(off), name: .displayOff, object: nil)
+        
         
         self.updateBackgroundViews()
         
         // Do any additional setup after loading the view.
+    }
+    
+    @objc func on (){
+
+        self.updateBackgroundViews()
+        
+        
+    }
+    
+    @objc func off (){
+
+        self.updateBackgroundViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -39,15 +56,15 @@ class SettingsVC: UIViewController {
         super.viewWillDisappear(true)
         updateBackgroundViews()
     }
-    
-    
+
+
     @IBAction func signOut(_ sender: Any) {
         
         FireService.sharedInstance.signOut()
-             globalUser = nil
-             let vc = UIStoryboard(name: "SignUpSB", bundle: nil).instantiateInitialViewController()!
-             vc.modalPresentationStyle = .fullScreen
-             self.present(vc, animated: true, completion: nil)
+        globalUser = nil
+        let vc = UIStoryboard(name: "SignUpSB", bundle: nil).instantiateInitialViewController()!
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
         
         
     }
@@ -70,6 +87,12 @@ class SettingsVC: UIViewController {
     }
     
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .displayOn, object: nil)
+         NotificationCenter.default.removeObserver(self, name: .displayOff, object: nil)
+    }
+    
+    
 }
 
 
@@ -81,8 +104,6 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
         return 3
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        
         if section == 0 {
             return 1
         }
@@ -128,40 +149,6 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
         default:
             break
         }
-        
-        //        if indexPath.section == 0 {
-        //            if let cell = SettingsTable.dequeueReusableCell(withIdentifier: identifier) as?  ProfileInfoCell {
-        //                cell.backgroundColor = .clear
-        //                return cell
-        //            }
-        //        }
-        //        else {
-        //            if let cell = SettingsTable.dequeueReusableCell(withIdentifier: identifier2) as?  ChatInfoCells {
-        //                cell.backgroundColor = .clear
-        //                return cell
-        //            }
-        //        }
-        //
-        //        //        if indexPath.section == 1 {
-        //        //            let cell = UITableViewCell()
-        //        //            cell.textLabel?.text = "section1"
-        //        //            return cell
-        //        //        }
-        //        //
-        //        //        if indexPath.section == 2 {
-        //        //            let cell = UITableViewCell()
-        //        //            cell.textLabel?.text = "section2"
-        //        //            return cell
-        //        //        }
-        //        //
-        //        //        if indexPath.section == 3 {
-        //        //            let cell = UITableViewCell()
-        //        //            cell.textLabel?.text = "section3"
-        //        //            return cell
-        //        //        }
-        //
-        //
-        //
         return UITableViewCell()
     }
     
@@ -213,12 +200,26 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
         }
         return 0
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        switch indexPath.section {
+        case 0:
+            performSegue(withIdentifier: Constants.settingsToProfileIdentifer, sender: self)
+               
+            
+        default:
+               break
+           
+            
+    }
+    }
     
     //updates the background color for the tableview and nav bar.
     func updateBackgroundViews(){
         DispatchQueue.main.async {
             self.SettingsTable.darkmodeBackground()
             self.navigationController?.navigationBar.darkmodeBackground()
+            self.signOutButton.settingsPageButtons()
             self.navigationBarBackgroundHandler()
             self.SettingsTable.reloadData()
             //self.navigationController?.navigationBar.settingsPage()
@@ -235,6 +236,7 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
             navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
             navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
             navBarAppearance.backgroundColor = .black
+            self.navigationController?.navigationBar.isTranslucent = false
             self.navigationController?.navigationBar.standardAppearance = navBarAppearance
             self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
             self.navigationController?.navigationBar.setNeedsLayout()
@@ -249,6 +251,7 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
             navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
             navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
             navBarAppearance.backgroundColor = .white
+            self.navigationController?.navigationBar.isTranslucent = true
             self.navigationController?.navigationBar.standardAppearance = navBarAppearance
             self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
             self.navigationController?.navigationBar.setNeedsLayout()
@@ -260,6 +263,15 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
         }
     }
     
+    
+    
+}
+
+extension Notification.Name {
+    static let displayOn
+        = NSNotification.Name("displayOn")
+    static let displayOff
+        = NSNotification.Name("displayOff")
     
     
 }

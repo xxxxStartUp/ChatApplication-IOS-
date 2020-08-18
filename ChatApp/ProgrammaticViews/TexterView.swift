@@ -13,8 +13,10 @@ class TexterView : UIView, UITextViewDelegate {
     
     var delegate : TexterViewDelegate?
     
+    
     let backgroundView : UIView = {
         let view = UIView()
+//        view.darkmodeBackground()
         view.backgroundColor = UIColor(white: 0.95, alpha: 1)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -24,7 +26,7 @@ class TexterView : UIView, UITextViewDelegate {
         let textView = UITextView()
         textView.backgroundColor = .white
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.text = "Hey this is a textView"
+        textView.text = ""
         textView.textColor = .black
         textView.isEditable = true
         textView.layer.cornerRadius = 12
@@ -38,8 +40,9 @@ class TexterView : UIView, UITextViewDelegate {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .clear
-        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(#colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1), for: .normal)
         button.setTitle("Send", for: .normal)
+        button.tintColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.addTarget(self, action: #selector(send), for: .touchUpInside)
         return button
@@ -52,7 +55,9 @@ class TexterView : UIView, UITextViewDelegate {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .clear
         button.setTitleColor(.systemBlue, for: .normal)
-        button.setImage(UIImage(named: "camera"), for: .normal)
+        let image = UIImage(systemName: "camera")
+        button.setImage(image, for: .normal)
+        button.tintColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.addTarget(self, action: #selector(handleCameraSelecation), for: .touchUpInside)
         return button
@@ -63,7 +68,9 @@ class TexterView : UIView, UITextViewDelegate {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .clear
         button.setTitleColor(.systemBlue, for: .normal)
-        button.setImage(UIImage(named: "file"), for: .normal)
+        let image = UIImage(systemName: "doc")
+        button.setImage(image, for: .normal)
+        button.tintColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.addTarget(self, action: #selector(handlefileSelection), for: .touchUpInside)
     
@@ -112,6 +119,7 @@ class TexterView : UIView, UITextViewDelegate {
             textingView.trailingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: -25),
             textingView.heightAnchor.constraint(equalToConstant: 35),
             
+            
             backgroundView.leadingAnchor.constraint(equalTo: textingView.leadingAnchor , constant: -25),
             backgroundView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 16),
             backgroundView.topAnchor.constraint(equalTo: textingView.topAnchor, constant: -16),
@@ -126,20 +134,68 @@ class TexterView : UIView, UITextViewDelegate {
     
     
     func textViewDidChange(_ textView: UITextView) {
-        
+        print("editing")
+        var width : CGFloat = 0
+        textView.isScrollEnabled = false
         let size = CGSize(width: frame.width, height: .infinity)
         let estimatedSize = textView.sizeThatFits(size)
+        guard let text = textView.text  else {return}
+        textView.constraints.forEach { (c) in
+            if c.firstAttribute == .width{
+                width = c.constant
+            }
+        }
+        var height = text.height(withConstrainedWidth: width + 10, font: textView.font!)
+        
+        
         textView.constraints.forEach { (c) in
             if c.firstAttribute == .height{
-                c.constant = estimatedSize.height + 5
+                if c.constant < 100{
+                    c.constant = height + 30//estimatedSize.height + 5
+                    textView.isScrollEnabled = false
+                }else{
+                    textView.isScrollEnabled = true
+                }
+                
+                
             }
         }
     }
     
 
-    
 
 }
 
+extension String {
+    func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+
+        return ceil(boundingBox.height)
+    }
+
+    func width(withConstrainedHeight height: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+
+        return ceil(boundingBox.width)
+    }
+}
+
+extension NSAttributedString {
+    func height(withConstrainedWidth width: CGFloat) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let boundingBox = boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)
+
+        return ceil(boundingBox.height)
+    }
+
+    func width(withConstrainedHeight height: CGFloat) -> CGFloat {
+        let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
+        let boundingBox = boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)
+
+        return ceil(boundingBox.width)
+    }
+}
 
 

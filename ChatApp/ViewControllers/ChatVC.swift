@@ -88,7 +88,7 @@ class ChatVC: UIViewController {
         let messageContent = Content(type: .string, content: messageView.text)
         let dummyMessage = Message(content: messageContent, sender: globalUser!, timeStamp: Date(), recieved: false)
         
-        FireService.sharedInstance.sendMessagefinal(User: globalUser!, message: dummyMessage, freind: r!) { (sucess, error) in
+        FireService.sharedInstance.sendMessageToFriend(User: globalUser!, message: dummyMessage, freind: r!) { (sucess, error) in
             
             if let error = error {
                 fatalError(error.localizedDescription)

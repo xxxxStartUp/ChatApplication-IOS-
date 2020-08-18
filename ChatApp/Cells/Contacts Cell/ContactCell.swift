@@ -13,7 +13,7 @@ class ContactCell: UITableViewCell {
     @IBOutlet weak var FreindimageView: UIImageView!
     @IBOutlet weak var friendName: UILabel!
     
-    @IBOutlet weak var freindLocation: UILabel!
+    @IBOutlet weak var friendEmail: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,8 +24,14 @@ class ContactCell: UITableViewCell {
     var friend : Friend!{
         didSet{
             friendName.text = friend.username
-            freindLocation.text = friend.email
+            friendEmail.text = friend.email
+            friendName.contactsPageLabels(type: Constants.contactsPage.UserNameHeader)
+            friendEmail.contactsPageLabels(type: Constants.contactsPage.emailSubHeader)
         }
+    }
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        accessoryType = selected ? .checkmark : .none
     }
     
     

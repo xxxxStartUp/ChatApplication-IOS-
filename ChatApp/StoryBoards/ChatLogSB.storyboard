@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sMJ-dg-PRO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sMJ-dg-PRO">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -37,10 +37,13 @@
                                 <color key="tintColor" red="0.078763119879999996" green="0.56403696540000003" blue="0.94189447159999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="square.and.pencil" catalog="system"/>
                                 <connections>
-                                    <segue destination="Sbf-Rq-bE3" kind="show" id="SAB-bb-Cmp"/>
+                                    <action selector="newGroupButtonPressed:" destination="82g-gy-gXR" eventType="touchUpInside" id="4UO-Ch-a2O"/>
                                 </connections>
                             </button>
                             <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="newGroupButtonPressed:" destination="82g-gy-gXR" id="QDJ-Ts-8or"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="jpw-hx-17B">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0JS-Vd-dl6">
@@ -49,14 +52,19 @@
                                 <color key="tintColor" red="0.078763119879999996" green="0.56403696540000003" blue="0.94189447159999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="magnifyingglass" catalog="system"/>
                                 <connections>
-                                    <segue destination="nfG-8g-AaW" kind="show" id="sJU-AH-cbt"/>
+                                    <action selector="contactButtonPressed:" destination="82g-gy-gXR" eventType="touchUpInside" id="ftw-ld-mFo"/>
                                 </connections>
                             </button>
                             <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="contactsButtonPressed:" destination="82g-gy-gXR" id="xLT-HX-NPg"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="chatLogTableview" destination="Pmj-kn-Ipv" id="mKM-pN-AVI"/>
+                        <segue destination="Sbf-Rq-bE3" kind="show" identifier="chatLogToNewGroupIdentifier" id="UBG-hB-zax"/>
+                        <segue destination="nfG-8g-AaW" kind="show" identifier="chatLogToContactsIdentifier" id="Scc-e3-5xp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OYv-zE-Ktn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -71,12 +79,12 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ENZ-b4-UZC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="684" y="-568"/>
+            <point key="canvasLocation" x="1210" y="19"/>
         </scene>
         <!--contact-->
         <scene sceneID="Sdo-An-BXO">
             <objects>
-                <viewControllerPlaceholder storyboardName="FriendsSB" referencedIdentifier="contact" id="nfG-8g-AaW" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="selectFriendSB" referencedIdentifier="contact" id="nfG-8g-AaW" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="0ua-rb-H9B"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rII-QB-q7h" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4XK-Of-flr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4XK-Of-flr">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -16,10 +16,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="HWj-8h-va4">
-                                <rect key="frame" x="0.0" y="44" width="414" height="633"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="643"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jOd-Wb-JYM">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="583"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="593"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SettingsProfileCell" rowHeight="177" id="JFH-6y-sbQ" customClass="SettingsProfileCell" customModule="ChatApp" customModuleProvider="target">
@@ -120,11 +120,11 @@
                                         </prototypes>
                                     </tableView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oLg-J4-e6Q">
-                                        <rect key="frame" x="0.0" y="583" width="414" height="50"/>
+                                        <rect key="frame" x="0.0" y="593" width="414" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="eFr-fM-6tQ"/>
                                         </constraints>
-                                        <state key="normal" title="SignOut"/>
+                                        <state key="normal" title="Sign Out"/>
                                         <connections>
                                             <action selector="signOut:" destination="P4w-Nq-2ev" eventType="touchUpInside" id="lB8-QM-Pdu"/>
                                         </connections>
@@ -135,17 +135,19 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="HWj-8h-va4" firstAttribute="trailing" secondItem="Lxc-Cd-qDT" secondAttribute="trailing" id="QLV-D7-GY8"/>
-                            <constraint firstItem="Lxc-Cd-qDT" firstAttribute="bottom" secondItem="HWj-8h-va4" secondAttribute="bottom" constant="10" id="c7i-vJ-06K"/>
+                            <constraint firstItem="Lxc-Cd-qDT" firstAttribute="bottom" secondItem="HWj-8h-va4" secondAttribute="bottom" id="c7i-vJ-06K"/>
                             <constraint firstItem="HWj-8h-va4" firstAttribute="top" secondItem="Lxc-Cd-qDT" secondAttribute="top" id="fVm-wV-EKJ"/>
                             <constraint firstItem="HWj-8h-va4" firstAttribute="leading" secondItem="Lxc-Cd-qDT" secondAttribute="leading" id="fgh-P4-1zA"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Lxc-Cd-qDT"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Settings" image="plus" catalog="system" id="LHZ-Jq-ykQ"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="hammer" catalog="system" id="LHZ-Jq-ykQ"/>
                     <navigationItem key="navigationItem" id="C88-tg-fZi"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="SettingsTable" destination="jOd-Wb-JYM" id="ymc-P8-jgg"/>
+                        <outlet property="signOutButton" destination="oLg-J4-e6Q" id="dDN-b9-JTW"/>
+                        <segue destination="iDD-Y3-Nku" kind="show" identifier="settingstoprofileIdentifier" id="bwU-2y-KOw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7yH-x9-RJY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -156,7 +158,7 @@
         <scene sceneID="AwC-Hc-XCa">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4XK-Of-flr" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" id="Nsn-5p-sLm"/>
+                    <tabBarItem key="tabBarItem" title="Settings" springLoaded="YES" id="Nsn-5p-sLm"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="FnG-tr-ytP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -170,6 +172,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TV6-i6-bP6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="100.00000000000001" y="98.4375"/>
+        </scene>
+        <!--profileStoryBoard-->
+        <scene sceneID="ZiZ-qT-7SB">
+            <objects>
+                <viewControllerPlaceholder storyboardName="profileStoryBoard" id="iDD-Y3-Nku" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="GRQ-Mr-puI"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qEL-ZE-RSQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1479" y="-253"/>
         </scene>
         <!--Profile-->
         <scene sceneID="Jde-Yk-cqc">
@@ -437,8 +449,8 @@
     </scenes>
     <resources>
         <image name="greaterthan" catalog="system" width="128" height="111"/>
+        <image name="hammer" catalog="system" width="128" height="115"/>
         <image name="person.3.fill" catalog="system" width="128" height="61"/>
         <image name="person.crop.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
     </resources>
 </document>

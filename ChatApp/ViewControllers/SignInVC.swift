@@ -45,7 +45,7 @@ class SignInVC: UIViewController {
         if let email = emailTextField.text, let password = passwordTextField.text{
             //Need to complete validate class and functions in class before using it
             if Validate.isPasswordValid(password) && Validate.isValidEmail(email){
-                 let user = FireUser(userID: 1, userName: "jhh", userEmail: email, creationDate: Date())
+
                 FireService.sharedInstance.signIn(email: email, password: password) { (completed) in
                     if completed{
                         FireService.sharedInstance.searchOneUserWithEmail(email: email) { (user, error) in
@@ -108,10 +108,15 @@ extension UIViewController {
     
     
     func goToTab(){
+        DispatchQueue.main.async {
+            
+            let vc = UIStoryboard(name: "MainTabStoryboard", bundle: nil).instantiateInitialViewController()!
+            self.view.window?.rootViewController = vc
+            self.view.window?.makeKeyAndVisible()
 
-    let vc = UIStoryboard(name: "MainTabStoryboard", bundle: nil).instantiateInitialViewController()!
-      view.window?.rootViewController = vc
-       view.window?.makeKeyAndVisible()
+        }
+
+  
         
         
 //        self.dismiss(animated: true) {

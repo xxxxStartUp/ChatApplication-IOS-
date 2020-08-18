@@ -53,7 +53,7 @@ class SignUpVC: UIViewController {
             //Need to complete validate class and functions in class before using it
             if Validate.isPasswordValid(password) && Validate.isValidEmail(email){
                 
-                let user = FireUser(userID: 1, userName: name, userEmail: email, creationDate: Date())
+                let user = FireUser(userID: "1", userName: name, userEmail: email, creationDate: Date())
                 
                 
                 FireService.sharedInstance.SignUp(email: email, password: password) { (completed) in
@@ -102,6 +102,7 @@ class SignUpVC: UIViewController {
         passwordLabel.onBoardingPageSubHeaderLabels(type: Constants.onBoardingPage.passwordSubHeader)
         signupButton.onBoardingPageButton(type: Constants.onBoardingPage.filledButton)
         loginButton.onBoardingPageButton(type: Constants.onBoardingPage.notFilledButton)
+        alreadyHaveAnAccount.onBoardingPageSubHeaderLabels(type: Constants.onBoardingPage.alreadyHaveAnAccoutSubHeader)
     }
     
 }

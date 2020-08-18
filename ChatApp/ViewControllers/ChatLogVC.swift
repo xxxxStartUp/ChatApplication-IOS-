@@ -20,27 +20,28 @@ class ChatLogVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
         chatLogTableview.register(UINib(nibName: "ChatLogCell", bundle: nil), forCellReuseIdentifier: "ChatCellIdentifier")
         chatLogTableview.delegate = self
         chatLogTableview.dataSource = self
         navigationController?.navigationBar.prefersLargeTitles = true
         chatLogTableview.separatorStyle = .none
-
+        
         
         
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         updateBackgroundViews()
+        
     }
     
-
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-         self.tabBarController?.tabBar.isHidden = false
-         loadActivity()
+        self.tabBarController?.tabBar.isHidden = false
+        loadActivity()
     }
     
     
@@ -53,30 +54,42 @@ class ChatLogVC: UIViewController {
                 print(ac.name)
                 self.activities.append(ac)
             }
-            self.chatLogTableview.reloadData()
+            
+            DispatchQueue.main.async {
+                self.chatLogTableview.reloadData()
+            }
+            
         }
         
     }
     
     func setUpfakeActivity(){
         
-        let activity3 = Activity(activityType: .GroupChat(group: Group(GroupAdmin: FireUser(userID: 1, userName: "dara", userEmail: "daraegb@gmail.com", creationDate: Date()), id: 1, name: "Group1")))
+        let activity3 = Activity(activityType: .GroupChat(group: Group(GroupAdmin: FireUser(userID: "1", userName: "dara", userEmail: "daraegb@gmail.com", creationDate: Date()), id: "1", name: "Group1")))
         
-        let activity1 = Activity(activityType: .FriendChat(friend: Friend(email: "ebukafake@gmail.com", username: "ebukaegb", id: 1)))
-        let activity2 = Activity(activityType: .FriendChat(friend: Friend(email: "ebukadoublefake@gmail.com", username: "ebukaegb", id: 1)))
-        let activity4 = Activity(activityType: .GroupChat(group: Group(GroupAdmin: FireUser(userID: 1, userName: "ramzi", userEmail: "ramzi@gmail.com", creationDate: Date()), id: 1, name: "Group2")))
+        let activity1 = Activity(activityType: .FriendChat(friend: Friend(email: "ebukafake@gmail.com", username: "ebukaegb", id: "1")))
+        let activity2 = Activity(activityType: .FriendChat(friend: Friend(email: "ebukadoublefake@gmail.com", username: "ebukaegb", id: "1")))
+        let activity4 = Activity(activityType: .GroupChat(group: Group(GroupAdmin: FireUser(userID: "1", userName: "ramzi", userEmail: "ramzi@gmail.com", creationDate: Date()), id: "1", name: "Group2")))
         
         activities.append(activity1)
         activities.append(activity2)
         activities.append(activity3)
-        activities.append(activity4)
         
-        chatLogTableview.reloadData()
         
     }
     
     
+    @IBAction func newGroupButtonPressed(_ sender: Any) {
+        print("new groupButton Clicked")
+        performSegue(withIdentifier: "chatLogToContactsIdentifier", sender: self)
+        
+        Constants.chatLogPage.chatLogToContactsSegueSignal = true
+    }
+    @IBAction func contactButtonPressed(_ sender: Any) {
+        performSegue(withIdentifier: "chatLogToContactsIdentifier", sender: self)
+    }
     
+  
 }
 
 
@@ -138,14 +151,16 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource{
             navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
             navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
             navBarAppearance.backgroundColor = .black
+            
+            self.navigationController?.navigationBar.isTranslucent = false
             self.navigationController?.navigationBar.standardAppearance = navBarAppearance
             self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
             self.navigationController?.navigationBar.setNeedsLayout()
             self.tabBarController?.tabBar.backgroundColor = .black
             
             //handles TabBar
-             self.tabBarController?.tabBar.barTintColor = .black
-             tabBarController?.tabBar.isTranslucent = false
+            self.tabBarController?.tabBar.barTintColor = .black
+            tabBarController?.tabBar.isTranslucent = false
             
         }
         else{
@@ -154,13 +169,14 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource{
             navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
             navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
             navBarAppearance.backgroundColor = .white
+            self.navigationController?.navigationBar.isTranslucent = true
             self.navigationController?.navigationBar.standardAppearance = navBarAppearance
             self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
             self.navigationController?.navigationBar.setNeedsLayout()
             
             //handles TabBar
-             self.tabBarController?.tabBar.barTintColor = .white
-             tabBarController?.tabBar.isTranslucent = false
+            self.tabBarController?.tabBar.barTintColor = .white
+            tabBarController?.tabBar.isTranslucent = false
             
         }
     }

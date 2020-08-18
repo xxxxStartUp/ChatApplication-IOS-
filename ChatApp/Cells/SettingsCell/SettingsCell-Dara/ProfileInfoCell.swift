@@ -26,5 +26,13 @@ class ProfileInfoCell: UITableViewCell {
         userNameHeader.settingsPageLabels(type: Constants.settingsPage.userNameHeader)
         statusTitle.settingsPageLabels(type: Constants.settingsPage.statusTitleLabel)
         
+        //
+        
+          if Constants.profilePage.globalProfileImage != nil && Constants.profilePage.profileImageState{
+            profilePhoto.settingsPageImageView()
+            profilePhoto.image = Constants.profilePage.globalProfileImage
+        
     }
+    }
+    
 }
