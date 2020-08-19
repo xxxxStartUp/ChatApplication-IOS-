@@ -104,7 +104,17 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     // Modified the sendMessage function to send images  URL.
     func sendMessage(){
         
-        var stringContent = String("Test")
+        let dummyMessage = Message(content: Content(type: .string, content: self.texterView.textingView.text ?? ""), sender: globalUser!, timeStamp: Date(), recieved: false)
+        
+        FireService.sharedInstance.sendMessageToFriend(User: globalUser!, message: dummyMessage, freind: self.r!) { (success, error) in
+            if let error = error{
+                fatalError()
+            }
+        }
+        
+        
+        
+        /*var stringContent = String("Test")
         FireService.sharedInstance.getImageToSend(user: globalUser!) { (result) in
             switch result{
                 
@@ -173,6 +183,8 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
                 print("sent message in chat_vc dara")
             }
         }*/
+ 
+ */
     }
     
     

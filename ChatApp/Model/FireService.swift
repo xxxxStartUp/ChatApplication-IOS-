@@ -351,7 +351,7 @@ class FireService {
         
     }
     
-    func chnageContentToDictionary( _ content : Content) -> [String : Any]{
+    func changeContentToDictionary( _ content : Content) -> [String : Any]{
         switch  content.type {
         case .string:
             return [ "type": "string",
@@ -369,12 +369,29 @@ class FireService {
     }
     
     func changeDictionaryToContent( dictionary : [String: Any]) -> Content{
-        return Content(type: .string, content: "NOT YET FINISHED(FIX FUNCTION)")
+        
+        if (dictionary["type"] as! String == "string"){
+            return Content(type: .string, content: dictionary["content"] ?? "")
+        }
+        
+        if (dictionary["type"] as! String == "image"){
+            return Content(type: .image, content: dictionary["content"] ?? "")
+        }
+        
+        if (dictionary["type"] as! String == "video"){
+            return Content(type: .video, content: dictionary["content"] ?? "")
+        }
+        
+        if (dictionary["type"] as! String == "file"){
+            return Content(type: .file, content: dictionary["content"] ?? "")
+        }
+        
+        return Content(type: .string, content: "")
     }
     
     func changeMessageToDictionary( _ message: Message) -> [String : Any]{
 
-        return [ "Content" :self.chnageContentToDictionary(message.content),
+        return [ "Content" :self.changeContentToDictionary(message.content),
                  "user":self.changeUserToDictionary(message.sender),
                  "timeStamp": message.timeStamp,
                  "recived": message.recieved
@@ -827,107 +844,28 @@ class FireService {
     
     
     
-    
+    //Updating this to send
     func sendMessageToFriend(User : FireUser, message : Message , freind : Friend ,completion : @escaping (Bool , Error?) -> ()){
         
+        let newSendRef = FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document()
         
-        let sentdata = ["id":message.id ,
-                        "timeStamp":message.timeStamp,
-                        "email":message.sender.email,
-                        "recived":false //I think we need to spell check as retrieving the data later on won't work
-            ] as [String : Any]
+        let newReceivedRef = FireService.users.document(freind.email).collection(FireService.firendsString).document(User.email).collection("messages").document()
         
-        
-        let recicedData =  ["id":message.id ,
-                            "timeStamp":message.timeStamp,
-                            "email":message.sender.email,
-                            "recived":true
-            
-            ] as [String : Any]
+        let messageDictionary = self.changeMessageToDictionary(message)
         
         
-        
-        let Content = ["type" : message.content.type.rawValue,
-                       "content":message.content.content] as [String : Any]
-        
-        let sendDoc =           FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document(freind.email).collection(freind.email).document()
-        
-        
-        let sendContentDoc = sendDoc.collection("content").document()
-        
-        
-        
-        
-        
-        let reciveDoc =                  FireService.users.document(freind.email).collection(FireService.firendsString).document(User.email).collection("messages").document(User.email).collection(User.email).document()
-        
-        
-        let reciveContentDoc = reciveDoc.collection("content").document()
-        
-        sendDoc.setData(sentdata) { (error) in
-            if let error = error{
-                completion(false , error)
-                fatalError()
-                
+        newSendRef.setData(messageDictionary) { (error) in
+            if let error = error {
+                completion(false, error)
             }
             
-            self.searchOneUserWithEmail(email: freind.email) { (user, error) in
-                if let error = error{
-                    completion(false , error)
-                    fatalError()
-                    
+            newReceivedRef.setData(messageDictionary) { (error) in
+                if let error = error {
+                    completion(false, error)
                 }
-                guard let user = user else {return}
-                
-                self.addFriend(User: user, friend: User.asAFriend) { (sucess, error) in
-                    
-                    if let error = error{
-                        completion(false , error)
-                        fatalError()
-                    }
-                    
-                    if sucess{
-                        
-                        
-                        reciveDoc.setData(recicedData, merge: false) { (error) in
-                            
-                            if let error = error{
-                                completion(false , error)
-                                fatalError()
-                                
-                            }
-                            
-                            sendContentDoc.setData( Content, merge: false) { (error) in
-                                
-                                if let error = error{
-                                    completion(false , error)
-                                    fatalError()
-                                    
-                                }
-                                
-                                reciveContentDoc.setData(Content) { (error) in
-                                    
-                                    if let error = error{
-                                        completion(false , error)
-                                        fatalError()
-                                        
-                                    }
-                                    
-                                    completion(true, nil)
-                                }
-                            }
-                        }
-                        
-                    }
-                    
-                }
-                
-                
-                
-                
+                completion(true, nil)
             }
         }
-        
         
     }
     
