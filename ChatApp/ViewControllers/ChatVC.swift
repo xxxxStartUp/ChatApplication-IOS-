@@ -53,7 +53,7 @@ class ChatVC: UIViewController {
     
     func loadMessages(){
 
-        FireService.sharedInstance.loadMessagesWithFriend2(User: globalUser!,  freind: r!) { (messages, error) in
+        FireService.sharedInstance.loadMessagesWithFriend(User: globalUser!,  freind: r!) { (messages, error) in
             self.messages.removeAll()
             self.ChatTable.reloadData()
             guard let messages = messages else {return}

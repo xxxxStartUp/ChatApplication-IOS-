@@ -398,6 +398,20 @@ class FireService {
         ]
     }
     
+    func changeDictionaryToMessage( _ dict : [String : Any]) -> Message {
+        
+        let contentDictionary = dict["Content"] as! [String : Any]
+        
+        let userDictionary = dict["user"] as! [String : Any]
+        
+        let date = (dict["timeStamp"] as! Timestamp).dateValue()
+        
+        let recieved = dict["recived"] as! Bool
+        
+        return Message(content: self.changeDictionaryToContent(dictionary: contentDictionary), sender: self.changeDictionaryToFireUser(data: userDictionary), timeStamp: date, recieved: recieved)
+        
+    }
+    
     
     
     
@@ -734,7 +748,19 @@ class FireService {
                 completion(false, error)
                 return
             }
-            completion(true, nil)
+            //add the groupadmin as a friend in the group
+            self.addFriendToGroup(user: group.GroupAdmin, group: group, freind: group.GroupAdmin.asAFriend) { (result) in
+                switch result{
+                case .success(_):
+                    completion(true, nil)
+                    return
+                case .failure(_):
+                    completion(false , error)
+                    return
+                }
+            }
+            
+            
             
         }
         
@@ -900,54 +926,43 @@ class FireService {
     
     
     
-    //works
-    func loadMessagesWithFriend2(User : FireUser, freind : Friend ,completion : @escaping ([Message]? , Error?) -> ()){
+    
+    /// Loads all messges with with a freind
+    /// - Parameters:
+    ///   - User: a fireuser
+    ///   - freind: a firend object
+    ///   - completion: complets with a list of messages if messages exsistes else complets with empty list
+    /// - Returns: None
+    func loadMessagesWithFriend(User : FireUser, freind : Friend ,completion : @escaping ([Message]? , Error?) -> ()){
+      //refrenec to the collaction with all messages
+        let ref =           FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages")
         
-        let ref =           FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document(freind.email).collection(freind.email)
-        
+        //gets all the documents
         ref.addSnapshotListener { (snapshot, error) in
             var messages : [Message] = []
+            if let error = error {
+                completion(nil ,error)
+            }
+            //unwarps documents
             guard let documents = snapshot?.documents else {
-                completion(nil , error)
+                print("no messages")
+                completion(messages , nil)
                 return
             }
+            
             documents.forEach { (document) in
-                let id = document.documentID
-                let data = document.data()
-                let email = data["email"] as! String
-                let recived = data["recived"] as! Bool // I think we need to spell check as it will not work later on once we try to retrieve data
-                let date = data["timeStamp"] as! Timestamp
-                let finalDate = date.dateValue()
-                // let messageId = data["id"] as! String
-                ref.document(id).collection("content").addSnapshotListener { (snapshot, error) in
-                    guard let contentDocuments = snapshot?.documents else {
-                        completion(nil , error)
-                        return
-                    }
-                    contentDocuments.forEach { (document) in
-                        let contentData =  document.data()
-                        let content = contentData["content"] as Any
-                        let messagecontent = Content(type: .string, content: content)
-                        self.searchOneUserWithEmail(email: email) { (user, error) in
-                            guard let user = user else {return}
-                            let message = Message(content: messagecontent, sender: user, timeStamp: finalDate, recieved: recived)
-                            messages.append(message)
-                            if messages.count == documents.count{
-                                
-                                completion(messages , nil)
-                                return
-                            }
-                        }
-                    }
+                let message = self.changeDictionaryToMessage(document.data())
+                messages.append(message)
+                if messages.count == documents.count {
+                    completion(messages , nil)
+                    return
                 }
-
             }
-            completion(messages, error)
-            return
         }
-        
-        
     }
+    
+    
+    
     //need testing
     /// Gets Friends froma  group return empty list if there are no friends , fails if it cant
     /// cast document to friend
@@ -981,6 +996,7 @@ class FireService {
                 Finalfriends.append(singleFriend!)
                 // completes the function when we are sure all documents have been chnaged to freinds
                 if Finalfriends.count == documents.count {
+                    
                     completionHandler(.success(Finalfriends))
                     return
                 }
@@ -1028,12 +1044,14 @@ class FireService {
                     let message = self.changeMessageToDictionary(message)
                     groupRef.setData(message) { (error) in
                         if let error = error {
+
                             print("failed while senidng to friends")
                             completionHandler(.failure(error))
                             
                         }
                         count -= 1
                         if count == 0 {
+                            
                             print("sent all messages")
                             completionHandler(.success(true))
                         }
@@ -1056,66 +1074,37 @@ class FireService {
     
     
     
-    // Need to test
+    
+    /// Load all messages with  group
+    /// - Parameters:
+    ///   - user: user object
+    ///   - group: group object
+    ///   - completion: complets with list of messages
+    /// - Returns: None
     func loadMessagesWithGroup(user : FireUser, group: Group ,completion : @escaping ([Message]? , Error?) -> ()){
-        
-        var messages : [Message] = []
-        
+        //refrence to get list of documents that are actaully messages
         let ref = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.name).collection("messages")
         
-        ref.addSnapshotListener { (snapshot, error) in
-            
+        //listening for new messages
+        ref.addSnapshotListener{ (snapshot, error) in
+            var messages : [Message] = []
+            if let error = error {
+                completion(nil ,error)
+            }
+            //unwarps documents
             guard let documents = snapshot?.documents else {
-                completion(nil , error)
+                print("no messages")
+                completion(messages , nil)
                 return
             }
             
             documents.forEach { (document) in
-                
-                let id = document.documentID
-                let data = document.data()
-                let received = data["recived"] as! Bool  //We need to spell check for the properties, as some spelling in Firestore will not correspond to this
-                let date = data["timeStamp"] as! Timestamp
-                let finalDate = date.dateValue()
-                let messageId = data["id"] as! String
-                let sender = data["email"] as! String
-                
-                
-                ref.document(id).collection("content").addSnapshotListener { (snapshot, error) in
-                    
-                    
-                    guard let contentDocuments = snapshot?.documents else {
-                        completion(nil , error)
-                        return
-                    }
-                    
-                    
-                    contentDocuments.forEach { (document) in
-                        let contentData =  document.data()
-                        let content = contentData["content"] as Any
-                        let messagecontent = Content(type: .string, content: content)
-                        
-                        // Need to verify this
-                        
-                        self.searchOneUserWithEmail(email: sender) { (user, error) in
-                            guard let tempUser = user else {return}
-                            let message = Message(content: messagecontent, sender: tempUser, timeStamp: finalDate, recieved: received)
-                            print(message.content.content as! String , "this is printing in loadmessages" )
-                            messages.append(message)
-                            
-                            
-                            if messages.count == documents.count{
-                                completion(messages , nil)
-                                return
-                            }
-                            
-                        }
-                        
-                    }
-                    
+                let message = self.changeDictionaryToMessage(document.data())
+                messages.append(message)
+                if messages.count == documents.count {
+                    completion(messages , nil)
+                    return
                 }
-                
-                
             }
         }
     }
@@ -1164,20 +1153,35 @@ class FireService {
     
     
     
-    //need to test
-    func addFriendsToGroup (group: Group, friendsToAdd: [Friend]){
-        
-        if friendsToAdd.count == 0 {return}
-        
-        for friend in friendsToAdd{
-            group.friends.append(friend)
-        }
-        
-        //We can delete this once we are sure if works
-        print ("\(group.friends.count) friends are in you group. They are:")
-        
-        for friend in group.friends {
-            print("Name:", friend.username,"-", "E-mail:", friend.email)
+    
+    /// Adds Multiple Friends to a group
+    /// - Parameters:
+    ///   - user: fireUser object
+    ///   - group: the group that will be used
+    ///   - friendsToAdd: list of friends
+    ///   - completionHandler: complets with a true boolen if all friends are added else error
+    /// - Returns: None
+    func addMultipleFriendsToGroup (user : FireUser , group: Group, friendsToAdd: [Friend], completionHandler : @escaping (Result<Bool , Error>)-> ()){
+        var count = friendsToAdd.count
+        //loop through freinds
+        friendsToAdd.forEach { (friend) in
+            // add a single freind
+            self.addFriendToGroup(user: user, group: group, freind: friend) { (result) in
+                switch result {
+                case .success(let bool):
+                    count -= 1
+                    //check if we added everyone
+                    if count == 0 {
+                        // we are done dding friends
+                        completionHandler(.success(bool))
+                        return
+                    }
+                case .failure(let error):
+                    //complete with with error
+                    completionHandler(.failure(error))
+                    return
+                }
+            }
         }
     }
     //need to test
