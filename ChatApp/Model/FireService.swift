@@ -766,8 +766,18 @@ class FireService {
         
     }
     //tested
-    func createGroupFromReceivingDynamicLink(groupname:String,groupID:String,groupAdmin:String,currentUserEmail:String,completion : @escaping (Bool, Error?) -> ()){
+    func createGroupFromReceivingDynamicLink(user : FireUser, group : Group , friend : Friend,completion : @escaping (Bool, Error?) -> ()){
         
+        self.addFriendToGroup(user: user, group: group, freind: friend) { (result) in
+            switch result {
+                
+            case .success(let bool):
+                completion(bool , nil)
+            case .failure(let error):
+                completion(false ,error)
+            }
+        }
+        /*
         let data = ["groupname":groupname, "groupadmin" : groupAdmin, "groupid": groupID] as [String : Any]
         FireService.users.document(currentUserEmail).collection("groups").document(groupname).setData(data, merge: true) { (error) in
             
@@ -778,7 +788,7 @@ class FireService {
             completion(true, nil)
             
         }
-        
+        */
     }
     
     
