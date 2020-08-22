@@ -1101,7 +1101,7 @@ class FireService {
                 if friends.isEmpty {return}
                 //sends the same message to every person in the group
                 friends.forEach { (friend) in
-                    let groupRef =         FireService.users.document(friend.email).collection(FireService.groupString).document(group.name).collection("messages").document()
+                    let groupRef =         FireService.users.document(friend.email).collection(FireService.groupString).document(group.id).collection("messages").document()
                     let message = self.changeMessageToDictionary(message)
                     groupRef.setData(message) { (error) in
                         if let error = error {
