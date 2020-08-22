@@ -1024,7 +1024,7 @@ class FireService {
     ///   - completionHandler: completes with true if the network call was sucessful, or faliure if the etwork call was unsucesfull
     /// - Returns: None
     func addFriendToGroup(user : FireUser , group : Group ,freind : Friend, completionHandler : @escaping (Result<Bool , Error>)-> ()){
-         let groupRef =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.name)
+         let groupRef =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
         let frieindAsData = self.changeFriendToDictionary(freind)
         
         groupRef.collection("Freinds").addDocument(data: frieindAsData) { (error) in

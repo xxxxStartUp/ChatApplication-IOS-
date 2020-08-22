@@ -262,6 +262,35 @@ extension UILabel{
         }
         
     }
+    func chatPageLabel(type:String){
+        if Constants.settingsPage.displayModeSwitch == false{
+            switch type {
+            case Constants.chatPage.senderNameLabel:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
+            case Constants.chatPage.messageTimeStamp:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 12)
+            default:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Medium", size: 16)
+            }
+        }
+            else{
+            switch type {
+            case Constants.chatPage.senderNameLabel:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
+            case Constants.chatPage.messageTimeStamp:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 12)
+            default:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Medium", size: 16)
+            }
+            }
+        
+    }
     func GroupInfoPageLabels(type:String){
         if Constants.settingsPage.displayModeSwitch == false{
             switch type {
