@@ -86,7 +86,7 @@ class FireService {
     /// - Returns: None
     func loadMessagesWithGroup(user : FireUser, group: Group ,completion : @escaping ([Message]? , Error?) -> ()){
         //refrence to get list of documents that are actaully messages
-        let ref = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("messages")
+        let ref = FireService.users.document(user.email).collection(FireService.groupString).document(group.id).collection("messages")
         
         //listening for new messages
         ref.addSnapshotListener{ (snapshot, error) in
