@@ -33,8 +33,34 @@ class FireService {
     ////////////////////////Group functions///////////////////////////
     
     
-    
-    
+    /// Load all saved messages to an array of messages
+    /// - Parameters:
+    ///   - user: The user whose saved messages is to be retrieved
+    ///   - completion: Completes with list of all saved messages
+    func loadSavedMessages(user: FireUser, completion : @escaping ([Message]? , Error?) -> ()) {
+        var savedMessages: [Message] = []
+        
+        FireService.users.document(user.email).collection(FireService.savedMessages).getDocuments() { (querySnapshot, error) in
+        
+            if let error = error {
+                print("Error getting documents: \(error)")
+                
+                completion (nil, error)
+        }   else {
+                
+                for document in querySnapshot!.documents {
+                    let documentData = document.data()
+                    let message = self.changeDictionaryToMessage(documentData)
+                    savedMessages.append(message)
+                    
+                    if (savedMessages.count == querySnapshot!.documents.count) {
+                        
+                        completion (savedMessages, nil)
+                    }
+                }
+            }
+        }
+    }
     
     // need to test
     func loadGroups(User : FireUser,completion : @escaping ([Group]? , Error?) -> ()){
