@@ -39,7 +39,7 @@ class FireService {
     // need to test
     func loadGroups(User : FireUser,completion : @escaping ([Group]? , Error?) -> ()){
         var groups  : [Group] = []
-        FireService.users.document(User.email).collection(FireService.groupString).addSnapshotListener { (snapshots, error) in
+        FireService.users.document(User.email).collection(FireService.groupString).getDocuments{ (snapshots, error) in
             
             if let error = error{
                 completion(nil , error)
@@ -128,8 +128,22 @@ class FireService {
             if let error = error{
                 completionHandler(.failure(error))
             }
+            self.searchOneUserWithEmail(email: freind.email) { (user, error) in
+                if let error = error {
+                    completionHandler(.failure(error))
+                }
+                guard let user = user else {return}
+                self.createGroup(user: user, group: group) { (sucess, error) in
+                    if let error = error {
+                        completionHandler(.failure(error))
+                    }
+                    if sucess{
+                        completionHandler(.success(true))
+                    }
+                }
+            }
             
-            completionHandler(.success(true))
+            
         }
           
     }
@@ -140,10 +154,11 @@ class FireService {
     
     
     
-    func createGroup(group : Group ,completion : @escaping (Bool, Error?) -> ()){
+    func createGroup(user:FireUser,group : Group ,completion : @escaping (Bool, Error?) -> ()){
         
         let data = ["groupname":group.name, "groupadmin" : group.GroupAdmin.email, "groupid": group.id] as [String : Any]
-        FireService.users.document(group.GroupAdmin.email).collection("groups").document(group.id).setData(data, merge: true) { (error) in
+        //creating group
+        FireService.users.document(user.email).collection("groups").document(group.id).setData(data, merge: true) { (error) in
             
             if let error = error {
                 completion(false, error)
@@ -521,6 +536,7 @@ class FireService {
                 completion(nil , error)
             }
             guard let groups = groups else {fatalError()}
+            print(groups,"Groups")
             groups.forEach { (group) in
                 let activity = Activity(activityType: .GroupChat(group: group))
                 activities.append(activity)
@@ -532,6 +548,7 @@ class FireService {
                     completion(nil , error)
                 }
                 guard let friends = friends else {fatalError()}
+                print(friends,"Friends")
                 friends.forEach { (freind) in
                     let activity = Activity(activityType: .FriendChat(friend: freind))
                     activities.append(activity)
@@ -554,7 +571,7 @@ class FireService {
         var friendList : [Friend] = []
         let friends =   FireService.users.document(user.email).collection(FireService.firendsString)
         
-        friends.order(by: "name", descending: true).addSnapshotListener { (snapshot, error) in
+        friends.order(by: "name", descending: true).getDocuments{ (snapshot, error) in
             if let error = error{
                 completion(nil , error)
                 return

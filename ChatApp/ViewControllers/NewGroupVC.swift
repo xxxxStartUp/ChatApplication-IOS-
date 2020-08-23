@@ -59,7 +59,7 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
             let id = UUID().uuidString
             let newGroup = Group(GroupAdmin: globalUser!, id: id, name: groupName)
             //added final id to completion to get the latest id from backend and use for creating dynamic link.
-            FireService.sharedInstance.createGroup(group: newGroup) { (completed, error) in
+            FireService.sharedInstance.createGroup(user: globalUser!, group: newGroup) { (completed, error) in
                 if let error = error{
                     print(error.localizedDescription)
                     fatalError()
