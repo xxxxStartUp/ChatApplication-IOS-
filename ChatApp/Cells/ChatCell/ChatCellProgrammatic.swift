@@ -21,7 +21,9 @@ class MessgaeCell: UITableViewCell {
 
             messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
             nameLabel.text = message.sender.name
+            nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
             timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
+            timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
             if  message.sender.email != globalUser!.email{
                 leadingContstraints?.isActive = true
                 tarilingConstraints?.isActive = false

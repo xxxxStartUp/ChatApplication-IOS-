@@ -39,7 +39,7 @@ class FireService {
     // need to test
     func loadGroups(User : FireUser,completion : @escaping ([Group]? , Error?) -> ()){
         var groups  : [Group] = []
-        FireService.users.document(User.email).collection(FireService.groupString).addSnapshotListener { (snapshots, error) in
+        FireService.users.document(User.email).collection(FireService.groupString).getDocuments{ (snapshots, error) in
             
             if let error = error{
                 completion(nil , error)
@@ -86,7 +86,7 @@ class FireService {
     /// - Returns: None
     func loadMessagesWithGroup(user : FireUser, group: Group ,completion : @escaping ([Message]? , Error?) -> ()){
         //refrence to get list of documents that are actaully messages
-        let ref = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("messages")
+        let ref = FireService.users.document(user.email).collection(FireService.groupString).document(group.id).collection("messages")
         
         //listening for new messages
         ref.addSnapshotListener{ (snapshot, error) in
@@ -128,8 +128,26 @@ class FireService {
             if let error = error{
                 completionHandler(.failure(error))
             }
+            self.searchOneUserWithEmail(email: freind.email) { (user, error) in
+                if let error = error {
+                    completionHandler(.failure(error))
+                }
+                guard let user = user else {return}
+                 let data = ["groupname":group.name, "groupadmin" : group.GroupAdmin.email, "groupid": group.id] as [String : Any]
+                
+                FireService.users.document(user.email).collection("groups").document(group.id).setData(data, merge: true) { (error) in
+                    
+                    if let error = error {
+                        completionHandler(.failure(error))
+                        return
+                    }
+                    
+                    completionHandler(.success(true))
+                }
+                
+            }
             
-            completionHandler(.success(true))
+            
         }
           
     }
@@ -140,10 +158,11 @@ class FireService {
     
     
     
-    func createGroup(group : Group ,completion : @escaping (Bool, Error?) -> ()){
+    func createGroup(user:FireUser,group : Group ,completion : @escaping (Bool, Error?) -> ()){
         
         let data = ["groupname":group.name, "groupadmin" : group.GroupAdmin.email, "groupid": group.id] as [String : Any]
-        FireService.users.document(group.GroupAdmin.email).collection("groups").document(group.id).setData(data, merge: true) { (error) in
+        //creating group
+        FireService.users.document(user.email).collection("groups").document(group.id).setData(data, merge: true) { (error) in
             
             if let error = error {
                 completion(false, error)
@@ -153,7 +172,7 @@ class FireService {
             self.addFriendToGroup(user: group.GroupAdmin, group: group, freind: group.GroupAdmin.asAFriend) { (result) in
                 switch result{
                 case .success(_):
-                    completion(true, nil)
+                     completion(true, nil)
                     return
                 case .failure(_):
                     completion(false , error)
@@ -521,6 +540,7 @@ class FireService {
                 completion(nil , error)
             }
             guard let groups = groups else {fatalError()}
+            print(groups,"Groups")
             groups.forEach { (group) in
                 let activity = Activity(activityType: .GroupChat(group: group))
                 activities.append(activity)
@@ -532,6 +552,7 @@ class FireService {
                     completion(nil , error)
                 }
                 guard let friends = friends else {fatalError()}
+                print(friends,"Friends")
                 friends.forEach { (freind) in
                     let activity = Activity(activityType: .FriendChat(friend: freind))
                     activities.append(activity)
@@ -554,7 +575,7 @@ class FireService {
         var friendList : [Friend] = []
         let friends =   FireService.users.document(user.email).collection(FireService.firendsString)
         
-        friends.order(by: "name", descending: true).addSnapshotListener { (snapshot, error) in
+        friends.order(by: "name", descending: true).getDocuments{ (snapshot, error) in
             if let error = error{
                 completion(nil , error)
                 return
@@ -727,7 +748,7 @@ class FireService {
         let query = FireService.users.whereField("email", isEqualTo: email)
         
         
-        query.addSnapshotListener { (snapshot, error) in
+        query.getDocuments { (snapshot, error) in
             if let error = error{
                 completion(nil , error)
                 return
@@ -940,13 +961,89 @@ class FireService {
     }
     
  
-    
-    
 
-
-    //tested
-    func createGroupFromReceivingDynamicLink(groupname:String,groupID:String,groupAdmin:String,currentUserEmail:String,completion : @escaping (Bool, Error?) -> ()){
+    func sendMessageToGroup(message : Message ,group :  Group , completionHandler: @escaping (Result<Bool, Error>) -> Void) {
         
+        
+        let sentdata = ["id":message.id ,
+                        "timeStamp":message.timeStamp,
+                        "email":message.sender.email,
+                        "recived":false //I think we need to spell check as retrieving the data later on won't work
+            ] as [String : Any]
+        
+        let Content = ["type" : message.content.type.rawValue,
+                       "content":message.content.content] as [String : Any]
+        
+        let ref =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.name).collection("messages").document()
+        
+        ref.setData(sentdata) { (error) in
+            if let error = error{
+                completionHandler(.failure(error))
+                return
+            }
+            
+            ref.collection("content").document().setData(Content) { (error) in
+                
+                if let error = error{
+                    completionHandler(.failure(error))
+                    return
+                }
+                
+                completionHandler(.success(true))
+                
+            }
+            
+            
+            
+        }
+        
+        
+        
+    }
+    
+    
+    
+    //tested
+//    func createGroup(group : Group ,completion : @escaping (Bool, Error?) -> ()){
+//
+//        let data = ["groupname":group.name, "groupadmin" : group.GroupAdmin.email, "groupid": group.id] as [String : Any]
+//        FireService.users.document(group.GroupAdmin.email).collection("groups").document(group.name).setData(data, merge: true) { (error) in
+//
+//            if let error = error {
+//                completion(false, error)
+//                return
+//            }
+//            //add the groupadmin as a friend in the group
+//            self.addFriendToGroup(user: group.GroupAdmin, group: group, freind: group.GroupAdmin.asAFriend) { (result) in
+//                switch result{
+//                case .success(_):
+//                    completion(true, nil)
+//                    return
+//                case .failure(_):
+//                    completion(false , error)
+//                    return
+//                }
+//            }
+//
+//
+//
+//        }
+//
+//    }
+    //tested
+    func createGroupFromReceivingDynamicLink(user : FireUser, group : Group , friend : Friend,completion : @escaping (Bool, Error?) -> ()){
+
+        
+        self.addFriendToGroup(user: user, group: group, freind: friend) { (result) in
+            switch result {
+                
+            case .success(let bool):
+                completion(bool , nil)
+            case .failure(let error):
+                completion(false ,error)
+            }
+        }
+        /*
         let data = ["groupname":groupname, "groupadmin" : groupAdmin, "groupid": groupID] as [String : Any]
         FireService.users.document(currentUserEmail).collection("groups").document(groupname).setData(data, merge: true) { (error) in
             
@@ -957,7 +1054,7 @@ class FireService {
             completion(true, nil)
             
         }
-        
+        */
     }
     
     
@@ -1086,9 +1183,28 @@ class FireService {
     
 
     
-
-    
-    
+//    //need testing
+//    /// Add Freinds to a roup by making  network call. Completes with true if it was sucessful
+//    /// - Parameters:
+//    ///   - user: The user currently using the application
+//    ///   - group: The group the user is in
+//    ///   - completionHandler: completes with true if the network call was sucessful, or faliure if the etwork call was unsucesfull
+//    /// - Returns: None
+//    func addFriendToGroup(user : FireUser , group : Group ,freind : Friend, completionHandler : @escaping (Result<Bool , Error>)-> ()){
+//         let groupRef =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
+//        let frieindAsData = self.changeFriendToDictionary(freind)
+//
+//        groupRef.collection("Freinds").addDocument(data: frieindAsData) { (error) in
+//            if let error = error{
+//                completionHandler(.failure(error))
+//            }
+//
+//            completionHandler(.success(true))
+//        }
+//
+//    }
+//
+//
     //need testing
     func sendMessgeToAllFriendsInGroup(message : Message , user : FireUser , group : Group , completionHandler : @escaping (Result<Bool , Error>)-> ()){
         //gets all the friends in current group

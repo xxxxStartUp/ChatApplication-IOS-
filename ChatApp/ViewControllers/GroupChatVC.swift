@@ -97,8 +97,9 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         
         let content = Content(type: .string, content: "This is\(globalUser?.name ?? "no user")" + (texterView.textingView.text ?? ""))
         let message = Message(content: content, sender: globalUser!, timeStamp: Date(), recieved: false)
-        FireService.sharedInstance.sendMessgeToAllFriendsInGroup(message: message, user: globalUser!, group: group!) { (result) in
-            
+
+        FireService.sharedInstance.sendMessgeToAllFriendsInGroup(message: message, user: globalUser!, group: group!, completionHandler: { (result) in
+
             switch result{
                 
             case .success( let bool):
@@ -112,7 +113,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         }
        
         
-    }
+    )}
     
     
     func loadMessages (){

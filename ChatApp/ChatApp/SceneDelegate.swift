@@ -75,6 +75,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 guard let groupID = groupQueryItem.value else {return}
                 guard let adminMail = adminQueryItem.value else {return}
                 guard let groupName = groupNameQueryItem.value else {return}
+                FireService.sharedInstance.searchOneUserWithEmail(email: adminMail) { (user, error) in
+                    if let error = error {
+                        print("could not find group admin user while adding new user to group",error.localizedDescription)
+                        
+                        return
+                    }
+                    guard let user = user else {return}
+                      let finalGroup = Group(GroupAdmin: user, id: groupID, name: groupName)
+                        
+                    
+                    FireService.sharedInstance.createGroupFromReceivingDynamicLink(user: globalUser!, group: finalGroup, friend: globalUser!.asAFriend) { (sucess, error) in
+                        
+                        if let error = error {
+                                 print("could not find group admin user while adding new user to group",error.localizedDescription)
+                                 return
+                             }
+                        
+                        if sucess{
+                            print("sucessfully added user as a freind to a group created from \(finalGroup.GroupAdmin.email)")
+                        }
+                        
+                    }
+                }
+                
+              
 
                 
         //After dynamic link is received you want to make the user join group. What I have available from the dynamic link:
@@ -87,18 +112,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       //
 //                let newGroup = Group(GroupAdmin: adminMail, id: groupID, name: groupName)
                 //added final id to completion to get the latest id from backend and use for creating dynamic link.
-                FireService.sharedInstance.createGroupFromReceivingDynamicLink(groupname: groupName, groupID: groupID, groupAdmin: adminMail, currentUserEmail: globalUser!.email) { (completed, error) in
-                    if let error = error{
-                        print(error.localizedDescription)
-                        fatalError()
-                    }
-                    if completed{
-                       print("Successfully received dynamic link")
-                       // self.goToTab()
-                        
-                    }
-                    
-                }
                 
         //use groupID to add group to chatLogVC by calling backend. Ebuka to make function for backend.
                 

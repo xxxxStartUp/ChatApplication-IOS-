@@ -82,6 +82,8 @@ struct Constants{
         static var chatToContactsSegueSignal = false
         static let leftChatBubblev = "LeftChatBubble"
         static let rightchatBubble = "RightChatBubble"
+        static let senderNameLabel = "SenderNameLabel"
+        static let messageTimeStamp = "MessageTimeStamp"
     }
     struct chatLogPage{
         static var chatLogToContactsSegueSignal = false
