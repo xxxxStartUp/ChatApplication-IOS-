@@ -133,14 +133,18 @@ class FireService {
                     completionHandler(.failure(error))
                 }
                 guard let user = user else {return}
-                self.createGroup(user: user, group: group) { (sucess, error) in
+                 let data = ["groupname":group.name, "groupadmin" : group.GroupAdmin.email, "groupid": group.id] as [String : Any]
+                
+                FireService.users.document(user.email).collection("groups").document(group.id).setData(data, merge: true) { (error) in
+                    
                     if let error = error {
                         completionHandler(.failure(error))
+                        return
                     }
-                    if sucess{
-                        completionHandler(.success(true))
-                    }
+                    
+                    completionHandler(.success(true))
                 }
+                
             }
             
             
@@ -168,7 +172,7 @@ class FireService {
             self.addFriendToGroup(user: group.GroupAdmin, group: group, freind: group.GroupAdmin.asAFriend) { (result) in
                 switch result{
                 case .success(_):
-                    completion(true, nil)
+                     completion(true, nil)
                     return
                 case .failure(_):
                     completion(false , error)
@@ -744,7 +748,7 @@ class FireService {
         let query = FireService.users.whereField("email", isEqualTo: email)
         
         
-        query.addSnapshotListener { (snapshot, error) in
+        query.getDocuments { (snapshot, error) in
             if let error = error{
                 completion(nil , error)
                 return
@@ -1179,13 +1183,13 @@ class FireService {
     
 
     
-    //need testing
-    /// Add Freinds to a roup by making  network call. Completes with true if it was sucessful
-    /// - Parameters:
-    ///   - user: The user currently using the application
-    ///   - group: The group the user is in
-    ///   - completionHandler: completes with true if the network call was sucessful, or faliure if the etwork call was unsucesfull
-    /// - Returns: None
+//    //need testing
+//    /// Add Freinds to a roup by making  network call. Completes with true if it was sucessful
+//    /// - Parameters:
+//    ///   - user: The user currently using the application
+//    ///   - group: The group the user is in
+//    ///   - completionHandler: completes with true if the network call was sucessful, or faliure if the etwork call was unsucesfull
+//    /// - Returns: None
 //    func addFriendToGroup(user : FireUser , group : Group ,freind : Friend, completionHandler : @escaping (Result<Bool , Error>)-> ()){
 //         let groupRef =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
 //        let frieindAsData = self.changeFriendToDictionary(freind)
@@ -1199,8 +1203,8 @@ class FireService {
 //        }
 //
 //    }
-
-    
+//
+//
     //need testing
     func sendMessgeToAllFriendsInGroup(message : Message , user : FireUser , group : Group , completionHandler : @escaping (Result<Bool , Error>)-> ()){
         //gets all the friends in current group
