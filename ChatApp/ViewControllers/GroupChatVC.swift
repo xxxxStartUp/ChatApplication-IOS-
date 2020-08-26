@@ -95,7 +95,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     func sendMessage(){
         print("sending message to group")
         
-        let content = Content(type: .string, content: "This is\(globalUser?.name ?? "no user")" + (texterView.textingView.text ?? ""))
+        let content = Content(type: .string, content: (texterView.textingView.text ?? ""))
         let message = Message(content: content, sender: globalUser!, timeStamp: Date(), recieved: false)
 
         FireService.sharedInstance.sendMessgeToAllFriendsInGroup(message: message, user: globalUser!, group: group!, completionHandler: { (result) in
