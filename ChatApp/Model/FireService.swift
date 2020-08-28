@@ -33,9 +33,6 @@ class FireService {
     ////////////////////////Group functions///////////////////////////
     
     
-    
-    
-    
     // need to test
     func loadGroups(User : FireUser,completion : @escaping ([Group]? , Error?) -> ()){
         var groups  : [Group] = []
@@ -122,33 +119,54 @@ class FireService {
     /// - Returns: None
     func addFriendToGroup(user : FireUser , group : Group ,freind : Friend, completionHandler : @escaping (Result<Bool , Error>)-> ()){
         let groupRef =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
-               let frieindAsData = self.changeFriendToDictionary(freind)
-               
-               groupRef.collection("Freinds").addDocument(data: frieindAsData) { (error) in
-                   if let error = error{
-                       completionHandler(.failure(error))
-                   }
-                   self.searchOneUserWithEmail(email: freind.email) { (user, error) in
-                       if let error = error {
-                           completionHandler(.failure(error))
-                       }
-                       guard let user = user else {return}
-                        let data = ["groupname":group.name, "groupadmin" : group.GroupAdmin.email, "groupid": group.id] as [String : Any]
-                       
-                       FireService.users.document(user.email).collection("groups").document(group.id).setData(data, merge: true) { (error) in
-                           
-                           if let error = error {
-                               completionHandler(.failure(error))
-                               return
-                           }
-                           
-                           completionHandler(.success(true))
-                       }
-                       
-                   }
-                   
-                   
-               }
+
+        let frieindAsData = self.changeFriendToDictionary(freind)
+
+        checkIfFriendInGroup(freindToAdd: freind, group: group) { (result) in
+            switch result {
+                
+            case .success(let bool):
+                if bool {
+                    
+                    groupRef.collection("Freinds").addDocument(data: frieindAsData) { (error) in
+                        if let error = error{
+                            completionHandler(.failure(error))
+                        }
+                        self.searchOneUserWithEmail(email: freind.email) { (user, error) in
+                            if let error = error {
+                                completionHandler(.failure(error))
+                            }
+                            guard let user = user else {return}
+                            let data = ["groupname":group.name, "groupadmin" : group.GroupAdmin.email, "groupid": group.id] as [String : Any]
+                            
+                            FireService.users.document(user.email).collection("groups").document(group.id).setData(data, merge: true) { (error) in
+                                
+                                if let error = error {
+                                    completionHandler(.failure(error))
+                                    return
+                                }
+                                
+                                completionHandler(.success(true))
+                                return
+                            }
+                            
+                        }
+                        
+                        
+                    }
+                    
+                }
+                else { completionHandler(.success(false)) }
+                
+                return
+                
+            case .failure(let error):
+                completionHandler(.failure(error))
+                return
+
+            }
+        }
+
         
         
     }
@@ -207,7 +225,35 @@ class FireService {
 //
 //    }
     
+
+    /// Checks if  a friend is in a paticular group
+    /// - Parameters:
+    ///   - freindToAdd: a friend object to be added
+    ///   - group: the group to add the friend
+    ///   - completionHandler: completes with a true or false if a friend is in a group or error if a network error occurs
+    /// - Returns: None
+    func checkIfFriendInGroup(freindToAdd : Friend , group : Group , completionHandler : @escaping (Result<Bool , Error>)-> ()){
+        
+        self.getFriendsInGroup(user: group.GroupAdmin, group: group) { (result) in
+            switch result {
+            case .success(let friends):
+                //when a friend is in a group complete with a false
+                if friends.contains(freindToAdd) { completionHandler(.success(false)) }
+                     //when a friend is not in a group; then now we know the friend is not the group
+                else { completionHandler(.success(true)) }
+                return
+            case .failure(let error):
+                 //when an error occurs
+                completionHandler(.failure(error))
+                return
+            }
+            
+        }
+        
+    }
     
+
+
     
     
     
@@ -296,6 +342,7 @@ class FireService {
     ///   - completionHandler: complets with a true boolen if all friends are added else error
     /// - Returns: None
     func addMultipleFriendsToGroup (user : FireUser , group: Group, friendsToAdd: [Friend], completionHandler : @escaping (Result<Bool , Error>)-> ()){
+ 
         var count = friendsToAdd.count
         //loop through freinds
         friendsToAdd.forEach { (friend) in
@@ -1119,6 +1166,7 @@ class FireService {
                 completion(false ,error)
             }
         }
+
         /*
          let data = ["groupname":groupname, "groupadmin" : groupAdmin, "groupid": groupID] as [String : Any]
          FireService.users.document(currentUserEmail).collection("groups").document(groupname).setData(data, merge: true) { (error) in
@@ -1131,6 +1179,7 @@ class FireService {
          
          }
          */
+
     }
     
     

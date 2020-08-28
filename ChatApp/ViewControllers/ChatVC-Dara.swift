@@ -207,7 +207,6 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
             
             messages.forEach { (message) in
                 self.messages.append(message)
-                print(message.content.content as! String)
             }
             
             
