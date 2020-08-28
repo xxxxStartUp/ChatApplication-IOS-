@@ -16,6 +16,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     var cellID = "id"
     var loaded  = false
     var groupMessages : [Message] = []
+    var groupDelegate : GroupDelegate?
     var group : Group?{
         didSet{
             title = group?.name
@@ -140,8 +141,15 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
 
         }
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? GroupInfoVC{
+            destination.group = group
+        }
+
+    }
     
     @IBAction func infoButtonPressed(_ sender: Any) {
+        print(group!.name,"groupname")
         performSegue(withIdentifier: Constants.groupchatSBToGroupInfoIdentifier, sender: self)
     }
     @IBAction func addcontactsButtonPressed(_ sender: Any) {
