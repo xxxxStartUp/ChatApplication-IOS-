@@ -99,11 +99,12 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     private func sendMessageFinal(){
         if let image = globalImageSent {
             sendImageMessage(image: image)
+            globalImageSent = nil
         }else{
          SendStringMessage()
         }
         
-        
+        texterView.textingView.text = ""
     }
     
     
