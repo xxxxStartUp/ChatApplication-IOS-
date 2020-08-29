@@ -31,10 +31,11 @@ class MessgaeCell: UITableViewCell {
 //                    timeLabel.textAlignment = .left
 //                     messageBackgroundView.chatPageViews(type: Constants.chatPage.rightchatBubble)
 //                }
-//    messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
+//    //messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
 //
 //
 //            if !urldetector(message: message.content.content as! String).isEmpty{
+//                messageImageView.isHidden = true
 //                let url = urldetector(message: message.content.content as! String)
 //
 //                messageImageView.loadImageFromGroups(urlString: url)
@@ -42,9 +43,8 @@ class MessgaeCell: UITableViewCell {
 //
 //            }
 //            else{
+//            messageImageView.isHidden = false
 //            messageLabel.text = message.content.content as! String
-//
-//
 //            nameLabel.text = message.sender.name
 //            nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
 //            timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
@@ -78,8 +78,8 @@ class MessgaeCell: UITableViewCell {
                  timeLabel.textAlignment = .left
                   messageBackgroundView.chatPageViews(type: Constants.chatPage.rightchatBubble)
              }
-       
-             
+
+
          }
      }
     let messageImageView: UIImageView = {

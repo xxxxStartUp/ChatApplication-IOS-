@@ -497,23 +497,7 @@ extension UIImageView{
                     }
 
                 }
-    //            URLSession.shared.dataTask(with: url.absoluteURL) { (data, response, error) in
-    //            if error != nil{
-    //                print(error?.localizedDescription)
-    //                return
-    //            }
-    //
-    //
-    //            DispatchQueue.main.async {
-    //                if let data = data, let downloadedImage = UIImage(data: data){
-    //                    print(data)
-    //                    self.cachedImage.setObject(downloadedImage, forKey: urlString as NSString)
-    //                    self.imageView.image = downloadedImage
-    //
-    //                }
-    //
-    //            }
-    //        }
+
                 
         }
         }
