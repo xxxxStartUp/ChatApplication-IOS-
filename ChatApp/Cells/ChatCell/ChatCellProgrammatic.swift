@@ -15,7 +15,34 @@ class MessgaeCell: UITableViewCell {
     var tarilingConstraints : NSLayoutConstraint?
     
     
+    var message : Message! {
+        didSet{
+
+            if  message.sender.email != globalUser!.email{
+                    leadingContstraints?.isActive = true
+                    tarilingConstraints?.isActive = false
+                    nameLabel.textAlignment = .left
+                    timeLabel.textAlignment = .right
+                     messageBackgroundView.chatPageViews(type: Constants.chatPage.leftChatBubblev)
+                }else{
+                    leadingContstraints?.isActive = false
+                    tarilingConstraints?.isActive = true
+                    nameLabel.textAlignment = .right
+                    timeLabel.textAlignment = .left
+                     messageBackgroundView.chatPageViews(type: Constants.chatPage.rightchatBubble)
+                }
+            
+            if message.content.type == .image{
+                let urlString = message.content.content as! String
+                messageImageView.loadImageFromGroups(urlString: urlString)
+            }
+
+
+        }
+    }
+    
 //    var message : Message! {
+
 //        didSet{
 //
 //            if  message.sender.email != globalUser!.email{
@@ -37,9 +64,32 @@ class MessgaeCell: UITableViewCell {
 //            if !urldetector(message: message.content.content as! String).isEmpty{
 //                messageImageView.isHidden = true
 //                let url = urldetector(message: message.content.content as! String)
+
+//         didSet{
+//             messageLabel.text = message.content.content as! String
 //
-//                messageImageView.loadImageFromGroups(urlString: url)
+//             messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
+//             nameLabel.text = message.sender.name
+//             nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
+//             timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
+//             timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
+//             if  message.sender.email != globalUser!.email{
+//                 leadingContstraints?.isActive = true
+//                 tarilingConstraints?.isActive = false
+//                 nameLabel.textAlignment = .left
+//                 timeLabel.textAlignment = .right
+//                  messageBackgroundView.chatPageViews(type: Constants.chatPage.leftChatBubblev)
+//             }else{
+//                 leadingContstraints?.isActive = false
+//                 tarilingConstraints?.isActive = true
+//                 nameLabel.textAlignment = .right
+//                 timeLabel.textAlignment = .left
+//                  messageBackgroundView.chatPageViews(type: Constants.chatPage.rightchatBubble)
+//             }
+
 //
+//
+
 //
 //            }
 //            else{
@@ -56,32 +106,38 @@ class MessgaeCell: UITableViewCell {
 //
 //        }
 //    }
-    var message : Message! {
-         didSet{
-             messageLabel.text = message.content.content as! String
+//    var message : Message! {
+//         didSet{
+//             messageLabel.text = message.content.content as! String
+//
+//             messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
+//             nameLabel.text = message.sender.name
+//             nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
+//             timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
+//             timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
+//             if  message.sender.email != globalUser!.email{
+//                 leadingContstraints?.isActive = true
+//                 tarilingConstraints?.isActive = false
+//                 nameLabel.textAlignment = .left
+//                 timeLabel.textAlignment = .right
+//                  messageBackgroundView.chatPageViews(type: Constants.chatPage.leftChatBubblev)
+//             }else{
+//                 leadingContstraints?.isActive = false
+//                 tarilingConstraints?.isActive = true
+//                 nameLabel.textAlignment = .right
+//                 timeLabel.textAlignment = .left
+//                  messageBackgroundView.chatPageViews(type: Constants.chatPage.rightchatBubble)
+//             }
+//
+//
+//         }
+//     }
 
-             messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
-             nameLabel.text = message.sender.name
-             nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
-             timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
-             timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
-             if  message.sender.email != globalUser!.email{
-                 leadingContstraints?.isActive = true
-                 tarilingConstraints?.isActive = false
-                 nameLabel.textAlignment = .left
-                 timeLabel.textAlignment = .right
-                  messageBackgroundView.chatPageViews(type: Constants.chatPage.leftChatBubblev)
-             }else{
-                 leadingContstraints?.isActive = false
-                 tarilingConstraints?.isActive = true
-                 nameLabel.textAlignment = .right
-                 timeLabel.textAlignment = .left
-                  messageBackgroundView.chatPageViews(type: Constants.chatPage.rightchatBubble)
-             }
+//         }
+//     }
+    
+    
 
-
-         }
-     }
     let messageImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -146,11 +202,10 @@ class MessgaeCell: UITableViewCell {
     
     func setUpView(){
         
-         nameLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-         timeLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+         nameLabel.heightAnchor.constraint(equalToConstant: 25).isActive = true
+         timeLabel.heightAnchor.constraint(equalToConstant: 25).isActive = true
          self.addSubview(stackView)
          self.addSubview(messageLabel)
-        self.addSubview(messageImageView)
          stackView.translatesAutoresizingMaskIntoConstraints = false
          stackView.alignment = .fill
          stackView.distribution = .fill
@@ -173,12 +228,14 @@ class MessgaeCell: UITableViewCell {
          messageLabel.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 16).isActive = true
           messageLabel.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -16).isActive = true
         
-        messageImageView.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 0).isActive = true
-        messageImageView.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: -16).isActive = true
-        messageImageView.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 0).isActive = true
-        messageImageView.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -16).isActive = true
-  
-    
+        if message.content.type == .image {
+            messageBackgroundView.addSubview(messageImageView)
+            messageImageView.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 16).isActive = true
+            messageImageView.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: -16).isActive = true
+            messageImageView.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 16).isActive = true
+            messageImageView.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -16).isActive = true
+             messageImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        }
     }
    
     func urldetector(message:String) -> String{
@@ -200,5 +257,21 @@ class MessgaeCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
   
+}
+
+
+class MessagePopUpView : UIView{
+    
+    override init(frame: CGRect) {
+        super.init(frame : frame)
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    
 }
 
