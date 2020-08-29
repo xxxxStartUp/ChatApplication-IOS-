@@ -483,12 +483,12 @@
 			path = GroupInfoCells;
 			sourceTree = "<group>";
 		};
-		CBA262A724AFB7C600F81034 /* Views Updates */ = {
+		CBA262A724AFB7C600F81034 /* Extentions */ = {
 			isa = PBXGroup;
 			children = (
 				CBA262AA24AFBB5F00F81034 /* Extensions.swift */,
 			);
-			path = "Views Updates";
+			path = Extentions;
 			sourceTree = "<group>";
 		};
 		CBA262AE24AFC24800F81034 /* Constants */ = {
@@ -505,7 +505,7 @@
 				43E1A25724BAA36600511642 /* ProgrammaticViews */,
 				43C6C9CB24B58D9E003DB77E /* StoryBoards */,
 				CBA262AE24AFC24800F81034 /* Constants */,
-				CBA262A724AFB7C600F81034 /* Views Updates */,
+				CBA262A724AFB7C600F81034 /* Extentions */,
 				43BD8A9124AA6CEE00749E2A /* Global */,
 				43BBB439249CA47F0024F449 /* Cells */,
 				43BBB434249C9E0C0024F449 /* Utitliies */,

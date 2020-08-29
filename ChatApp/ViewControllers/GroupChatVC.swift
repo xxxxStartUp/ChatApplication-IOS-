@@ -12,7 +12,8 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     
     @IBOutlet weak var groupChatTable: UITableView!
     @IBOutlet weak var infoButton: UIButton!
-    
+    var globalImageSent : UIImage?
+    var messageToBeSent : Message?
     var cellID = "id"
     var loaded  = false
     var groupMessages : [Message] = []
@@ -26,47 +27,28 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        
+        let imageURL = info[UIImagePickerController.InfoKey.imageURL] as! NSURL
+        self.texterView.textingView.text = imageURL.absoluteString
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {return}
-        
-        
-        let selectedImage = image
-        
-        let data = selectedImage.pngData()!
-        
-//        saveImageToSend(data: data)
-        saveAndGetImageUrlFromStorage(data: data)
+        globalImageSent = image
+
     }
     
-    func saveAndGetImageUrlFromStorage(data:Data){
+    /// Takes a image , converts it to data and sends to firebase , collects the url and ceates a messagetobesent
+    /// - Parameter image: image to be sent
+    private func sendImageMessage(image:UIImage){
+        guard let data = image.jpeg(.medium) else {return}
         FireService.sharedInstance.saveImageToBeSentToGroupChat(data: data, user: globalUser!, group: group!) { (url, error) in
             if let error = error{
                 print(error.localizedDescription)
                 fatalError()
             }
-            self.texterView.textingView.text = url
-            self.dismiss(animated: true, completion: nil)
+            let message = Message(content: Content(type: .image, content: url!), sender: globalUser!, timeStamp: Date(), recieved: false)
+            self.messageToBeSent = message
+            self.sendMessage()
         }
     }
-    /// Function that saves the image to send to Firebase
-    /// - Parameter data: Data containing the image to send
-    func saveImageToSend(data : Data){
-       
-        FireService.sharedInstance.saveImageToSend(data: data, user: globalUser!) { (result) in
-            switch result {
-            case .success(_):
-                print("sucess")
-                self.dismiss(animated: true, completion: nil)
-                //let image = UIImage(data: data)!
-                //Constants.profilePage.globalProfileImage = image
-                //Constants.profilePage.profileImageState = true
-                 //self.profileImageView.isUserInteractionEnabled = true
-            case .failure(_):
-                print("falure")
-            }
-        }
-        
-    }
+
     
     let texterView = TexterView()
 
@@ -101,14 +83,31 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         
     }
     
-    
-    
-    func sendMessage(){
-        print("sending message to group")
-        
-        let content = Content(type: .string, content: (texterView.textingView.text ?? ""))
+    private func SendStringMessage(){
+        guard let messageText = texterView.textingView.text else {
+            return
+        }
+        let content = Content(type: .string, content: messageText)
         let message = Message(content: content, sender: globalUser!, timeStamp: Date(), recieved: false)
-
+        messageToBeSent = message
+        sendMessage()
+        
+    }
+    
+    
+    private func sendMessageFinal(){
+        if let image = globalImageSent {
+            sendImageMessage(image: image)
+        }else{
+         SendStringMessage()
+        }
+        
+        
+    }
+    
+    
+    private func sendMessage() {
+        guard let message = messageToBeSent else {return}
         FireService.sharedInstance.sendMessgeToAllFriendsInGroup(message: message, user: globalUser!, group: group!, completionHandler: { (result) in
 
             switch result{
@@ -121,10 +120,10 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
             case .failure(_):
                 fatalError()
             }
-        }
-       
-        
-    )}
+        })
+    }
+    
+    
     
     
     func loadMessages (){
@@ -236,7 +235,7 @@ extension GroupChatVC : GroupDelegate {
 extension GroupChatVC : TexterViewDelegate {
     func didClickSend() {
         print("send")
-        sendMessage()
+        sendMessageFinal()
     }
     
     func didClickFile() {

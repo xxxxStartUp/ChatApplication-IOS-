@@ -650,28 +650,28 @@ class FireService {
         }
     }
     
-    func saveImageToBeSentToGroupChat(data:Data,user:FireUser,group:Group,completionHandler:@escaping (String,Error?) -> ()){
+    func saveImageToBeSentToGroupChat(data:Data,user:FireUser,group:Group,completionHandler: @escaping (String?,Error?) -> ()){
         
         let uuid = NSUUID().uuidString
         
-        let refName = "\(user.email)/\(group.name)/groupChatImages.png/\(uuid)"
+        let refName = "\(user.email)/\(group.id)/groupChatImages.png/\(uuid)"
         let ref = FireService.storageRef.child(refName)
         let newMetadata = StorageMetadata()
-        newMetadata.contentType = "image/png"
-        var finalUrl = String()
+        newMetadata.contentType = "image/jpeg"
         
         ref.putData(data, metadata: newMetadata) { (metadata, error) in
             if let error = error{
-                completionHandler(finalUrl,error)
+                completionHandler(nil,error)
             }
             
             
             ref.downloadURL { (url, error) in
                 guard let url = url else{
-                    completionHandler(finalUrl,error)
+                    completionHandler(nil,error)
                     return
                 }
-                finalUrl = url.absoluteString
+                
+               let finalUrl = url.absoluteString
                 completionHandler(finalUrl,nil)
 
             }
