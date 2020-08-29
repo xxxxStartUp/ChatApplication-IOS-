@@ -80,11 +80,13 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "group"{
-            
+
             let destination = segue.destination as! ChatVC
             destination.modalPresentationStyle = .currentContext
-            
+
         }
+
+        
     }
     func importSelectedFriends(friendsListEmail:[String]){
         selectedFriendsListEmail.removeAll()

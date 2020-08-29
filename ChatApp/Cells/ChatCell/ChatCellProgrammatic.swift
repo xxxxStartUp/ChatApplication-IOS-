@@ -15,32 +15,82 @@ class MessgaeCell: UITableViewCell {
     var tarilingConstraints : NSLayoutConstraint?
     
     
+//    var message : Message! {
+//        didSet{
+//
+//            if  message.sender.email != globalUser!.email{
+//                    leadingContstraints?.isActive = true
+//                    tarilingConstraints?.isActive = false
+//                    nameLabel.textAlignment = .left
+//                    timeLabel.textAlignment = .right
+//                     messageBackgroundView.chatPageViews(type: Constants.chatPage.leftChatBubblev)
+//                }else{
+//                    leadingContstraints?.isActive = false
+//                    tarilingConstraints?.isActive = true
+//                    nameLabel.textAlignment = .right
+//                    timeLabel.textAlignment = .left
+//                     messageBackgroundView.chatPageViews(type: Constants.chatPage.rightchatBubble)
+//                }
+//    messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
+//
+//
+//            if !urldetector(message: message.content.content as! String).isEmpty{
+//                let url = urldetector(message: message.content.content as! String)
+//
+//                messageImageView.loadImageFromGroups(urlString: url)
+//
+//
+//            }
+//            else{
+//            messageLabel.text = message.content.content as! String
+//
+//
+//            nameLabel.text = message.sender.name
+//            nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
+//            timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
+//            timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
+//
+//
+//            }
+//
+//
+//        }
+//    }
     var message : Message! {
-        didSet{
-            messageLabel.text = message.content.content as! String
+         didSet{
+             messageLabel.text = message.content.content as! String
 
-            messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
-            nameLabel.text = message.sender.name
-            nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
-            timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
-            timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
-            if  message.sender.email != globalUser!.email{
-                leadingContstraints?.isActive = true
-                tarilingConstraints?.isActive = false
-                nameLabel.textAlignment = .left
-                timeLabel.textAlignment = .right
-                 messageBackgroundView.chatPageViews(type: Constants.chatPage.leftChatBubblev)
-            }else{
-                leadingContstraints?.isActive = false
-                tarilingConstraints?.isActive = true
-                nameLabel.textAlignment = .right
-                timeLabel.textAlignment = .left
-                 messageBackgroundView.chatPageViews(type: Constants.chatPage.rightchatBubble)
-            }
-      
-            
-        }
-    }
+             messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
+             nameLabel.text = message.sender.name
+             nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
+             timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
+             timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
+             if  message.sender.email != globalUser!.email{
+                 leadingContstraints?.isActive = true
+                 tarilingConstraints?.isActive = false
+                 nameLabel.textAlignment = .left
+                 timeLabel.textAlignment = .right
+                  messageBackgroundView.chatPageViews(type: Constants.chatPage.leftChatBubblev)
+             }else{
+                 leadingContstraints?.isActive = false
+                 tarilingConstraints?.isActive = true
+                 nameLabel.textAlignment = .right
+                 timeLabel.textAlignment = .left
+                  messageBackgroundView.chatPageViews(type: Constants.chatPage.rightchatBubble)
+             }
+       
+             
+         }
+     }
+    let messageImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 8
+        imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        
+        return imageView
+    }()
     
     var nameLabel : UILabel = {
         let label = UILabel()
@@ -95,41 +145,57 @@ class MessgaeCell: UITableViewCell {
     
     
     func setUpView(){
-        nameLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        timeLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        self.addSubview(stackView)
-        self.addSubview(messageLabel)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.alignment = .fill
-        stackView.distribution = .fill
-        stackView.axis = .vertical
-        stackView.spacing = 4
         
+         nameLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+         timeLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+         self.addSubview(stackView)
+         self.addSubview(messageLabel)
+        self.addSubview(messageImageView)
+         stackView.translatesAutoresizingMaskIntoConstraints = false
+         stackView.alignment = .fill
+         stackView.distribution = .fill
+         stackView.axis = .vertical
+         stackView.spacing = 4
+         
+         
+         stackView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
+         stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
+         
+         leadingContstraints = stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
+         
+         tarilingConstraints = stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
+         
+        // stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
+         stackView.widthAnchor.constraint(equalToConstant: 250).isActive = true
+         
+         messageLabel.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 16).isActive = true
+         messageLabel.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: -16).isActive = true
+         messageLabel.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 16).isActive = true
+          messageLabel.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -16).isActive = true
         
-        stackView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
-        
-        leadingContstraints = stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
-        
-        tarilingConstraints = stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
-        
-       // stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
-        stackView.widthAnchor.constraint(equalToConstant: 250).isActive = true
-        
-        messageLabel.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 16).isActive = true
-        messageLabel.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: -16).isActive = true
-        messageLabel.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 16).isActive = true
-         messageLabel.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -16).isActive = true
-        
-        
-        
+        messageImageView.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 0).isActive = true
+        messageImageView.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: -16).isActive = true
+        messageImageView.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 0).isActive = true
+        messageImageView.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -16).isActive = true
+  
+    
+    }
+   
+    func urldetector(message:String) -> String{
+        let input = message
+        var url = String()
+        let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+        let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
+
+        for match in matches {
+            guard let range = Range(match.range, in: input) else {continue}
+            url = String(input[range])
+            print(url,"This is the url from url detector")
+        }
+        return url
     }
     
 
-
-
-
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

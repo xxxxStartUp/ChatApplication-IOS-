@@ -22,20 +22,25 @@ class GroupInfoVC: UIViewController {
     let identifier3 = "participantsCellIdentifier"
     
     let identifier4 = "participantsHeaderCellIdentifier"
+    var groupDelegate : GroupDelegate?
+    var groupParticipants = [Friend]()
+    var tempParticipants = [Friend]()
     
-    var r : Friend?{
-         didSet {
-            groupNameTextField.text = r?.username
-         }
-     }
-    
+    var group : Group?{
+        didSet{
+            title = group?.name
+            print(group!,"group")
+            
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         navigationItem.largeTitleDisplayMode = .never
         updateBackgroundViews()
-        setupTableView()
-        print(r)
         
+        setupTableView()
+
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -126,6 +131,8 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
         }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     
+        if tableView == groupinfoTableview{
         if section == 0 {
             return 1
         }
@@ -136,9 +143,15 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
         else {
             return 0
         }
+        }else{
+            
+        }
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        
         if tableView == groupinfoTableview{
             switch indexPath.section {
             case 0:
@@ -158,6 +171,7 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
                     cell.updateViews(indexPath: indexPath.row)
                     return cell
                 }
+                
                 //        case 2:
                 //            if let cell = groupinfoTableview.dequeueReusableCell(withIdentifier: identifier3) as? participantsCell  {
                 //                cell.backgroundColor = .clear
@@ -171,9 +185,19 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
         }
         else{
             if let cell = participantsTableview.dequeueReusableCell(withIdentifier: identifier3) as? participantsCell  {
+                
+                //        Dara used this to test the viewGroupParticipants function in fireservice
+                FireService.sharedInstance.viewGroupParticipants(user: globalUser!, group: group!) { (participants, true, error) in
+                    if let error = error{
+                        print(error)
+                        fatalError()
+                    }
+                    self.groupParticipants = participants
+                    cell.updateViews(groupParticipants: self.groupParticipants,indexPath:indexPath.row)
+                    print(self.groupParticipants,"group Participants",indexPath.row)
+
+                }
                 cell.backgroundColor = .clear
-                cell.updateViews()
-                //cell.updateViews(indexPath: indexPath.row)
                 return cell
                 
             }
@@ -219,3 +243,4 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
     }
     
 }
+

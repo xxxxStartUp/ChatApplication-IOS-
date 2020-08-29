@@ -16,6 +16,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     var cellID = "id"
     var loaded  = false
     var groupMessages : [Message] = []
+    var groupDelegate : GroupDelegate?
     var group : Group?{
         didSet{
             title = group?.name
@@ -33,10 +34,20 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         
         let data = selectedImage.pngData()!
         
-        saveImageToSend(data: data)
+//        saveImageToSend(data: data)
+        saveAndGetImageUrlFromStorage(data: data)
     }
     
-    
+    func saveAndGetImageUrlFromStorage(data:Data){
+        FireService.sharedInstance.saveImageToBeSentToGroupChat(data: data, user: globalUser!, group: group!) { (url, error) in
+            if let error = error{
+                print(error.localizedDescription)
+                fatalError()
+            }
+            self.texterView.textingView.text = url
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
     /// Function that saves the image to send to Firebase
     /// - Parameter data: Data containing the image to send
     func saveImageToSend(data : Data){
@@ -140,8 +151,15 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
 
         }
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? GroupInfoVC{
+            destination.group = group
+        }
+
+    }
     
     @IBAction func infoButtonPressed(_ sender: Any) {
+        print(group!.name,"groupname")
         performSegue(withIdentifier: Constants.groupchatSBToGroupInfoIdentifier, sender: self)
     }
     @IBAction func addcontactsButtonPressed(_ sender: Any) {

@@ -13,10 +13,18 @@ class participantsCell: UITableViewCell {
     @IBOutlet weak var email: UILabel!
     @IBOutlet weak var adminLabel: UILabel!
     
-    func updateViews(){
+    func updateViews(groupParticipants:[Friend],indexPath:Int){
         username.GroupInfoPageLabels(type: Constants.groupInfoPage.userNameHeader)
         email.GroupInfoPageLabels(type: Constants.groupInfoPage.emailHeader)
         adminLabel.GroupInfoPageLabels(type: Constants.groupInfoPage.admin)
-        
+        if !groupParticipants.isEmpty{
+        username.text = groupParticipants[indexPath].username
+        email.text = groupParticipants[indexPath].email
+        }
+        else{
+        username.text = ""
+        email.text = ""
+        adminLabel.text = ""
+        }
     }
 }
