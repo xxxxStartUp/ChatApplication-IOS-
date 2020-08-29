@@ -31,6 +31,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         self.texterView.textingView.text = imageURL.absoluteString
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {return}
         globalImageSent = image
+        self.dismiss(animated: true, completion: nil)
 
     }
     
