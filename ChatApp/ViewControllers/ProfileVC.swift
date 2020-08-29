@@ -191,7 +191,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         let cameraRoll = UIImagePickerController()
         cameraRoll.delegate = self
         cameraRoll.sourceType = .photoLibrary
-        cameraRoll.allowsEditing = false
+        cameraRoll.allowsEditing = true
         self.present(cameraRoll, animated: true, completion: nil)
         
         
@@ -214,12 +214,19 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
             Constants.profilePage.globalProfileImage = image
             
             dismiss(animated: true, completion: nil)
+        }
+        //sets image to be the edited image.
+        else if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage{
+            profileImageView.image = image
+            Constants.profilePage.profileImageState = true
+            Constants.profilePage.globalProfileImage = image
             
-            
+            dismiss(animated: true, completion: nil)
         }
         
         let data = Constants.profilePage.globalProfileImage!.pngData()!
         saveProfilePicture(data: data)
+        
         
 
 

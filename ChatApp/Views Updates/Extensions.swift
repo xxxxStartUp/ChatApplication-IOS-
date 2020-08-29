@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+let cachedImage = NSCache<NSString,UIImage>()
+
 extension UIButton{
     
     func onBoardingPageButton(type:String){
@@ -460,6 +462,38 @@ extension UIView{
         else{
             self.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }
+    }
+    
+
+}
+
+extension UIImageView{
+    
+    
+    func loadImageFromGroups(urlString:String){
+        
+        self.image = nil
+        
+        //check cache for image
+        if let cachedImage = cachedImage.object(forKey: urlString as NSString){
+            self.image = cachedImage
+            return
+        }
+        
+        //otherwise fire off a new download
+        let url = URL(string: urlString)
+
+        URLSession.shared.dataTask(with: url!) { (data, response, error) in
+            if error != nil{
+                print(error?.localizedDescription)
+                return
+            }
+            if let downloadedImage = UIImage(data: data!){
+                cachedImage.setValue(downloadedImage, forKey: urlString)
+                self.image = downloadedImage
+            }
+        }
+
     }
 }
 

@@ -34,10 +34,20 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         
         let data = selectedImage.pngData()!
         
-        saveImageToSend(data: data)
+//        saveImageToSend(data: data)
+        saveAndGetImageUrlFromStorage(data: data)
     }
     
-    
+    func saveAndGetImageUrlFromStorage(data:Data){
+        FireService.sharedInstance.saveImageToBeSentToGroupChat(data: data, user: globalUser!, group: group!) { (url, error) in
+            if let error = error{
+                print(error.localizedDescription)
+                fatalError()
+            }
+            self.texterView.textingView.text = url
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
     /// Function that saves the image to send to Firebase
     /// - Parameter data: Data containing the image to send
     func saveImageToSend(data : Data){

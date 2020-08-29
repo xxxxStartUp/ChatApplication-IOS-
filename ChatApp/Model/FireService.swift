@@ -650,6 +650,32 @@ class FireService {
         }
     }
     
+    func saveImageToBeSentToGroupChat(data:Data,user:FireUser,group:Group,completionHandler:@escaping (String,Error?) -> ()){
+        
+        let uuid = NSUUID().uuidString
+        
+        let refName = "\(user.email)/\(group.name)/groupChatImages.png/\(uuid)"
+        let ref = FireService.storageRef.child(refName)
+        var finalUrl = String()
+        
+        ref.putData(data, metadata: nil) { (metadata, error) in
+            if let error = error{
+                completionHandler(finalUrl,error)
+            }
+            
+            
+            ref.downloadURL { (url, error) in
+                guard let url = url else{
+                    completionHandler(finalUrl,error)
+                    return
+                }
+                finalUrl = url.absoluteString
+                completionHandler(finalUrl,nil)
+
+            }
+        }
+    }
+    
     
     /// Loads all the activity from a user.
     /// - Parameters:

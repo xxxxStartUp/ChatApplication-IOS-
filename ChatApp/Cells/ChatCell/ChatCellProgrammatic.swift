@@ -17,6 +17,30 @@ class MessgaeCell: UITableViewCell {
     
     var message : Message! {
         didSet{
+            
+            
+            //write code for load url as a message here
+
+            if !urldetector(message: message.content.content as! String).isEmpty{
+                setUpView(type: "Image")
+                let url = urldetector(message: message.content.content as! String)
+                messageImageView.loadImageFromGroups(urlString: url)
+                if  message.sender.email != globalUser!.email{
+                    leadingContstraints?.isActive = true
+                    tarilingConstraints?.isActive = false
+                    nameLabel.textAlignment = .left
+                    timeLabel.textAlignment = .right
+                     messageBackgroundView.chatPageViews(type: Constants.chatPage.leftChatBubblev)
+                }else{
+                    leadingContstraints?.isActive = false
+                    tarilingConstraints?.isActive = true
+                    nameLabel.textAlignment = .right
+                    timeLabel.textAlignment = .left
+                     messageBackgroundView.chatPageViews(type: Constants.chatPage.rightchatBubble)
+                }
+
+            }
+            else{
             messageLabel.text = message.content.content as! String
 
             messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
@@ -39,8 +63,18 @@ class MessgaeCell: UITableViewCell {
             }
       
             
+       }
         }
     }
+    let messageImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 8
+        imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        
+        return imageView
+    }()
     
     var nameLabel : UILabel = {
         let label = UILabel()
@@ -88,40 +122,93 @@ class MessgaeCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setUpView()
+        setUpView(type: "String")
     }
 
     
     
     
-    func setUpView(){
-        nameLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        timeLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        self.addSubview(stackView)
-        self.addSubview(messageLabel)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.alignment = .fill
-        stackView.distribution = .fill
-        stackView.axis = .vertical
-        stackView.spacing = 4
+    func setUpView(type:String){
         
+        switch type {
+        case "Image":
+             nameLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+             timeLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+             self.addSubview(stackView)
+             self.addSubview(messageImageView)
+             stackView.translatesAutoresizingMaskIntoConstraints = false
+             stackView.alignment = .fill
+             stackView.distribution = .fill
+             stackView.axis = .vertical
+             stackView.spacing = 4
+             
+             
+             stackView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
+             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
+             
+             leadingContstraints = stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
+             
+             tarilingConstraints = stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
+             
+            // stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
+             stackView.widthAnchor.constraint(equalToConstant: 250).isActive = true
+             
+             messageImageView.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 0).isActive = true
+             messageImageView.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: -16).isActive = true
+             messageImageView.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 0).isActive = true
+             messageImageView.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -16).isActive = true
+        case "String":
+            setUpViewDefault()
+        default:
+            setUpViewDefault()
+        }
+
         
-        stackView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
-        
-        leadingContstraints = stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
-        
-        tarilingConstraints = stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
-        
-       // stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
-        stackView.widthAnchor.constraint(equalToConstant: 250).isActive = true
-        
-        messageLabel.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 16).isActive = true
-        messageLabel.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: -16).isActive = true
-        messageLabel.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 16).isActive = true
-         messageLabel.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -16).isActive = true
-        
-        
+    
+    }
+    func setUpViewDefault(){
+         nameLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+         timeLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+         self.addSubview(stackView)
+         self.addSubview(messageLabel)
+         stackView.translatesAutoresizingMaskIntoConstraints = false
+         stackView.alignment = .fill
+         stackView.distribution = .fill
+         stackView.axis = .vertical
+         stackView.spacing = 4
+         
+         
+         stackView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
+         stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
+         
+         leadingContstraints = stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
+         
+         tarilingConstraints = stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
+         
+        // stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
+         stackView.widthAnchor.constraint(equalToConstant: 250).isActive = true
+         
+         messageLabel.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 16).isActive = true
+         messageLabel.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: -16).isActive = true
+         messageLabel.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 16).isActive = true
+          messageLabel.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -16).isActive = true
+    }
+    func urldetector(message:String) -> String{
+        let input = message
+        var url = String()
+        let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+        let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
+
+        for match in matches {
+            guard let range = Range(match.range, in: input) else {continue}
+            url = String(input[range])
+            print(url,"This is the url from url detector")
+        }
+        return url
+    }
+    
+    func setupImageView(){
+
         
     }
     
