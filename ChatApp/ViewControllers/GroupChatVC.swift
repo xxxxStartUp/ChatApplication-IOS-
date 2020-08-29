@@ -38,7 +38,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     /// Takes a image , converts it to data and sends to firebase , collects the url and ceates a messagetobesent
     /// - Parameter image: image to be sent
     private func sendImageMessage(image:UIImage){
-        guard let data = image.jpeg(.medium) else {return}
+        guard let data = image.jpeg(.lowest) else {return}
         FireService.sharedInstance.saveImageToBeSentToGroupChat(data: data, user: globalUser!, group: group!) { (url, error) in
             if let error = error{
                 print(error.localizedDescription)

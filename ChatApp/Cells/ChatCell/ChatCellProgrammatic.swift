@@ -21,7 +21,9 @@ class MessgaeCell: UITableViewCell {
         didSet{
             
  
-            
+        nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
+        timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
+        timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
             
             if  message.sender.email != globalUser!.email{
                 messageLabel.text = message.content.content as! String
