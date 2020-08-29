@@ -101,6 +101,7 @@ class FireService {
             documents.forEach { (document) in
                 let message = self.changeDictionaryToMessage(document.data())
                 messages.append(message)
+                print(message.content.content as! String , "this is from loadmessageswithgroup",message.content.type.rawValue)
                 if messages.count == documents.count {
                     completion(messages , nil)
                     return
