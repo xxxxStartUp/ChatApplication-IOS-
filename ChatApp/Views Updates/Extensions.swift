@@ -471,30 +471,52 @@ extension UIImageView{
     
     
     func loadImageFromGroups(urlString:String){
-        
-        self.image = nil
-        
-        //check cache for image
-        if let cachedImage = cachedImage.object(forKey: urlString as NSString){
-            self.image = cachedImage
-            return
-        }
-        
-        //otherwise fire off a new download
-        let url = URL(string: urlString)
-
-        URLSession.shared.dataTask(with: url!) { (data, response, error) in
-            if error != nil{
-                print(error?.localizedDescription)
+            
+            self.image = nil
+            
+            //check cache for image
+            if let cachedImage = cachedImage.object(forKey: urlString as NSString){
+                self.image = cachedImage
                 return
             }
-            if let downloadedImage = UIImage(data: data!){
-                cachedImage.setValue(downloadedImage, forKey: urlString)
-                self.image = downloadedImage
-            }
-        }
+            
+            //otherwise fire off a new download
 
-    }
+            if let url =
+                URL(string:urlString){
+                print(url,"URL")
+                
+                self.af.setImage(withURL: url, cacheKey: nil, placeholderImage: nil, serializer: nil, filter: nil, progress: nil, progressQueue: DispatchQueue.global(), imageTransition: .crossDissolve(0.1), runImageTransitionIfCached: true) { (reponse) in
+
+                    switch reponse.result {
+                    case .success(let image):
+                        self.image = image
+                    case .failure(let error):
+                        print(error.localizedDescription)
+    //                     self.profileImageView.isUserInteractionEnabled = true
+                    }
+
+                }
+    //            URLSession.shared.dataTask(with: url.absoluteURL) { (data, response, error) in
+    //            if error != nil{
+    //                print(error?.localizedDescription)
+    //                return
+    //            }
+    //
+    //
+    //            DispatchQueue.main.async {
+    //                if let data = data, let downloadedImage = UIImage(data: data){
+    //                    print(data)
+    //                    self.cachedImage.setObject(downloadedImage, forKey: urlString as NSString)
+    //                    self.imageView.image = downloadedImage
+    //
+    //                }
+    //
+    //            }
+    //        }
+                
+        }
+        }
 }
 
 

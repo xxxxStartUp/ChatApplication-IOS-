@@ -656,9 +656,11 @@ class FireService {
         
         let refName = "\(user.email)/\(group.name)/groupChatImages.png/\(uuid)"
         let ref = FireService.storageRef.child(refName)
+        let newMetadata = StorageMetadata()
+        newMetadata.contentType = "image/png"
         var finalUrl = String()
         
-        ref.putData(data, metadata: nil) { (metadata, error) in
+        ref.putData(data, metadata: newMetadata) { (metadata, error) in
             if let error = error{
                 completionHandler(finalUrl,error)
             }
