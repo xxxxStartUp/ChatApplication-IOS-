@@ -30,8 +30,8 @@ class SettingsVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(on), name: .displayOn, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(off), name: .displayOff, object: nil)
         
-        
         self.updateBackgroundViews()
+        
         
         // Do any additional setup after loading the view.
     }
@@ -51,10 +51,11 @@ class SettingsVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         updateBackgroundViews()
+        SettingsTable.reloadData()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
-        updateBackgroundViews()
+        
     }
 
 

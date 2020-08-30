@@ -16,6 +16,9 @@ struct Constants{
     static let settingsToProfileIdentifer = "settingstoprofileIdentifier"
     static let groupchatSBToGroupInfoIdentifier = "GroupInfoIdentifier"
     
+    static let groupImagesType = "groupImageType"
+    
+    
     struct onBoardingPage{
         static let filledButton = "filled"
         static let notFilledButton = "noFill"
@@ -56,6 +59,7 @@ struct Constants{
         static let textfields = "Textfields"
         static var profileImageState = false
         static var globalProfileImage:UIImage? = nil
+        static let profileImageType = "profileImageType"
         
 
     }
@@ -63,6 +67,7 @@ struct Constants{
         static let userNameHeader = "userNameHeader"
         static let labelTitles = "labelTitle"
         static let statusTitleLabel = "statusTitleLabel"
+        static let settingsImageType = "settingsImageType"
     
         static var displayModeSwitch = false
     }
@@ -84,6 +89,7 @@ struct Constants{
         static let rightchatBubble = "RightChatBubble"
         static let senderNameLabel = "SenderNameLabel"
         static let messageTimeStamp = "MessageTimeStamp"
+        static let groupImagesType = "groupImageType"
     }
     struct chatLogPage{
         static var chatLogToContactsSegueSignal = false

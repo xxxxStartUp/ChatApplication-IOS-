@@ -52,7 +52,7 @@ class MessgaeCell: UITableViewCell {
             if message.content.type == .image{
                  messageLabel.text = nil
                  let urlString = message.content.content as! String
-                 messageImageView.loadImageFromGroups(urlString: urlString)
+                messageImageView.loadImageFromGroups(urlString: urlString, imageType: Constants.chatPage.groupImagesType)
                  messageBackgroundView.addSubview(messageImageView)
                  messageImageView.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 0).isActive = true
                  messageImageView.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: 0).isActive = true
