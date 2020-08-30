@@ -470,7 +470,7 @@ extension UIView{
 extension UIImageView{
     
     
-    func loadImageFromGroups(urlString:String,imageType:String){
+    func loadImages(urlString:String,imageType:String){
             
         switch imageType {
         case Constants.profilePage.profileImageType:
