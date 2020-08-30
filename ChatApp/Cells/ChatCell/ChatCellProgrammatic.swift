@@ -21,11 +21,17 @@ class MessgaeCell: UITableViewCell {
         didSet{
             
  
+
             
             nameLabel.text = message.sender.name
             nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
             timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
             timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
+
+//        nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
+//        timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
+//        timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
+            
             if  message.sender.email != globalUser!.email{
                 messageLabel.text = message.content.content as! String
                 leadingContstraints?.isActive = true
@@ -48,8 +54,8 @@ class MessgaeCell: UITableViewCell {
                  let urlString = message.content.content as! String
                  messageImageView.loadImageFromGroups(urlString: urlString)
                  messageBackgroundView.addSubview(messageImageView)
-                 messageImageView.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 16).isActive = true
-                 messageImageView.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: -16).isActive = true
+                 messageImageView.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 0).isActive = true
+                 messageImageView.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: 0).isActive = true
                  messageImageView.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 16).isActive = true
                  messageImageView.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -16).isActive = true
                  messageImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
@@ -275,10 +281,10 @@ class MessgaeCell: UITableViewCell {
  
         stackView.widthAnchor.constraint(equalToConstant: 250).isActive = true
         
-        messageLabel.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 16).isActive = true
-        messageLabel.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: -16).isActive = true
-        messageLabel.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 16).isActive = true
-        messageLabel.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -16).isActive = true
+        messageLabel.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 12).isActive = true
+        messageLabel.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: -12).isActive = true
+        messageLabel.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 12).isActive = true
+        messageLabel.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -12).isActive = true
         
         
     }

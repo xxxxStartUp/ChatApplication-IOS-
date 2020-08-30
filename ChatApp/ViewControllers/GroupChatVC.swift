@@ -29,16 +29,23 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         
         let imageURL = info[UIImagePickerController.InfoKey.imageURL] as! NSURL
         self.texterView.textingView.text = imageURL.absoluteString
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {return}
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
         globalImageSent = image
         self.dismiss(animated: true, completion: nil)
+        
+    }
+        else if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage{
+            globalImageSent = image
+            self.dismiss(animated: true, completion: nil)
+            dismiss(animated: true, completion: nil)
+        }
 
     }
     
     /// Takes a image , converts it to data and sends to firebase , collects the url and ceates a messagetobesent
     /// - Parameter image: image to be sent
     private func sendImageMessage(image:UIImage){
-        guard let data = image.jpeg(.medium) else {return}
+        guard let data = image.jpeg(.lowest) else {return}
         FireService.sharedInstance.saveImageToBeSentToGroupChat(data: data, user: globalUser!, group: group!) { (url, error) in
             if let error = error{
                 print(error.localizedDescription)
@@ -99,11 +106,12 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     private func sendMessageFinal(){
         if let image = globalImageSent {
             sendImageMessage(image: image)
+            globalImageSent = nil
         }else{
          SendStringMessage()
         }
         
-        
+        texterView.textingView.text = ""
     }
     
     
@@ -248,7 +256,7 @@ extension GroupChatVC : TexterViewDelegate {
         let cameraRoll = UIImagePickerController()
         cameraRoll.delegate = self
         cameraRoll.sourceType = .photoLibrary
-        cameraRoll.allowsEditing = false
+        cameraRoll.allowsEditing = true
         self.present(cameraRoll, animated: true, completion: nil)
         print("camera")
         

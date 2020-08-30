@@ -491,9 +491,10 @@ extension UIImageView{
                     switch reponse.result {
                     case .success(let image):
                         self.image = image
+                        cachedImage.setObject(image, forKey: urlString as NSString)
                     case .failure(let error):
                         print(error.localizedDescription)
-    //                     self.profileImageView.isUserInteractionEnabled = true
+
                     }
 
                 }
