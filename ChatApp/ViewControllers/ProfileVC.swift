@@ -247,21 +247,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
                 
             case .success(let url):
 //                self.profileImageView.af_setImage(withURL: url)
-                
-                self.profileImageView.af.setImage(withURL: url, cacheKey: nil, placeholderImage: nil, serializer: nil, filter: nil, progress: nil, progressQueue: DispatchQueue.global(), imageTransition: .crossDissolve(0.1), runImageTransitionIfCached: true) { (reponse) in
-
-                    switch reponse.result {
-                    case .success(let image):
-                        Constants.profilePage.globalProfileImage = image
-                        Constants.profilePage.profileImageState = true
-                        self.profileImageView.isUserInteractionEnabled = true
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                         self.profileImageView.isUserInteractionEnabled = true
-                    }
-
-                }
-                
+                self.profileImageView.loadImages(urlString: url.absoluteString, imageType: Constants.profilePage.profileImageType)
                 
             case .failure(_):
                 print("failed to set image url")

@@ -408,8 +408,8 @@ extension UIView{
     }
     
     func profilePageImageView(){
-        self.layer.borderWidth = 1
-        self.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        self.layer.borderWidth = 0.5
+        self.layer.borderColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
         self.layer.masksToBounds = false
         self.layer.cornerRadius = self.layer.frame.size.height/2
         self.clipsToBounds = true
@@ -420,7 +420,7 @@ extension UIView{
     func settingsPageImageView(){
         
         self.layer.borderWidth = 1
-        self.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        self.layer.borderColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
         self.layer.masksToBounds = false
         self.layer.cornerRadius = self.layer.frame.size.height/2
         self.clipsToBounds = true
@@ -470,8 +470,46 @@ extension UIView{
 extension UIImageView{
     
     
-    func loadImageFromGroups(urlString:String){
+    func loadImages(urlString:String,imageType:String){
             
+        switch imageType {
+        case Constants.profilePage.profileImageType:
+                self.image = nil
+                
+                //check cache for image
+                if let cachedImage = cachedImage.object(forKey: urlString as NSString){
+                    self.image = cachedImage
+                    return
+                }
+                
+                //otherwise fire off a new download
+
+                if let url =
+                    URL(string:urlString){
+                    print(url,"URL")
+                    
+                    self.af.setImage(withURL: url, cacheKey: nil, placeholderImage: nil, serializer: nil, filter: nil, progress: nil, progressQueue: DispatchQueue.global(), imageTransition: .crossDissolve(0.1), runImageTransitionIfCached: true) { (reponse) in
+
+                        switch reponse.result {
+                        case .success(let image):
+                            self.image = image
+                            self.isUserInteractionEnabled = true
+                            Constants.profilePage.profileImageState = true
+                            Constants.profilePage.globalProfileImage = image
+                            cachedImage.setObject(image, forKey: urlString as NSString)
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                             self.isUserInteractionEnabled = true
+
+                        }
+
+                    }
+            }
+        case Constants.chatPage.groupImagesType:
+            defaultLoadImageFromGroup(urlString: urlString)
+            
+        case Constants.settingsPage.settingsImageType:
+            self.settingsPageImageView()
             self.image = nil
             
             //check cache for image
@@ -491,32 +529,50 @@ extension UIImageView{
                     switch reponse.result {
                     case .success(let image):
                         self.image = image
+                        
+                        
+                        cachedImage.setObject(image, forKey: urlString as NSString)
                     case .failure(let error):
                         print(error.localizedDescription)
-    //                     self.profileImageView.isUserInteractionEnabled = true
+
                     }
 
                 }
-    //            URLSession.shared.dataTask(with: url.absoluteURL) { (data, response, error) in
-    //            if error != nil{
-    //                print(error?.localizedDescription)
-    //                return
-    //            }
-    //
-    //
-    //            DispatchQueue.main.async {
-    //                if let data = data, let downloadedImage = UIImage(data: data){
-    //                    print(data)
-    //                    self.cachedImage.setObject(downloadedImage, forKey: urlString as NSString)
-    //                    self.imageView.image = downloadedImage
-    //
-    //                }
-    //
-    //            }
-    //        }
                 
+            }
+        default:
+            defaultLoadImageFromGroup(urlString: urlString)
+        
+            }}
+    func defaultLoadImageFromGroup(urlString:String){
+        self.image = nil
+        
+        //check cache for image
+        if let cachedImage = cachedImage.object(forKey: urlString as NSString){
+            self.image = cachedImage
+            return
         }
-        }
+        
+        //otherwise fire off a new download
+
+        if let url =
+            URL(string:urlString){
+            print(url,"URL")
+            
+            self.af.setImage(withURL: url, cacheKey: nil, placeholderImage: nil, serializer: nil, filter: nil, progress: nil, progressQueue: DispatchQueue.global(), imageTransition: .crossDissolve(0.1), runImageTransitionIfCached: true) { (reponse) in
+
+                switch reponse.result {
+                case .success(let image):
+                    self.image = image
+                    
+                    cachedImage.setObject(image, forKey: urlString as NSString)
+                case .failure(let error):
+                    print(error.localizedDescription)
+
+                }
+
+            }
+        }}
 }
 
 extension UIImage {

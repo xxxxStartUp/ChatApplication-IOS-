@@ -14,6 +14,7 @@ class MessgaeCell: UITableViewCell {
     var leadingContstraints : NSLayoutConstraint?
     var tarilingConstraints : NSLayoutConstraint?
     
+    var groupVC:GroupChatVC?
     
     var message : Message! {
         
@@ -24,6 +25,7 @@ class MessgaeCell: UITableViewCell {
         nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
         timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
         timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
+
             
             if  message.sender.email != globalUser!.email{
                 messageLabel.text = message.content.content as! String
@@ -44,19 +46,24 @@ class MessgaeCell: UITableViewCell {
             
             if message.content.type == .image{
                  messageLabel.text = nil
+                 messageLabel.isHidden = true
                  let urlString = message.content.content as! String
-                 messageImageView.loadImageFromGroups(urlString: urlString)
+                messageImageView.loadImages(urlString: urlString, imageType: Constants.chatPage.groupImagesType)
                  messageBackgroundView.addSubview(messageImageView)
-                 messageImageView.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 16).isActive = true
-                 messageImageView.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: -16).isActive = true
+                 messageImageView.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 0).isActive = true
+                 messageImageView.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: 0).isActive = true
                  messageImageView.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 16).isActive = true
                  messageImageView.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -16).isActive = true
                  messageImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+               // messageBackgroundView.isHidden = true
+               
                 messageBackgroundView.backgroundColor = .clear
 
 
 
              }else{
+                //messageBackgroundView.isHidden = false
+                messageLabel.isHidden = false
                  messageImageView.removeFromSuperview()
                  messageImageView.image = nil
                 
@@ -68,40 +75,16 @@ class MessgaeCell: UITableViewCell {
         }
     }
     
-    //    var message : Message! {
-    //         didSet{
-    //             messageLabel.text = message.content.content as! String
-    //
-    //             messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
-    //             nameLabel.text = message.sender.name
-    //             nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
-    //             timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
-    //             timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
-    //             if  message.sender.email != globalUser!.email{
-    //                 leadingContstraints?.isActive = true
-    //                 tarilingConstraints?.isActive = false
-    //                 nameLabel.textAlignment = .left
-    //                 timeLabel.textAlignment = .right
-    //                  messageBackgroundView.chatPageViews(type: Constants.chatPage.leftChatBubblev)
-    //             }else{
-    //                 leadingContstraints?.isActive = false
-    //                 tarilingConstraints?.isActive = true
-    //                 nameLabel.textAlignment = .right
-    //                 timeLabel.textAlignment = .left
-    //                  messageBackgroundView.chatPageViews(type: Constants.chatPage.rightchatBubble)
-    //             }
-    //
-    //
-    //         }
-    //     }
-    
-    
-    let messageImageView: UIImageView = {
+
+
+    lazy var messageImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 8
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleImageTap)))
         
         return imageView
     }()
@@ -176,10 +159,10 @@ class MessgaeCell: UITableViewCell {
  
         stackView.widthAnchor.constraint(equalToConstant: 250).isActive = true
         
-        messageLabel.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 16).isActive = true
-        messageLabel.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: -16).isActive = true
-        messageLabel.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 16).isActive = true
-        messageLabel.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -16).isActive = true
+        messageLabel.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 12).isActive = true
+        messageLabel.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: -12).isActive = true
+        messageLabel.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 12).isActive = true
+        messageLabel.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -12).isActive = true
         
         
     }
@@ -196,6 +179,15 @@ class MessgaeCell: UITableViewCell {
             print(url,"This is the url from url detector")
         }
         return url
+    }
+    
+    @objc func handleImageTap(tapGesture:UITapGestureRecognizer){
+        print("Image Tapped")
+        if let imageView = tapGesture.view as? UIImageView{
+            self.groupVC?.handlesTappedInImage(startingImageview: imageView)
+        }
+        
+       
     }
     
     

@@ -172,8 +172,39 @@ class FireService {
         
     }
     
-//    func addFriendToGroup(user : FireUser , group : Group ,freind : Friend, completionHandler : @escaping (Result<Bool , Error>)-> ()){
-//        let groupRef =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
+    func addAdminToGroup(user : FireUser , group : Group ,freind : Friend, completionHandler : @escaping (Result<Bool , Error>)-> ()){
+        let groupRef =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
+        
+           let frieindAsData = self.changeFriendToDictionary(freind)
+
+                   groupRef.collection("Freinds").addDocument(data: frieindAsData) { (error) in
+                       if let error = error{
+                           completionHandler(.failure(error))
+                       }
+                       self.searchOneUserWithEmail(email: freind.email) { (user, error) in
+                           if let error = error {
+                               completionHandler(.failure(error))
+                           }
+                           guard let user = user else {return}
+                            let data = ["groupname":group.name, "groupadmin" : group.GroupAdmin.email, "groupid": group.id] as [String : Any]
+
+                           FireService.users.document(user.email).collection("groups").document(group.id).setData(data, merge: true) { (error) in
+
+                               if let error = error {
+                                   completionHandler(.failure(error))
+                                   return
+                               }
+
+                               completionHandler(.success(true))
+                           }
+
+                       }
+
+                   
+
+
+        }
+    }
 //        let frieindAsData = self.changeFriendToDictionary(freind)
 //        self.searchOneUserWithEmail(email: freind.email) { (user, error) in
 //            if let error = error {
@@ -270,7 +301,7 @@ class FireService {
                 return
             }
             //add the groupadmin as a friend in the group
-            self.addFriendToGroup(user: group.GroupAdmin, group: group, freind: group.GroupAdmin.asAFriend) { (result) in
+            self.addAdminToGroup(user: group.GroupAdmin, group: group, freind: group.GroupAdmin.asAFriend) { (result) in
                 switch result{
                 case .success(_):
                     completion(true, nil)
@@ -280,9 +311,7 @@ class FireService {
                     return
                 }
             }
-            
-            
-            
+
         }
         
     }
