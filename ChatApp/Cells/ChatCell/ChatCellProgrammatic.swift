@@ -14,6 +14,7 @@ class MessgaeCell: UITableViewCell {
     var leadingContstraints : NSLayoutConstraint?
     var tarilingConstraints : NSLayoutConstraint?
     
+    var groupVC:GroupChatVC?
     
     var message : Message! {
         
@@ -51,6 +52,7 @@ class MessgaeCell: UITableViewCell {
             
             if message.content.type == .image{
                  messageLabel.text = nil
+                 messageLabel.isHidden = true
                  let urlString = message.content.content as! String
                 messageImageView.loadImages(urlString: urlString, imageType: Constants.chatPage.groupImagesType)
                  messageBackgroundView.addSubview(messageImageView)
@@ -59,11 +61,15 @@ class MessgaeCell: UITableViewCell {
                  messageImageView.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 16).isActive = true
                  messageImageView.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -16).isActive = true
                  messageImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+               // messageBackgroundView.isHidden = true
+               
                 messageBackgroundView.backgroundColor = .clear
 
 
 
              }else{
+                //messageBackgroundView.isHidden = false
+                messageLabel.isHidden = false
                  messageImageView.removeFromSuperview()
                  messageImageView.image = nil
                  
@@ -200,12 +206,14 @@ class MessgaeCell: UITableViewCell {
     
     
 
-    let messageImageView: UIImageView = {
+    lazy var messageImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 8
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleImageTap)))
         
         return imageView
     }()
@@ -301,6 +309,15 @@ class MessgaeCell: UITableViewCell {
             print(url,"This is the url from url detector")
         }
         return url
+    }
+    
+    @objc func handleImageTap(tapGesture:UITapGestureRecognizer){
+        print("Image Tapped")
+        if let imageView = tapGesture.view as? UIImageView{
+            self.groupVC?.handlesTappedInImage(startingImageview: imageView)
+        }
+        
+       
     }
     
     

@@ -18,6 +18,9 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     var loaded  = false
     var groupMessages : [Message] = []
     var groupDelegate : GroupDelegate?
+    var startingFrame:CGRect?
+    var startingImageView:UIImageView?
+    var blackBackgroundView:UIView?
     var group : Group?{
         didSet{
             title = group?.name
@@ -278,6 +281,8 @@ extension GroupChatVC : TexterViewDelegate {
 
 
 extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groupMessages.count
     }
@@ -285,13 +290,71 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = groupChatTable.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! MessgaeCell
-        
+        cell.groupVC = self
         let message = groupMessages[indexPath.row]
         cell.message = message
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
         
         return cell
+    }
+    //handles when the image is tapped.
+    func handlesTappedInImage(startingImageview:UIImageView){
+        print("HandlesImageTap")
+        self.startingImageView = startingImageview
+        startingImageView?.isHidden = true
+        startingFrame = startingImageview.superview?.convert(startingImageview.frame, to: nil)
+        print(startingFrame)
+        
+        let tappedImageFrame = UIImageView(frame: startingFrame!)
+        tappedImageFrame.backgroundColor = .red
+        tappedImageFrame.image = startingImageview.image
+        tappedImageFrame.isUserInteractionEnabled = true
+        tappedImageFrame.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTappedOutImage)))
+        
+       
+        var keywindow = UIWindow()
+        for window in UIApplication.shared.windows{
+            if window.isKeyWindow{
+                keywindow = window
+            }
+        }
+        blackBackgroundView = UIView(frame: keywindow.frame)
+        blackBackgroundView?.alpha = 0
+        blackBackgroundView?.backgroundColor = .black
+        keywindow.addSubview(blackBackgroundView!)
+        
+        let height = (startingFrame!.height/startingFrame!.width)*keywindow.frame.width
+        
+        keywindow.addSubview(tappedImageFrame)
+        UIView.animate(withDuration: 0.5, delay: 0,usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            tappedImageFrame.frame = CGRect(x: 0, y: 0, width: keywindow.frame.width, height: height)
+            self.blackBackgroundView?.alpha = 1
+            self.texterView.alpha = 0
+            tappedImageFrame.center = keywindow.center
+        }, completion: nil)
+       
+    }
+    
+    @objc func handleTappedOutImage(tapGesture:UITapGestureRecognizer){
+        
+        print("Zooming out")
+        
+        if let tappedOutImageView = tapGesture.view,let startingFrame = startingFrame{
+            
+            tappedOutImageView.layer.cornerRadius = 8
+            tappedOutImageView.clipsToBounds = true
+            
+            UIView.animate(withDuration: 0.5, delay: 0,usingSpringWithDamping: 1,initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.blackBackgroundView?.alpha = 0
+                tappedOutImageView.frame = startingFrame
+            }, completion: {(completed: Bool) in
+                tappedOutImageView.removeFromSuperview()
+                self.startingImageView?.isHidden = false
+            })
+
+        }
+        
     }
     
     
