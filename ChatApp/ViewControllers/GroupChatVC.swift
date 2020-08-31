@@ -24,6 +24,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
             loaded = true
         }
     }
+    var groupParticipants = [Friend]()
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
@@ -71,6 +72,15 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         self.groupChatTable.contentInset = insets
         
+        FireService.sharedInstance.viewGroupParticipants(user: globalUser!, group: group!) { (participants, true, error) in
+            if let error = error{
+                print(error)
+                fatalError()
+            }
+           self.groupParticipants = participants
+            
+
+        }
 
        
     }
@@ -162,6 +172,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? GroupInfoVC{
             destination.group = group
+            destination.groupParticipants = groupParticipants
         }
 
     }

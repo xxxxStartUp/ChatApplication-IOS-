@@ -146,7 +146,7 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
         }else{
             
         }
-        return 1
+        return groupParticipants.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -187,16 +187,8 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
             if let cell = participantsTableview.dequeueReusableCell(withIdentifier: identifier3) as? participantsCell  {
                 
                 //        Dara used this to test the viewGroupParticipants function in fireservice
-                FireService.sharedInstance.viewGroupParticipants(user: globalUser!, group: group!) { (participants, true, error) in
-                    if let error = error{
-                        print(error)
-                        fatalError()
-                    }
-                    self.groupParticipants = participants
-                    cell.updateViews(groupParticipants: self.groupParticipants,indexPath:indexPath.row)
-                    print(self.groupParticipants,"group Participants",indexPath.row)
-
-                }
+                cell.updateViews(groupParticipants: self.groupParticipants,indexPath:indexPath.row,group:group!)
+                print(self.groupParticipants,"group Participants",indexPath.row)
                 cell.backgroundColor = .clear
                 return cell
                 
