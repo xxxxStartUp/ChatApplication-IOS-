@@ -387,6 +387,7 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
             }, completion: {(completed: Bool) in
                 tappedOutImageView.removeFromSuperview()
                 self.startingImageView?.isHidden = false
+                self.texterView.alpha = 1 
             })
 
         }
