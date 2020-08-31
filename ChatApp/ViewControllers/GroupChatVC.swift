@@ -21,7 +21,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     var startingFrame:CGRect?
     var startingImageView:UIImageView?
     var blackBackgroundView:UIView?
-    let messagePopUptableView = UITableView(frame: CGRect(x: 0, y: 0, width: 200, height: 200), style: .plain)
+    var messagePopUptableView: UITableView!
     let messagePopUptableViewList = ["Save","Archive","Favorite"]
     var group : Group?{
         didSet{
@@ -68,6 +68,10 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let tapgesture = UITapGestureRecognizer(target: self, action: #selector(removeAnimateTableView))
+        self.view.addGestureRecognizer(tapgesture)
+        messagePopUptableView = UITableView(frame: CGRect(x:0 , y:
+            self.view.frame.height, width: self.view.frame.width, height: self.view.frame.height/3), style: .plain)
         updateBackgroundViews()
         groupChatTable.delegate = self
         groupChatTable.dataSource = self
@@ -89,6 +93,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
 
        
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -246,22 +251,30 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         //remove tableView
         removeTableView(tableView: messagePopUptableView)
         //add tableView
+        messagePopUptableView.delegate = self
+        messagePopUptableView.dataSource = self
         self.view.addSubview(messagePopUptableView)
         //add tableView frame auto layout
         //animateTableView
-        animateTableView(tableView: messagePopUptableView)
+        animateTableView()
       }
     
     private func removeTableView(tableView : UITableView){
         tableView.removeFromSuperview()
     }
     
-    private func animateTableView(tableView : UITableView){
-        let y = 100
+    private func animateTableView(){
+        let y = 400
         UIView.animate(withDuration: 0.3) {
-            tableView.frame.origin.y = CGFloat(y)
+            self.messagePopUptableView.frame.origin.y = CGFloat(y)
         }
     }
+    @objc private func removeAnimateTableView(){
+           let y = self.view.frame.height
+           UIView.animate(withDuration: 0.3) {
+            self.messagePopUptableView.frame.origin.y = CGFloat(y)
+           }
+       }
     
 
 }
@@ -318,6 +331,7 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
         if tableView == messagePopUptableView{
             let cell = UITableViewCell()
             cell.textLabel?.text = messagePopUptableViewList[indexPath.row]
+            cell.backgroundView?.backgroundColor = .brown
             return cell
         }
         
