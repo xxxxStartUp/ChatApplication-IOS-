@@ -21,6 +21,8 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     var startingFrame:CGRect?
     var startingImageView:UIImageView?
     var blackBackgroundView:UIView?
+    let messagePopUptableView = UITableView(frame: CGRect(x: 0, y: 0, width: 200, height: 200), style: .plain)
+    let messagePopUptableViewList = ["Save","Archive","Favorite"]
     var group : Group?{
         didSet{
             title = group?.name
@@ -239,6 +241,27 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
        }
    }
     
+    @objc func  handleLongTap(){
+          print("tapped for long")
+        //remove tableView
+        removeTableView(tableView: messagePopUptableView)
+        //add tableView
+        self.view.addSubview(messagePopUptableView)
+        //add tableView frame auto layout
+        //animateTableView
+        animateTableView(tableView: messagePopUptableView)
+      }
+    
+    private func removeTableView(tableView : UITableView){
+        tableView.removeFromSuperview()
+    }
+    
+    private func animateTableView(tableView : UITableView){
+        let y = 100
+        UIView.animate(withDuration: 0.3) {
+            tableView.frame.origin.y = CGFloat(y)
+        }
+    }
     
 
 }
@@ -284,10 +307,22 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if tableView == messagePopUptableView {
+            return messagePopUptableViewList.count
+        }
         return groupMessages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if tableView == messagePopUptableView{
+            let cell = UITableViewCell()
+            cell.textLabel?.text = messagePopUptableViewList[indexPath.row]
+            return cell
+        }
+        
+        
+        let longMessageCellTapGesture : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap))
         
         let cell = groupChatTable.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! MessgaeCell
         cell.groupVC = self
@@ -295,12 +330,13 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
         cell.message = message
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-        
+        cell.addGestureRecognizer(longMessageCellTapGesture)
         return cell
     }
     //handles when the image is tapped.
     func handlesTappedInImage(startingImageview:UIImageView){
         print("HandlesImageTap")
+        self.startingImageView?.contentMode = .scaleAspectFit
         self.startingImageView = startingImageview
         startingImageView?.isHidden = true
         startingFrame = startingImageview.superview?.convert(startingImageview.frame, to: nil)

@@ -26,6 +26,8 @@ class GroupInfoVC: UIViewController {
     var groupParticipants = [Friend]()
     var tempParticipants = [Friend]()
     
+   
+    
     var group : Group?{
         didSet{
             title = group?.name
@@ -119,6 +121,8 @@ class GroupInfoVC: UIViewController {
         }
     }
     
+  
+    
 }
 extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
     
@@ -151,7 +155,6 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        
         if tableView == groupinfoTableview{
             switch indexPath.section {
             case 0:
@@ -172,12 +175,7 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
                     return cell
                 }
                 
-                //        case 2:
-                //            if let cell = groupinfoTableview.dequeueReusableCell(withIdentifier: identifier3) as? participantsCell  {
-                //                cell.backgroundColor = .clear
-                //                //cell.updateViews(indexPath: indexPath.row)
-                //                return cell
-            //            }
+              
             default:
                 break
             }
