@@ -20,7 +20,7 @@ class MessgaeCell: UITableViewCell {
         
         didSet{
             
- 
+        nameLabel.text = message.sender.name
         nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
         timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
         timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
@@ -59,6 +59,7 @@ class MessgaeCell: UITableViewCell {
              }else{
                  messageImageView.removeFromSuperview()
                  messageImageView.image = nil
+                
                  
              }
             
@@ -150,7 +151,6 @@ class MessgaeCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUpView()
     }
-    
     
     
     
