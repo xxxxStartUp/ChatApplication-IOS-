@@ -9,12 +9,17 @@
 import Foundation
 
 import UIKit
+import AVFoundation
 class MessgaeCell: UITableViewCell {
     
     var leadingContstraints : NSLayoutConstraint?
     var tarilingConstraints : NSLayoutConstraint?
+    var playerLayer:AVPlayerLayer?
+    var player:AVPlayer?
     
     var groupVC:GroupChatVC?
+    
+    
     
     var message : Message! {
         
@@ -54,7 +59,7 @@ class MessgaeCell: UITableViewCell {
                  messageLabel.text = nil
                  messageLabel.isHidden = true
                  let urlString = message.content.content as! String
-                messageImageView.loadImages(urlString: urlString, imageType: Constants.chatPage.groupImagesType)
+                messageImageView.loadImages(urlString: urlString, mediaType: Constants.chatPage.groupImagesType)
                  messageBackgroundView.addSubview(messageImageView)
                  messageImageView.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 0).isActive = true
                  messageImageView.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: 0).isActive = true
@@ -67,9 +72,35 @@ class MessgaeCell: UITableViewCell {
 
 
 
-             }else{
+            }else if message.content.type == .video{
+                  messageLabel.text = nil
+                  messageLabel.isHidden = true
+                  let urlString = message.content.content as! String
+                  let initialURL = urlString.components(separatedBy: "thumbNailURL")[1]
+                 messageImageView.loadImages(urlString: initialURL, mediaType: Constants.chatPage.groupImagesType)
+                  messageBackgroundView.addSubview(messageImageView)
+                  messageBackgroundView.addSubview(playButton)
+                  
+                  messageImageView.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 0).isActive = true
+                  messageImageView.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: 0).isActive = true
+                  messageImageView.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 16).isActive = true
+                  messageImageView.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -16).isActive = true
+                  messageImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+                // messageBackgroundView.isHidden = true
+                
+                //play button anchors
+                messageBackgroundView.centerXAnchor.constraint(equalTo: playButton.centerXAnchor).isActive = true
+                messageBackgroundView.centerYAnchor.constraint(equalTo: playButton.centerYAnchor).isActive = true
+                messageBackgroundView.widthAnchor.constraint(equalTo: playButton.widthAnchor).isActive = true
+                messageBackgroundView.heightAnchor.constraint(equalTo: playButton.heightAnchor).isActive = true
+                
+                
+                
+                 messageBackgroundView.backgroundColor = .clear
+            }else
+            {
                 //messageBackgroundView.isHidden = false
-                messageLabel.isHidden = false
+                 messageLabel.isHidden = false
                  messageImageView.removeFromSuperview()
                  messageImageView.image = nil
                  
@@ -79,133 +110,7 @@ class MessgaeCell: UITableViewCell {
             
         }
     }
-    
-
-//    var message : Message! {
-
-//        didSet{
-//
-//            if  message.sender.email != globalUser!.email{
-//                    leadingContstraints?.isActive = true
-//                    tarilingConstraints?.isActive = false
-//                    nameLabel.textAlignment = .left
-//                    timeLabel.textAlignment = .right
-//                     messageBackgroundView.chatPageViews(type: Constants.chatPage.leftChatBubblev)
-//                }else{
-//                    leadingContstraints?.isActive = false
-//                    tarilingConstraints?.isActive = true
-//                    nameLabel.textAlignment = .right
-//                    timeLabel.textAlignment = .left
-//                     messageBackgroundView.chatPageViews(type: Constants.chatPage.rightchatBubble)
-//                }
-//    //messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
-//
-//
-//            if !urldetector(message: message.content.content as! String).isEmpty{
-//                messageImageView.isHidden = true
-//                let url = urldetector(message: message.content.content as! String)
-
-//         didSet{
-//             messageLabel.text = message.content.content as! String
-//
-//             messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
-//             nameLabel.text = message.sender.name
-//             nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
-//             timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
-//             timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
-//             if  message.sender.email != globalUser!.email{
-//                 leadingContstraints?.isActive = true
-//                 tarilingConstraints?.isActive = false
-//                 nameLabel.textAlignment = .left
-//                 timeLabel.textAlignment = .right
-//                  messageBackgroundView.chatPageViews(type: Constants.chatPage.leftChatBubblev)
-//             }else{
-//                 leadingContstraints?.isActive = false
-//                 tarilingConstraints?.isActive = true
-//                 nameLabel.textAlignment = .right
-//                 timeLabel.textAlignment = .left
-//                  messageBackgroundView.chatPageViews(type: Constants.chatPage.rightchatBubble)
-//             }
-
-//
-//
-
-//
-//            }
-//            else{
-//            messageImageView.isHidden = false
-//            messageLabel.text = message.content.content as! String
-//            nameLabel.text = message.sender.name
-//            nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
-//            timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
-//            timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
-//
-//
-//            }
-//
-//
-//        }
-//    }
-//    var message : Message! {
-//         didSet{
-//             messageLabel.text = message.content.content as! String
-//
-//             messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
-//             nameLabel.text = message.sender.name
-//             nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
-//             timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
-//             timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
-//             if  message.sender.email != globalUser!.email{
-//                 leadingContstraints?.isActive = true
-//                 tarilingConstraints?.isActive = false
-//                 nameLabel.textAlignment = .left
-//                 timeLabel.textAlignment = .right
-//                  messageBackgroundView.chatPageViews(type: Constants.chatPage.leftChatBubblev)
-//             }else{
-//                 leadingContstraints?.isActive = false
-//                 tarilingConstraints?.isActive = true
-//                 nameLabel.textAlignment = .right
-//                 timeLabel.textAlignment = .left
-//                  messageBackgroundView.chatPageViews(type: Constants.chatPage.rightchatBubble)
-//             }
-//
-//
-//         }
-//     }
-
-//         }
-//     }
-
-    //    var message : Message! {
-    //         didSet{
-    //             messageLabel.text = message.content.content as! String
-    //
-    //             messageBackgroundView.backgroundColor = message.recieved ? .lightGray : .darkGray
-    //             nameLabel.text = message.sender.name
-    //             nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
-    //             timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
-    //             timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
-    //             if  message.sender.email != globalUser!.email{
-    //                 leadingContstraints?.isActive = true
-    //                 tarilingConstraints?.isActive = false
-    //                 nameLabel.textAlignment = .left
-    //                 timeLabel.textAlignment = .right
-    //                  messageBackgroundView.chatPageViews(type: Constants.chatPage.leftChatBubblev)
-    //             }else{
-    //                 leadingContstraints?.isActive = false
-    //                 tarilingConstraints?.isActive = true
-    //                 nameLabel.textAlignment = .right
-    //                 timeLabel.textAlignment = .left
-    //                  messageBackgroundView.chatPageViews(type: Constants.chatPage.rightchatBubble)
-    //             }
-    //
-    //
-    //         }
-    //     }
-
-    
-    
-
+ 
     lazy var messageImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -216,6 +121,17 @@ class MessgaeCell: UITableViewCell {
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleImageTap)))
         
         return imageView
+    }()
+    
+    lazy var playButton:UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let largeConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 60))
+        let image = UIImage(systemName: "play.circle.fill",withConfiguration: largeConfiguration)
+        button.setImage(image, for: .normal)
+        button.tintColor = .lightGray
+        button.addTarget(self, action: #selector(handlePlayButtonTap(_:)), for: .touchUpInside)
+        return button
     }()
     
     var nameLabel : UILabel = {
@@ -320,11 +236,27 @@ class MessgaeCell: UITableViewCell {
        
     }
     
+    @objc func handlePlayButtonTap(_ sender:UIButton){
+        let urlString = message.content.content as! String
+        
+        let url = urlString.components(separatedBy: "thumbNailURL")[0]
+        self.groupVC?.handleVideoZoomedIn(url: url)
+    }
+    
+    func handleVideoZoomedOut(url:String){
+        
+    }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+        
     }
-    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        playerLayer?.removeFromSuperlayer()
+        player?.pause()
+    }
 }
 
 

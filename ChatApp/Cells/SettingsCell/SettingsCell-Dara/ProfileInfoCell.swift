@@ -45,7 +45,7 @@ class ProfileInfoCell: UITableViewCell {
                     
                 case .success(let url):
     //                self.profileImageView.af_setImage(withURL: url)
-                    self.profilePhoto.loadImages(urlString: url.absoluteString, imageType: Constants.settingsPage.settingsImageType)
+                    self.profilePhoto.loadImages(urlString: url.absoluteString, mediaType: Constants.settingsPage.settingsImageType)
                     
                 case .failure(_):
                     print("failed to set image url")

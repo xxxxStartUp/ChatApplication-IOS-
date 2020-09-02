@@ -12,6 +12,7 @@ import FirebaseFirestoreSwift
 import FirebaseFirestore
 import FirebaseStorage
 import UIKit
+import AVFoundation
 
 
 
@@ -701,11 +702,79 @@ class FireService {
                     return
                 }
                 
+                
                let finalUrl = url.absoluteString
                 completionHandler(finalUrl,nil)
 
             }
         }
+    }
+    
+    func thumbnailImageForFileUrl(fileUrl:NSURL) -> UIImage?{
+        let asset = AVAsset(url: fileUrl as URL)
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+        
+        
+        do {
+            let thumbnailCGImage = try imageGenerator.copyCGImage(at: CMTime(value: 1, timescale: 60), actualTime: nil)
+            return UIImage(cgImage: thumbnailCGImage)
+        } catch let err {
+            print(err)
+        }
+        return nil
+    }
+    func saveVideoToBeSentToGroupChat(url:NSURL,user:FireUser,group:Group,completionHandler: @escaping (String?,Error?,[String:Any?]) -> ()){
+        
+        let uuid = NSUUID().uuidString
+        
+        let refName = "\(user.email)/\(group.id)/groupChatVideos.mov/\(uuid)"
+        let ref = FireService.storageRef.child(refName)
+        let newMetadata = StorageMetadata()
+        var properties = [String:Any]()
+        newMetadata.contentType = "video/quicktime"
+    
+        
+
+        do {
+            let videoData = try Data(contentsOf: url as URL)
+            let uploadTask = ref.putData(videoData, metadata: newMetadata){ (metadata, error) in
+                if let error = error{
+                    completionHandler(nil,error,properties)
+                }
+
+
+                ref.downloadURL { (videoUrl, error) in
+                    guard let videoUrl = videoUrl else{
+                        completionHandler(nil,error,properties)
+                        return
+                    }
+                    let finalUrl = videoUrl.absoluteString
+                    if let thumbnailImage = self.thumbnailImageForFileUrl(fileUrl:url){
+                        properties = ["thumbNailWidth":thumbnailImage.size.width,"thumbNailHeight":thumbnailImage.size.height,"thumbNailImage":thumbnailImage]
+                    }
+                  
+
+                    print(finalUrl)
+                    completionHandler(finalUrl,nil,properties)
+
+                }
+            }
+        //use to get progress update
+            uploadTask.observe(.progress) { (snapshot) in
+                if let completedUnitCount = snapshot.progress?.completedUnitCount{
+                    
+                }
+                //get if the task is successful
+                uploadTask.observe(.success) { (snapshot) in
+                    
+                }
+                
+            }
+            
+        } catch {
+            print(error)
+        }
+
     }
     
     
