@@ -21,8 +21,16 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     var startingFrame:CGRect?
     var startingImageView:UIImageView?
     var blackBackgroundView:UIView?
+    var MessagePopUpheightAnchor : NSLayoutConstraint?
+    var MessagePopUpBottomAnchor : NSLayoutConstraint?
     var messagePopUptableView: UITableView!
-    let messagePopUptableViewList = ["Save","Archive","Favorite"]
+    let messagePopUpCellId = "messagePopUpCellId"
+    let messagePopUptableViewList  = [MessagepopUp(image: UIImage(named: "chat")!, title: "Save"),
+                                      MessagepopUp(image: UIImage(named: "chat")!, title: "Archive"),
+                                      MessagepopUp(image: UIImage(named: "chat")!, title: "Favorite"),
+                                      MessagepopUp(image: UIImage(named: "chat")!, title: "Reply")]
+    
+    
     var group : Group?{
         didSet{
             title = group?.name
@@ -70,8 +78,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         super.viewDidLoad()
         let tapgesture = UITapGestureRecognizer(target: self, action: #selector(removeAnimateTableView))
         self.view.addGestureRecognizer(tapgesture)
-        messagePopUptableView = UITableView(frame: CGRect(x:0 , y:
-            self.view.frame.height, width: self.view.frame.width, height: self.view.frame.height/3), style: .plain)
+        messagePopUptableView = UITableView(frame: CGRect(x: 0, y: 500, width: 0, height: 0))
         updateBackgroundViews()
         groupChatTable.delegate = self
         groupChatTable.dataSource = self
@@ -80,7 +87,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         groupChatTable.separatorStyle = .none
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         self.groupChatTable.contentInset = insets
-        
+          messagePopUptableView.register(MessagePopUpCell.self, forCellReuseIdentifier: messagePopUpCellId)
         FireService.sharedInstance.viewGroupParticipants(user: globalUser!, group: group!) { (participants, true, error) in
             if let error = error{
                 print(error)
@@ -90,6 +97,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
             
 
         }
+        //handleLongTap()
 
        
     }
@@ -250,23 +258,51 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
           print("tapped for long")
         //remove tableView
         removeTableView(tableView: messagePopUptableView)
+        //removeAnimateTableView()
         //add tableView
         messagePopUptableView.delegate = self
         messagePopUptableView.dataSource = self
         self.view.addSubview(messagePopUptableView)
+        messagePopUptableView.estimatedRowHeight = 40
+        messagePopUptableView.rowHeight = UITableView.automaticDimension
+        constainMessagePopUpTableView()
+        messagePopUptableView.isScrollEnabled = false
+        messagePopUptableView.layer.cornerRadius = 15
+        messagePopUptableView.layer.borderWidth = 0.4
+        messagePopUptableView.layer.borderColor = UIColor.gray.cgColor
+        
+        
         //add tableView frame auto layout
         //animateTableView
         animateTableView()
       }
+    
+    
+    func constainMessagePopUpTableView(){
+        messagePopUptableView.translatesAutoresizingMaskIntoConstraints = false
+        messagePopUptableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
+         messagePopUptableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
+        MessagePopUpheightAnchor = messagePopUptableView.heightAnchor.constraint(equalToConstant: messagePopUptableView.contentSize.height)
+//messagePopUptableView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0).isActive = true
+        
+        MessagePopUpBottomAnchor =  messagePopUptableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
+        MessagePopUpBottomAnchor?.isActive = true
+        
+        
+    }
     
     private func removeTableView(tableView : UITableView){
         tableView.removeFromSuperview()
     }
     
     private func animateTableView(){
-        let y = 400
+        MessagePopUpheightAnchor?.isActive = true
+        MessagePopUpBottomAnchor?.isActive = true
+        
+      //  let y = 500
         UIView.animate(withDuration: 0.3) {
-            self.messagePopUptableView.frame.origin.y = CGFloat(y)
+//            self.messagePopUptableView.frame.origin.y = CGFloat(y)
+            self.view.layoutIfNeeded()
         }
     }
     @objc private func removeAnimateTableView(){
@@ -318,6 +354,13 @@ extension GroupChatVC : TexterViewDelegate {
 
 extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == messagePopUptableView{
+            print(indexPath.row, "ebuka")
+            return
+        }
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -329,9 +372,10 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == messagePopUptableView{
-            let cell = UITableViewCell()
-            cell.textLabel?.text = messagePopUptableViewList[indexPath.row]
-            cell.backgroundView?.backgroundColor = .brown
+           
+            let cell = messagePopUptableView.dequeueReusableCell(withIdentifier: messagePopUpCellId) as! MessagePopUpCell
+            cell.icon = messagePopUptableViewList[indexPath.row]
+           
             return cell
         }
         

@@ -493,7 +493,6 @@ class FireService {
         let ref = FireService.storageRef.child(refName)
         let newMetadata = StorageMetadata()
         newMetadata.contentType = "image/png"
-        
         ref.putData(data, metadata: newMetadata) { (metadata, error) in
             if let error = error {
                 print(error.localizedDescription)
