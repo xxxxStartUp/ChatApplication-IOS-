@@ -102,6 +102,7 @@ class MessgaeCell: UITableViewCell {
                 //messageBackgroundView.isHidden = false
                  messageLabel.isHidden = false
                  messageImageView.removeFromSuperview()
+                 playButton.removeFromSuperview()
                  messageImageView.image = nil
                  
              }
