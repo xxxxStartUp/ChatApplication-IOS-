@@ -90,6 +90,7 @@ struct Constants{
         static let senderNameLabel = "SenderNameLabel"
         static let messageTimeStamp = "MessageTimeStamp"
         static let groupImagesType = "groupImageType"
+        static var uploadTaskProgressIndicator = false
     }
     struct chatLogPage{
         static var chatLogToContactsSegueSignal = false

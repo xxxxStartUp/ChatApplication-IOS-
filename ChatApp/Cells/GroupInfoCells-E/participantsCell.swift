@@ -20,7 +20,7 @@ class participantsCell: UITableViewCell {
         if !groupParticipants.isEmpty{
         username.text = groupParticipants[indexPath].username
         email.text = groupParticipants[indexPath].email
-            if group.GroupAdmin.name == groupParticipants[indexPath].username{
+            if group.GroupAdmin.email == groupParticipants[indexPath].email{
                 adminLabel.text = "Admin"
             }
             else{

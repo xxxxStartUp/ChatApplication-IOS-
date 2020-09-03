@@ -31,7 +31,10 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     var videoBackgroundView:UIView?
     var videoExitButton:UIButton?
     var pauseButton:UIButton?
-    var playStatus:Bool?
+    var trailingTimeLabel:UILabel?
+    var leadingTimeLabel:UILabel?
+    var videoSlider:UISlider?
+    
     
     let activityIndicator:UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(style: .large)
@@ -138,21 +141,20 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         self.groupChatTable.contentInset = insets
         
+        getGroupName()
         FireService.sharedInstance.viewGroupParticipants(user: globalUser!, group: group!) { (participants, true, error) in
             if let error = error{
                 print(error)
                 fatalError()
             }
             self.groupParticipants = participants
-            
-            
         }
-        
-        
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        getGroupName()
         updateBackgroundViews()
         loadMessages()
         
@@ -160,11 +162,22 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        getGroupName()
         updateBackgroundViews()
         loadMessages()
         
         
         
+    }
+    func getGroupName(){
+        FireService.sharedInstance.getGroupname(user: globalUser!, group: group!) { (group, true, error) in
+            if let error = error{
+                print(error.localizedDescription)
+            }
+            print(group!.GroupAdmin.email)
+            
+            self.group = group
+        }
     }
     
     private func SendStringMessage(){
@@ -405,7 +418,7 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
                 self.activityIndicator.startAnimating()
             
             }, completion: {(completed: Bool) in
-                self.playStatus = true
+                
                 self.activityIndicator.removeFromSuperview()
                 
             
@@ -474,7 +487,7 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
     }
     @objc func handleZoomedOutVideo(tapGesture:UITapGestureRecognizer){
         print("video is tapped out")
-        playStatus = false
+        
         
         if let tappedOutBackgroundView = tapGesture.view{
             //play button anchors
@@ -504,6 +517,31 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
                 return button
             }()
             
+            trailingTimeLabel = {
+                let label = UILabel()
+                label.text = "0:00"
+                label.textColor = .white
+                label.font = UIFont.boldSystemFont(ofSize: 15)
+                label.textAlignment = .right
+                label.translatesAutoresizingMaskIntoConstraints = false
+                return label
+            }()
+            leadingTimeLabel = {
+                      let label = UILabel()
+                      label.text = "0:00"
+                      label.textColor = .white
+                      label.font = UIFont.boldSystemFont(ofSize: 15)
+                      label.textAlignment = .right
+                      label.translatesAutoresizingMaskIntoConstraints = false
+                      return label
+                  }()
+            videoSlider = {
+                let slider = UISlider()
+                slider.translatesAutoresizingMaskIntoConstraints = false
+                return slider
+            }()
+            
+            
             keywindow = UIWindow()
             for window in UIApplication.shared.windows{
                 if window.isKeyWindow{
@@ -512,18 +550,41 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
             }
             keywindow?.addSubview(pauseButton!)
             keywindow?.addSubview(videoExitButton!)
+//            keywindow?.addSubview(trailingTimeLabel!)
+//            keywindow?.addSubview(leadingTimeLabel!)
+//            keywindow?.addSubview(videoSlider!)
+            
             keywindow?.centerXAnchor.constraint(equalTo: pauseButton!.centerXAnchor).isActive = true
             keywindow?.centerYAnchor.constraint(equalTo: pauseButton!.centerYAnchor).isActive = true
             keywindow?.widthAnchor.constraint(equalTo: pauseButton!.widthAnchor).isActive = true
             keywindow?.heightAnchor.constraint(equalTo: pauseButton!.heightAnchor).isActive = true
             keywindow?.centerXAnchor.constraint(equalTo: videoExitButton!.centerXAnchor, constant: 16).isActive = true
-            //            keywindow.centerYAnchor.constraint(equalTo: pauseButton.centerYAnchor, constant: ).isActive = true
+            
             videoExitButton!.widthAnchor.constraint(equalToConstant: 44).isActive = true
             videoExitButton!.heightAnchor.constraint(equalToConstant: 44).isActive = true
-            
-            videoExitButton!.leadingAnchor.constraint(equalTo: keywindow!.leadingAnchor,constant: 16).isActive = true
+            videoExitButton!.leftAnchor.constraint(equalTo:keywindow!.leftAnchor,constant: 16).isActive = true
             videoExitButton!.trailingAnchor.constraint(equalTo: keywindow!.trailingAnchor,constant: -((keywindow?.frame.width)! - videoExitButton!.frame.width+10)).isActive = true
-            videoExitButton!.topAnchor.constraint(equalTo: keywindow!.topAnchor, constant: 32).isActive = true
+            videoExitButton!.topAnchor.constraint(equalTo: keywindow!.topAnchor,constant: 32).isActive = true
+            
+//            trailingTimeLabel!.widthAnchor.constraint(equalToConstant: 60).isActive = true
+//            trailingTimeLabel!.heightAnchor.constraint(equalToConstant: 44).isActive = true
+//            trailingTimeLabel?.topAnchor.constraint(equalTo: keywindow!.topAnchor,constant: 32).isActive = true
+//            trailingTimeLabel?.rightAnchor.constraint(equalTo: keywindow!.rightAnchor, constant: -16).isActive = true
+//            
+//            leadingTimeLabel!.widthAnchor.constraint(equalToConstant: 60).isActive = true
+//            leadingTimeLabel!.heightAnchor.constraint(equalToConstant: 44).isActive = true
+//            leadingTimeLabel?.topAnchor.constraint(equalTo: keywindow!.topAnchor,constant: 32).isActive = true
+//            leadingTimeLabel?.leftAnchor.constraint(equalTo: videoExitButton!.rightAnchor, constant: -16).isActive = true
+//            
+//            videoSlider?.heightAnchor.constraint(equalToConstant: 44).isActive = true
+//            videoSlider?.rightAnchor.constraint(equalTo: trailingTimeLabel!.leftAnchor).isActive = true
+//            videoSlider?.topAnchor.constraint(equalTo: keywindow!.topAnchor,constant: 32).isActive = true
+//            videoSlider?.leftAnchor.constraint(equalTo: leadingTimeLabel!.rightAnchor).isActive = true
+            
+            
+            
+         
+//           trailingTimeLabel!.leadingAnchor.constraint(equalTo: keywindow!.leadingAnchor,constant: ((keywindow?.frame.width)! - videoExitButton!.frame.width+10)).isActive = true
             
             
             

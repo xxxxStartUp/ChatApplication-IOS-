@@ -40,6 +40,9 @@ class GroupInfoVC: UIViewController {
         updateBackgroundViews()
         
         setupTableView()
+        
+        groupNameTextField.delegate = self
+        updateGroupName()
 
         // Do any additional setup after loading the view.
     }
@@ -47,6 +50,7 @@ class GroupInfoVC: UIViewController {
         super.viewWillAppear(true)
         updateBackgroundViews()
         setupTableView()
+        
     }
     
     func setupTableView(){
@@ -63,6 +67,16 @@ class GroupInfoVC: UIViewController {
         participantsTableview.tableFooterView = UIView()
         //participantsTableview.tableHeaderView = UIView()
         
+    }
+    func updateGroupName(){
+        FireService.sharedInstance.getGroupname(user: globalUser!, group: group!) { (group, true, error) in
+            if let error = error{
+                print(error.localizedDescription)
+            }
+            print(group!.GroupAdmin.email)
+            
+            self.groupNameTextField.text = group?.name
+        }
     }
     //updates the background color for the tableview and nav bar.
     func updateBackgroundViews(){
@@ -187,7 +201,8 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
             if let cell = participantsTableview.dequeueReusableCell(withIdentifier: identifier3) as? participantsCell  {
                 
                 //        Dara used this to test the viewGroupParticipants function in fireservice
-                cell.updateViews(groupParticipants: self.groupParticipants,indexPath:indexPath.row,group:group!)
+                cell.updateViews(groupParticipants:
+                self.groupParticipants,indexPath:indexPath.row,group:group!)
                 print(self.groupParticipants,"group Participants",indexPath.row)
                 cell.backgroundColor = .clear
                 return cell
@@ -233,6 +248,31 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
         }
         return 40
     }
+
     
+}
+extension GroupInfoVC:UITextFieldDelegate{
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let text = groupNameTextField.text{
+        textField.resignFirstResponder()
+        let data = ["groupname":text]
+            FireService.sharedInstance.addCustomGroupNameData(data: data, user: globalUser!, group: group!, friends: groupParticipants) { (error, success, isAdmin ) in
+                if let error = error{
+                    print(error.localizedDescription)
+                }
+                if success{
+                    print("Changed Group Name")
+                    //change the name of group for all friends in the group.
+                }
+                if !isAdmin{
+                    self.groupNameTextField.text = self.group?.name
+                    print("You're not admin")
+                }
+            }
+        }
+        participantsTableview.reloadData()
+        return true
+    }
 }
 
