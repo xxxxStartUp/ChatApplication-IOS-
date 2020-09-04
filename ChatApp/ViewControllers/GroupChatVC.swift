@@ -27,7 +27,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     var videoFrame:CGRect?
     var startingImageView:UIImageView?
     var blackBackgroundView:UIView?
-
+    var messagelongTapped : Message?
     var MessagePopUpheightAnchor : NSLayoutConstraint?
     var MessagePopUpBottomAnchor : NSLayoutConstraint?
     var messagePopUptableView: UITableView!
@@ -36,9 +36,6 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
                                       MessagepopUp(image: UIImage(named: "chat")!, title: "Archive"),
                                       MessagepopUp(image: UIImage(named: "chat")!, title: "Favorite"),
                                       MessagepopUp(image: UIImage(named: "chat")!, title: "Reply")]
-    
-    
-
     var keywindow:UIWindow?
     var videoBackgroundView:UIView?
     var videoExitButton:UIButton?
@@ -46,7 +43,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     var trailingTimeLabel:UILabel?
     var leadingTimeLabel:UILabel?
     var videoSlider:UISlider?
-    
+    let navBarButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     
     let activityIndicator:UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(style: .large)
@@ -169,8 +166,21 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
             }
             self.groupParticipants = participants
         }
-        //handleLongTap()
+        
+       handleNavBarImage()
+        
+        
+        
 
+    }
+    
+    func handleNavBarImage(){
+        navBarButton.layer.cornerRadius = 20
+        navBarButton.backgroundColor = .red
+        let image =  UIImage(named: "profile")
+        navBarButton.setImage(image, for: .normal)
+        navigationItem.titleView = navBarButton
+        
     }
     
     
@@ -342,7 +352,11 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     }
     
     
-    @objc func  handleLongTap(){
+    @objc func  handleLongTap(gesture : UIGestureRecognizer){
+        let cellView = gesture.view
+        guard let newCellView = cellView else {return}
+        let cell = newCellView as! MessgaeCell
+        messagelongTapped = cell.message
           print("tapped for long")
         //remove tableView
         removeTableView(tableView: messagePopUptableView)
@@ -358,7 +372,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         messagePopUptableView.layer.cornerRadius = 15
         messagePopUptableView.layer.borderWidth = 0.4
         messagePopUptableView.layer.borderColor = UIColor.gray.cgColor
-        
+        messagePopUptableView.allowsSelection = true
         
         //add tableView frame auto layout
         //animateTableView
@@ -436,17 +450,49 @@ extension GroupChatVC : TexterViewDelegate {
         
     }
     
+    @objc func handlemessagePopUpTableViewTapped(gesture : UITapGestureRecognizer){
+        print("tapped")
+        //removeAnimateTableView()
+        
+        let tapped = gesture.view?.tag
+        guard let realTapped = tapped else {
+            return
+        }
+        switch realTapped {
+        case 0:
+            FireService.sharedInstance.saveMessages(user: globalUser!, messageToSave: messagelongTapped!) { (result) in
+                switch result {
+                case .success(let bool):
+                    if bool {
+                        self.removeAnimateTableView()
+                        break
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.removeAnimateTableView()
+                }
+            }
+        default:
+            self.removeAnimateTableView()
+            break
+        }
+        
+       self.removeAnimateTableView()
+        
+    }
+    
     
 }
 
 
 extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
+
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView == messagePopUptableView{
-            print(indexPath.row, "ebuka")
-            return
+        if tableView == messagePopUptableView {
+            print(indexPath.row)
         }
+        
     }
     
     
@@ -462,13 +508,15 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
         if tableView == messagePopUptableView{
            
             let cell = messagePopUptableView.dequeueReusableCell(withIdentifier: messagePopUpCellId) as! MessagePopUpCell
+            cell.tag = indexPath.row
             cell.icon = messagePopUptableViewList[indexPath.row]
+            let tapgesture = UITapGestureRecognizer(target: self, action: #selector(handlemessagePopUpTableViewTapped(gesture:)))
+            cell.addGestureRecognizer(tapgesture)
+            
            
             return cell
         }
         
-        
-        let longMessageCellTapGesture : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap))
         
         let cell = groupChatTable.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! MessgaeCell
         cell.groupVC = self
@@ -476,6 +524,7 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
         cell.message = message
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
+         let longMessageCellTapGesture : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap(gesture:)))
         cell.addGestureRecognizer(longMessageCellTapGesture)
         return cell
     }
@@ -666,27 +715,6 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
             videoExitButton!.leftAnchor.constraint(equalTo:keywindow!.leftAnchor,constant: 16).isActive = true
             videoExitButton!.trailingAnchor.constraint(equalTo: keywindow!.trailingAnchor,constant: -((keywindow?.frame.width)! - videoExitButton!.frame.width+10)).isActive = true
             videoExitButton!.topAnchor.constraint(equalTo: keywindow!.topAnchor,constant: 32).isActive = true
-            
-//            trailingTimeLabel!.widthAnchor.constraint(equalToConstant: 60).isActive = true
-//            trailingTimeLabel!.heightAnchor.constraint(equalToConstant: 44).isActive = true
-//            trailingTimeLabel?.topAnchor.constraint(equalTo: keywindow!.topAnchor,constant: 32).isActive = true
-//            trailingTimeLabel?.rightAnchor.constraint(equalTo: keywindow!.rightAnchor, constant: -16).isActive = true
-//            
-//            leadingTimeLabel!.widthAnchor.constraint(equalToConstant: 60).isActive = true
-//            leadingTimeLabel!.heightAnchor.constraint(equalToConstant: 44).isActive = true
-//            leadingTimeLabel?.topAnchor.constraint(equalTo: keywindow!.topAnchor,constant: 32).isActive = true
-//            leadingTimeLabel?.leftAnchor.constraint(equalTo: videoExitButton!.rightAnchor, constant: -16).isActive = true
-//            
-//            videoSlider?.heightAnchor.constraint(equalToConstant: 44).isActive = true
-//            videoSlider?.rightAnchor.constraint(equalTo: trailingTimeLabel!.leftAnchor).isActive = true
-//            videoSlider?.topAnchor.constraint(equalTo: keywindow!.topAnchor,constant: 32).isActive = true
-//            videoSlider?.leftAnchor.constraint(equalTo: leadingTimeLabel!.rightAnchor).isActive = true
-            
-            
-            
-         
-//           trailingTimeLabel!.leadingAnchor.constraint(equalTo: keywindow!.leadingAnchor,constant: ((keywindow?.frame.width)! - videoExitButton!.frame.width+10)).isActive = true
-            
             
             
             player?.pause()
