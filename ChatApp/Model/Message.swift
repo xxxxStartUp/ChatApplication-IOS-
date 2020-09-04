@@ -9,7 +9,7 @@
 import Foundation
 
 
-class Message  : Messaging  {
+class Message    {
     var id : String
     var content : Content
     var sender : FireUser

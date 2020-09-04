@@ -8,9 +8,7 @@
 
 import Foundation
 
-protocol Messaging {
-    
-}
+
 
 
 class Activity {

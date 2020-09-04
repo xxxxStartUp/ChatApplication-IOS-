@@ -20,6 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        //checks for user on the phone
+        checkForUser()
     }
     //Use this method to update the specified scene with the data from the provided activity object. UIKit calls this method on your app's main thread only after it receives all of the data for an activity object, which might originate from a different device.
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
@@ -82,15 +84,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         return
                     }
                     guard let user = user else {return}
-                      let finalGroup = Group(GroupAdmin: user, id: groupID, name: groupName)
-                        
+                    let finalGroup = Group(GroupAdmin: user, id: groupID, name: groupName)
+                    
                     
                     FireService.sharedInstance.createGroupFromReceivingDynamicLink(user: globalUser!, group: finalGroup, friend: globalUser!.asAFriend) { (sucess, error) in
                         
                         if let error = error {
-                                 print("could not find group admin user while adding new user to group",error.localizedDescription)
-                                 return
-                             }
+                            print("could not find group admin user while adding new user to group",error.localizedDescription)
+                            return
+                        }
                         
                         if sucess{
                             print("sucessfully added user as a freind to a group created from \(finalGroup.GroupAdmin.email)")
@@ -99,31 +101,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     }
                 }
                 
-              
-
                 
-        //After dynamic link is received you want to make the user join group. What I have available from the dynamic link:
-        //1) The groupID
-        //2) The group adminMail address
-        //3) The group Name.
                 
-    // I need the back end function that basically copies adds the user as a group participant, copies all the documents from the group to this users group collection. Thats where i'm stuck
-       //You should be able to transfer information from the group that was created to this user
-      //
-//                let newGroup = Group(GroupAdmin: adminMail, id: groupID, name: groupName)
+                
+                //After dynamic link is received you want to make the user join group. What I have available from the dynamic link:
+                //1) The groupID
+                //2) The group adminMail address
+                //3) The group Name.
+                
+                // I need the back end function that basically copies adds the user as a group participant, copies all the documents from the group to this users group collection. Thats where i'm stuck
+                //You should be able to transfer information from the group that was created to this user
+                //
+                //                let newGroup = Group(GroupAdmin: adminMail, id: groupID, name: groupName)
                 //added final id to completion to get the latest id from backend and use for creating dynamic link.
                 
-        //use groupID to add group to chatLogVC by calling backend. Ebuka to make function for backend.
+                //use groupID to add group to chatLogVC by calling backend. Ebuka to make function for backend.
                 
-    
-//                let storyboard:UIStoryboard = UIStoryboard(name: "GroupChatSB", bundle: nil)
-//                guard let groupChatVC = storyboard.instantiateViewController(withIdentifier: "GroupChat") as? GroupChatVC else {return}
+                
+                //                let storyboard:UIStoryboard = UIStoryboard(name: "GroupChatSB", bundle: nil)
+                //                guard let groupChatVC = storyboard.instantiateViewController(withIdentifier: "GroupChat") as? GroupChatVC else {return}
                 //  call a groupchatVC.loadMessages(id:String) that uses the groupid to search through and load messages.
-//                if let rootViewController = window?.rootViewController {
-//                let rootViewController = rootViewController
-//                    rootViewController.present(groupChatVC, animated: true, completion: nil)
-//                }
-
+                //                if let rootViewController = window?.rootViewController {
+                //                let rootViewController = rootViewController
+                //                    rootViewController.present(groupChatVC, animated: true, completion: nil)
+                //                }
+                
             }
         }
         
@@ -169,5 +171,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     
+}
+
+extension SceneDelegate {
+    
+    func checkForUser(){
+        //checks firebase for user
+        FireService.sharedInstance.getCurrentUser { (user) in
+            if let email = user?.email{
+                
+                FireService.sharedInstance.getCurrentUserData(email: email) { (fireUser, error) in
+                    if let fireUser = fireUser{
+                        globalUser = fireUser
+                        DispatchQueue.main.async {
+                            
+                            let vc = UIStoryboard(name: "MainTabStoryboard", bundle: nil).instantiateInitialViewController()!
+                            self.window?.rootViewController = vc
+                            self.window?.makeKeyAndVisible()
+                            
+                        }
+                        
+                    }
+                    
+                }
+            }
+        }
+    }
 }
 
