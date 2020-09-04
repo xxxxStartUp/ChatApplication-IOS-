@@ -247,7 +247,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
                 
             case .success(let url):
 //                self.profileImageView.af_setImage(withURL: url)
-                self.profileImageView.loadImages(urlString: url.absoluteString, imageType: Constants.profilePage.profileImageType)
+                self.profileImageView.loadImages(urlString: url.absoluteString, mediaType: Constants.profilePage.profileImageType)
                 
             case .failure(_):
                 print("failed to set image url")

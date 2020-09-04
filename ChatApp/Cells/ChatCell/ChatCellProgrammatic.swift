@@ -9,12 +9,17 @@
 import Foundation
 
 import UIKit
+import AVFoundation
 class MessgaeCell: UITableViewCell {
     
     var leadingContstraints : NSLayoutConstraint?
     var tarilingConstraints : NSLayoutConstraint?
+    var playerLayer:AVPlayerLayer?
+    var player:AVPlayer?
     
     var groupVC:GroupChatVC?
+    
+    
     
     var message : Message! {
         
@@ -48,7 +53,7 @@ class MessgaeCell: UITableViewCell {
                  messageLabel.text = nil
                  messageLabel.isHidden = true
                  let urlString = message.content.content as! String
-                messageImageView.loadImages(urlString: urlString, imageType: Constants.chatPage.groupImagesType)
+                messageImageView.loadImages(urlString: urlString, mediaType: Constants.chatPage.groupImagesType)
                  messageBackgroundView.addSubview(messageImageView)
                  messageImageView.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 0).isActive = true
                  messageImageView.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: 0).isActive = true
@@ -61,10 +66,37 @@ class MessgaeCell: UITableViewCell {
 
 
 
-             }else{
+            }else if message.content.type == .video{
+                  messageLabel.text = nil
+                  messageLabel.isHidden = true
+                  let urlString = message.content.content as! String
+                  let initialURL = urlString.components(separatedBy: "thumbNailURL")[1]
+                 messageImageView.loadImages(urlString: initialURL, mediaType: Constants.chatPage.groupImagesType)
+                  messageBackgroundView.addSubview(messageImageView)
+                  messageBackgroundView.addSubview(playButton)
+                  
+                  messageImageView.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 0).isActive = true
+                  messageImageView.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: 0).isActive = true
+                  messageImageView.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 16).isActive = true
+                  messageImageView.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -16).isActive = true
+                  messageImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+                // messageBackgroundView.isHidden = true
+                
+                //play button anchors
+                messageBackgroundView.centerXAnchor.constraint(equalTo: playButton.centerXAnchor).isActive = true
+                messageBackgroundView.centerYAnchor.constraint(equalTo: playButton.centerYAnchor).isActive = true
+                messageBackgroundView.widthAnchor.constraint(equalTo: playButton.widthAnchor).isActive = true
+                messageBackgroundView.heightAnchor.constraint(equalTo: playButton.heightAnchor).isActive = true
+                
+                
+                
+                 messageBackgroundView.backgroundColor = .clear
+            }else
+            {
                 //messageBackgroundView.isHidden = false
-                messageLabel.isHidden = false
+                 messageLabel.isHidden = false
                  messageImageView.removeFromSuperview()
+                 playButton.removeFromSuperview()
                  messageImageView.image = nil
                 
                  
@@ -74,8 +106,6 @@ class MessgaeCell: UITableViewCell {
             
         }
     }
-    
-
 
     lazy var messageImageView: UIImageView = {
         let imageView = UIImageView()
@@ -87,6 +117,17 @@ class MessgaeCell: UITableViewCell {
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleImageTap)))
         
         return imageView
+    }()
+    
+    lazy var playButton:UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let largeConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 60))
+        let image = UIImage(systemName: "play.circle.fill",withConfiguration: largeConfiguration)
+        button.setImage(image, for: .normal)
+        button.tintColor = .lightGray
+        button.addTarget(self, action: #selector(handlePlayButtonTap(_:)), for: .touchUpInside)
+        return button
     }()
     
     var nameLabel : UILabel = {
@@ -190,11 +231,27 @@ class MessgaeCell: UITableViewCell {
        
     }
     
+    @objc func handlePlayButtonTap(_ sender:UIButton){
+        let urlString = message.content.content as! String
+        
+        let url = urlString.components(separatedBy: "thumbNailURL")[0]
+        self.groupVC?.handleVideoZoomedIn(url: url)
+    }
+    
+    func handleVideoZoomedOut(url:String){
+        
+    }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+        
     }
-    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        playerLayer?.removeFromSuperlayer()
+        player?.pause()
+    }
 }
 
 

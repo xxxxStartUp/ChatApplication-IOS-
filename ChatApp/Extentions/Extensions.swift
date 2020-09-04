@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
 let cachedImage = NSCache<NSString,UIImage>()
 
@@ -470,9 +471,9 @@ extension UIView{
 extension UIImageView{
     
     
-    func loadImages(urlString:String,imageType:String){
+    func loadImages(urlString:String,mediaType:String){
             
-        switch imageType {
+        switch mediaType {
         case Constants.profilePage.profileImageType:
                 self.image = nil
                 
@@ -573,6 +574,24 @@ extension UIImageView{
 
             }
         }}
+    
+    func thumbnailImageForFileUrl(fileUrl:NSURL){
+        let asset = AVAsset(url: fileUrl as URL)
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+//        var properties = [String:Any]()
+        
+        
+        do {
+            let thumbnailCGImage = try imageGenerator.copyCGImage(at: CMTime(value: 1, timescale: 60), actualTime: nil)
+        
+            let thumbnailImage = UIImage(cgImage: thumbnailCGImage)
+            self.image = thumbnailImage
+        } catch let err {
+            print(err)
+        }
+        
+    }
+
 }
 
 extension UIImage {
