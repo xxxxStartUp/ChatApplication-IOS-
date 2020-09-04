@@ -8,13 +8,15 @@
 
 import UIKit
 
-class GroupInfoVC: UIViewController {
+class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
     
     @IBOutlet weak var groupinfoTableview: UITableView!
     @IBOutlet weak var participantsTableview: UITableView!
     @IBOutlet weak var groupNameView: UIView!
     @IBOutlet weak var groupNameTextField: UITextField!
     
+    @IBOutlet var groupImageView: UIImageView!
+    var defaultImage:UIImage?
     let identifier1 = "GroupchatInfoCellIdentifier"
     
     let identifier2 = "GroupSettingsCellIdentifier"
@@ -37,12 +39,16 @@ class GroupInfoVC: UIViewController {
         super.viewDidLoad()
         
         navigationItem.largeTitleDisplayMode = .never
+        defaultImage = groupImageView.image
         updateBackgroundViews()
         
         setupTableView()
         
         groupNameTextField.delegate = self
         updateGroupName()
+        groupPictureGestureSetup()
+        
+        setImage()
 
         // Do any additional setup after loading the view.
     }
@@ -68,6 +74,9 @@ class GroupInfoVC: UIViewController {
         //participantsTableview.tableHeaderView = UIView()
         
     }
+    
+
+
     func updateGroupName(){
         FireService.sharedInstance.getGroupname(user: globalUser!, group: group!) { (group, true, error) in
             if let error = error{
@@ -274,5 +283,123 @@ extension GroupInfoVC:UITextFieldDelegate{
         participantsTableview.reloadData()
         return true
     }
+}
+extension GroupInfoVC:UIImagePickerControllerDelegate{
+    
+    func presentCameraRoll (sender : UIAlertAction!){
+        let cameraRoll = UIImagePickerController()
+        cameraRoll.delegate = self
+        cameraRoll.sourceType = .photoLibrary
+        cameraRoll.allowsEditing = true
+        self.present(cameraRoll, animated: true, completion: nil)
+    }
+    
+    func groupPictureGestureSetup(){
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(profileImageTapped))
+        groupImageView.isUserInteractionEnabled = true
+        groupImageView.addGestureRecognizer(gesture)
+    }
+    
+    @objc func profileImageTapped(){
+        let alertController = UIAlertController(title: "What do you want to do?", message: "", preferredStyle: .actionSheet)
+        
+        let action1 = UIAlertAction(title: "Delete Photo", style: .destructive, handler: deleteImage(sender:))
+        let action2 = UIAlertAction(title: "Choose Photo", style: .default, handler: presentCameraRoll(sender:))
+        let action3 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let actions = [action1,action2,action3]
+        
+        for action in actions{
+            alertController.addAction(action)
+        }
+        
+        self.present(alertController, animated: true, completion: nil)
+        
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
+            groupImageView.image = image
+            Constants.groupInfoPage.groupImageState = true
+            Constants.groupInfoPage.globalGroupImage = image
+            
+            dismiss(animated: true, completion: nil)
+        }
+        //sets image to be the edited image.
+        else if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage{
+            groupImageView.image = image
+             Constants.groupInfoPage.groupImageState = true
+             Constants.groupInfoPage.globalGroupImage = image
+            
+            dismiss(animated: true, completion: nil)
+        }
+        
+        let data = Constants.groupInfoPage.globalGroupImage!.pngData()!
+        saveGroupPicture(data: data)
+   
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    func saveGroupPicture(data : Data){
+         self.groupImageView.isUserInteractionEnabled = false
+        FireService.sharedInstance.saveGroupPicture(data : data , user : globalUser!, group:group!,friend:groupParticipants) { (result) in
+            switch result {
+            case .success(_):
+                print("sucess")
+                let image = UIImage(data: data)!
+                Constants.groupInfoPage.groupImageState = true
+                Constants.groupInfoPage.globalGroupImage = image
+                self.groupImageView.image = image
+                self.groupImageView.isUserInteractionEnabled = true
+            case .failure(_):
+                print("falure")
+            }
+        }
+        
+        
+    }
+        func setImage(){
+            FireService.sharedInstance.getGroupPictureData(user: globalUser!,group: group!) { (result) in
+                switch result{
+                    
+                case .success(let url):
+    //                self.profileImageView.af_setImage(withURL: url)
+                    self.groupImageView.loadImages(urlString: url.absoluteString, mediaType: Constants.groupInfoPage.GroupImageType)
+                    
+                case .failure(_):
+                    print("failed to set image url")
+                }
+                
+            }
+        }
+    func deleteImage (sender : UIAlertAction!){
+        groupImageView.image = defaultImage
+        deleteGroupPicture()
+ 
+    }
+    func deleteGroupPicture(){
+         groupImageView.isUserInteractionEnabled = false
+        FireService.sharedInstance.DeleteGroupPicture(user: globalUser!, group: group!,friends:groupParticipants) { (result) in
+            switch result{
+                
+            case .success(let bool):
+                if bool{
+                    Constants.groupInfoPage.globalGroupImage = self.defaultImage
+                    Constants.groupInfoPage.groupImageState = true
+                    self.groupImageView.isUserInteractionEnabled = true
+                    return
+                }
+            case .failure(let error):
+                let alert = UIAlertController(title: "Could not delete", message: error.localizedDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Try Again", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                 self.groupImageView.isUserInteractionEnabled = true
+            }
+        }
+        
+        
+        
+    }
+    
 }
 

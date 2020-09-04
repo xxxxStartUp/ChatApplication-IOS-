@@ -541,6 +541,39 @@ extension UIImageView{
                 }
                 
             }
+        case Constants.groupInfoPage.GroupImageType:
+                self.image = nil
+                
+                //check cache for image
+                if let cachedImage = cachedImage.object(forKey: urlString as NSString){
+                    self.image = cachedImage
+                    return
+                }
+                
+                //otherwise fire off a new download
+
+                if let url =
+                    URL(string:urlString){
+                    print(url,"URL")
+                    
+                    self.af.setImage(withURL: url, cacheKey: nil, placeholderImage: nil, serializer: nil, filter: nil, progress: nil, progressQueue: DispatchQueue.global(), imageTransition: .crossDissolve(0.1), runImageTransitionIfCached: true) { (reponse) in
+
+                        switch reponse.result {
+                        case .success(let image):
+                            self.image = image
+                            self.isUserInteractionEnabled = true
+                            Constants.groupInfoPage.groupImageState = true
+                            Constants.groupInfoPage.globalGroupImage = image
+                            cachedImage.setObject(image, forKey: urlString as NSString)
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                             self.isUserInteractionEnabled = true
+
+                        }
+
+                    }
+            }
+            
         default:
             defaultLoadImageFromGroup(urlString: urlString)
         

@@ -585,6 +585,41 @@ class FireService {
     
     
     
+       /// Deletes the profile picture of a user
+       /// - Parameters:
+       ///   - user: User whose profile picture is to be deleted
+       ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
+       /// - Returns: Nothing
+    func DeleteGroupPicture(user : FireUser, group:Group,friends:[Friend], completionHandler : @escaping (Result<Bool , Error>)-> ()){
+           
+           
+           let refName = "\(group.id)/groupPicture.png"
+           let ref = FireService.storageRef.child(refName)
+           ref.delete { (error) in
+               if let error = error{
+                   completionHandler(.failure(error))
+                   return
+               }
+            for friend in friends{
+              let ref = FireService.users.document(friend.email).collection(FireService.groupString).document(group.id)
+                  ref.updateData(["groupPictureUrl":FieldValue.delete()]) { (error) in
+                      
+                      if let error = error{
+                          completionHandler(.failure(error))
+                          return
+                      }
+                   
+                   
+                      completionHandler(.success(true))
+                      return
+       
+                  }
+                  
+              }
+          
+           }
+           
+       }
     
     //Updating this to send
     func sendMessageToFriend(User : FireUser, message : Message , freind : Friend ,completion : @escaping (Bool , Error?) -> ()){
@@ -682,6 +717,72 @@ class FireService {
             })
         }
     }
+    /// Uploads the profile picture of a user
+     /// - Parameters:
+     ///   - data: The data containing image to be saved
+     ///   - user: User whose profile picture is to be uploaded
+     ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
+    func saveGroupPicture(data : Data , user : FireUser , group:Group,friend:[Friend], completionHandler: @escaping (Result<Bool, Error>) -> Void){
+         let refName = "\(group.id)/groupPicture.png"
+         let ref = FireService.storageRef.child(refName)
+         let newMetadata = StorageMetadata()
+         newMetadata.contentType = "image/png"
+         
+         ref.putData(data, metadata: newMetadata) { (metadata, error) in
+             if let error = error {
+                 print(error.localizedDescription)
+                 completionHandler(.failure(error))
+             }
+             ref.downloadURL(completion: { (url, error) in
+                 guard let url = url else {
+                     completionHandler(.failure(error!))
+                     return
+                 }
+                 let data = ["groupPictureUrl" : url.absoluteString]
+                 
+                self.addCustomDataToGroup(data: data ,user : globalUser! , group:group, friends: friend) { (error, sucess) in
+                     if let error = error {
+                         print(error.localizedDescription)
+                         completionHandler(.failure(error))
+                     }
+                     if sucess{
+                         print("Added group picture data to all group friends")
+                         completionHandler(.success(true))
+                     }
+                     
+                 }
+                
+             })
+         }
+     }
+    
+    func getGroupPictureData(user : FireUser , group:Group, completionHandler : @escaping (Result<URL , Error>)-> ()){
+        
+        
+        let groupRef =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
+            groupRef.getDocument { (documents, error) in
+            
+            guard let data = documents?.data() else {return}
+            
+            if let url = data["groupPictureUrl"] as? String {
+                if  let finalUrl = URL(string: url){
+                    completionHandler(.success(finalUrl))
+                }else{
+                    print("couldnt cast to url")
+                }
+                
+                
+            }else{
+                print("couldnt cast to string")
+            }
+            
+        }
+        
+        
+    }
+    
+    
+     
     
     func saveImageToBeSentToGroupChat(data:Data,user:FireUser,group:Group,completionHandler: @escaping (String?,Error?) -> ()){
         
@@ -1185,7 +1286,24 @@ class FireService {
         }
         
     }
-    
+    //add group picture data to all the users in the group
+    func addCustomDataToGroup(data: [String : Any] ,user : FireUser , group:Group, friends:[Friend], completion : @escaping (Error? , Bool) -> ()){
+        
+        for friend in friends{
+        let ref = FireService.users.document(friend.email).collection(FireService.groupString).document(group.id)
+            ref.setData(data, merge: true) { (error) in
+                if let error = error{
+                    completion(error , false)
+                    return
+                }
+                //UserDefaults.standard.set(user, forKey: "user")
+                completion(nil , true)
+            }
+            
+        }
+        
+    }
+ 
     func addCustomGroupNameData(data : [String : Any] ,user : FireUser, group:Group,friends:[Friend], completion : @escaping (Error? , Bool, Bool) -> ()){
         
         let groupRef =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
@@ -1262,13 +1380,7 @@ class FireService {
         }
         
     }
-    
-    func changeGroupNameForAllFriendsInGroup(user : FireUser, group:Group,friends: Friend, completionHandler : @escaping (Bool,Error?)-> ()){
-        
-        
-        
-    }
-    
+
     
     
     
