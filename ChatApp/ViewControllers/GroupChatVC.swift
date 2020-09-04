@@ -9,6 +9,8 @@
 import UIKit
 import MobileCoreServices
 import AVFoundation
+import AlamofireImage
+import Alamofire
 
 class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
@@ -58,6 +60,8 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         didSet{
             title = group?.name
             loaded = true
+            //setGroupImagehere
+            handleNavBarImage()
         }
     }
     var groupParticipants = [Friend]()
@@ -167,7 +171,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
             self.groupParticipants = participants
         }
         
-       handleNavBarImage()
+       
         
         
         
@@ -175,11 +179,37 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     }
     
     func handleNavBarImage(){
-        navBarButton.layer.cornerRadius = 20
-        navBarButton.backgroundColor = .red
-        let image =  UIImage(named: "profile")
-        navBarButton.setImage(image, for: .normal)
+        //navBarButton.layer.cornerRadius = 20
+        //navBarButton.backgroundColor = .red
+       // let imageCache = AutoPurgingImageCache()
         navigationItem.titleView = navBarButton
+//        let cachedAvatar = imageCache.image(withIdentifier: "image")
+//        self.navBarButton.setImage(cachedAvatar, for: .normal)
+        
+        FireService.sharedInstance.getGroupPictureData(user: globalUser!,group: group!) { (result) in
+            switch result{
+                
+            case .success(let url):
+                
+                let imageView = UIImageView()
+                imageView.af.setImage(withURL: url, cacheKey: "image", placeholderImage: UIImage(named: "profile"), serializer: nil, filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.3), runImageTransitionIfCached: false) { (_) in
+                    let data = imageView.image?.jpeg(.low)
+                    let newImage = (UIImage(data: data!))!.af.imageRoundedIntoCircle()
+                    self.navBarButton.imageView?.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
+                    self.navBarButton.imageView?.contentMode = .scaleAspectFit
+                    self.navBarButton.setImage(newImage, for: .normal)
+                    
+    
+                    
+                }
+
+                
+                
+            case .failure(_):
+                print("failed to set image url")
+            }
+            
+        }
         
     }
     
@@ -189,6 +219,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         getGroupName()
         updateBackgroundViews()
         loadMessages()
+        handleNavBarImage()
         
     }
     
