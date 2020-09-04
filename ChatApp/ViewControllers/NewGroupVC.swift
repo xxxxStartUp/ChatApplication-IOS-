@@ -59,7 +59,7 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
             let id = UUID().uuidString
             let newGroup = Group(GroupAdmin: globalUser!, id: id, name: groupName)
             //added final id to completion to get the latest id from backend and use for creating dynamic link.
-            FireService.sharedInstance.createGroup(group: newGroup) { (completed, error) in
+            FireService.sharedInstance.createGroup(user: globalUser!, group: newGroup) { (completed, error) in
                 if let error = error{
                     print(error.localizedDescription)
                     fatalError()
@@ -80,11 +80,13 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "group"{
-            
+
             let destination = segue.destination as! ChatVC
             destination.modalPresentationStyle = .currentContext
-            
+
         }
+
+        
     }
     func importSelectedFriends(friendsListEmail:[String]){
         selectedFriendsListEmail.removeAll()
@@ -287,8 +289,9 @@ extension NewGroupVC: MFMessageComposeViewControllerDelegate{
         let composer = MFMailComposeViewController()
         composer.mailComposeDelegate = self
         composer.setToRecipients(selectedFriendsListEmail)
-        composer.setSubject("Dara has invited you to join the group")
-        composer.setMessageBody("Use the link below to join the app...\(url)", isHTML: true)
+        composer.setSubject("\(globalUser!.name) has invited you to join a group on the Soluchat App")
+
+        composer.setMessageBody("Hello," + "\n" + "\n\(globalUser!.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", isHTML: false)
         
         present(composer, animated: true, completion: nil)
         

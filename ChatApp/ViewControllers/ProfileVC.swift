@@ -191,7 +191,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         let cameraRoll = UIImagePickerController()
         cameraRoll.delegate = self
         cameraRoll.sourceType = .photoLibrary
-        cameraRoll.allowsEditing = false
+        cameraRoll.allowsEditing = true
         self.present(cameraRoll, animated: true, completion: nil)
         
         
@@ -214,12 +214,19 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
             Constants.profilePage.globalProfileImage = image
             
             dismiss(animated: true, completion: nil)
+        }
+        //sets image to be the edited image.
+        else if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage{
+            profileImageView.image = image
+            Constants.profilePage.profileImageState = true
+            Constants.profilePage.globalProfileImage = image
             
-            
+            dismiss(animated: true, completion: nil)
         }
         
         let data = Constants.profilePage.globalProfileImage!.pngData()!
         saveProfilePicture(data: data)
+        
         
 
 
@@ -240,21 +247,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
                 
             case .success(let url):
 //                self.profileImageView.af_setImage(withURL: url)
-                
-                self.profileImageView.af.setImage(withURL: url, cacheKey: nil, placeholderImage: nil, serializer: nil, filter: nil, progress: nil, progressQueue: DispatchQueue.global(), imageTransition: .crossDissolve(0.1), runImageTransitionIfCached: true) { (reponse) in
-
-                    switch reponse.result {
-                    case .success(let image):
-                        Constants.profilePage.globalProfileImage = image
-                        Constants.profilePage.profileImageState = true
-                        self.profileImageView.isUserInteractionEnabled = true
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                         self.profileImageView.isUserInteractionEnabled = true
-                    }
-
-                }
-                
+                self.profileImageView.loadImages(urlString: url.absoluteString, mediaType: Constants.profilePage.profileImageType)
                 
             case .failure(_):
                 print("failed to set image url")

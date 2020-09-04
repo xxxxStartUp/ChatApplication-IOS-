@@ -8,6 +8,9 @@
 
 import Foundation
 import UIKit
+import AVFoundation
+
+let cachedImage = NSCache<NSString,UIImage>()
 
 extension UIButton{
     
@@ -262,6 +265,35 @@ extension UILabel{
         }
         
     }
+    func chatPageLabel(type:String){
+        if Constants.settingsPage.displayModeSwitch == false{
+            switch type {
+            case Constants.chatPage.senderNameLabel:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
+            case Constants.chatPage.messageTimeStamp:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 12)
+            default:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Medium", size: 16)
+            }
+        }
+            else{
+            switch type {
+            case Constants.chatPage.senderNameLabel:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Medium", size: 20)
+            case Constants.chatPage.messageTimeStamp:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 12)
+            default:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Medium", size: 16)
+            }
+            }
+        
+    }
     func GroupInfoPageLabels(type:String){
         if Constants.settingsPage.displayModeSwitch == false{
             switch type {
@@ -377,8 +409,8 @@ extension UIView{
     }
     
     func profilePageImageView(){
-        self.layer.borderWidth = 1
-        self.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        self.layer.borderWidth = 0.5
+        self.layer.borderColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
         self.layer.masksToBounds = false
         self.layer.cornerRadius = self.layer.frame.size.height/2
         self.clipsToBounds = true
@@ -389,7 +421,7 @@ extension UIView{
     func settingsPageImageView(){
         
         self.layer.borderWidth = 1
-        self.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        self.layer.borderColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
         self.layer.masksToBounds = false
         self.layer.cornerRadius = self.layer.frame.size.height/2
         self.clipsToBounds = true
@@ -431,6 +463,184 @@ extension UIView{
         else{
             self.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         }
+    }
+    
+
+}
+
+extension UIImageView{
+    
+    
+    func loadImages(urlString:String,mediaType:String){
+            
+        switch mediaType {
+        case Constants.profilePage.profileImageType:
+                self.image = nil
+                
+                //check cache for image
+                if let cachedImage = cachedImage.object(forKey: urlString as NSString){
+                    self.image = cachedImage
+                    return
+                }
+                
+                //otherwise fire off a new download
+
+                if let url =
+                    URL(string:urlString){
+                    print(url,"URL")
+                    
+                    self.af.setImage(withURL: url, cacheKey: nil, placeholderImage: nil, serializer: nil, filter: nil, progress: nil, progressQueue: DispatchQueue.global(), imageTransition: .crossDissolve(0.1), runImageTransitionIfCached: true) { (reponse) in
+
+                        switch reponse.result {
+                        case .success(let image):
+                            self.image = image
+                            self.isUserInteractionEnabled = true
+                            Constants.profilePage.profileImageState = true
+                            Constants.profilePage.globalProfileImage = image
+                            cachedImage.setObject(image, forKey: urlString as NSString)
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                             self.isUserInteractionEnabled = true
+
+                        }
+
+                    }
+            }
+        case Constants.chatPage.groupImagesType:
+            defaultLoadImageFromGroup(urlString: urlString)
+            
+        case Constants.settingsPage.settingsImageType:
+            self.settingsPageImageView()
+            self.image = nil
+            
+            //check cache for image
+            if let cachedImage = cachedImage.object(forKey: urlString as NSString){
+                self.image = cachedImage
+                return
+            }
+            
+            //otherwise fire off a new download
+
+            if let url =
+                URL(string:urlString){
+                print(url,"URL")
+                
+                self.af.setImage(withURL: url, cacheKey: nil, placeholderImage: nil, serializer: nil, filter: nil, progress: nil, progressQueue: DispatchQueue.global(), imageTransition: .crossDissolve(0.1), runImageTransitionIfCached: true) { (reponse) in
+
+                    switch reponse.result {
+                    case .success(let image):
+                        self.image = image
+                        
+                        
+                        cachedImage.setObject(image, forKey: urlString as NSString)
+                    case .failure(let error):
+                        print(error.localizedDescription)
+
+                    }
+
+                }
+                
+            }
+        case Constants.groupInfoPage.GroupImageType:
+                self.image = nil
+                
+                //check cache for image
+                if let cachedImage = cachedImage.object(forKey: urlString as NSString){
+                    self.image = cachedImage
+                    return
+                }
+                
+                //otherwise fire off a new download
+
+                if let url =
+                    URL(string:urlString){
+                    print(url,"URL")
+                    
+                    self.af.setImage(withURL: url, cacheKey: nil, placeholderImage: nil, serializer: nil, filter: nil, progress: nil, progressQueue: DispatchQueue.global(), imageTransition: .crossDissolve(0.1), runImageTransitionIfCached: true) { (reponse) in
+
+                        switch reponse.result {
+                        case .success(let image):
+                            self.image = image
+                            self.isUserInteractionEnabled = true
+                            Constants.groupInfoPage.groupImageState = true
+                            Constants.groupInfoPage.globalGroupImage = image
+                            cachedImage.setObject(image, forKey: urlString as NSString)
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                             self.isUserInteractionEnabled = true
+
+                        }
+
+                    }
+            }
+            
+        default:
+            defaultLoadImageFromGroup(urlString: urlString)
+        
+            }}
+    func defaultLoadImageFromGroup(urlString:String){
+        self.image = nil
+        
+        //check cache for image
+        if let cachedImage = cachedImage.object(forKey: urlString as NSString){
+            self.image = cachedImage
+            return
+        }
+        
+        //otherwise fire off a new download
+
+        if let url =
+            URL(string:urlString){
+            print(url,"URL")
+            
+            self.af.setImage(withURL: url, cacheKey: nil, placeholderImage: nil, serializer: nil, filter: nil, progress: nil, progressQueue: DispatchQueue.global(), imageTransition: .crossDissolve(0.1), runImageTransitionIfCached: true) { (reponse) in
+
+                switch reponse.result {
+                case .success(let image):
+                    self.image = image
+                    
+                    cachedImage.setObject(image, forKey: urlString as NSString)
+                case .failure(let error):
+                    print(error.localizedDescription)
+
+                }
+
+            }
+        }}
+    
+    func thumbnailImageForFileUrl(fileUrl:NSURL){
+        let asset = AVAsset(url: fileUrl as URL)
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+//        var properties = [String:Any]()
+        
+        
+        do {
+            let thumbnailCGImage = try imageGenerator.copyCGImage(at: CMTime(value: 1, timescale: 60), actualTime: nil)
+        
+            let thumbnailImage = UIImage(cgImage: thumbnailCGImage)
+            self.image = thumbnailImage
+        } catch let err {
+            print(err)
+        }
+        
+    }
+
+}
+
+extension UIImage {
+    enum JPEGQuality: CGFloat {
+        case lowest  = 0
+        case low     = 0.25
+        case medium  = 0.5
+        case high    = 0.75
+        case highest = 1
+    }
+
+    /// Returns the data for the specified image in JPEG format.
+    /// If the image object’s underlying image data has been purged, calling this function forces that data to be reloaded into memory.
+    /// - returns: A data object containing the JPEG data, or nil if there was a problem generating the data. This function may return nil if the image has no data or if the underlying CGImageRef contains data in an unsupported bitmap format.
+    func jpeg(_ quality: JPEGQuality) -> Data? {
+        return self.jpegData(compressionQuality: quality.rawValue)
     }
 }
 

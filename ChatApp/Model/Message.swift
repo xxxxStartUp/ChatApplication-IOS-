@@ -9,16 +9,16 @@
 import Foundation
 
 
-class Message  : Messaging  {
+class Message    {
     var id : String
     var content : Content
     var sender : FireUser
     var timeStamp : Date
     var recieved : Bool
     
-    init(content : Content , sender : FireUser , timeStamp : Date , recieved : Bool) {
+    init(id : String = UUID().uuidString ,content : Content , sender : FireUser , timeStamp : Date , recieved : Bool) {
         self.recieved = recieved
-        self.id = UUID().uuidString
+        self.id = id
         self.content = content
         self.sender = sender
         self.timeStamp = timeStamp

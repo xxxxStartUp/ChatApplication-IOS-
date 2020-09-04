@@ -192,7 +192,7 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     
     
     func loadMessages(){
-        FireService.sharedInstance.loadMessagesWithFriend2(User: globalUser!,  freind: r!) { (messages, error) in
+        FireService.sharedInstance.loadMessagesWithFriend(User: globalUser!,  freind: r!) { (messages, error) in
             
             
             self.messages.removeAll()
@@ -207,7 +207,6 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
             
             messages.forEach { (message) in
                 self.messages.append(message)
-                print(message.content.content as! String)
             }
             
             
@@ -295,67 +294,5 @@ extension UIViewController {
         texterView.darkmodeBackground()
     }
 }
-
-
-//class MessageView : UIView {
-//
-//    lazy var messageBubble : UIView = {
-//        let view = UIView()
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.backgroundColor = .black
-//        return view
-//    }()
-//
-//
-//    lazy var  messageText : UILabel = {
-//        let label = UILabel()
-//        label.translatesAutoresizingMaskIntoConstraints = true
-//        label.text = "This is a message"
-//        label.backgroundColor = .red
-//        return label
-//    }()
-//
-//
-//
-//
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        self.layer.cornerRadius = 12
-//        self.backgroundColor = .green
-//        self.addSubview(messageBubble)
-//        self.addSubview(messageText)
-//
-//        let constraints  =
-//        [
-//            messageBubble.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
-//            messageBubble.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
-//            messageBubble.bottomAnchor.constraint(equalTo: self.bottomAnchor , constant: 0),
-//            messageBubble.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
-//
-//            messageText.topAnchor.constraint(equalToSystemSpacingBelow: messageBubble.topAnchor, multiplier: 20),
-//            messageText.leadingAnchor.constraint(equalTo: messageBubble.leadingAnchor, constant: 10),
-//            messageText.bottomAnchor.constraint(equalTo: messageBubble.bottomAnchor, constant: 10)
-//
-//
-//
-//        ]
-//
-//
-//
-//
-//
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//    }
-//
-//
-//}
-
-
-
-
-
 
 

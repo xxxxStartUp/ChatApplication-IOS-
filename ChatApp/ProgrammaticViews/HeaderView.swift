@@ -64,7 +64,7 @@ class HeaderView: UIView {
         stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
         stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
         stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
-        stackView.widthAnchor.constraint(greaterThanOrEqualToConstant: 100).isActive = true
+        headerImageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
         headerLabel.backgroundColor = .red
     }
     

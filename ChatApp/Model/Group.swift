@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Group : Messaging {
+class Group  {
     
     var GroupAdmin : FireUser
     var friends : [Friend]

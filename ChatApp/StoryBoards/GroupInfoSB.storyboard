@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jkc-ug-6o9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jkc-ug-6o9">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -91,6 +91,7 @@
                         <viewLayoutGuide key="safeArea" id="YEC-MU-WwZ"/>
                     </view>
                     <connections>
+                        <outlet property="groupImageView" destination="5gO-jf-V3r" id="TUv-oF-G7m"/>
                         <outlet property="groupNameTextField" destination="DSl-m1-QCs" id="gC9-a9-W3a"/>
                         <outlet property="groupNameView" destination="L2C-HX-xEM" id="JOg-YR-M6U"/>
                         <outlet property="groupinfoTableview" destination="AsU-Ve-JGz" id="Ok6-Sd-45y"/>
