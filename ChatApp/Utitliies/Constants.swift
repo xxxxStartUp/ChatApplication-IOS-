@@ -82,6 +82,9 @@ struct Constants{
         static let userNameHeader = "UserNameHeader"
         static let emailHeader = "emailHeader"
         static let admin = "admin"
+        static var groupImageState = false
+        static var globalGroupImage:UIImage? = nil
+        static let GroupImageType = "groupImageType"
     }
     struct chatPage{
         static var chatToContactsSegueSignal = false
