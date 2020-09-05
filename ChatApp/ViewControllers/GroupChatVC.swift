@@ -491,7 +491,7 @@ extension GroupChatVC : TexterViewDelegate {
         }
         switch realTapped {
         case 0:
-            FireService.sharedInstance.saveMessages(user: globalUser!, messageToSave: messagelongTapped!) { (result) in
+            FireService.sharedInstance.saveMessages(user: globalUser!,group: group!, messageToSave: messagelongTapped!) { (result) in
                 switch result {
                 case .success(let bool):
                     if bool {
@@ -652,7 +652,7 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
             
             tappedOutImageView.layer.cornerRadius = 8
             tappedOutImageView.clipsToBounds = true
-            
+
             UIView.animate(withDuration: 0.5, delay: 0,usingSpringWithDamping: 1,initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.blackBackgroundView?.alpha = 0
                 self.texterView.alpha = 1 
@@ -660,7 +660,7 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
             }, completion: {(completed: Bool) in
                 tappedOutImageView.removeFromSuperview()
                 self.startingImageView?.isHidden = false
-                
+                self.startingImageView?.layer.cornerRadius = 8
             })
             
         }

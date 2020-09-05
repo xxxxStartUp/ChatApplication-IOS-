@@ -24,6 +24,8 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
     let identifier3 = "participantsCellIdentifier"
     
     let identifier4 = "participantsHeaderCellIdentifier"
+    
+    let GroupInfoVCToSavedMessagesID = "GroupInfoVCToSavedMessagesID"
     var groupDelegate : GroupDelegate?
     var groupParticipants = [Friend]()
     var tempParticipants = [Friend]()
@@ -107,6 +109,13 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
             
             
         }
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? SavedMessagesVC{
+            destination.group = group
+            
+        }
+        
     }
     //handles the text color, background color and appearance of the nav bar
     func navigationBarBackgroundHandler(){
@@ -255,7 +264,17 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
         }
         return 40
     }
-
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if tableView == groupinfoTableview{
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "GroupchatInfoCellIdentifier", for: indexPath) as? GroupchatinfoCells{
+                if indexPath.row == 0 {
+                    performSegue(withIdentifier: GroupInfoVCToSavedMessagesID, sender: self)
+                }}
+            
+        }}
     
 }
 extension GroupInfoVC:UITextFieldDelegate{
@@ -400,4 +419,5 @@ extension GroupInfoVC:UIImagePickerControllerDelegate{
     }
     
 }
+
 

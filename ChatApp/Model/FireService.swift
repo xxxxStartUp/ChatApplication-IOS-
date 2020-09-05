@@ -48,6 +48,7 @@ class FireService {
             print(snapShots.documents.count)
             for  document in snapShots.documents{
                 let documentData = document.data()
+                print(documentData)
                 let email = documentData["groupadmin"] as! String
                 let id = documentData["groupid"] as! String
                 let name = documentData["groupname"] as! String
@@ -529,10 +530,10 @@ class FireService {
     ///   - user: The current user sqving the message
     ///   - messageToSave: Message to be saved
     ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
-    func saveMessages(user : FireUser, messageToSave: Message, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+    func saveMessages(user : FireUser, group:Group, messageToSave: Message, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
         
         
-        let ref =         FireService.users.document(user.email).collection(FireService.savedMessages).document()
+        let ref =         FireService.users.document(user.email).collection(FireService.savedMessages).document(group.id).collection("Messages").document()
         
         
         
@@ -546,6 +547,40 @@ class FireService {
             completionHandler(.success(true))
             
         }
+    }
+    
+    func loadSavedMessages(user:FireUser, group:Group, completion: @escaping ([Message]?,Error?)-> ()){
+        
+        
+        let ref =         FireService.users.document(user.email).collection(FireService.savedMessages).document(group.id).collection("Messages")
+        //listening for new messages
+            ref.addSnapshotListener{ (snapshot, error) in
+                   var messages : [Message] = []
+                   if let error = error {
+                    completion(nil , error)
+                   }
+                   //unwarps documents
+                   guard let documents = snapshot?.documents else {
+                       print("no messages")
+                       completion(messages , nil)
+                       return
+                }
+                   
+                   documents.forEach { (document) in
+                    
+                    //checks if documentID is equal to group id then it returns the messages
+                  
+                       let message = self.changeDictionaryToMessage(document.data())
+                       messages.append(message)
+                       print(message.content.content as! String , "this is from loadmessageswithgroup",message.content.type.rawValue)
+                       if messages.count == documents.count {
+                           completion(messages, nil)
+                           return
+                       }
+                    }
+                    
+                
+               }
     }
     
     

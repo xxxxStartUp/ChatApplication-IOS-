@@ -96,11 +96,22 @@
                         <outlet property="groupNameView" destination="L2C-HX-xEM" id="JOg-YR-M6U"/>
                         <outlet property="groupinfoTableview" destination="AsU-Ve-JGz" id="Ok6-Sd-45y"/>
                         <outlet property="participantsTableview" destination="Fty-KW-msy" id="shM-V6-Rf7"/>
+                        <segue destination="xn0-LB-cgo" kind="show" identifier="GroupInfoVCToSavedMessagesID" id="bAF-uH-2Gv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PMx-hR-uFq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-268.1159420289855" y="-76.630434782608702"/>
+        </scene>
+        <!--SavedMessagesSB-->
+        <scene sceneID="DTh-9E-Y5c">
+            <objects>
+                <viewControllerPlaceholder storyboardName="SavedMessagesSB" id="xn0-LB-cgo" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="XKD-gZ-9wT"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fza-zL-3BO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="377" y="-311"/>
         </scene>
     </scenes>
     <resources>
