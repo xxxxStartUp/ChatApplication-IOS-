@@ -93,6 +93,8 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
     }
     //updates the background color for the tableview and nav bar.
     func updateBackgroundViews(){
+
+
         DispatchQueue.main.async {
             self.groupinfoTableview.darkmodeBackground()
             self.participantsTableview.darkmodeBackground()
@@ -106,6 +108,25 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
             //self.navigationController?.navigationBar.settingsPage()
             
             self.groupNameTextField.groupInfoTextField()
+
+            let rightImage:UIButton = {
+                
+                let button = UIButton(type: .system)
+                
+                let image = UIImage(systemName:"pencil")
+                
+                button.setImage(image, for: .normal)
+                button.isUserInteractionEnabled = false
+                return button
+            }()
+            
+            
+            self.groupNameTextField.rightViewMode = .unlessEditing
+            
+            self.groupNameTextField.tintColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+            
+            self.groupNameTextField.rightView = rightImage
+            
             
             
         }
@@ -241,8 +262,7 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
                 view.darkmodeBackground()
                 return view
             }
-            
-            
+  
         }
         else{
             let view = tableView.dequeueReusableCell(withIdentifier: identifier4) as! participantsHeaderCell
@@ -259,10 +279,11 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
             if section == 1 {
                 return 0
             }
+           
         }else{
             return 35
         }
-        return 40
+        return 0
     }
     
     
@@ -382,6 +403,7 @@ extension GroupInfoVC:UIImagePickerControllerDelegate{
                 case .success(let url):
     //                self.profileImageView.af_setImage(withURL: url)
                     self.groupImageView.loadImages(urlString: url.absoluteString, mediaType: Constants.groupInfoPage.GroupImageType)
+//                    self.groupImageView.contentMode = .scaleAspectFit
                     
                 case .failure(_):
                     print("failed to set image url")
