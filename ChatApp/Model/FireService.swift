@@ -554,7 +554,7 @@ class FireService {
         
         let ref =         FireService.users.document(user.email).collection(FireService.savedMessages).document(group.id).collection("Messages")
         //listening for new messages
-            ref.addSnapshotListener{ (snapshot, error) in
+            ref.getDocuments{ (snapshot, error) in
                    var messages : [Message] = []
                    if let error = error {
                     completion(nil , error)
@@ -569,7 +569,7 @@ class FireService {
                    documents.forEach { (document) in
                     
                     //checks if documentID is equal to group id then it returns the messages
-                  
+                 
                        let message = self.changeDictionaryToMessage(document.data())
                        messages.append(message)
                        print(message.content.content as! String , "this is from loadmessageswithgroup",message.content.type.rawValue)

@@ -188,7 +188,7 @@ extension SavedMessagesVC{
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
-          
+            
             let message = savedMessages[indexPath.row]
             print(savedMessages[indexPath.row].content)
             FireService.sharedInstance.deleteOneSavedMessage(user: globalUser!, group: group!, MessageToDelete: message) { (result) in
@@ -199,6 +199,7 @@ extension SavedMessagesVC{
                         print("Saved Messages:\(self.savedMessages.count)")
                         self.savedMessages.remove(at: indexPath.row)
                         self.savedMessagesTable.deleteRows(at: [indexPath], with: .automatic)
+                        
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
