@@ -197,7 +197,8 @@ extension SavedMessagesVC{
                 case .success(let bool):
                     if bool{
                         print("Saved Messages:\(self.savedMessages.count)")
-                        
+                        self.savedMessages.remove(at: indexPath.row)
+                        self.savedMessagesTable.deleteRows(at: [indexPath], with: .automatic)
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
