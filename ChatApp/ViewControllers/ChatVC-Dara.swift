@@ -49,16 +49,6 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         self.chatTableView.contentInset = insets
 
-//       let headerView = HeaderView(title: r!.username, image: UIImage(named: "profile"))
-//        let View = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-//        View.addSubview(headerView)
-//        view.backgroundColor = .red
-//        navigationItem.titleView = View
-//        view.addSubview(View)
-
-        //dummy()
-
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
