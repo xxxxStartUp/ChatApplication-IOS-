@@ -16,6 +16,7 @@ class MessgaeCell: UITableViewCell {
     var tarilingConstraints : NSLayoutConstraint?
     var playerLayer:AVPlayerLayer?
     var player:AVPlayer?
+    var trailingConstant: CGFloat = -32
     
     var groupVC:GroupChatVC?
     
@@ -196,7 +197,7 @@ class MessgaeCell: UITableViewCell {
         
         leadingContstraints = stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
         
-        tarilingConstraints = stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
+        tarilingConstraints = stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: trailingConstant)
  
         stackView.widthAnchor.constraint(equalToConstant: 250).isActive = true
         
@@ -207,8 +208,9 @@ class MessgaeCell: UITableViewCell {
         
         
     }
-    
+
     func urldetector(message:String) -> String{
+        
         let input = message
         var url = String()
         let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)

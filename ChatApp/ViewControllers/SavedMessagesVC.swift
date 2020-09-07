@@ -9,13 +9,15 @@
 import UIKit
 
 class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
-
+    
     
     @IBOutlet var savedMessagesTable: UITableView!
     let identifier1 = "GroupchatInfoCellIdentifier"
     var cellID = "id"
-
-    var savedMessages : [Message] = []
+    
+    var savedMessagesDictionary : [String:Message] = [:]
+    var savedMessagesKeys:[String] = []
+    var savedMessages:[Message] = []
     
     var group: Group?
     
@@ -25,8 +27,9 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
         updateBackgroundViews()
         setupTableView()
         loadMessages()
+        setupRightNavItem()
         savedMessagesTable.reloadData()
-       
+        
         // Do any additional setup after loading the view.
     }
     
@@ -40,7 +43,7 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
         super.viewDidAppear(true)
         updateBackgroundViews()
         loadMessages()
-       
+        
         
     }
     
@@ -49,6 +52,40 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
         savedMessagesTable.dataSource = self
         savedMessagesTable.register(MessgaeCell.self, forCellReuseIdentifier: cellID)
     }
+    func setupRightNavItem(){
+        let button:UIButton = {
+            let rightButton = UIButton(type: .system)
+            rightButton.setTitle("Delete All", for: .normal)
+            rightButton.addTarget(self, action: #selector(handlesTappedRightNavBarItem), for: .touchUpInside)
+            return rightButton
+        }()
+        
+        let rightBarButtonItem = UIBarButtonItem(customView: button)
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+        
+    }
+    
+    @objc func handlesTappedRightNavBarItem(){
+        
+        FireService.sharedInstance.deleteAllSavedMessages(user: globalUser!, group: group!, MessageToDelete: savedMessages) { (result) in
+            switch result{
+                
+            case .success(let bool):
+                if bool{
+                    print("Successfully deleted")
+                    self.savedMessages.removeAll()
+                    self.savedMessagesTable.reloadData()
+                    print("Savedmessages:\(self.savedMessages)")
+                    
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                
+            }
+        }
+        print("Right Bar button tapped")
+        
+    }
     func loadMessages (){
         
         FireService.sharedInstance.loadSavedMessages(user: globalUser!, group: group!) { (messages, error) in
@@ -56,6 +93,7 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
             self.savedMessagesTable.reloadData()
             guard let messages = messages else {return}
             print(messages.count , "this is printing is in groupvc")
+            
             messages.forEach { (message) in
                 self.savedMessages.append(message)
                 print(message.content.content as! String, "this is printing in group vc")
@@ -74,59 +112,59 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
             }
             
         }
-
+        
     }
     //updates the background color for the tableview and nav bar.
-      func updateBackgroundViews(){
-          print("Display switch:\(Constants.settingsPage.displayModeSwitch)")
-          navigationItem.title = "Saved Messages"
-          DispatchQueue.main.async {
-              self.savedMessagesTable.darkmodeBackground()
-              
-              //self.navigationController?.navigationBar.darkmodeBackground()
-              
-              self.navigationBarBackgroundHandler()
-              
-          }
-      }
-      //handles the text color, background color and appearance of the nav bar
-      func navigationBarBackgroundHandler(){
-          
-          print("Display switch:\(Constants.settingsPage.displayModeSwitch)")
-          if Constants.settingsPage.displayModeSwitch{
-              let navBarAppearance = UINavigationBarAppearance()
-              navBarAppearance.configureWithOpaqueBackground()
-              navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-              navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-              navBarAppearance.backgroundColor = .black
-              self.navigationController?.navigationBar.isTranslucent = false
-              self.navigationController?.navigationBar.standardAppearance = navBarAppearance
-              self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-              self.navigationController?.navigationBar.setNeedsLayout()
-              //handles TabBar
-              self.tabBarController?.tabBar.barTintColor = .black
-              tabBarController?.tabBar.isTranslucent = false
-              
-          }
-          else{
-              let navBarAppearance = UINavigationBarAppearance()
-              navBarAppearance.configureWithOpaqueBackground()
-              navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
-              navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
-              navBarAppearance.backgroundColor = .white
-              self.navigationController?.navigationBar.isTranslucent = true
-              self.navigationController?.navigationBar.standardAppearance = navBarAppearance
-              self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-              self.navigationController?.navigationBar.setNeedsLayout()
-              
-              //handles TabBar
-              self.tabBarController?.tabBar.barTintColor = .white
-              self.tabBarController?.tabBar.backgroundColor = .white
-              tabBarController?.tabBar.isTranslucent = true
-          }
-      }
-
-
+    func updateBackgroundViews(){
+        print("Display switch:\(Constants.settingsPage.displayModeSwitch)")
+        navigationItem.title = "Saved Messages"
+        DispatchQueue.main.async {
+            self.savedMessagesTable.darkmodeBackground()
+            
+            //self.navigationController?.navigationBar.darkmodeBackground()
+            
+            self.navigationBarBackgroundHandler()
+            
+        }
+    }
+    //handles the text color, background color and appearance of the nav bar
+    func navigationBarBackgroundHandler(){
+        
+        print("Display switch:\(Constants.settingsPage.displayModeSwitch)")
+        if Constants.settingsPage.displayModeSwitch{
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.backgroundColor = .black
+            self.navigationController?.navigationBar.isTranslucent = false
+            self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+            self.navigationController?.navigationBar.setNeedsLayout()
+            //handles TabBar
+            self.tabBarController?.tabBar.barTintColor = .black
+            tabBarController?.tabBar.isTranslucent = false
+            
+        }
+        else{
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.backgroundColor = .white
+            self.navigationController?.navigationBar.isTranslucent = true
+            self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+            self.navigationController?.navigationBar.setNeedsLayout()
+            
+            //handles TabBar
+            self.tabBarController?.tabBar.barTintColor = .white
+            self.tabBarController?.tabBar.backgroundColor = .white
+            tabBarController?.tabBar.isTranslucent = true
+        }
+    }
+    
+    
 }
 
 
@@ -136,14 +174,38 @@ extension SavedMessagesVC{
         return savedMessages.count
         
     }
+
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = savedMessagesTable.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! MessgaeCell
-          let message = savedMessages[indexPath.row]
-          cell.message = message
-          cell.backgroundColor = .clear
-          cell.selectionStyle = .none
-          return cell
+        let message = savedMessages[indexPath.row]
+        cell.message = message
+        cell.backgroundColor = .clear
+        cell.selectionStyle = .none
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+          
+            let message = savedMessages[indexPath.row]
+            print(savedMessages[indexPath.row].content)
+            FireService.sharedInstance.deleteOneSavedMessage(user: globalUser!, group: group!, MessageToDelete: message) { (result) in
+                switch result{
+
+                case .success(let bool):
+                    if bool{
+                        print("Saved Messages:\(self.savedMessages.count)")
+                        
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+
+                }
+            }
+            
+            
+        }
     }
 }

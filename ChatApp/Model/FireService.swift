@@ -533,7 +533,7 @@ class FireService {
     func saveMessages(user : FireUser, group:Group, messageToSave: Message, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
         
         
-        let ref =         FireService.users.document(user.email).collection(FireService.savedMessages).document(group.id).collection("Messages").document()
+        let ref =         FireService.users.document(user.email).collection(FireService.savedMessages).document(group.id).collection("Messages").document("\(messageToSave.id)")
         
         
         
@@ -583,6 +583,41 @@ class FireService {
                }
     }
     
+    func deleteAllSavedMessages(user : FireUser, group:Group, MessageToDelete: [Message], completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+        
+        for message in MessageToDelete {
+            let ref =         FireService.users.document(user.email).collection(FireService.savedMessages).document(group.id).collection("Messages").document(message.id)
+        
+        ref.delete { (error) in
+            
+            if let error = error{
+                completionHandler(.failure(error))
+                return
+            }
+            
+            completionHandler(.success(true))
+            
+        }
+    }
+    }
+    
+    func deleteOneSavedMessage(user : FireUser, group:Group, MessageToDelete: Message, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+        
+            let ref = FireService.users.document(user.email).collection(FireService.savedMessages).document(group.id).collection("Messages").document(MessageToDelete.id)
+        
+        ref.delete { (error) in
+            
+            if let error = error{
+                completionHandler(.failure(error))
+                return
+            }
+            
+            completionHandler(.success(true))
+            
+        }
+    
+    }
+
     
     
     /// Deletes the profile picture of a user
@@ -1045,7 +1080,7 @@ class FireService {
     
     func changeMessageToDictionary( _ message: Message) -> [String : Any]{
         
-        return [ "Content" :self.changeContentToDictionary(message.content),
+        return [ "id": message.id, "Content" :self.changeContentToDictionary(message.content),
                  "user":self.changeUserToDictionary(message.sender),
                  "timeStamp": message.timeStamp,
                  "recived": message.recieved
@@ -1062,8 +1097,9 @@ class FireService {
         
         let recieved = dict["recived"] as! Bool
         
-        return Message(content: self.changeDictionaryToContent(dictionary: contentDictionary), sender: self.changeDictionaryToFireUser(data: userDictionary), timeStamp: date, recieved: recieved)
+        let id = dict["id"] as! String
         
+        return Message(id:id,content: self.changeDictionaryToContent(dictionary: contentDictionary), sender: self.changeDictionaryToFireUser(data: userDictionary), timeStamp: date, recieved: recieved)
     }
     
     
@@ -1701,7 +1737,7 @@ class FireService {
                 if friends.isEmpty {return}
                 //sends the same message to every person in the group
                 friends.forEach { (friend) in
-                    let groupRef =         FireService.users.document(friend.email).collection(FireService.groupString).document(group.id).collection("messages").document()
+                    let groupRef =         FireService.users.document(friend.email).collection(FireService.groupString).document(group.id).collection("messages").document("\(message.id)")
                     let message = self.changeMessageToDictionary(message)
                     groupRef.setData(message) { (error) in
                         if let error = error {

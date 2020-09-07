@@ -102,7 +102,9 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
                 print(error.localizedDescription)
                 fatalError()
             }
-            let message = Message(content: Content(type: .image, content: url!), sender: globalUser!, timeStamp: Date(), recieved: false)
+            let id = UUID().uuidString
+            
+            let message = Message(id:id,content: Content(type: .image, content: url!), sender: globalUser!, timeStamp: Date(), recieved: false)
             self.messageToBeSent = message
             self.sendMessage()
         }
@@ -128,8 +130,9 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
                 if let finalUrl = url, let videoURL = videoURL {
                     messageUrl = videoURL + "thumbNailURL\(finalUrl)"
                     //ebuka may need to refactor code for message to contain property dictionary for content.
-                    
-                    let message = Message(content: Content(type: .video, content: messageUrl), sender: globalUser!, timeStamp: Date(), recieved: false)
+                    let id = UUID().uuidString
+
+                    let message = Message(id:id,content: Content(type: .video, content: messageUrl), sender: globalUser!, timeStamp: Date(), recieved: false)
                     
                     
                     self.messageToBeSent = message
@@ -248,7 +251,9 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
             return
         }
         let content = Content(type: .string, content: messageText)
-        let message = Message(content: content, sender: globalUser!, timeStamp: Date(), recieved: false)
+        let id = UUID().uuidString
+        
+        let message = Message(id:id,content: content, sender: globalUser!, timeStamp: Date(), recieved: false)
         messageToBeSent = message
         sendMessage()
         
