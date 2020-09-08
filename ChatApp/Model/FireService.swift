@@ -601,6 +601,7 @@ class FireService {
     }
     }
     
+    
     func deleteOneSavedMessage(user : FireUser, group:Group, MessageToDelete: Message, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
         
             let ref = FireService.users.document(user.email).collection(FireService.savedMessages).document(group.id).collection("Messages").document(MessageToDelete.id)
@@ -618,6 +619,23 @@ class FireService {
     
     }
 
+    func deleteAllGroupMessages(user : FireUser, group:Group, MessageToDelete: [Message], completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+        
+        for message in MessageToDelete {
+            let ref =         FireService.users.document(user.email).collection(FireService.groupString).document(group.id).collection("messages").document(message.id)
+        
+        ref.delete { (error) in
+            
+            if let error = error{
+                completionHandler(.failure(error))
+                return
+            }
+            
+            completionHandler(.success(true))
+            
+        }
+    }
+    }
     
     
     /// Deletes the profile picture of a user

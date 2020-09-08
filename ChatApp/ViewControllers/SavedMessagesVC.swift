@@ -20,6 +20,7 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
     var savedMessages:[Message] = []
     
     var group: Group?
+    var finalLabel:UILabel?
     
     
     override func viewDidLoad() {
@@ -28,6 +29,7 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
         setupTableView()
         loadMessages()
         setupRightNavItem()
+        self.handleEmptySavedMessages()
         savedMessagesTable.reloadData()
         
         // Do any additional setup after loading the view.
@@ -36,13 +38,16 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         updateBackgroundViews()
+        finalLabel?.settingsPageLabels(type: Constants.settingsPage.labelTitles)
         loadMessages()
+       
         
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         updateBackgroundViews()
         loadMessages()
+        
         
         
     }
@@ -60,6 +65,26 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
             return rightButton
         }()
         
+        var keywindow = UIWindow()
+        for window in UIApplication.shared.windows{
+            if window.isKeyWindow{
+                keywindow = window
+            }
+        }
+        let label:UILabel = {
+            let finalLabel = UILabel(frame: keywindow.frame)
+            finalLabel.text = "No Saved Messages"
+            finalLabel.textAlignment = .center
+            finalLabel.center = keywindow.center
+            return finalLabel
+        }()
+        
+        finalLabel = label
+        savedMessagesTable.addSubview(finalLabel!)
+        
+        finalLabel?.isHidden = true
+        finalLabel?.settingsPageLabels(type: Constants.settingsPage.labelTitles)
+        
         let rightBarButtonItem = UIBarButtonItem(customView: button)
         navigationItem.rightBarButtonItem = rightBarButtonItem
         
@@ -76,6 +101,15 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
                     self.savedMessages.removeAll()
                     self.savedMessagesTable.reloadData()
                     print("Savedmessages:\(self.savedMessages)")
+                    if self.savedMessages.isEmpty{
+                        self.savedMessagesTable.separatorStyle = .none
+                        self.finalLabel?.isHidden = false
+                    }
+                    else{
+                        self.savedMessagesTable.separatorStyle = .singleLine
+                        self.finalLabel?.isHidden = true
+                    }
+                    
                     
                 }
             case .failure(let error):
@@ -106,10 +140,24 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
             
             if !messages.isEmpty{
                 self.savedMessagesTable.reloadData()
+                self.savedMessagesTable.separatorStyle = .singleLine
+                self.finalLabel?.isHidden = true
                 let indexPath = IndexPath(row: self.savedMessages.count-1, section: 0)
                 self.savedMessagesTable.scrollToRow(at:indexPath, at: .bottom, animated: true)
                 print(self.savedMessages[0].content.content)
             }
+            else{
+                self.savedMessagesTable.separatorStyle = .none
+                self.finalLabel?.isHidden = false
+            }
+            //            if self.savedMessages.isEmpty{
+            //                   self.savedMessagesTable.separatorStyle = .none
+            //                   self.finalLabel?.isHidden = false
+            //               }
+            //               else{
+            //                   self.savedMessagesTable.separatorStyle = .singleLine
+            //                   self.finalLabel?.isHidden = true
+            //               }
             
         }
         
@@ -125,6 +173,16 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
             
             self.navigationBarBackgroundHandler()
             
+        }
+    }
+    func handleEmptySavedMessages(){
+        if self.savedMessages.isEmpty{
+            self.savedMessagesTable.separatorStyle = .none
+            self.finalLabel?.isHidden = false
+        }
+        else{
+            self.savedMessagesTable.separatorStyle = .singleLine
+            self.finalLabel?.isHidden = true
         }
     }
     //handles the text color, background color and appearance of the nav bar
@@ -174,7 +232,7 @@ extension SavedMessagesVC{
         return savedMessages.count
         
     }
-
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -193,21 +251,23 @@ extension SavedMessagesVC{
             print(savedMessages[indexPath.row].content)
             FireService.sharedInstance.deleteOneSavedMessage(user: globalUser!, group: group!, MessageToDelete: message) { (result) in
                 switch result{
-
+                    
                 case .success(let bool):
                     if bool{
                         print("Saved Messages:\(self.savedMessages.count)")
                         self.savedMessages.remove(at: indexPath.row)
                         self.savedMessagesTable.deleteRows(at: [indexPath], with: .automatic)
+                        self.handleEmptySavedMessages()
                         
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
-
+                    
                 }
             }
             
             
         }
     }
+
 }

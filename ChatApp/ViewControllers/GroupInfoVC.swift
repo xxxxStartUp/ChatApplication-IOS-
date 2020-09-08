@@ -29,6 +29,7 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
     var groupDelegate : GroupDelegate?
     var groupParticipants = [Friend]()
     var tempParticipants = [Friend]()
+    var messages:[Message]?
     
    
     
@@ -47,6 +48,7 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
         updateBackgroundViews()
         
         setupTableView()
+        setupRightNavItem()
         
         groupNameTextField.delegate = self
         updateGroupName()
@@ -72,10 +74,21 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
         groupinfoTableview.register(UINib(nibName: "GroupSettingCell", bundle: nil), forCellReuseIdentifier: identifier2)
         participantsTableview.register(UINib(nibName: "participantsHeaderCell", bundle: nil), forCellReuseIdentifier: identifier4)
         participantsTableview.register(UINib(nibName: "participantsCell", bundle: nil), forCellReuseIdentifier: identifier3)
-        
+
         groupinfoTableview.tableFooterView = UIView()
         participantsTableview.tableFooterView = UIView()
         //participantsTableview.tableHeaderView = UIView()
+        
+    }
+    func setupRightNavItem(){
+        let button:UIButton = {
+            let rightButton = UIButton(type: .system)
+            rightButton.setTitle("Clear Chat", for: .normal)
+            rightButton.addTarget(self, action: #selector(handlesTappedRightNavBarItem), for: .touchUpInside)
+            return rightButton
+        }()
+        let rightBarButtonItem = UIBarButtonItem(customView: button)
+        navigationItem.rightBarButtonItem = rightBarButtonItem
         
     }
     
@@ -89,6 +102,25 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
             print(group!.GroupAdmin.email)
             
             self.groupNameTextField.text = group?.name
+        }
+    }
+    
+    @objc func handlesTappedRightNavBarItem(){
+        if let messages = messages{
+        FireService.sharedInstance.deleteAllGroupMessages(user: globalUser!, group: group!, MessageToDelete: messages) { (result) in
+            
+                   switch result{
+                       
+                   case .success(let bool):
+                       if bool{
+                        print("Successfully")
+                       }
+                   case .failure(let error):
+                       print(error.localizedDescription)
+                       
+                   }
+               }
+                       print("Right Bar button tapped")
         }
     }
     //updates the background color for the tableview and nav bar.

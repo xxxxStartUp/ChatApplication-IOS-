@@ -324,6 +324,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         if let destination = segue.destination as? GroupInfoVC{
             destination.group = group
             destination.groupParticipants = groupParticipants
+            destination.messages = groupMessages
         }
         
     }
