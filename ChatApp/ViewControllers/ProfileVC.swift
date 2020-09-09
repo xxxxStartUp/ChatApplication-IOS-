@@ -95,6 +95,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         FireService.sharedInstance.addCustomData(data: ["username":name], user: globalUser!) { (error, sucess) in
             if sucess {
                 print("name was chnaged")
+                
                 FireService.sharedInstance.refreshUserInfo(email: globalUser!.email)
             }
             

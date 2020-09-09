@@ -31,6 +31,8 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
     var tempParticipants = [Friend]()
     var messages:[Message]?
     
+    var selectedIndexpath:Int?
+    
    
     
     var group : Group?{
@@ -53,8 +55,10 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
         groupNameTextField.delegate = self
         updateGroupName()
         groupPictureGestureSetup()
+        participantsTableview.allowsSelection = false
         
         setImage()
+
 
         // Do any additional setup after loading the view.
     }
@@ -75,23 +79,15 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
         participantsTableview.register(UINib(nibName: "participantsHeaderCell", bundle: nil), forCellReuseIdentifier: identifier4)
         participantsTableview.register(UINib(nibName: "participantsCell", bundle: nil), forCellReuseIdentifier: identifier3)
 
+
+        
         groupinfoTableview.tableFooterView = UIView()
-        participantsTableview.tableFooterView = UIView()
+        participantsTableview.tableFooterView = footerviewSetUp()
         //participantsTableview.tableHeaderView = UIView()
         
     }
-    func setupRightNavItem(){
-        let button:UIButton = {
-            let rightButton = UIButton(type: .system)
-            rightButton.setTitle("Clear Chat", for: .normal)
-            rightButton.addTarget(self, action: #selector(handlesTappedRightNavBarItem), for: .touchUpInside)
-            return rightButton
-        }()
-        let rightBarButtonItem = UIBarButtonItem(customView: button)
-        navigationItem.rightBarButtonItem = rightBarButtonItem
-        
-    }
     
+   
 
 
     func updateGroupName(){
@@ -319,15 +315,6 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
     }
     
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if tableView == groupinfoTableview{
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "GroupchatInfoCellIdentifier", for: indexPath) as? GroupchatinfoCells{
-                if indexPath.row == 0 {
-                    performSegue(withIdentifier: GroupInfoVCToSavedMessagesID, sender: self)
-                }}
-            
-        }}
     
 }
 extension GroupInfoVC:UITextFieldDelegate{
@@ -471,6 +458,136 @@ extension GroupInfoVC:UIImagePickerControllerDelegate{
         
         
     }
+    
+}
+
+//handles footerview setup
+extension GroupInfoVC{
+    func footerviewSetUp() -> UIView{
+           let view:UIView = {
+               let finalLabel = UIView(frame: CGRect(x: 0, y: 0, width: participantsTableview.frame.width, height: 24))
+               finalLabel.backgroundColor = .clear
+               return finalLabel
+           }()
+            let button:UIButton = {
+               let rightButton = UIButton(type: .system)
+               rightButton.frame = view.frame
+               rightButton.setTitle("Leave Chat", for: .normal)
+               rightButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Regular", size: 14)
+               rightButton.setTitleColor(.red, for: .normal)
+               rightButton.translatesAutoresizingMaskIntoConstraints = false
+               rightButton.addTarget(self, action: #selector(handlesLeaveGroupTapped), for: .touchUpInside)
+               return rightButton
+           }()
+           view.addSubview(button)
+           
+           button.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+           button.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+           button.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+           button.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+           
+           return view
+       }
+       func setupRightNavItem(){
+           let button:UIButton = {
+               let rightButton = UIButton(type: .system)
+               rightButton.setTitle("Clear Chat", for: .normal)
+               rightButton.addTarget(self, action: #selector(handlesTappedRightNavBarItem), for: .touchUpInside)
+               return rightButton
+           }()
+           let rightBarButtonItem = UIBarButtonItem(customView: button)
+           navigationItem.rightBarButtonItem = rightBarButtonItem
+           
+       }
+       
+       @objc func handlesLeaveGroupTapped(){
+           let alertController = UIAlertController(title: "What do you want to do?", message: "", preferredStyle: .actionSheet)
+        
+        if let groupadmin = group?.GroupAdmin.email{
+            
+            if groupadmin == globalUser?.email{
+            
+            let action1 = UIAlertAction(title: "Assign new admin and leave group", style: .destructive, handler: selectMakeAdminOption(sender:))
+            let action2 = UIAlertAction(title: "Delete group chat", style: .destructive, handler: deleteGroup(sender:))
+            let action3 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let actions = [action1,action2,action3]
+            
+            for action in actions{
+                alertController.addAction(action)
+            }
+            
+            self.present(alertController, animated: true, completion: nil)
+       }
+            else{
+                print("Not admin")
+            }
+        }
+    }
+    func selectMakeAdminOption(sender:UIAlertAction!){
+        participantsTableview.reloadData()
+        participantsTableview.allowsSelection = true
+//        participantsTableview.isEditing = true
+//        participantsTableview.allowsSelectionDuringEditing = true
+    }
+    
+    func deleteGroup(sender:UIAlertAction!){
+        print("Delete Group")
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            print("Editing:\(indexPath.row)")
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if tableView == groupinfoTableview{
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "GroupchatInfoCellIdentifier", for: indexPath) as? GroupchatinfoCells{
+                if indexPath.row == 0 {
+                    performSegue(withIdentifier: GroupInfoVCToSavedMessagesID, sender: self)
+                }
+                
+            }
+            
+        }
+        if tableView == participantsTableview{
+              if let cell = participantsTableview.dequeueReusableCell(withIdentifier: identifier3) as? participantsCell  {
+                
+                   let alertController = UIAlertController(title: "What do you want to do?", message: "", preferredStyle: .actionSheet)
+            
+                    
+                let action1 = UIAlertAction(title: "Make Admin", style: .destructive, handler: setAsAdminClicked(sender:))
+                selectedIndexpath = indexPath.row
+        
+                    let action2 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                    let actions = [action1,action2]
+                    
+                    for action in actions{
+                        alertController.addAction(action)
+                    }
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                
+            }}
+    }
+    //handles changing the admin to a new user.
+        func setAsAdminClicked(sender:UIAlertAction!){
+          print("Set this user as admin")
+            if let selectedIndexPath = selectedIndexpath{
+                let data = ["groupadmin":groupParticipants[selectedIndexPath].email]
+                FireService.sharedInstance.addCustomGroupAdminData(data: data, user: globalUser!, group: group!, friends: groupParticipants) { (error,success, admin) in
+                    if let error = error{
+                        print(error.localizedDescription)
+                    }
+                    if success{
+                        print("Changed adminName")
+                        //change the name of group for all friends in the group.
+                    }
+                }
+        }
+    
+    }
+
     
 }
 

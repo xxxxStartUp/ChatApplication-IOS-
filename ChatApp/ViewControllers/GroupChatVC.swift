@@ -165,7 +165,11 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
 
         
         getGroupName()
+        handleNavBarImage()
 
+        loadGroupParticipants()
+    }
+    func loadGroupParticipants(){
         FireService.sharedInstance.viewGroupParticipants(user: globalUser!, group: group!) { (participants, true, error) in
             if let error = error{
                 print(error)
@@ -173,12 +177,6 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
             }
             self.groupParticipants = participants
         }
-        
-       
-        
-        
-        
-
     }
     
     func handleNavBarImage(){
@@ -220,6 +218,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         getGroupName()
+        loadGroupParticipants()
         updateBackgroundViews()
         loadMessages()
         handleNavBarImage()
@@ -229,12 +228,12 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         getGroupName()
+        loadGroupParticipants()
         updateBackgroundViews()
         loadMessages()
-        
-        
-        
+        handleNavBarImage()
     }
+    
     func getGroupName(){
         FireService.sharedInstance.getGroupname(user: globalUser!, group: group!) { (group, true, error) in
             if let error = error{

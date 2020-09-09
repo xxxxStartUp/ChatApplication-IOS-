@@ -21,6 +21,7 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
     
     var group: Group?
     var finalLabel:UILabel?
+    var rightBarButton:UIBarButtonItem?
     
     
     override func viewDidLoad() {
@@ -86,6 +87,7 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
         finalLabel?.settingsPageLabels(type: Constants.settingsPage.labelTitles)
         
         let rightBarButtonItem = UIBarButtonItem(customView: button)
+        rightBarButton = rightBarButtonItem
         navigationItem.rightBarButtonItem = rightBarButtonItem
         
     }
@@ -104,6 +106,7 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
                     if self.savedMessages.isEmpty{
                         self.savedMessagesTable.separatorStyle = .none
                         self.finalLabel?.isHidden = false
+                        self.savedMessagesTable.scrollsToTop = true
                     }
                     else{
                         self.savedMessagesTable.separatorStyle = .singleLine
@@ -147,8 +150,10 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
                 print(self.savedMessages[0].content.content)
             }
             else{
+                self.savedMessagesTable.scrollsToTop = true
                 self.savedMessagesTable.separatorStyle = .none
                 self.finalLabel?.isHidden = false
+            
             }
             //            if self.savedMessages.isEmpty{
             //                   self.savedMessagesTable.separatorStyle = .none
