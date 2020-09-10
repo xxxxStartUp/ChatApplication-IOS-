@@ -1441,16 +1441,18 @@ class FireService {
     }
     
     
-    func addCustomGroupAdminData(data : [String : Any] ,user : FireUser, group:Group,friends:[Friend], completion : @escaping (Error? , Bool, Bool) -> ()){
+    func addCustomGroupAdminData(data : [String : Any] ,user : FireUser, group:Group,friends:[Friend], completion : @escaping (Error? , Bool, [String:Any]?) -> ()){
         
         let groupRef =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
-        var isAdmin = false
+        var newFriends = [Friend]()
+        var dataToBeSent = [String:Any]()
+        let newAdmin = data["groupadmin"] as! String
         
         //get all the group documents
         groupRef.getDocument { (document, error) in
             if let error = error{
                 
-                completion(error,false,isAdmin)
+                completion(error,false,dataToBeSent)
                 return
             }
             //check document and unwrap groupdata to get groupadmin
@@ -1458,35 +1460,57 @@ class FireService {
                 guard let groupData = document.data() else {return}
                 let admin = groupData["groupadmin"] as! String
                 
-                //check if admin is the global user and set data(change group name in group for admin) and return completion of true
-                if admin == globalUser?.email{
+                
+                FireService.sharedInstance.searchOneUserWithEmail(email: newAdmin) { (user, error) in
+                    if let error = error {
+                        print("could not find group admin user while adding new user to group",error.localizedDescription)
+                        
+                        return
+                    }
+                    guard let user = user else {return}
+                    let finalGroup = Group(GroupAdmin: user, id: group.id, name: group.name)
                     
-                    //                    let ref = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
-            
-                    for friend in friends {
-                        let ref = FireService.users.document(friend.email).collection(FireService.groupString).document(group.id)
-                        ref.setData(data, merge: true) { (error) in
-                            if let error = error{
-                                completion(error, false, isAdmin)
-                                return
-                            }
-                            isAdmin = true
-                            completion(nil,true,isAdmin)
-                            
+                    
+                    for friend in friends{
+                        if admin != friend.email{
+                            newFriends.append(friend)
                         }
                     }
                     
+                    dataToBeSent["user"] = user
+                    dataToBeSent["group"] = finalGroup
+                    dataToBeSent["friends"] = newFriends
+
+                    var count = newFriends.count
+                    for friend in newFriends {
+                        
+                        let ref = FireService.users.document(friend.email).collection(FireService.groupString).document(group.id)
+                        ref.setData(data, merge: true) { (error) in
+                            if let error = error{
+                                completion(error, false, dataToBeSent)
+                                return
+                            }
+                            count -= 1
+                            if count == 0{
+                            groupRef.delete { (error) in
+                                if let error = error{
+                                    print(error.localizedDescription)
+                                    return
+                                }
+                                completion(nil,true,dataToBeSent)
+
+                                print("Data successfully set")
+                                      }
+                            }
+                          
+                        }
+                    }
                 }
-                    //else change groupname for all the members of the group and return completion of true but admin completion of false.
-                else{
-                    isAdmin = false
-                    completion(nil,false,false)
-                }
+                //check if admin is the global user and set data(change group name in group for admin) and return completion of true
+                    
+
             }
         }
-        
-        
-        
     }
     
     func getGroupname(user : FireUser, group:Group,completionHandler : @escaping (Group?,Bool,Error?)-> ()){

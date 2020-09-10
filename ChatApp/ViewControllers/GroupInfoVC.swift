@@ -573,13 +573,32 @@ extension GroupInfoVC{
     //handles changing the admin to a new user.
         func setAsAdminClicked(sender:UIAlertAction!){
           print("Set this user as admin")
-            if let selectedIndexPath = selectedIndexpath{
+            if let selectedIndexPath = selectedIndexpath {
                 let data = ["groupadmin":groupParticipants[selectedIndexPath].email]
-                FireService.sharedInstance.addCustomGroupAdminData(data: data, user: globalUser!, group: group!, friends: groupParticipants) { (error,success, admin) in
+                print("This is the \(data["groupadmin"])")
+                FireService.sharedInstance.addCustomGroupAdminData(data: data, user: globalUser!, group: group!, friends: groupParticipants) { (error,success, dataReceived) in
                     if let error = error{
                         print(error.localizedDescription)
                     }
+                    
+                    let user = dataReceived!["user"] as! FireUser
+                    let newGroup = dataReceived!["group"] as! Group
+                    let friends = dataReceived!["friends"] as! [Friend]
                     if success{
+                        
+                        FireService.sharedInstance.addMultipleFriendsToGroup(user: user, group: newGroup, friendsToAdd: friends) { (result) in
+                            switch result {
+                            case .success( let bool):
+                                if bool{
+                                    print("Successfully added to group")
+                                }
+                                
+                            case .failure(let error):
+                                //complete with with error
+                                print(error.localizedDescription)
+                                fatalError()
+                            }
+                        }
                         print("Changed adminName")
                         //change the name of group for all friends in the group.
                     }
