@@ -570,6 +570,7 @@ extension GroupInfoVC{
                 }
             }
             else{
+                if groupParticipants.contains(globalUser!.asAFriend){
                 print("Not admin")
                 let action1 = UIAlertAction(title: "Leave group", style: .destructive, handler: leaveGroupOption(sender:))
                 let action2 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -580,7 +581,9 @@ extension GroupInfoVC{
                 }
                 
                 self.present(alertController, animated: true, completion: nil)
-                
+                }else{
+                    groupOptionButton?.isUserInteractionEnabled = false
+                }
             }
         }else{
             groupOptionButton?.isUserInteractionEnabled = false
@@ -613,6 +616,7 @@ extension GroupInfoVC{
     }
     
     func leaveGroupOption(sender:UIAlertAction!){
+    
         FireService.sharedInstance.leaveGroup(user: globalUser!, group: group!, friends: groupParticipants) { (error, success) in
             if let error = error{
                 print(error.localizedDescription)
