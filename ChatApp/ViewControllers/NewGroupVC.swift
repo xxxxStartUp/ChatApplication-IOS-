@@ -23,6 +23,7 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
     
     var selectedFriendsListEmail: [String] = []
     var shareURL:URL? = nil
+    var shareURLString:String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,9 +66,21 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
                     fatalError()
                 }
                 if completed{
-                    self.createDynamicLink(admin: globalUser!, groupID: id, groupName: groupName)
-                   // self.goToTab()
-                    
+                    self.createDynamicLink(admin: globalUser!, groupID: id, groupName: groupName) { (success) in
+                        if success{
+                            //call function to save the url in FB
+                            if let shareURLString = self.shareURLString{
+                            let data = ["groupInvitationUrl" : shareURLString]
+                            FireService.sharedInstance.addCustomDataToGroup(data: data, user: globalUser!, group: newGroup) { (error, success) in
+                                if let error = error {
+                                    print(error.localizedDescription)
+                                    fatalError()
+                                }
+                                    print("Added custom URL data to group")
+                            }
+                            }
+                        }
+                    }
                 }
                 
             }
@@ -117,7 +130,7 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
         createGroup()
         
     }
-    func createDynamicLink(admin:FireUser,groupID:String,groupName:String){
+    func createDynamicLink(admin:FireUser,groupID:String,groupName:String,completion:@escaping (Bool) -> ()){
         print("this dynamic link func has been called")
         
         var components = URLComponents()
@@ -140,6 +153,7 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
             print("Couldn't create FDL components")
             return
         }
+        
         if let myBundleId = Bundle.main.bundleIdentifier{
             shareLink.iOSParameters = DynamicLinkIOSParameters(bundleID: myBundleId)
         }
@@ -161,9 +175,12 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
                 }
             }
             guard let url = url else{return}
+            let shortUrl = url.absoluteString
             print("I have a short URL to share! \(url.absoluteString)")
             self.shareURL = url
+            self.shareURLString = shortUrl
             self.composeMail(url:url)
+            completion(true)
             
             //            self.showSheet(url: url)
         }
