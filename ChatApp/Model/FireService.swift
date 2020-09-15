@@ -16,7 +16,6 @@ import AVFoundation
 
 
 
-/// <#Description#>
 class FireService {
     static let db = Firestore.firestore()
     static let firendsString = "friends"
@@ -781,6 +780,38 @@ class FireService {
     }
     
     
+    
+    func saveImageToBeSentToFriend (data : Data , friend : Friend , user : FireUser , completionHandler: @escaping (String?,Error?) -> ()) {
+        
+        
+        let uuid = NSUUID().uuidString
+        
+        let refName = "\(user.email)/\(friend.id)/Images.png/\(uuid)"
+        let ref = FireService.storageRef.child(refName)
+        let newMetadata = StorageMetadata()
+        newMetadata.contentType = "image/jpeg"
+        
+        ref.putData(data, metadata: newMetadata) { (metadata, error) in
+            if let error = error{
+                completionHandler(nil,error)
+            }
+            
+            
+            ref.downloadURL { (url, error) in
+                guard let url = url else{
+                    completionHandler(nil,error)
+                    return
+                }
+                
+                
+                let finalUrl = url.absoluteString
+                completionHandler(finalUrl,nil)
+                
+            }
+        }
+        
+        
+    }
      
     
     func saveImageToBeSentToGroupChat(data:Data,user:FireUser,group:Group,completionHandler: @escaping (String?,Error?) -> ()){
@@ -825,6 +856,62 @@ class FireService {
         }
         return nil
     }
+    
+    func sendVideoToFriend(url : NSURL ,friend : Friend , user : FireUser,completionHandler: @escaping (String?,Error?,[String:Any?]) -> ()){
+        let uuid = NSUUID().uuidString
+        
+        let refName = "\(user.email)/\(friend.id)/Videos.mov/\(uuid)"
+        let ref = FireService.storageRef.child(refName)
+        let newMetadata = StorageMetadata()
+        var properties = [String:Any]()
+        newMetadata.contentType = "video/quicktime"
+        
+        
+        do{
+            let videoData = try Data(contentsOf: url as URL)
+            let uploadTask = ref.putData(videoData, metadata: newMetadata){ (metadata, error) in
+                if let error = error{
+                    completionHandler(nil,error,properties)
+                }
+                
+                
+                ref.downloadURL { (videoUrl, error) in
+                    guard let videoUrl = videoUrl else{
+                        completionHandler(nil,error,properties)
+                        return
+                    }
+                    let finalUrl = videoUrl.absoluteString
+                    if let thumbnailImage = self.thumbnailImageForFileUrl(fileUrl:url){
+                        properties = ["thumbNailWidth":thumbnailImage.size.width,"thumbNailHeight":thumbnailImage.size.height,"thumbNailImage":thumbnailImage]
+                    }
+                    
+                    
+                    print(finalUrl)
+                    completionHandler(finalUrl,nil,properties)
+                    
+                }
+            }
+            //use to get progress update
+            uploadTask.observe(.progress) { (snapshot) in
+                if let completedUnitCount = snapshot.progress?.completedUnitCount{
+                    print(completedUnitCount)
+                }
+                //get if the task is successful
+                uploadTask.observe(.success) { (snapshot) in
+                    print("Yupppp")
+                }
+                
+            }
+            
+        }catch {
+            print(error)
+        }
+        
+        
+        
+    }
+    
+    
     func saveVideoToBeSentToGroupChat(url:NSURL,user:FireUser,group:Group,completionHandler: @escaping (String?,Error?,[String:Any?]) -> ()){
         
         let uuid = NSUUID().uuidString
