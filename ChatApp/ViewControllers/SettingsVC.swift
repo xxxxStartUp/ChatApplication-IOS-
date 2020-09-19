@@ -210,8 +210,7 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
             
         default:
                break
-           
-            
+     
     }
     }
     

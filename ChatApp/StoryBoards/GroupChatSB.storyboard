@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="l98-gk-GfK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="l98-gk-GfK">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -45,7 +45,9 @@
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rTc-vN-DeC">
                                     <rect key="frame" x="374" y="0.0" width="20" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="info.circle" catalog="system"/>
+                                    <state key="normal" image="info.circle" catalog="system">
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                    </state>
                                     <connections>
                                         <action selector="infoButtonPressed:" destination="l98-gk-GfK" eventType="touchUpInside" id="iUG-e1-zdN"/>
                                     </connections>
@@ -55,7 +57,9 @@
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JuT-6q-ScP">
                                     <rect key="frame" x="346" y="0.0" width="20" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" image="plus.circle" catalog="system"/>
+                                    <state key="normal" image="person.crop.circle.badge.plus" catalog="system">
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                    </state>
                                     <connections>
                                         <action selector="addcontactsButtonPressed:" destination="l98-gk-GfK" eventType="touchUpInside" id="083-7y-nRh"/>
                                     </connections>
@@ -115,6 +119,6 @@
     </scenes>
     <resources>
         <image name="info.circle" catalog="system" width="128" height="121"/>
-        <image name="plus.circle" catalog="system" width="128" height="121"/>
+        <image name="person.crop.circle.badge.plus" catalog="system" width="128" height="101"/>
     </resources>
 </document>

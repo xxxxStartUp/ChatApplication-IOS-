@@ -68,12 +68,33 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     
     func handleNavBarImage(){
         navBarButton.layer.cornerRadius = 20
-        navBarButton.backgroundColor = .red
+        navBarButton.backgroundColor = .clear
         navigationItem.titleView = navBarButton
         navBarButton.addTarget(self, action: #selector(handleTapNavBarButton), for: .touchUpInside)
+        let image = UIImage(named:"profile")
+        navBarButton.setImage(image, for: .normal)
+        handleNavBarImageView()
         
+
     }
     
+    func handleNavBarImageView(){
+        FireService.sharedInstance.searchOneUserWithEmail(email: r!.email) { (user, error) in
+            guard let user = user else {return}
+            
+            FireService.sharedInstance.getProfilePicture(user: user) { (result) in
+                switch result{
+                case .success(let url):
+                    self.navBarButton.imageView?.af.setImage(withURL: url)
+                    break
+                case .failure(let error):
+                    print("profileImageview Cannot be set")
+                    break
+                }
+            }
+        }
+        
+    }
     
    @objc func handleTapNavBarButton(){
         

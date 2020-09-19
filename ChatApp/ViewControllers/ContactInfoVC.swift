@@ -27,10 +27,7 @@ class ContactInfoVC : UIViewController {
     
     var freindAsUser : FireUser? {
         didSet{
-            if stopGettingData{
-               updateView()
-            }
-            
+            UpdateImageView()
         }
     }
     override func viewDidLoad() {
@@ -43,7 +40,7 @@ class ContactInfoVC : UIViewController {
         contactInfoTableView.delegate = self
         contactInfoTableView.dataSource = self
         contactInfoTableView.register(ContactInfoCell.self, forCellReuseIdentifier: id)
-        contactInfoTableView.estimatedRowHeight = 60
+        contactInfoTableView.estimatedRowHeight = 40
         // contactInfoTableView.rowHeight = UITableView.automaticDimension
     }
     
@@ -138,7 +135,13 @@ extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
+        
+        if indexPath.section == 1 {
+            if indexPath.row == 0 {
+               // go to savedMessaged
+            }
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

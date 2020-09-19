@@ -11,6 +11,8 @@
 		2709E88B250298EC006E0DF0 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2709E88A250298EC006E0DF0 /* HeaderView.swift */; };
 		2727D50225108D9700CCC9C8 /* ContactInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2727D50125108D9700CCC9C8 /* ContactInfoVC.swift */; };
 		2727D50425108E0200CCC9C8 /* ContactInfoSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2727D50325108E0200CCC9C8 /* ContactInfoSB.storyboard */; };
+		2733F2902516A07300C12729 /* SavedMessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2733F28F2516A07200C12729 /* SavedMessagesVC.swift */; };
+		2733F2922516A09400C12729 /* SavedMessagesSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2733F2912516A09400C12729 /* SavedMessagesSB.storyboard */; };
 		2758031B24EB97F800057807 /* GroupchatinfoCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758031224EB97F700057807 /* GroupchatinfoCells.swift */; };
 		2758031C24EB97F800057807 /* participantsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758031324EB97F700057807 /* participantsCell.swift */; };
 		2758031D24EB97F800057807 /* chatinfoCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2758031424EB97F700057807 /* chatinfoCells.swift */; };
@@ -123,6 +125,8 @@
 		2709E88A250298EC006E0DF0 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		2727D50125108D9700CCC9C8 /* ContactInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInfoVC.swift; sourceTree = "<group>"; };
 		2727D50325108E0200CCC9C8 /* ContactInfoSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ContactInfoSB.storyboard; sourceTree = "<group>"; };
+		2733F28F2516A07200C12729 /* SavedMessagesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedMessagesVC.swift; sourceTree = "<group>"; };
+		2733F2912516A09400C12729 /* SavedMessagesSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SavedMessagesSB.storyboard; sourceTree = "<group>"; };
 		2758031224EB97F700057807 /* GroupchatinfoCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GroupchatinfoCells.swift; path = "Cells/GroupInfoCells-E/GroupchatinfoCells.swift"; sourceTree = SOURCE_ROOT; };
 		2758031324EB97F700057807 /* participantsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = participantsCell.swift; path = "Cells/GroupInfoCells-E/participantsCell.swift"; sourceTree = SOURCE_ROOT; };
 		2758031424EB97F700057807 /* chatinfoCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = chatinfoCells.swift; path = "Cells/GroupInfoCells-E/chatinfoCells.swift"; sourceTree = SOURCE_ROOT; };
@@ -345,6 +349,7 @@
 				43C6C9ED24B590B2003DB77E /* ProfileVC.swift */,
 				43C6C9C924B58B85003DB77E /* NotificationsVC.swift */,
 				43BBB45524A0795E0024F449 /* ChatVC.swift */,
+				2733F28F2516A07200C12729 /* SavedMessagesVC.swift */,
 				43BBB44C24A064660024F449 /* SettingsVC.swift */,
 				43C2F9F924A315700080CD8F /* NewGroupVC.swift */,
 				436213E324B647B100304FB3 /* GroupChatVC.swift */,
@@ -450,6 +455,7 @@
 				43C6C9D824B58D9E003DB77E /* MainTabStoryboard.storyboard */,
 				43C6C9D924B58D9E003DB77E /* NotificationSB.storyboard */,
 				436213E524B647D300304FB3 /* GroupChatSB.storyboard */,
+				2733F2912516A09400C12729 /* SavedMessagesSB.storyboard */,
 				43C6C9DA24B58D9E003DB77E /* FriendsSB.storyboard */,
 				43C6C9DB24B58D9E003DB77E /* WelcomeScreenSB.storyboard */,
 				43C6C9DC24B58D9E003DB77E /* profileStoryBoard.storyboard */,
@@ -710,6 +716,7 @@
 				CBD5986424986040000CBEBD /* Assets.xcassets in Resources */,
 				43C6C9DF24B58D9E003DB77E /* AddFriendSB.storyboard in Resources */,
 				43A7480724BB811400281A07 /* ChatInfoCells.xib in Resources */,
+				2733F2922516A09400C12729 /* SavedMessagesSB.storyboard in Resources */,
 				CBF45C7F24C5117000E5AFA3 /* GroupInfoSB.storyboard in Resources */,
 				43C6C9EA24B58D9E003DB77E /* WelcomeScreenSB.storyboard in Resources */,
 				43C6C9E924B58D9E003DB77E /* FriendsSB.storyboard in Resources */,
@@ -889,6 +896,7 @@
 				43BBB436249C9E1C0024F449 /* Validate.swift in Sources */,
 				43E1A25B24BAA77300511642 /* TexterViewDelegate.swift in Sources */,
 				2758031E24EB97F800057807 /* participantsHeaderCell.swift in Sources */,
+				2733F2902516A07300C12729 /* SavedMessagesVC.swift in Sources */,
 				2727D50225108D9700CCC9C8 /* ContactInfoVC.swift in Sources */,
 				2758031D24EB97F800057807 /* chatinfoCells.swift in Sources */,
 				43BBB428249B13EA0024F449 /* User.swift in Sources */,

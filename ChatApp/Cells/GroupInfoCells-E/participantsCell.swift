@@ -12,6 +12,8 @@ class participantsCell: UITableViewCell {
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var email: UILabel!
     @IBOutlet weak var adminLabel: UILabel!
+
+    
     
     func updateViews(groupParticipants:[Friend],indexPath:Int,group:Group){
         username.GroupInfoPageLabels(type: Constants.groupInfoPage.userNameHeader)
@@ -20,6 +22,8 @@ class participantsCell: UITableViewCell {
         if !groupParticipants.isEmpty{
         username.text = groupParticipants[indexPath].username
         email.text = groupParticipants[indexPath].email
+
+        
             if group.GroupAdmin.email == groupParticipants[indexPath].email{
                 adminLabel.text = "Admin"
             }
@@ -32,5 +36,9 @@ class participantsCell: UITableViewCell {
         email.text = ""
         adminLabel.text = ""
         }
+    }
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        accessoryType = selected ? .checkmark : .none
     }
 }

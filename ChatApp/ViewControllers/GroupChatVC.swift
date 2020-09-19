@@ -102,7 +102,9 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
                 print(error.localizedDescription)
                 fatalError()
             }
-            let message = Message(content: Content(type: .image, content: url!), sender: globalUser!, timeStamp: Date(), recieved: false)
+            let id = UUID().uuidString
+            
+            let message = Message(id:id,content: Content(type: .image, content: url!), sender: globalUser!, timeStamp: Date(), recieved: false)
             self.messageToBeSent = message
             self.sendMessage()
         }
@@ -128,8 +130,9 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
                 if let finalUrl = url, let videoURL = videoURL {
                     messageUrl = videoURL + "thumbNailURL\(finalUrl)"
                     //ebuka may need to refactor code for message to contain property dictionary for content.
-                    
-                    let message = Message(content: Content(type: .video, content: messageUrl), sender: globalUser!, timeStamp: Date(), recieved: false)
+                    let id = UUID().uuidString
+
+                    let message = Message(id:id,content: Content(type: .video, content: messageUrl), sender: globalUser!, timeStamp: Date(), recieved: false)
                     
                     
                     self.messageToBeSent = message
@@ -164,7 +167,13 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         
         
         getGroupName()
-        
+
+        handleNavBarImage()
+
+        loadGroupParticipants()
+    }
+    func loadGroupParticipants(){
+
         FireService.sharedInstance.viewGroupParticipants(user: globalUser!, group: group!) { (participants, true, error) in
             if let error = error{
                 print(error)
@@ -172,11 +181,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
             }
             self.groupParticipants = participants
         }
-        
-        
-        
-        
-        
+
         
     }
     
@@ -219,6 +224,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         getGroupName()
+        loadGroupParticipants()
         updateBackgroundViews()
         loadMessages()
         handleNavBarImage()
@@ -228,12 +234,12 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         getGroupName()
+        loadGroupParticipants()
         updateBackgroundViews()
         loadMessages()
-        
-        
-        
+        handleNavBarImage()
     }
+    
     func getGroupName(){
         FireService.sharedInstance.getGroupname(user: globalUser!, group: group!) { (group, true, error) in
             if let error = error{
@@ -251,7 +257,9 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
             return
         }
         let content = Content(type: .string, content: messageText)
-        let message = Message(content: content, sender: globalUser!, timeStamp: Date(), recieved: false)
+        let id = UUID().uuidString
+        
+        let message = Message(id:id,content: content, sender: globalUser!, timeStamp: Date(), recieved: false)
         messageToBeSent = message
         sendMessage()
         
@@ -322,6 +330,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         if let destination = segue.destination as? GroupInfoVC{
             destination.group = group
             destination.groupParticipants = groupParticipants
+            destination.messages = groupMessages
         }
         
     }
@@ -494,7 +503,7 @@ extension GroupChatVC : TexterViewDelegate {
         }
         switch realTapped {
         case 0:
-            FireService.sharedInstance.saveMessages(user: globalUser!, messageToSave: messagelongTapped!) { (result) in
+            FireService.sharedInstance.saveMessages(user: globalUser!,group: group!, messageToSave: messagelongTapped!) { (result) in
                 switch result {
                 case .success(let bool):
                     if bool {
@@ -663,7 +672,7 @@ extension GroupChatVC {
             
             tappedOutImageView.layer.cornerRadius = 8
             tappedOutImageView.clipsToBounds = true
-            
+
             UIView.animate(withDuration: 0.5, delay: 0,usingSpringWithDamping: 1,initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.blackBackgroundView?.alpha = 0
                 self.texterView.alpha = 1
@@ -671,7 +680,7 @@ extension GroupChatVC {
             }, completion: {(completed: Bool) in
                 tappedOutImageView.removeFromSuperview()
                 self.startingImageView?.isHidden = false
-                
+                self.startingImageView?.layer.cornerRadius = 8
             })
             
         }
