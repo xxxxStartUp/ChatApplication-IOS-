@@ -61,7 +61,8 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
     func setupRightNavItem(){
         let button:UIButton = {
             let rightButton = UIButton(type: .system)
-            rightButton.setTitle("Delete All", for: .normal)
+            let image = UIImage(systemName: "trash")
+            rightButton.setImage(image, for: .normal)
             rightButton.addTarget(self, action: #selector(handlesTappedRightNavBarItem), for: .touchUpInside)
             return rightButton
         }()
