@@ -110,7 +110,7 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
         }
     }
     
-    @objc func handlesClearButtonRightNavBarItem(){
+    @objc func handlesClearButtonRightNavBarItem(sender:UIAlertAction!){
         if let messages = messages{
             FireService.sharedInstance.deleteAllGroupMessages(user: globalUser!, group: group!, MessageToDelete: messages) { (result) in
                 
@@ -530,9 +530,8 @@ extension GroupInfoVC{
                 rightButton.addTarget(self, action: #selector(handlesShareNavBarItem), for: .touchUpInside)
                 return rightButton
             }()
-        let clearRightBarButtonItem = UIBarButtonItem(customView: clearButton)
         let shareRightBarButtonItem = UIBarButtonItem(customView: shareButton)
-        navigationItem.rightBarButtonItems = [shareRightBarButtonItem,clearRightBarButtonItem]
+        navigationItem.rightBarButtonItems = [shareRightBarButtonItem]
         
     }
     
@@ -550,7 +549,9 @@ extension GroupInfoVC{
                 let action1 = UIAlertAction(title: "Assign new admin and leave group", style: .destructive, handler: selectMakeAdminAndLeaveGroupOption(sender:))
                     let action2 = UIAlertAction(title: "Assign admin", style: .default, handler: assignNewAdminOption(sender:))
                 let action3 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-                let actions = [action1,action2,action3]
+                let action4 = UIAlertAction(title: "Clear Chat", style: .default, handler: handlesClearButtonRightNavBarItem(sender:))
+                    
+                let actions = [action1,action2,action3,action4]
                 
                 for action in actions{
                     alertController.addAction(action)
@@ -574,7 +575,8 @@ extension GroupInfoVC{
                 print("Not admin")
                 let action1 = UIAlertAction(title: "Leave group", style: .destructive, handler: leaveGroupOption(sender:))
                 let action2 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-                let actions = [action1,action2]
+                let action3 = UIAlertAction(title: "Clear Chat", style: .default, handler: handlesClearButtonRightNavBarItem(sender:))
+                let actions = [action1,action2,action3]
                 
                 for action in actions{
                     alertController.addAction(action)

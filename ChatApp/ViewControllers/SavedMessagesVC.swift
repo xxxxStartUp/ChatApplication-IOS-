@@ -61,7 +61,7 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
     func setupRightNavItem(){
         let button:UIButton = {
             let rightButton = UIButton(type: .system)
-            let image = UIImage(systemName: "trash")
+            let image = UIImage(systemName: "minus.circle.fill")
             rightButton.setImage(image, for: .normal)
             rightButton.addTarget(self, action: #selector(handlesTappedRightNavBarItem), for: .touchUpInside)
             return rightButton
@@ -94,33 +94,35 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
     }
     
     @objc func handlesTappedRightNavBarItem(){
+//
+//        FireService.sharedInstance.deleteAllSavedMessages(user: globalUser!, group: group!, MessageToDelete: savedMessages) { (result) in
+//            switch result{
+//
+//            case .success(let bool):
+//                if bool{
+//                    print("Successfully deleted")
+//                    self.savedMessages.removeAll()
+//                    self.savedMessagesTable.reloadData()
+//                    print("Savedmessages:\(self.savedMessages)")
+//                    if self.savedMessages.isEmpty{
+//                        self.savedMessagesTable.separatorStyle = .none
+//                        self.finalLabel?.isHidden = false
+//                        self.savedMessagesTable.scrollsToTop = true
+//                    }
+//                    else{
+//                        self.savedMessagesTable.separatorStyle = .singleLine
+//                        self.finalLabel?.isHidden = true
+//                    }
+//
+//
+//                }
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//
+//            }
+//        }
+        savedMessagesTable.setEditing(true, animated: true)
         
-        FireService.sharedInstance.deleteAllSavedMessages(user: globalUser!, group: group!, MessageToDelete: savedMessages) { (result) in
-            switch result{
-                
-            case .success(let bool):
-                if bool{
-                    print("Successfully deleted")
-                    self.savedMessages.removeAll()
-                    self.savedMessagesTable.reloadData()
-                    print("Savedmessages:\(self.savedMessages)")
-                    if self.savedMessages.isEmpty{
-                        self.savedMessagesTable.separatorStyle = .none
-                        self.finalLabel?.isHidden = false
-                        self.savedMessagesTable.scrollsToTop = true
-                    }
-                    else{
-                        self.savedMessagesTable.separatorStyle = .singleLine
-                        self.finalLabel?.isHidden = true
-                    }
-                    
-                    
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-                
-            }
-        }
         print("Right Bar button tapped")
         
     }
@@ -263,6 +265,7 @@ extension SavedMessagesVC{
                         print("Saved Messages:\(self.savedMessages.count)")
                         self.savedMessages.remove(at: indexPath.row)
                         self.savedMessagesTable.deleteRows(at: [indexPath], with: .automatic)
+                        self.savedMessagesTable.setEditing(false, animated: false)
                         self.handleEmptySavedMessages()
                         
                     }
