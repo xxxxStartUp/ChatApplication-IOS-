@@ -150,8 +150,10 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         self.view.addGestureRecognizer(tapgesture)
         messagePopUptableView = UITableView(frame: CGRect(x: 0, y: 500, width: 0, height: 0))
         updateBackgroundViews()
+        
         groupChatTable.delegate = self
         groupChatTable.dataSource = self
+        
         groupChatTable.register(MessgaeCell.self, forCellReuseIdentifier: cellID)
         self.setUptexter(texterView: texterView, controller: self)
         groupChatTable.separatorStyle = .none

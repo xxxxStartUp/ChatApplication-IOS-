@@ -11,10 +11,28 @@ import UIKit
 
 class ContactInfoVC : UIViewController {
     
-    
+    @IBOutlet weak var profileImageView : UIImageView!
     
     @IBOutlet weak var contactInfoTableView: UITableView!
     let id = "contactInfoTableView"
+    var stopGettingData  = false
+    var name : String?
+    
+    var friend : Friend?{
+        
+        didSet{
+            updateView()
+        }
+    }
+    
+    var freindAsUser : FireUser? {
+        didSet{
+            if stopGettingData{
+               updateView()
+            }
+            
+        }
+    }
     override func viewDidLoad() {
         
         print("in contact vc ")
@@ -25,8 +43,41 @@ class ContactInfoVC : UIViewController {
         contactInfoTableView.delegate = self
         contactInfoTableView.dataSource = self
         contactInfoTableView.register(ContactInfoCell.self, forCellReuseIdentifier: id)
-        contactInfoTableView.estimatedRowHeight = 100
+        contactInfoTableView.estimatedRowHeight = 60
         // contactInfoTableView.rowHeight = UITableView.automaticDimension
+    }
+    
+        
+    fileprivate func getUser(){
+        
+        FireService.sharedInstance.searchOneUserWithEmail(email: friend!.email) { (user, error) in
+            guard let user = user else {return}
+            self.freindAsUser = user
+            self.stopGettingData = true
+            return
+        }
+    }
+   fileprivate func updateView(){
+        print("Updated View")
+    
+        name = friend?.username
+        getUser()
+        
+    }
+    
+    func UpdateImageView(){
+        print("updating ImageView")
+        FireService.sharedInstance.getProfilePicture(user: freindAsUser!) { (result) in
+            switch result {
+            case .success(let url):
+                self.profileImageView.af.setImage(withURL: url)
+                break
+            case .failure(_):
+                self.profileImageView.image = UIImage(named: "profile")
+                break
+            }
+        }
+        
     }
     
     
@@ -57,7 +108,7 @@ extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
         
         
         if indexPath.section == 0 {
-            cell.ContactInfoLabel.text = "Dexta Daps"
+            cell.ContactInfoLabel.text = name ?? "no name"
         }
         
         if indexPath.section == 1{
@@ -86,6 +137,10 @@ extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
         
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         if section == 0{
@@ -96,7 +151,7 @@ extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
             let point = CGPoint(x: 0, y: 0)
             let frame = CGRect(origin: point, size: size)
             let space = UIView(frame: frame)
-            space.backgroundColor = .red
+            space.backgroundColor = .clear
             return space
         }
         
@@ -124,7 +179,7 @@ class ContactInfoCell : UITableViewCell {
     }
     lazy var ContactInfobackgroundView : UIView = {
         let view = UIView()
-        view.backgroundColor = .gray
+        view.backgroundColor = .lightGray
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -134,7 +189,7 @@ class ContactInfoCell : UITableViewCell {
         
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = .blue
+        label.backgroundColor = .clear
         label.text = "Testing 123"
         return label
     }()
@@ -150,7 +205,8 @@ class ContactInfoCell : UITableViewCell {
         
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .green
+        button.backgroundColor = .clear
+        button.setImage(UIImage(named: "next"), for: .normal)
         return button
     }()
     

@@ -48,6 +48,7 @@
                     </view>
                     <connections>
                         <outlet property="contactInfoTableView" destination="57L-jz-hfh" id="ryo-gy-ghH"/>
+                        <outlet property="profileImageView" destination="EO7-1J-lZh" id="F4x-5c-UyS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QTl-vV-o0L" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

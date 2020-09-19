@@ -78,6 +78,7 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
    @objc func handleTapNavBarButton(){
         
         guard let vc = UIStoryboard(name: "ContactInfoSB", bundle: nil).instantiateViewController(identifier: "ContactInfoVC") as? ContactInfoVC else {return}
+        vc.friend = r
         self.present(vc, animated: true, completion: nil)
     }
     
