@@ -417,9 +417,16 @@ extension UIView{
         self.layer.cornerRadius = self.layer.frame.size.height/2
         self.clipsToBounds = true
         self.contentMode = .scaleAspectFill
-        
-        
     }
+    func newGroupImageView(){
+        self.layer.borderWidth = 0.5
+        self.layer.borderColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+        self.layer.masksToBounds = false
+        self.layer.cornerRadius = self.layer.frame.size.height/2
+        self.clipsToBounds = true
+        self.contentMode = .scaleAspectFit
+    }
+    
     func settingsPageImageView(){
         
         self.layer.borderWidth = 1
