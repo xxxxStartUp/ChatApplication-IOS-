@@ -462,23 +462,35 @@ extension GroupInfoVC:UIImagePickerControllerDelegate{
     }
     func deleteGroupPicture(){
         groupImageView.isUserInteractionEnabled = false
-        FireService.sharedInstance.DeleteGroupPicture(user: globalUser!, group: group!,friends:groupParticipants) { (result) in
+        FireService.sharedInstance.getGroupPictureData(user: globalUser!, group: group!) { [self] (result) in
             switch result{
                 
-            case .success(let bool):
-                if bool{
-                    Constants.groupInfoPage.globalGroupImage = self.defaultImage
-                    Constants.groupInfoPage.groupImageState = true
-                    self.groupImageView.isUserInteractionEnabled = true
-                    return
+            case .success(let url):
+                FireService.sharedInstance.DeleteGroupPicture(user: globalUser!, group: group!,friends:groupParticipants) { (result) in
+                    switch result{
+                        
+                    case .success(let bool):
+                        if bool{
+                            
+                            Constants.groupInfoPage.globalGroupImage = self.defaultImage
+                            Constants.groupInfoPage.groupImageState = true
+                            self.groupImageView.isUserInteractionEnabled = true
+                            groupImageView.clearCachedImage(url: url.absoluteString)
+                            return
+                        }
+                    case .failure(let error):
+                        let alert = UIAlertController(title: "Could not delete", message: error.localizedDescription, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Try Again", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                        self.groupImageView.isUserInteractionEnabled = true
+                    }
                 }
-            case .failure(let error):
-                let alert = UIAlertController(title: "Could not delete", message: error.localizedDescription, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Try Again", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-                self.groupImageView.isUserInteractionEnabled = true
+                
+            case .failure(_):
+                print("failed to set image url")
             }
         }
+
         
         
         

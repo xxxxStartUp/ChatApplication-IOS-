@@ -193,7 +193,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
             case .success(let url):
                 
                 let imageView = UIImageView()
-                imageView.af.setImage(withURL: url, cacheKey: "image", placeholderImage: UIImage(named: "profile"), serializer: nil, filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.3), runImageTransitionIfCached: false) { (_) in
+                imageView.af.setImage(withURL: url, cacheKey: nil, placeholderImage: UIImage(named: "profile"), serializer: nil, filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.3), runImageTransitionIfCached: false) { (_) in
                     let data = imageView.image?.jpeg(.low)
                     let newImage = (UIImage(data: data!))!.af.imageRoundedIntoCircle()
                     self.navBarButton.imageView?.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
@@ -325,6 +325,9 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
             destination.groupParticipants = groupParticipants
             destination.messages = groupMessages
         }
+        if let destination = segue.destination as? SelectFriendVC{
+            destination.group = group
+        }
         
     }
     
@@ -335,6 +338,8 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     @IBAction func addcontactsButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "chatToContactsIdentifier", sender: self)
         Constants.chatPage.chatToContactsSegueSignal = true
+        Constants.selectedContactsPage.fromChatLogIndicator = false
+        Constants.selectedContactsPage.fromGroupChatVCIndicator = true
     }
     
     //updates the background color for the tableview and nav bar.

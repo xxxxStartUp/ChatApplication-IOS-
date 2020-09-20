@@ -76,6 +76,11 @@ struct Constants{
         static let emailSubHeader = "emailSubHeader"
         
     }
+    struct selectedContactsPage{
+        static var fromGroupChatVCIndicator = false
+        static var fromChatLogIndicator = false
+        
+    }
     struct groupInfoPage{
         static let settingsHeader = "settingsHeader"
         static let groupMemberTitleHeader = "groupMemberTitleHeader"
@@ -92,11 +97,12 @@ struct Constants{
         static let rightchatBubble = "RightChatBubble"
         static let senderNameLabel = "SenderNameLabel"
         static let messageTimeStamp = "MessageTimeStamp"
-        static let groupImagesType = "groupImageType"
+        static let groupImagesType = "groupchatImageType"
         static var uploadTaskProgressIndicator = false
     }
     struct chatLogPage{
         static var chatLogToContactsSegueSignal = false
+        static let ChatLogImageType = "chatLogImageType"
     }
     
 }

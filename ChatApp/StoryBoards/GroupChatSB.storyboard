@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="l98-gk-GfK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="l98-gk-GfK">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,7 +19,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JHH-wi-0xB">
                                 <rect key="frame" x="0.0" y="88" width="414" height="744"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="121" id="ogk-Ll-6W2" customClass="ChatCell_Dara" customModule="ChatApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="121"/>
@@ -30,20 +32,20 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="IE3-p3-3ze"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="JHH-wi-0xB" firstAttribute="top" secondItem="IE3-p3-3ze" secondAttribute="top" id="7qn-0O-hH7"/>
                             <constraint firstItem="IE3-p3-3ze" firstAttribute="trailing" secondItem="JHH-wi-0xB" secondAttribute="trailing" id="8ng-ow-LnP"/>
                             <constraint firstItem="IE3-p3-3ze" firstAttribute="bottom" secondItem="JHH-wi-0xB" secondAttribute="bottom" constant="30" id="qKA-Xf-6eZ"/>
                             <constraint firstItem="JHH-wi-0xB" firstAttribute="leading" secondItem="IE3-p3-3ze" secondAttribute="leading" id="qhq-oc-nc3"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="IE3-p3-3ze"/>
                     </view>
                     <navigationItem key="navigationItem" id="d81-gX-o7h">
                         <rightBarButtonItems>
                             <barButtonItem title="Item" style="plain" id="dVv-fI-JYc">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rTc-vN-DeC">
-                                    <rect key="frame" x="374" y="0.0" width="20" height="44"/>
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rTc-vN-DeC">
+                                    <rect key="frame" x="369" y="0.0" width="25" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" image="info.circle" catalog="system">
                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
@@ -54,8 +56,8 @@
                                 </button>
                             </barButtonItem>
                             <barButtonItem style="plain" id="D7p-WF-kLc">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JuT-6q-ScP">
-                                    <rect key="frame" x="346" y="0.0" width="20" height="44"/>
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JuT-6q-ScP">
+                                    <rect key="frame" x="333.5" y="0.0" width="27.5" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" image="person.crop.circle.badge.plus" catalog="system">
                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
@@ -78,10 +80,10 @@
             </objects>
             <point key="canvasLocation" x="1039.1304347826087" y="52.901785714285715"/>
         </scene>
-        <!--FriendsSB-->
+        <!--selectFriendSB-->
         <scene sceneID="kLL-WO-pyT">
             <objects>
-                <viewControllerPlaceholder storyboardName="FriendsSB" id="lYC-wK-fiY" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="selectFriendSB" id="lYC-wK-fiY" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="H4E-TS-DXL"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RUO-r3-RA3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -119,6 +121,9 @@
     </scenes>
     <resources>
         <image name="info.circle" catalog="system" width="128" height="121"/>
-        <image name="person.crop.circle.badge.plus" catalog="system" width="128" height="101"/>
+        <image name="person.crop.circle.badge.plus" catalog="system" width="128" height="113"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

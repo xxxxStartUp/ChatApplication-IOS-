@@ -85,6 +85,8 @@ class ChatLogVC: UIViewController {
         performSegue(withIdentifier: "chatLogToContactsIdentifier", sender: self)
         
         Constants.chatLogPage.chatLogToContactsSegueSignal = true
+        Constants.selectedContactsPage.fromChatLogIndicator = true
+        Constants.selectedContactsPage.fromGroupChatVCIndicator = false
     }
     @IBAction func contactButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "chatLogToContactsIdentifier", sender: self)

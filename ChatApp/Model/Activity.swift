@@ -23,6 +23,7 @@ class Activity {
       
         case .GroupChat(group: let group):
             self.name = group.name
+            
             break
         case .FriendChat(friend: let friend):
             self.name = friend.username

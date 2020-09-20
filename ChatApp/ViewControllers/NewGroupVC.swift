@@ -11,7 +11,7 @@ import Foundation
 import FirebaseDynamicLinks
 import MessageUI
 
-class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate, UINavigationControllerDelegate {
+class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate, UINavigationControllerDelegate{
     
     
     @IBOutlet weak var groupNameTextField: UITextField!
@@ -321,8 +321,7 @@ extension NewGroupVC: MFMessageComposeViewControllerDelegate{
         present(composer, animated: true, completion: nil)
         
     }
-    
-    
+
 }
 extension NewGroupVC:UIImagePickerControllerDelegate{
     
