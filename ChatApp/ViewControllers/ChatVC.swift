@@ -34,7 +34,7 @@ class ChatVC: UIViewController {
         messageView.delegate = self
         super.viewDidLoad()
         setUpTableView()
-        
+        print("ekemini")
     }
     
     

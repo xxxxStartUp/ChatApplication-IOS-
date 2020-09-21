@@ -22,7 +22,8 @@ class ChatLogCell: UITableViewCell {
         
         profileImageview.chatLogImageView()
         
-        print("errr"')
+        print("errr")
+        
         
         
     }
