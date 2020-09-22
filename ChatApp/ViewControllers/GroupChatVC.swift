@@ -337,7 +337,6 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     }
     @IBAction func addcontactsButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "chatToContactsIdentifier", sender: self)
-        Constants.chatPage.chatToContactsSegueSignal = true
         Constants.selectedContactsPage.fromChatLogIndicator = false
         Constants.selectedContactsPage.fromGroupChatVCIndicator = true
     }

@@ -25,7 +25,6 @@ class FriendsVC: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
         updateBackgroundViews()
-        rightBarButtonItemTrick()
         setUpTableView()
         //contactsTable.allowsMultipleSelection = true
         
@@ -72,15 +71,7 @@ class FriendsVC: UIViewController {
     @IBAction func addButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "contactsToAddFriends", sender: self)
     }
-    //handles hiding the rightbar button when contactstable appears from segueing from the chatscreen. The reason for this is so you can only add contacts from the contacts tab
-    func rightBarButtonItemTrick(){
-        if Constants.chatPage.chatToContactsSegueSignal{
-            self.navigationItem.rightBarButtonItem = nil
-        }
-        else{
-            self.navigationItem.rightBarButtonItem = addButton
-        }
-    }
+
 
     
     func setUpTableView() -> Void {

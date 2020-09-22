@@ -97,6 +97,9 @@
                     <navigationItem key="navigationItem" title="Contacts" id="nXr-Ua-f9X">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="3xa-Ax-aBa">
                             <color key="tintColor" red="0.1333333333" green="0.57647058819999997" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="addContactPressed:" destination="9pa-BF-PDe" id="rbz-1X-BKc"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>

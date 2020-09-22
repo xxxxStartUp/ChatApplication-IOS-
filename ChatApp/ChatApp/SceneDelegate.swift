@@ -99,35 +99,46 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         }
                         
                     }
-                }
-                
-                
-                
-                
-                //After dynamic link is received you want to make the user join group. What I have available from the dynamic link:
-                //1) The groupID
-                //2) The group adminMail address
-                //3) The group Name.
-                
-                // I need the back end function that basically copies adds the user as a group participant, copies all the documents from the group to this users group collection. Thats where i'm stuck
-                //You should be able to transfer information from the group that was created to this user
-                //
-                //                let newGroup = Group(GroupAdmin: adminMail, id: groupID, name: groupName)
-                //added final id to completion to get the latest id from backend and use for creating dynamic link.
-                
-                //use groupID to add group to chatLogVC by calling backend. Ebuka to make function for backend.
-                
-                
-                //                let storyboard:UIStoryboard = UIStoryboard(name: "GroupChatSB", bundle: nil)
-                //                guard let groupChatVC = storyboard.instantiateViewController(withIdentifier: "GroupChat") as? GroupChatVC else {return}
-                //  call a groupchatVC.loadMessages(id:String) that uses the groupid to search through and load messages.
-                //                if let rootViewController = window?.rootViewController {
-                //                let rootViewController = rootViewController
-                //                    rootViewController.present(groupChatVC, animated: true, completion: nil)
-                //                }
-                
-            }
+                }}}
+        else if (components.path == "/Contacts"){
+            if let senderQueryItem = queryItems.first(where: {$0.name == "requestSenderEmail" }),let receiverQueryItem = queryItems.first(where: {$0.name == "requestReceiverEmail" }) {
+                guard let senderEmail = senderQueryItem.value else {return}
+                guard let receiverEmail = receiverQueryItem.value else {return}
+                FireService.sharedInstance.searchOneUserWithEmail(email: senderEmail) { (user, error) in
+                    if let error = error {
+                        print("could not find group admin user while adding new user to group",error.localizedDescription)
+                        
+                        return
+                    }
+                guard let user = user else {return}
+                FireService.sharedInstance.searchOneFreindWithEmail(email:receiverEmail) { (freind, error) in
+                    if let error = error {
+                        print(error)
+                        fatalError("cannot add friend, deoes not exsist")
+                    }
+                    if let friend = freind {
+//                        guard let globalUser = globalUser else {return}
+                        FireService.sharedInstance.addFriend(User: user, friend: friend) { (sucess, error) in
+                            
+                            if let error = error{
+                                print(error)
+                                
+//                                let controller = UIAlertController.alertUser(title: "Error", message: error.localizedDescription, whatToDo:  "make sure the email is complete")
+//                                self.present(controller, animated: true, completion: nil)
+                            }else{
+                                if sucess {
+                                    print("sucessfully added contact")
+//                                    let controller = UIAlertController.alertUser(title: "Sucesss", message: "Sucessfully added a user", whatToDo: "Check contact sb")
+                                    
+//                                    self.present(controller, animated: true, completion: nil)
+                                }
+                            }}
+                    }}}}
         }
+        else{
+            print("just here chilling")
+        }
+        
         
         
     }

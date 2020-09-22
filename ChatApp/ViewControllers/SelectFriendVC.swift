@@ -43,6 +43,7 @@ class SelectFriendVC: UIViewController,MFMailComposeViewControllerDelegate{
         super.viewWillAppear(true)
         updateBackgroundViews()
         Constants.chatLogPage.chatLogToContactsSegueSignal = true
+        contactsTable.tableFooterView = footerviewSetUp()
         friendListEmail.removeAll()
         
         
@@ -160,6 +161,10 @@ class SelectFriendVC: UIViewController,MFMailComposeViewControllerDelegate{
         }
     }
     
+    @IBAction func addContactPressed(_ sender: Any) {
+        performSegue(withIdentifier: "contactsToAddFriends", sender: self)
+    }
+    
     
     
     
@@ -249,7 +254,7 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
     func footerviewSetUp() -> UIView{
         let view:UIView = {
             let finalLabel = UIView(frame: CGRect(x: 0, y: 0, width: contactsTable.frame.width, height: 30))
-            finalLabel.backgroundColor = .clear
+            finalLabel.darkmodeBackground()
             return finalLabel
         }()
         let button:UIButton = {

@@ -92,7 +92,6 @@ struct Constants{
         static let GroupImageType = "groupImageType"
     }
     struct chatPage{
-        static var chatToContactsSegueSignal = false
         static let leftChatBubblev = "LeftChatBubble"
         static let rightchatBubble = "RightChatBubble"
         static let senderNameLabel = "SenderNameLabel"

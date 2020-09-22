@@ -1905,6 +1905,9 @@ class FireService {
         let data = ["name" : friend.username,
                     "email":friend.email,
                     "id": friend.id] as [String : Any]
+        let data2 = ["name" : User.name,
+                    "email":User.email,
+                    "id": User.id] as [String : Any]
         
         if friend.email == User.email {
             fatalError("you cannot add yourself")
@@ -1921,8 +1924,14 @@ class FireService {
                         if let error = error {
                             completion(false, error)
                         }else{
-                            completion(true , nil)
-                            return
+                            FireService.users.document(friend.email).collection(FireService.firendsString).document(User.email).setData(data2) { (error) in
+                                if let error = error {
+                                completion(false, error)
+                                }
+                                completion(true , nil)
+                                return
+                            }
+                          
                         }
                     }
                     
