@@ -19,6 +19,7 @@ class SettingsVC: UIViewController {
     let identifier2 = "ChatActionsCellsIdentifier"
     
     let identifier3 = "AppSettingsCellIdentifier"
+    let settingsVCToSavedMessagesID = "settingsVCToSavedMessagesID"
     
     
     override func viewDidLoad() {
@@ -206,12 +207,16 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
         switch indexPath.section {
         case 0:
             performSegue(withIdentifier: Constants.settingsToProfileIdentifer, sender: self)
-               
+        case 1:
+            if indexPath.row == 0{
+                performSegue(withIdentifier: settingsVCToSavedMessagesID, sender: self)
+            }
             
         default:
                break
      
     }
+        
     }
     
     //updates the background color for the tableview and nav bar.

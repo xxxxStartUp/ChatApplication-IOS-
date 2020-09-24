@@ -14,6 +14,8 @@ class FriendsVC: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet var addButton: UIBarButtonItem!
     
+    var searchBarr:UISearchBar?
+    
     
     var friendList : [Friend] = []
     let identifier = "ContactCell"
@@ -24,6 +26,7 @@ class FriendsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
+//        contactsTable.tableHeaderView = headerViewSetUp()
         updateBackgroundViews()
         setUpTableView()
         //contactsTable.allowsMultipleSelection = true
@@ -34,6 +37,7 @@ class FriendsVC: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+//        contactsTable.tableHeaderView = headerViewSetUp()
         updateBackgroundViews()
                 
         
@@ -178,6 +182,16 @@ extension FriendsVC : UITableViewDelegate , UITableViewDataSource, UISearchBarDe
             delegate?.didSendFriend(freind: friendList[indexPath.row])
             navigationController?.pushViewController(vc, animated: true)
     }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let view:UIView = {
+//            let searchBar = UISearchBar()//UIView(frame: CGRect(x: 0, y: 0, width: contactsTable.frame.width, height: 30))
+//            searchBar.placeholder = "Search Contacts"
+//            searchBar.darkmodeBackground()
+//            return searchBar
+//        }()
+//        let finalSearchBar = searchBar
+//        return finalSearchBar
+//    }
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -193,6 +207,17 @@ extension FriendsVC : UITableViewDelegate , UITableViewDataSource, UISearchBarDe
         searchBar.text = ""
         contactsTable.reloadData()
     }
+//    func headerViewSetUp() -> UIView{
+//        let view:UIView = {
+//            let searchBar = UISearchBar()//UIView(frame: CGRect(x: 0, y: 0, width: contactsTable.frame.width, height: 30))
+//            searchBar.placeholder = "Search Contacts"
+//            searchBar.darkmodeBackground()
+//            return searchBar
+//        }()
+//        searchBar = view as? UISearchBar
+//        return view
+//    }
+        
     
     
     
