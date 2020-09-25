@@ -58,7 +58,8 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate, UINavig
                 self.present(controller, animated: true, completion: nil)
                 return
             }
-
+            if groupName.count == 15{
+            print("Character count is equal to: \(groupName.count)")
             //new group is created and temp id is passed.
             let id = UUID().uuidString
             let newGroup = Group(GroupAdmin: globalUser!, id: id, name: groupName)
@@ -94,7 +95,13 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate, UINavig
                         }
                     }
                 }
+            }
                 
+            }
+            else{
+                let controller = UIAlertController.alertUser(title: "Character limit exceeded", message: "The maximum number of characters allowed is 15. Please use a shorter group name", whatToDo: "Try again")
+                self.present(controller, animated: true, completion: nil)
+                return
             }
             
         }

@@ -22,7 +22,7 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
     var group: Group?
     var finalLabel:UILabel?
     var rightBarButton:UIBarButtonItem?
-    
+    var freind : Friend?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,34 +93,30 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
         
     }
     
+    func loadFreindMessage(){
+        
+        FireService.sharedInstance.loadMessagesWithFriend(User: globalUser!, freind: freind!) { (messages, error) in
+            
+        }
+    }
+    
+    
+    
+    func loadRightMessage(){
+        
+        
+        if freind != nil {
+            loadFreindMessage()
+            
+        }else if group != nil{
+            loadMessages()
+        }
+    }
+    
+    
+    
+    
     @objc func handlesTappedRightNavBarItem(){
-//
-//        FireService.sharedInstance.deleteAllSavedMessages(user: globalUser!, group: group!, MessageToDelete: savedMessages) { (result) in
-//            switch result{
-//
-//            case .success(let bool):
-//                if bool{
-//                    print("Successfully deleted")
-//                    self.savedMessages.removeAll()
-//                    self.savedMessagesTable.reloadData()
-//                    print("Savedmessages:\(self.savedMessages)")
-//                    if self.savedMessages.isEmpty{
-//                        self.savedMessagesTable.separatorStyle = .none
-//                        self.finalLabel?.isHidden = false
-//                        self.savedMessagesTable.scrollsToTop = true
-//                    }
-//                    else{
-//                        self.savedMessagesTable.separatorStyle = .singleLine
-//                        self.finalLabel?.isHidden = true
-//                    }
-//
-//
-//                }
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//
-//            }
-//        }
         savedMessagesTable.setEditing(true, animated: true)
         
         print("Right Bar button tapped")
@@ -162,15 +158,7 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
                 self.finalLabel?.isHidden = false
             
             }
-            //            if self.savedMessages.isEmpty{
-            //                   self.savedMessagesTable.separatorStyle = .none
-            //                   self.finalLabel?.isHidden = false
-            //               }
-            //               else{
-            //                   self.savedMessagesTable.separatorStyle = .singleLine
-            //                   self.finalLabel?.isHidden = true
-            //               }
-            
+
         }
         
     }

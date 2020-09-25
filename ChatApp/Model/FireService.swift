@@ -521,6 +521,61 @@ class FireService {
         
     }
     
+    
+    
+    func saveMessageWithFreind(user : FireUser , freind : Friend , message : Message, completionHandler: @escaping (Result<Bool, Error>) -> Void){
+        let ref = FireService.users.document(user.email).collection(FireService.savedMessages).document(freind.id)
+        let data = self.changeMessageToDictionary(message)
+        ref.collection("FreindMessages").document("\(message.id)").setData(data) { (error) in
+            if let error = error{
+                completionHandler(.failure(error))
+                return
+            }
+            
+            completionHandler(.success(true))
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+    func loadSavedMessagesWithFriend(user:FireUser, freind:Friend, completion: @escaping ([Message]?,Error?)-> ()){
+        let ref =         FireService.users.document(user.email).collection(FireService.savedMessages).document(freind.id).collection("Messages")
+        //listening for new messages
+        ref.getDocuments{ (snapshot, error) in
+            var messages : [Message] = []
+            if let error = error {
+                completion(nil , error)
+            }
+            //unwarps documents
+            guard let documents = snapshot?.documents else {
+                print("no messages")
+                completion(messages , nil)
+                return
+            }
+            
+            documents.forEach { (document) in
+                
+                //checks if documentID is equal to group id then it returns the messages
+                
+                let message = self.changeDictionaryToMessage(document.data())
+                messages.append(message)
+                print(message.content.content as! String , "this is from loadmessageswithgroup",message.content.type.rawValue)
+                if messages.count == documents.count {
+                    completion(messages, nil)
+                    return
+                }
+            }
+            
+            
+        }
+    }
+    
+    
+    
     /// Backend function to  save  a message. This  creates a document (a message) in FireBase in the user's 'savedMessages' collection.
     /// - Parameters:
     ///   - user: The current user sqving the message

@@ -81,6 +81,10 @@ class ContactInfoVC : UIViewController {
         
     }
     
+    @objc func clearChat(){
+        print("Clear Chat")
+    }
+    
     
 }
 
@@ -92,7 +96,7 @@ extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
             return 1
         }
         if section == 1 {
-            return 3
+            return 2
         }
         
         if section == 2 {
@@ -109,7 +113,7 @@ extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
         
         
         if indexPath.section == 0 {
-            cell.ContactInfoLabel.text = name ?? "no name"
+            cell.ContactInfoLabel.text = friend?.email ?? "no name"
         }
         
         if indexPath.section == 1{
@@ -123,17 +127,17 @@ extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
                 cell.ContactInfoLabel.text = "Mute"
                 cell.buttonIsSwitch = true
             }
-            if indexPath.row == 2{
-                cell.ContactInfoLabel.text = "Archive"
-                cell.buttonIsSwitch = true
-            }
+//            if indexPath.row == 2{
+//                cell.ContactInfoLabel.text = "Archive"
+//                cell.buttonIsSwitch = true
+//            }
             
         }
         
-        if indexPath.section == 2 {
-             cell.ContactInfoLabel.text = "Clear Chat"
-            // cell.buttonIsSwitch = nil
-        }
+//        if indexPath.section == 2 {
+//             cell.ContactInfoLabel.text = "Clear Chat"
+//            // cell.buttonIsSwitch = nil
+//        }
         
         return cell
         
@@ -156,18 +160,49 @@ extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
             return nil
         }
         else{
-            let size = CGSize(width: contactInfoTableView.frame.width, height: 60)
+            let size = CGSize(width: contactInfoTableView.frame.width, height: 30)
             let point = CGPoint(x: 0, y: 0)
             let frame = CGRect(origin: point, size: size)
             let space = UIView(frame: frame)
-            space.backgroundColor = .clear
+            space.backgroundColor = .white
             return space
         }
         
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 2
+    }
+    
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        if section == 1 {
+            let size = CGSize(width: contactInfoTableView.frame.width, height: 60)
+            let point = CGPoint(x: 0, y: 0)
+            let frame = CGRect(origin: point, size: size)
+            let button = UIButton(frame:frame)
+            button.setTitle("Clear Chat", for: .normal)
+            button.addTarget(self, action: #selector(clearChat), for: .touchUpInside)
+            button.backgroundColor =  #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+            return button
+        }
+        return nil
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == 1 {
+            return 50
+        }
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 1 {
+            return 20
+        }
+        
+        return 0 
     }
     
     

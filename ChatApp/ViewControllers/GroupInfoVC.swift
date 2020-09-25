@@ -269,6 +269,7 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
                     cell.backgroundColor = .clear
                     
                     cell.updateView()
+                
                     tableView.setEditing(false, animated: false)
                     return cell
                 }

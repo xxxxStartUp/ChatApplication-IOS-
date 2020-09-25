@@ -94,33 +94,7 @@ class SavedMessagesFromSettingsVC: UIViewController,UITableViewDataSource,UITabl
     }
     
     @objc func handlesTappedRightNavBarItem(){
-//
-//        FireService.sharedInstance.deleteAllSavedMessages(user: globalUser!, group: group!, MessageToDelete: savedMessages) { (result) in
-//            switch result{
-//
-//            case .success(let bool):
-//                if bool{
-//                    print("Successfully deleted")
-//                    self.savedMessages.removeAll()
-//                    self.savedMessagesTable.reloadData()
-//                    print("Savedmessages:\(self.savedMessages)")
-//                    if self.savedMessages.isEmpty{
-//                        self.savedMessagesTable.separatorStyle = .none
-//                        self.finalLabel?.isHidden = false
-//                        self.savedMessagesTable.scrollsToTop = true
-//                    }
-//                    else{
-//                        self.savedMessagesTable.separatorStyle = .singleLine
-//                        self.finalLabel?.isHidden = true
-//                    }
-//
-//
-//                }
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//
-//            }
-//        }
+
         savedMessagesTable.setEditing(true, animated: true)
         
         print("Right Bar button tapped")
@@ -128,12 +102,6 @@ class SavedMessagesFromSettingsVC: UIViewController,UITableViewDataSource,UITabl
     }
     func loadMessages (){
         
-//        FireService.sharedInstance.loadSavedMessagesFromSettings2(user: globalUser!){(messages, error) in
-//            if let error = error{
-//                print(error.localizedDescription)
-//            }
-//            print("THIS DICTIONARY I AM PRINTING IS :\(messages)")
-//            }
         FireService.sharedInstance.loadSavedMessagesFromSettings(user: globalUser!) { (messages, error) in
 
             if let error = error{
