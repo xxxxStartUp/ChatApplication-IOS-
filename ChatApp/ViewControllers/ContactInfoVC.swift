@@ -40,8 +40,12 @@ class ContactInfoVC : UIViewController {
         contactInfoTableView.delegate = self
         contactInfoTableView.dataSource = self
         contactInfoTableView.register(ContactInfoCell.self, forCellReuseIdentifier: id)
-        contactInfoTableView.estimatedRowHeight = 40
-        // contactInfoTableView.rowHeight = UITableView.automaticDimension
+        //contactInfoTableView.estimatedRowHeight = 20
+        contactInfoTableView.separatorStyle = .singleLine
+        contactInfoTableView.rowHeight =  60
+    
+        
+        
     }
     
         
@@ -56,7 +60,7 @@ class ContactInfoVC : UIViewController {
     }
    fileprivate func updateView(){
         print("Updated View")
-    
+        title = friend?.username
         name = friend?.username
         getUser()
         
@@ -102,7 +106,8 @@ extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
         guard let cell = contactInfoTableView.dequeueReusableCell(withIdentifier: id) as? ContactInfoCell else {
             return UITableViewCell()
         }
-        
+        cell.selectionStyle = .none
+        cell.tintColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
         
         if indexPath.section == 0 {
             cell.ContactInfoLabel.text = name ?? "no name"
@@ -112,6 +117,9 @@ extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
             
             if indexPath.row == 0{
                 cell.ContactInfoLabel.text = "Saved Messages"
+                
+                cell.accessoryType = .disclosureIndicator
+                
             }
             if indexPath.row == 1{
                 cell.ContactInfoLabel.text = "Mute"
@@ -182,7 +190,7 @@ class ContactInfoCell : UITableViewCell {
     }
     lazy var ContactInfobackgroundView : UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -200,6 +208,8 @@ class ContactInfoCell : UITableViewCell {
     lazy var ContactInfoswitch : UISwitch = {
         
         let newSwitch = UISwitch()
+        //self.groupNameTextField.tintColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+        newSwitch.onTintColor =  #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
         newSwitch.translatesAutoresizingMaskIntoConstraints = false
         return newSwitch
     }()
@@ -214,7 +224,7 @@ class ContactInfoCell : UITableViewCell {
     }()
     
     
-    lazy var stackView = UIStackView(arrangedSubviews: [ContactInfoLabel,ContactInfoButton])
+    lazy var stackView = UIStackView(arrangedSubviews: [ContactInfoLabel])
     
     
     
@@ -233,7 +243,7 @@ class ContactInfoCell : UITableViewCell {
               stackView = UIStackView(arrangedSubviews: [ContactInfoLabel,ContactInfoswitch])
         }
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = 5
+        stackView.spacing = 0
         stackView.backgroundColor = .green
         self.addSubview(ContactInfobackgroundView)
         self.addSubview(stackView)
@@ -255,12 +265,12 @@ class ContactInfoCell : UITableViewCell {
         stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16).isActive = true
         
         
-        if buttonIsSwitch{
-   ContactInfoswitch.widthAnchor.constraint(equalToConstant: 36).isActive = true
-        
-    
+       if buttonIsSwitch{
+        ContactInfoswitch.widthAnchor.constraint(equalToConstant: 36).isActive = true
+
+
         }else{
-            ContactInfoButton.widthAnchor.constraint(equalToConstant: 36).isActive = true
+            //ContactInfoButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         }
         //  constarint for ContactInfoswitch and ContactInfoButton
       

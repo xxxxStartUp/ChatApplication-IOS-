@@ -1050,12 +1050,9 @@ class FireService {
                 }else{
                     print("couldnt cast to url")
                 }
-                
-                
             }else{
                 print("couldnt cast to string")
             }
-            
         }
         
         

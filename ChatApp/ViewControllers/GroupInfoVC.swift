@@ -246,7 +246,7 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
                 return 1
             }
             else if section == 1 {
-                return 2
+                return 1
             }
                 
             else {
@@ -467,7 +467,7 @@ extension GroupInfoVC:UIImagePickerControllerDelegate{
             switch result{
                 
             case .success(let url):
-                FireService.sharedInstance.DeleteGroupPicture(user: globalUser!, group: group!,friends:groupParticipants) { (result) in
+                FireService.sharedInstance.DeleteGroupPicture(user: globalUser!, group: self.group!,friends:self.groupParticipants) { (result) in
                     switch result{
                         
                     case .success(let bool):
@@ -476,7 +476,7 @@ extension GroupInfoVC:UIImagePickerControllerDelegate{
                             Constants.groupInfoPage.globalGroupImage = self.defaultImage
                             Constants.groupInfoPage.groupImageState = true
                             self.groupImageView.isUserInteractionEnabled = true
-                            groupImageView.clearCachedImage(url: url.absoluteString)
+                            self.groupImageView.clearCachedImage(url: url.absoluteString)
                             return
                         }
                     case .failure(let error):

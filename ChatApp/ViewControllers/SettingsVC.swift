@@ -110,7 +110,7 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
             return 1
         }
         else if section == 1 {
-            return 2
+            return 1
         }
             
         else if section == 2 {

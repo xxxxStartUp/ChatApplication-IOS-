@@ -58,7 +58,7 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate, UINavig
                 self.present(controller, animated: true, completion: nil)
                 return
             }
-            if groupName.count == 15{
+            if groupName.count <= 15{
             print("Character count is equal to: \(groupName.count)")
             //new group is created and temp id is passed.
             let id = UUID().uuidString
@@ -76,8 +76,14 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate, UINavig
                             //call function to save the url in FB
                             if let shareURLString = self.shareURLString{
                             let data = ["groupInvitationUrl" : shareURLString]
-                            let imageData = Constants.groupInfoPage.globalGroupImage!.pngData()!
-                            self.saveGroupPicture(data: imageData)
+                                
+                                if let image = Constants.groupInfoPage.globalGroupImage {
+                                    if let imageData = image.pngData(){
+                                      self.saveGroupPicture(data: imageData)
+                                    }
+                                }
+                
+    
                             FireService.sharedInstance.addCustomDataToGroup(data: data, user: globalUser!, group: newGroup) { (error, success) in
                                 if let error = error {
                                     print(error.localizedDescription)
