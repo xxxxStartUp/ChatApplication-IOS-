@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import IQKeyboardManager
 import FirebaseDynamicLinks
+import UserNotificationsUI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+
+        FirebaseApp.configure()
+        IQKeyboardManager.shared().isEnabled = true
+       
         if #available(iOS 10.0, *) {
           // For iOS 10 display notification (sent via APNS)
           UNUserNotificationCenter.current().delegate = self
@@ -29,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
           let settings: UIUserNotificationSettings =
           UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+         Messaging.messaging().delegate = self
           application.registerUserNotificationSettings(settings)
         }
 
@@ -60,12 +66,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 
 
-}
-
-
-
-extension AppDelegate {
-    
 }
 
 
@@ -173,6 +173,9 @@ extension AppDelegate : MessagingDelegate {
     }
     
 
+    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+        
+    }
     
 }
 

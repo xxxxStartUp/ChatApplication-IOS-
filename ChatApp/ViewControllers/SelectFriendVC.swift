@@ -21,7 +21,11 @@ class SelectFriendVC: UIViewController,MFMailComposeViewControllerDelegate{
     var delegate : FreindDelegate?
     var filteredFriendList = [Friend]()
     var searching = false
+
     var group:Group?
+
+    let navBarButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
