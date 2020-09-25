@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class ChatLogCell: UITableViewCell {
     
@@ -19,7 +20,7 @@ class ChatLogCell: UITableViewCell {
         chatDateLabel.chatLogPageLabels(type: Constants.mainPage.timeStamp)
 //        chatNameLabel.text = "Chat \(indexPath)"
         chatDateLabel.text = "9/1\(indexPath)/20"
-        
+    
         profileImageview.chatLogImageView()
         
         print("errr")
@@ -42,7 +43,8 @@ class ChatLogCell: UITableViewCell {
                         
                     case .success(let url):
                         //                self.profileImageView.af_setImage(withURL: url)
-                        self.profileImageview.loadImages(urlString: url.absoluteString, mediaType: Constants.groupInfoPage.GroupImageType)
+                        self.profileImageview.af.setImage(withURL: url)
+                       // self.profileImageview.loadImages(urlString: url.absoluteString, mediaType: Constants.groupInfoPage.GroupImageType)
                        
                         //                    self.groupImageView.contentMode = .scaleAspectFit
                         
