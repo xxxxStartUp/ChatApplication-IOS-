@@ -60,7 +60,7 @@ class MessgaeCell: UITableViewCell {
                  messageImageView.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: 0).isActive = true
                  messageImageView.topAnchor.constraint(equalTo: messageBackgroundView.topAnchor, constant: 16).isActive = true
                  messageImageView.bottomAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: -16).isActive = true
-                 messageImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+                messageImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
                // messageBackgroundView.isHidden = true
                
                 messageBackgroundView.backgroundColor = .clear

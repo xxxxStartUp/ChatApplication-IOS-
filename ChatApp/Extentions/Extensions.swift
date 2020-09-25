@@ -602,7 +602,9 @@ extension UIImageView{
         //check cache for image
         if let cachedImage = cachedImage.object(forKey: urlString as NSString){
             self.image = cachedImage
+            self.contentMode = .scaleAspectFill
             return
+            
         }
         //otherwise fire off a new download
 
@@ -615,6 +617,7 @@ extension UIImageView{
                 switch reponse.result {
                 case .success(let image):
                     self.image = image
+                    self.contentMode = .scaleAspectFill
                     
                     cachedImage.setObject(image, forKey: urlString as NSString)
                 case .failure(let error):

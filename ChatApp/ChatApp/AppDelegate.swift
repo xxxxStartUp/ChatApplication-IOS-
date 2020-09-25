@@ -20,8 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
-        FirebaseApp.configure()
-        IQKeyboardManager.shared().isEnabled = true
+//        FirebaseApp.configure()
+//        IQKeyboardManager.shared().isEnabled = true
        
         if #available(iOS 10.0, *) {
           // For iOS 10 display notification (sent via APNS)

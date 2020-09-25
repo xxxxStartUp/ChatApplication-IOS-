@@ -674,7 +674,7 @@ extension GroupChatVC {
         
         if let tappedOutImageView = tapGesture.view,let startingFrame = startingFrame{
             
-            tappedOutImageView.layer.cornerRadius = 8
+            //tappedOutImageView.layer.cornerRadius = 8
             tappedOutImageView.clipsToBounds = true
 
             UIView.animate(withDuration: 0.5, delay: 0,usingSpringWithDamping: 1,initialSpringVelocity: 1, options: .curveEaseOut, animations: {
@@ -684,6 +684,7 @@ extension GroupChatVC {
             }, completion: {(completed: Bool) in
                 tappedOutImageView.removeFromSuperview()
                 self.startingImageView?.isHidden = false
+                self.startingImageView?.contentMode = .scaleAspectFill
                 self.startingImageView?.layer.cornerRadius = 8
             })
             
