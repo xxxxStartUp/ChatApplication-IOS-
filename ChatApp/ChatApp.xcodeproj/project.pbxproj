@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		18AE0FFA1E2C8765A2A2C9A8 /* Pods_ChatApp_ChatAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B61A6BE78F572A288EFF5C54 /* Pods_ChatApp_ChatAppUITests.framework */; };
-		1A4CAF22F581A07E461693D6 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		1A4CAF22F581A07E461693D6 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		2709E88B250298EC006E0DF0 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2709E88A250298EC006E0DF0 /* HeaderView.swift */; };
 		2727D50225108D9700CCC9C8 /* ContactInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2727D50125108D9700CCC9C8 /* ContactInfoVC.swift */; };
 		2727D50425108E0200CCC9C8 /* ContactInfoSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2727D50325108E0200CCC9C8 /* ContactInfoSB.storyboard */; };
@@ -105,7 +105,7 @@
 		CBD5987224986041000CBEBD /* ChatAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5987124986041000CBEBD /* ChatAppTests.swift */; };
 		CBD5987D24986041000CBEBD /* ChatAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5987C24986041000CBEBD /* ChatAppUITests.swift */; };
 		CBF45C7F24C5117000E5AFA3 /* GroupInfoSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBF45C7E24C5117000E5AFA3 /* GroupInfoSB.storyboard */; };
-		CDFF0A4BC8D2179091611278 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		CDFF0A4BC8D2179091611278 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -243,7 +243,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A4CAF22F581A07E461693D6 /* BuildFile in Frameworks */,
+				1A4CAF22F581A07E461693D6 /* (null) in Frameworks */,
 				418257BBDCDBE180D898FEBA /* Pods_ChatApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -252,7 +252,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDFF0A4BC8D2179091611278 /* BuildFile in Frameworks */,
+				CDFF0A4BC8D2179091611278 /* (null) in Frameworks */,
 				83C51EC65116E5E2F8C3A276 /* Pods_ChatAppTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

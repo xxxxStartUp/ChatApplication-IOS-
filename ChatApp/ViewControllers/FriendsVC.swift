@@ -152,6 +152,7 @@ extension FriendsVC : UITableViewDelegate , UITableViewDataSource, UISearchBarDe
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = contactsTable.dequeueReusableCell(withIdentifier: identifier) as? ContactCell {
+            cell.FreindimageView.chatLogImageView()
             if searching{
                 cell.friend = filteredFriendList[indexPath.row]
                 print("This is FilteredfriendsList\(filteredFriendList)")

@@ -58,7 +58,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     
     func handleIncomingDynamicLink(dynamicLink:DynamicLink){
-        
+        if let globaluser = globalUser{
         guard let url = dynamicLink.url else{
             print("That's weird. My dynamic link object has no url")
             return
@@ -86,8 +86,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     guard let user = user else {return}
                     let finalGroup = Group(GroupAdmin: user, id: groupID, name: groupName)
                     
-                    
-                    FireService.sharedInstance.createGroupFromReceivingDynamicLink(user: globalUser!, group: finalGroup, friend: globalUser!.asAFriend) { (sucess, error) in
+                   
+                
+                    FireService.sharedInstance.createGroupFromReceivingDynamicLink(user: globaluser, group: finalGroup, friend: globalUser!.asAFriend) { (sucess, error) in
                         
                         if let error = error {
                             print("could not find group admin user while adding new user to group",error.localizedDescription)
@@ -140,7 +141,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         
-        
+        }
     }
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         if let url = URLContexts.first?.url{

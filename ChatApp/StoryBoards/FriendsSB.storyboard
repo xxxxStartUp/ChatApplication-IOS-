@@ -35,8 +35,8 @@
                                                             <rect key="frame" x="0.0" y="1" width="90" height="89.666666666666671"/>
                                                             <color key="tintColor" red="0.86657208200000002" green="0.86672115329999999" blue="0.86656266449999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" priority="999" constant="90" id="DAy-YL-c1X"/>
-                                                                <constraint firstAttribute="height" priority="999" constant="90" id="opp-TN-eez"/>
+                                                                <constraint firstAttribute="width" constant="90" id="DAy-YL-c1X"/>
+                                                                <constraint firstAttribute="height" constant="90" id="opp-TN-eez"/>
                                                             </constraints>
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="-30" translatesAutoresizingMaskIntoConstraints="NO" id="nKW-iz-02h">
