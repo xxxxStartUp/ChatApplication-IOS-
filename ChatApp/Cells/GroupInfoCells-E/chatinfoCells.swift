@@ -11,6 +11,7 @@ import UIKit
 class GroupchatinfoCells: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     
+    
     func updateView(){
         //using this as a temporary solution because cell tint color in xcode has a bug
         let image = UIImage(systemName: "chevron.right.circle.fill")
@@ -24,6 +25,7 @@ class GroupchatinfoCells: UITableViewCell {
             label.settingsPageLabels(type: Constants.settingsPage.labelTitles)
 
         }
+    
     }
     
 
