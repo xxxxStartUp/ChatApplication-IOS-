@@ -1254,33 +1254,35 @@ class FireService {
     /// - Returns: Nothing
     func loadAllActivity(User : FireUser , completion : @escaping ([Activity]? , Error?) -> ()){
         var activities  : [Activity] = []
+       
         loadGroups(User: User) { (groups, error) in
             if let error = error{
                 completion(nil , error)
             }
             guard let groups = groups else {fatalError()}
             print(groups,"Groups")
+            var count = groups.count
             groups.forEach { (group) in
                 let activity = Activity(activityType: .GroupChat(group: group))
+                count -= 1
                 activities.append(activity)
-            }
-            
-            
-            self.loadAllFriends(user: User) { (friends, error) in
-                if let error = error{
-                    completion(nil , error)
+                if count == 0 {
+                    self.loadAllFriends(user: User) { (friends, error) in
+                        if let error = error{
+                            completion(nil , error)
+                        }
+                        guard let friends = friends else {fatalError()}
+                        print(friends,"Friends")
+                        friends.forEach { (freind) in
+                            let activity = Activity(activityType: .FriendChat(friend: freind))
+                            activities.append(activity)
+                            completion(activities , nil)
+                        }
+                        
+                    }
                 }
-                guard let friends = friends else {fatalError()}
-                print(friends,"Friends")
-                friends.forEach { (freind) in
-                    let activity = Activity(activityType: .FriendChat(friend: freind))
-                    activities.append(activity)
-                    completion(activities , nil)
-                }
-                
             }
-            
-            
+ 
         }
     }
     

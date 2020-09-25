@@ -180,6 +180,9 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
                 fatalError()
             }
             self.groupParticipants = participants
+            if !self.groupParticipants.contains(globalUser!.asAFriend){
+                self.texterView.isHidden = true
+            }
         }
 
         
