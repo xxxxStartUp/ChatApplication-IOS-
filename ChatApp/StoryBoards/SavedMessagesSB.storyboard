@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4Zh-1h-65L">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Saved MessagesVC-->
+        <scene sceneID="ORI-wd-07u">
+            <objects>
+                <viewController id="4Zh-1h-65L" customClass="SavedMessagesVC" customModule="ChatApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7Ew-be-Ewu">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="UgO-J2-lPk">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="UgO-J2-lPk" firstAttribute="leading" secondItem="ZSC-GI-cVg" secondAttribute="leading" id="1IS-Le-jjY"/>
+                            <constraint firstItem="UgO-J2-lPk" firstAttribute="trailing" secondItem="ZSC-GI-cVg" secondAttribute="trailing" id="gmO-SC-crl"/>
+                            <constraint firstItem="UgO-J2-lPk" firstAttribute="top" secondItem="ZSC-GI-cVg" secondAttribute="top" id="jjO-M1-KPl"/>
+                            <constraint firstItem="UgO-J2-lPk" firstAttribute="bottom" secondItem="ZSC-GI-cVg" secondAttribute="bottom" id="rwa-U6-jFa"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ZSC-GI-cVg"/>
+                    </view>
+                    <connections>
+                        <outlet property="savedMessagesTable" destination="UgO-J2-lPk" id="ef6-Nm-zl2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9tX-Ft-T2g" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-104.34782608695653" y="-89.673913043478265"/>
+        </scene>
+    </scenes>
+</document>

@@ -52,8 +52,8 @@ class SignUpVC: UIViewController {
         if let name = nameTextField.text, let email = emailTextField.text, let password = passwordTextField.text{
             //Need to complete validate class and functions in class before using it
             if Validate.isPasswordValid(password) && Validate.isValidEmail(email){
-                
-                let user = FireUser(userID: "1", userName: name, userEmail: email, creationDate: Date())
+                let id = UUID().uuidString
+                let user = FireUser(userID: id, userName: name, userEmail: email, creationDate: Date())
                 
                 
                 FireService.sharedInstance.SignUp(email: email, password: password) { (completed) in

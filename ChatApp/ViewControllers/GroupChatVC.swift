@@ -52,10 +52,10 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         aiv.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         aiv.translatesAutoresizingMaskIntoConstraints = false
         aiv.hidesWhenStopped = true
-    
+        
         return aiv
     }()
-
+    
     var group : Group?{
         didSet{
             title = group?.name
@@ -102,7 +102,9 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
                 print(error.localizedDescription)
                 fatalError()
             }
-            let message = Message(content: Content(type: .image, content: url!), sender: globalUser!, timeStamp: Date(), recieved: false)
+            let id = UUID().uuidString
+            
+            let message = Message(id:id,content: Content(type: .image, content: url!), sender: globalUser!, timeStamp: Date(), recieved: false)
             self.messageToBeSent = message
             self.sendMessage()
         }
@@ -128,8 +130,9 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
                 if let finalUrl = url, let videoURL = videoURL {
                     messageUrl = videoURL + "thumbNailURL\(finalUrl)"
                     //ebuka may need to refactor code for message to contain property dictionary for content.
-                    
-                    let message = Message(content: Content(type: .video, content: messageUrl), sender: globalUser!, timeStamp: Date(), recieved: false)
+                    let id = UUID().uuidString
+
+                    let message = Message(id:id,content: Content(type: .video, content: messageUrl), sender: globalUser!, timeStamp: Date(), recieved: false)
                     
                     
                     self.messageToBeSent = message
@@ -150,18 +153,26 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         self.view.addGestureRecognizer(tapgesture)
         messagePopUptableView = UITableView(frame: CGRect(x: 0, y: 500, width: 0, height: 0))
         updateBackgroundViews()
+        
         groupChatTable.delegate = self
         groupChatTable.dataSource = self
+        
         groupChatTable.register(MessgaeCell.self, forCellReuseIdentifier: cellID)
         self.setUptexter(texterView: texterView, controller: self)
         groupChatTable.separatorStyle = .none
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         self.groupChatTable.contentInset = insets
-
-          messagePopUptableView.register(MessagePopUpCell.self, forCellReuseIdentifier: messagePopUpCellId)
-
+        
+        messagePopUptableView.register(MessagePopUpCell.self, forCellReuseIdentifier: messagePopUpCellId)
+        
         
         getGroupName()
+
+        handleNavBarImage()
+
+        loadGroupParticipants()
+    }
+    func loadGroupParticipants(){
 
         FireService.sharedInstance.viewGroupParticipants(user: globalUser!, group: group!) { (participants, true, error) in
             if let error = error{
@@ -170,21 +181,17 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
             }
             self.groupParticipants = participants
         }
-        
-       
-        
-        
-        
 
+        
     }
     
     func handleNavBarImage(){
         //navBarButton.layer.cornerRadius = 20
         //navBarButton.backgroundColor = .red
-       // let imageCache = AutoPurgingImageCache()
+        // let imageCache = AutoPurgingImageCache()
         navigationItem.titleView = navBarButton
-//        let cachedAvatar = imageCache.image(withIdentifier: "image")
-//        self.navBarButton.setImage(cachedAvatar, for: .normal)
+        //        let cachedAvatar = imageCache.image(withIdentifier: "image")
+        //        self.navBarButton.setImage(cachedAvatar, for: .normal)
         
         FireService.sharedInstance.getGroupPictureData(user: globalUser!,group: group!) { (result) in
             switch result{
@@ -199,10 +206,10 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
                     self.navBarButton.imageView?.contentMode = .scaleAspectFit
                     self.navBarButton.setImage(newImage, for: .normal)
                     
-    
+                    
                     
                 }
-
+                
                 
                 
             case .failure(_):
@@ -217,6 +224,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         getGroupName()
+        loadGroupParticipants()
         updateBackgroundViews()
         loadMessages()
         handleNavBarImage()
@@ -226,12 +234,12 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         getGroupName()
+        loadGroupParticipants()
         updateBackgroundViews()
         loadMessages()
-        
-        
-        
+        handleNavBarImage()
     }
+    
     func getGroupName(){
         FireService.sharedInstance.getGroupname(user: globalUser!, group: group!) { (group, true, error) in
             if let error = error{
@@ -244,11 +252,14 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     }
     
     private func SendStringMessage(){
+        if texterView.textingView.text.isEmpty{ return }
         guard let messageText = texterView.textingView.text else {
             return
         }
         let content = Content(type: .string, content: messageText)
-        let message = Message(content: content, sender: globalUser!, timeStamp: Date(), recieved: false)
+        let id = UUID().uuidString
+        
+        let message = Message(id:id,content: content, sender: globalUser!, timeStamp: Date(), recieved: false)
         messageToBeSent = message
         sendMessage()
         
@@ -319,6 +330,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         if let destination = segue.destination as? GroupInfoVC{
             destination.group = group
             destination.groupParticipants = groupParticipants
+            destination.messages = groupMessages
         }
         
     }
@@ -388,7 +400,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         guard let newCellView = cellView else {return}
         let cell = newCellView as! MessgaeCell
         messagelongTapped = cell.message
-          print("tapped for long")
+        print("tapped for long")
         //remove tableView
         removeTableView(tableView: messagePopUptableView)
         //removeAnimateTableView()
@@ -408,15 +420,15 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         //add tableView frame auto layout
         //animateTableView
         animateTableView()
-      }
+    }
     
     
     func constainMessagePopUpTableView(){
         messagePopUptableView.translatesAutoresizingMaskIntoConstraints = false
         messagePopUptableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
-         messagePopUptableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
+        messagePopUptableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
         MessagePopUpheightAnchor = messagePopUptableView.heightAnchor.constraint(equalToConstant: messagePopUptableView.contentSize.height)
-//messagePopUptableView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0).isActive = true
+        //messagePopUptableView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0).isActive = true
         
         MessagePopUpBottomAnchor =  messagePopUptableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
         MessagePopUpBottomAnchor?.isActive = true
@@ -432,18 +444,18 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         MessagePopUpheightAnchor?.isActive = true
         MessagePopUpBottomAnchor?.isActive = true
         
-      //  let y = 500
+        //  let y = 500
         UIView.animate(withDuration: 0.3) {
-//            self.messagePopUptableView.frame.origin.y = CGFloat(y)
+            //            self.messagePopUptableView.frame.origin.y = CGFloat(y)
             self.view.layoutIfNeeded()
         }
     }
     @objc private func removeAnimateTableView(){
-           let y = self.view.frame.height
-           UIView.animate(withDuration: 0.3) {
+        let y = self.view.frame.height
+        UIView.animate(withDuration: 0.3) {
             self.messagePopUptableView.frame.origin.y = CGFloat(y)
-           }
-       }
+        }
+    }
     
 }
 
@@ -491,7 +503,7 @@ extension GroupChatVC : TexterViewDelegate {
         }
         switch realTapped {
         case 0:
-            FireService.sharedInstance.saveMessages(user: globalUser!, messageToSave: messagelongTapped!) { (result) in
+            FireService.sharedInstance.saveMessages(user: globalUser!,group: group!, messageToSave: messagelongTapped!) { (result) in
                 switch result {
                 case .success(let bool):
                     if bool {
@@ -508,7 +520,7 @@ extension GroupChatVC : TexterViewDelegate {
             break
         }
         
-       self.removeAnimateTableView()
+        self.removeAnimateTableView()
         
     }
     
@@ -517,7 +529,7 @@ extension GroupChatVC : TexterViewDelegate {
 
 
 extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
-
+    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == messagePopUptableView {
@@ -537,14 +549,14 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == messagePopUptableView{
-           
+            
             let cell = messagePopUptableView.dequeueReusableCell(withIdentifier: messagePopUpCellId) as! MessagePopUpCell
             cell.tag = indexPath.row
             cell.icon = messagePopUptableViewList[indexPath.row]
             let tapgesture = UITapGestureRecognizer(target: self, action: #selector(handlemessagePopUpTableViewTapped(gesture:)))
             cell.addGestureRecognizer(tapgesture)
             
-           
+            
             return cell
         }
         
@@ -555,10 +567,18 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
         cell.message = message
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-         let longMessageCellTapGesture : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap(gesture:)))
+        let longMessageCellTapGesture : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap(gesture:)))
         cell.addGestureRecognizer(longMessageCellTapGesture)
         return cell
     }
+    
+    
+    
+}
+
+extension GroupChatVC {
+    
+    
     //handles when the video is tapped in from message cell.
     func handleVideoZoomedIn(url:String){
         if let videoURL = URL(string: url){
@@ -577,7 +597,7 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
             blackBackgroundView?.alpha = 0
             blackBackgroundView?.backgroundColor = .black
             self.blackBackgroundView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleZoomedOutVideo)))
-      
+            
             
             keywindow.addSubview(activityIndicator)
             keywindow.centerXAnchor.constraint(equalTo: activityIndicator.centerXAnchor).isActive = true
@@ -596,13 +616,13 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
                 self.playerLayer?.frame = keywindow.frame
                 self.player?.play()
                 self.activityIndicator.startAnimating()
-            
+                
             }, completion: {(completed: Bool) in
                 
                 self.activityIndicator.removeFromSuperview()
                 
-            
-        })
+                
+            })
             
         }
     }
@@ -652,15 +672,15 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
             
             tappedOutImageView.layer.cornerRadius = 8
             tappedOutImageView.clipsToBounds = true
-            
+
             UIView.animate(withDuration: 0.5, delay: 0,usingSpringWithDamping: 1,initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.blackBackgroundView?.alpha = 0
-                self.texterView.alpha = 1 
+                self.texterView.alpha = 1
                 tappedOutImageView.frame = startingFrame
             }, completion: {(completed: Bool) in
                 tappedOutImageView.removeFromSuperview()
                 self.startingImageView?.isHidden = false
-                
+                self.startingImageView?.layer.cornerRadius = 8
             })
             
         }
@@ -708,14 +728,14 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
                 return label
             }()
             leadingTimeLabel = {
-                      let label = UILabel()
-                      label.text = "0:00"
-                      label.textColor = .white
-                      label.font = UIFont.boldSystemFont(ofSize: 15)
-                      label.textAlignment = .right
-                      label.translatesAutoresizingMaskIntoConstraints = false
-                      return label
-                  }()
+                let label = UILabel()
+                label.text = "0:00"
+                label.textColor = .white
+                label.font = UIFont.boldSystemFont(ofSize: 15)
+                label.textAlignment = .right
+                label.translatesAutoresizingMaskIntoConstraints = false
+                return label
+            }()
             videoSlider = {
                 let slider = UISlider()
                 slider.translatesAutoresizingMaskIntoConstraints = false
@@ -731,9 +751,9 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
             }
             keywindow?.addSubview(pauseButton!)
             keywindow?.addSubview(videoExitButton!)
-//            keywindow?.addSubview(trailingTimeLabel!)
-//            keywindow?.addSubview(leadingTimeLabel!)
-//            keywindow?.addSubview(videoSlider!)
+            //            keywindow?.addSubview(trailingTimeLabel!)
+            //            keywindow?.addSubview(leadingTimeLabel!)
+            //            keywindow?.addSubview(videoSlider!)
             
             keywindow?.centerXAnchor.constraint(equalTo: pauseButton!.centerXAnchor).isActive = true
             keywindow?.centerYAnchor.constraint(equalTo: pauseButton!.centerYAnchor).isActive = true
@@ -766,13 +786,13 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
             self.texterView.alpha = 1
             
         }, completion: {(completed: Bool) in
-               self.playerLayer?.removeFromSuperlayer()
-                self.videoExitButton?.removeFromSuperview()
-                self.videoBackgroundView?.removeFromSuperview()
-                self.pauseButton?.removeFromSuperview()
+            self.playerLayer?.removeFromSuperlayer()
+            self.videoExitButton?.removeFromSuperview()
+            self.videoBackgroundView?.removeFromSuperview()
+            self.pauseButton?.removeFromSuperview()
             
         })
-  
+        
         print("dismissVideo")
     }
     
@@ -782,7 +802,5 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
         self.videoExitButton?.isHidden = true
         self.pauseButton?.isHidden = true
     }
-    
-    
     
 }

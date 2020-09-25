@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import IQKeyboardManager
 import FirebaseDynamicLinks
+import UserNotificationsUI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         IQKeyboardManager.shared().isEnabled = true
-        Messaging.messaging().delegate = self
+       
         if #available(iOS 10.0, *) {
           // For iOS 10 display notification (sent via APNS)
           UNUserNotificationCenter.current().delegate = self
@@ -32,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
           let settings: UIUserNotificationSettings =
           UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+         Messaging.messaging().delegate = self
           application.registerUserNotificationSettings(settings)
         }
 
@@ -59,11 +61,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
-}
-
-
-extension AppDelegate {
-    
 }
 
 
@@ -120,6 +117,10 @@ extension AppDelegate : MessagingDelegate {
       NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
       // TODO: If necessary send token to application server.
       // Note: This callback is fired at each app startup and whenever a new token is generated.
+    }
+    
+    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+        
     }
     
 }

@@ -16,7 +16,6 @@ import AVFoundation
 
 
 
-/// <#Description#>
 class FireService {
     static let db = Firestore.firestore()
     static let firendsString = "friends"
@@ -48,6 +47,7 @@ class FireService {
             print(snapShots.documents.count)
             for  document in snapShots.documents{
                 let documentData = document.data()
+                print(documentData)
                 let email = documentData["groupadmin"] as! String
                 let id = documentData["groupid"] as! String
                 let name = documentData["groupname"] as! String
@@ -120,7 +120,7 @@ class FireService {
     ///   - completionHandler: completes with true if the network call was sucessful, or faliure if the etwork call was unsucesfull
     /// - Returns: None
     func addFriendToGroup(user : FireUser , group : Group ,freind : Friend, completionHandler : @escaping (Result<Bool , Error>)-> ()){
-        let groupRef =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
+        let groupRef =  FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
         
         let frieindAsData = self.changeFriendToDictionary(freind)
         
@@ -130,7 +130,7 @@ class FireService {
             case .success(let bool):
                 if bool {
                     
-                    groupRef.collection("Freinds").addDocument(data: frieindAsData) { (error) in
+                    groupRef.collection("Freinds").document(freind.id).setData(frieindAsData) { (error) in
                         if let error = error{
                             completionHandler(.failure(error))
                         }
@@ -178,7 +178,7 @@ class FireService {
         
         let frieindAsData = self.changeFriendToDictionary(freind)
         
-        groupRef.collection("Freinds").addDocument(data: frieindAsData) { (error) in
+        groupRef.collection("Freinds").document(freind.id).setData(frieindAsData) { (error) in
             if let error = error{
                 completionHandler(.failure(error))
             }
@@ -478,10 +478,7 @@ class FireService {
             }else{
                 print("couldnt cast to string")
             }
-            
         }
-        
-        
     }
     
     /// Uploads a temporary image to send
@@ -529,10 +526,10 @@ class FireService {
     ///   - user: The current user sqving the message
     ///   - messageToSave: Message to be saved
     ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
-    func saveMessages(user : FireUser, messageToSave: Message, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+    func saveMessages(user : FireUser, group:Group, messageToSave: Message, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
         
         
-        let ref =         FireService.users.document(user.email).collection(FireService.savedMessages).document()
+        let ref =         FireService.users.document(user.email).collection(FireService.savedMessages).document(group.id).collection("Messages").document("\(messageToSave.id)")
         
         
         
@@ -548,6 +545,93 @@ class FireService {
         }
     }
     
+    func loadSavedMessages(user:FireUser, group:Group, completion: @escaping ([Message]?,Error?)-> ()){
+        
+        
+        let ref =         FireService.users.document(user.email).collection(FireService.savedMessages).document(group.id).collection("Messages")
+        //listening for new messages
+        ref.getDocuments{ (snapshot, error) in
+            var messages : [Message] = []
+            if let error = error {
+                completion(nil , error)
+            }
+            //unwarps documents
+            guard let documents = snapshot?.documents else {
+                print("no messages")
+                completion(messages , nil)
+                return
+            }
+            
+            documents.forEach { (document) in
+                
+                //checks if documentID is equal to group id then it returns the messages
+                
+                let message = self.changeDictionaryToMessage(document.data())
+                messages.append(message)
+                print(message.content.content as! String , "this is from loadmessageswithgroup",message.content.type.rawValue)
+                if messages.count == documents.count {
+                    completion(messages, nil)
+                    return
+                }
+            }
+            
+            
+        }
+    }
+    
+    func deleteAllSavedMessages(user : FireUser, group:Group, MessageToDelete: [Message], completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+        
+        for message in MessageToDelete {
+            let ref =         FireService.users.document(user.email).collection(FireService.savedMessages).document(group.id).collection("Messages").document(message.id)
+            
+            ref.delete { (error) in
+                
+                if let error = error{
+                    completionHandler(.failure(error))
+                    return
+                }
+                
+                completionHandler(.success(true))
+                
+            }
+        }
+    }
+    
+    
+    func deleteOneSavedMessage(user : FireUser, group:Group, MessageToDelete: Message, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+        
+        let ref = FireService.users.document(user.email).collection(FireService.savedMessages).document(group.id).collection("Messages").document(MessageToDelete.id)
+        
+        ref.delete { (error) in
+            
+            if let error = error{
+                completionHandler(.failure(error))
+                return
+            }
+            
+            completionHandler(.success(true))
+            
+        }
+        
+    }
+    
+    func deleteAllGroupMessages(user : FireUser, group:Group, MessageToDelete: [Message], completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+        
+        for message in MessageToDelete {
+            let ref =         FireService.users.document(user.email).collection(FireService.groupString).document(group.id).collection("messages").document(message.id)
+            
+            ref.delete { (error) in
+                
+                if let error = error{
+                    completionHandler(.failure(error))
+                    return
+                }
+                
+                completionHandler(.success(true))
+                
+            }
+        }
+    }
     
     
     /// Deletes the profile picture of a user
@@ -584,41 +668,41 @@ class FireService {
     
     
     
-       /// Deletes the profile picture of a user
-       /// - Parameters:
-       ///   - user: User whose profile picture is to be deleted
-       ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
-       /// - Returns: Nothing
+    /// Deletes the profile picture of a user
+    /// - Parameters:
+    ///   - user: User whose profile picture is to be deleted
+    ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
+    /// - Returns: Nothing
     func DeleteGroupPicture(user : FireUser, group:Group,friends:[Friend], completionHandler : @escaping (Result<Bool , Error>)-> ()){
-           
-           
-           let refName = "\(group.id)/groupPicture.png"
-           let ref = FireService.storageRef.child(refName)
-           ref.delete { (error) in
-               if let error = error{
-                   completionHandler(.failure(error))
-                   return
-               }
+        
+        
+        let refName = "\(group.id)/groupPicture.png"
+        let ref = FireService.storageRef.child(refName)
+        ref.delete { (error) in
+            if let error = error{
+                completionHandler(.failure(error))
+                return
+            }
             for friend in friends{
-              let ref = FireService.users.document(friend.email).collection(FireService.groupString).document(group.id)
-                  ref.updateData(["groupPictureUrl":FieldValue.delete()]) { (error) in
-                      
-                      if let error = error{
-                          completionHandler(.failure(error))
-                          return
-                      }
-                   
-                   
-                      completionHandler(.success(true))
-                      return
-       
-                  }
-                  
-              }
-          
-           }
-           
-       }
+                let ref = FireService.users.document(friend.email).collection(FireService.groupString).document(group.id)
+                ref.updateData(["groupPictureUrl":FieldValue.delete()]) { (error) in
+                    
+                    if let error = error{
+                        completionHandler(.failure(error))
+                        return
+                    }
+                    
+                    
+                    completionHandler(.success(true))
+                    return
+                    
+                }
+                
+            }
+            
+        }
+        
+    }
     
     //Updating this to send
     func sendMessageToFriend(User : FireUser, message : Message , freind : Friend ,completion : @escaping (Bool , Error?) -> ()){
@@ -650,7 +734,7 @@ class FireService {
     /// - Parameters:
     ///   - user: User whose profile picture is to be retrieved
     ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
-    /// - Returns: <#description#>
+    /// - Returns:
     
     
     func getProfilePicture(user : FireUser , completionHandler : @escaping (Result<URL , Error>)-> ()){
@@ -717,49 +801,49 @@ class FireService {
         }
     }
     /// Uploads the profile picture of a user
-     /// - Parameters:
-     ///   - data: The data containing image to be saved
-     ///   - user: User whose profile picture is to be uploaded
-     ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
+    /// - Parameters:
+    ///   - data: The data containing image to be saved
+    ///   - user: User whose profile picture is to be uploaded
+    ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
     func saveGroupPicture(data : Data , user : FireUser , group:Group,friend:[Friend], completionHandler: @escaping (Result<Bool, Error>) -> Void){
-         let refName = "\(group.id)/groupPicture.png"
-         let ref = FireService.storageRef.child(refName)
-         let newMetadata = StorageMetadata()
-         newMetadata.contentType = "image/png"
-         
-         ref.putData(data, metadata: newMetadata) { (metadata, error) in
-             if let error = error {
-                 print(error.localizedDescription)
-                 completionHandler(.failure(error))
-             }
-             ref.downloadURL(completion: { (url, error) in
-                 guard let url = url else {
-                     completionHandler(.failure(error!))
-                     return
-                 }
-                 let data = ["groupPictureUrl" : url.absoluteString]
-                 
-                self.addCustomDataToGroup(data: data ,user : globalUser! , group:group, friends: friend) { (error, sucess) in
-                     if let error = error {
-                         print(error.localizedDescription)
-                         completionHandler(.failure(error))
-                     }
-                     if sucess{
-                         print("Added group picture data to all group friends")
-                         completionHandler(.success(true))
-                     }
-                     
-                 }
+        let refName = "\(group.id)/groupPicture.png"
+        let ref = FireService.storageRef.child(refName)
+        let newMetadata = StorageMetadata()
+        newMetadata.contentType = "image/png"
+        
+        ref.putData(data, metadata: newMetadata) { (metadata, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                completionHandler(.failure(error))
+            }
+            ref.downloadURL(completion: { (url, error) in
+                guard let url = url else {
+                    completionHandler(.failure(error!))
+                    return
+                }
+                let data = ["groupPictureUrl" : url.absoluteString]
                 
-             })
-         }
-     }
+                self.addCustomDataToAllFriendsInGroup(data: data ,user : globalUser! , group:group, friends: friend) { (error, sucess) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        completionHandler(.failure(error))
+                    }
+                    if sucess{
+                        print("Added group picture data to all group friends")
+                        completionHandler(.success(true))
+                    }
+                    
+                }
+                
+            })
+        }
+    }
     
     func getGroupPictureData(user : FireUser , group:Group, completionHandler : @escaping (Result<URL , Error>)-> ()){
         
         
         let groupRef =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
-            groupRef.getDocument { (documents, error) in
+        groupRef.getDocument { (documents, error) in
             
             guard let data = documents?.data() else {return}
             
@@ -781,7 +865,40 @@ class FireService {
     }
     
     
-     
+    
+
+    func saveImageToBeSentToFriend (data : Data , friend : Friend , user : FireUser , completionHandler: @escaping (String?,Error?) -> ()) {
+        
+        
+        let uuid = NSUUID().uuidString
+        
+        let refName = "\(user.email)/\(friend.id)/Images.png/\(uuid)"
+        let ref = FireService.storageRef.child(refName)
+        let newMetadata = StorageMetadata()
+        newMetadata.contentType = "image/jpeg"
+        
+        ref.putData(data, metadata: newMetadata) { (metadata, error) in
+            if let error = error{
+                completionHandler(nil,error)
+            }
+            
+            
+            ref.downloadURL { (url, error) in
+                guard let url = url else{
+                    completionHandler(nil,error)
+                    return
+                }
+                
+                
+                let finalUrl = url.absoluteString
+                completionHandler(finalUrl,nil)
+                
+            }
+        }
+        
+        
+    }
+    
     
     func saveImageToBeSentToGroupChat(data:Data,user:FireUser,group:Group,completionHandler: @escaping (String?,Error?) -> ()){
         
@@ -825,6 +942,62 @@ class FireService {
         }
         return nil
     }
+    
+    func sendVideoToFriend(url : NSURL ,friend : Friend , user : FireUser,completionHandler: @escaping (String?,Error?,[String:Any?]) -> ()){
+        let uuid = NSUUID().uuidString
+        
+        let refName = "\(user.email)/\(friend.id)/Videos.mov/\(uuid)"
+        let ref = FireService.storageRef.child(refName)
+        let newMetadata = StorageMetadata()
+        var properties = [String:Any]()
+        newMetadata.contentType = "video/quicktime"
+        
+        
+        do{
+            let videoData = try Data(contentsOf: url as URL)
+            let uploadTask = ref.putData(videoData, metadata: newMetadata){ (metadata, error) in
+                if let error = error{
+                    completionHandler(nil,error,properties)
+                }
+                
+                
+                ref.downloadURL { (videoUrl, error) in
+                    guard let videoUrl = videoUrl else{
+                        completionHandler(nil,error,properties)
+                        return
+                    }
+                    let finalUrl = videoUrl.absoluteString
+                    if let thumbnailImage = self.thumbnailImageForFileUrl(fileUrl:url){
+                        properties = ["thumbNailWidth":thumbnailImage.size.width,"thumbNailHeight":thumbnailImage.size.height,"thumbNailImage":thumbnailImage]
+                    }
+                    
+                    
+                    print(finalUrl)
+                    completionHandler(finalUrl,nil,properties)
+                    
+                }
+            }
+            //use to get progress update
+            uploadTask.observe(.progress) { (snapshot) in
+                if let completedUnitCount = snapshot.progress?.completedUnitCount{
+                    print(completedUnitCount)
+                }
+                //get if the task is successful
+                uploadTask.observe(.success) { (snapshot) in
+                    print("Yupppp")
+                }
+                
+            }
+            
+        }catch {
+            print(error)
+        }
+        
+        
+        
+    }
+    
+    
     func saveVideoToBeSentToGroupChat(url:NSURL,user:FireUser,group:Group,completionHandler: @escaping (String?,Error?,[String:Any?]) -> ()){
         
         let uuid = NSUUID().uuidString
@@ -1010,7 +1183,7 @@ class FireService {
     
     func changeMessageToDictionary( _ message: Message) -> [String : Any]{
         
-        return [ "Content" :self.changeContentToDictionary(message.content),
+        return [ "id": message.id, "Content" :self.changeContentToDictionary(message.content),
                  "user":self.changeUserToDictionary(message.sender),
                  "timeStamp": message.timeStamp,
                  "recived": message.recieved
@@ -1027,8 +1200,9 @@ class FireService {
         
         let recieved = dict["recived"] as! Bool
         
-        return Message(content: self.changeDictionaryToContent(dictionary: contentDictionary), sender: self.changeDictionaryToFireUser(data: userDictionary), timeStamp: date, recieved: recieved)
+        let id = dict["id"] as! String
         
+        return Message(id:id,content: self.changeDictionaryToContent(dictionary: contentDictionary), sender: self.changeDictionaryToFireUser(data: userDictionary), timeStamp: date, recieved: recieved)
     }
     
     
@@ -1285,11 +1459,22 @@ class FireService {
         }
         
     }
+    func addCustomDataToGroup(data : [String : Any] ,user : FireUser , group:Group, completion : @escaping (Error? , Bool) -> ()) {
+        FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).setData(data, merge: true) { (error) in
+            if let error = error{
+                completion(error , false)
+                return
+            }
+            //UserDefaults.standard.set(user, forKey: "user")
+            completion(nil , true)
+        }
+        
+    }
     //add group picture data to all the users in the group
-    func addCustomDataToGroup(data: [String : Any] ,user : FireUser , group:Group, friends:[Friend], completion : @escaping (Error? , Bool) -> ()){
+    func addCustomDataToAllFriendsInGroup(data: [String : Any] ,user : FireUser , group:Group, friends:[Friend], completion : @escaping (Error? , Bool) -> ()){
         
         for friend in friends{
-        let ref = FireService.users.document(friend.email).collection(FireService.groupString).document(group.id)
+            let ref = FireService.users.document(friend.email).collection(FireService.groupString).document(group.id)
             ref.setData(data, merge: true) { (error) in
                 if let error = error{
                     completion(error , false)
@@ -1298,11 +1483,9 @@ class FireService {
                 //UserDefaults.standard.set(user, forKey: "user")
                 completion(nil , true)
             }
-            
         }
-        
     }
- 
+    
     func addCustomGroupNameData(data : [String : Any] ,user : FireUser, group:Group,friends:[Friend], completion : @escaping (Error? , Bool, Bool) -> ()){
         
         let groupRef =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
@@ -1323,7 +1506,7 @@ class FireService {
                 //check if admin is the global user and set data(change group name in group for admin) and return completion of true
                 if admin == globalUser?.email{
                     
-//                    let ref = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
+                    //                    let ref = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
                     
                     for friend in friends {
                         let ref = FireService.users.document(friend.email).collection(FireService.groupString).document(group.id)
@@ -1334,7 +1517,7 @@ class FireService {
                             }
                             isAdmin = true
                             completion(nil,true,isAdmin)
-                                       
+                            
                         }
                     }
                     
@@ -1343,7 +1526,7 @@ class FireService {
                 else{
                     isAdmin = false
                     completion(nil,false,false)
-}
+                }
             }
         }
         
@@ -1351,8 +1534,273 @@ class FireService {
         
     }
     
+    
+    func assignAdminAndLeaveGroup(data : [String : Any] ,user : FireUser, group:Group,friends:[Friend], completion : @escaping (Error? , Bool, [String:Any]?) -> ()){
+        let oldGroupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(user.id)
+        let groupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
+        var newFriends = [Friend]()
+        var dataToBeSent = [String:Any]()
+        let newAdmin = data["groupadmin"] as! String
+        
+        //get all the group documents
+        groupRef.getDocument { (document, error) in
+            if let error = error{
+                
+                completion(error,false,dataToBeSent)
+                return
+            }
+            //check document and unwrap groupdata to get groupadmin
+            if let document = document{
+                guard let groupData = document.data() else {return}
+                let admin = groupData["groupadmin"] as! String
+                
+                
+                FireService.sharedInstance.searchOneUserWithEmail(email: newAdmin) { (user, error) in
+                    if let error = error {
+                        print("could not find group admin user while adding new user to group",error.localizedDescription)
+                        
+                        return
+                    }
+                    guard let user = user else {return}
+                    let finalGroup = Group(GroupAdmin: user, id: group.id, name: group.name)
+                    
+                    
+                    for friend in friends{
+                        if admin != friend.email{
+                            newFriends.append(friend)
+                        }
+                    }
+                    
+                    dataToBeSent["user"] = user
+                    dataToBeSent["group"] = finalGroup
+                    dataToBeSent["friends"] = newFriends
+                    
+                    var count = newFriends.count
+                    for friend in friends {
+                        
+                        let ref = FireService.users.document(friend.email).collection(FireService.groupString).document(group.id)
+                        let oldGroupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(friend.id)
+                        let oldGroupDataRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
+                        ref.setData(data, merge: true) { (error) in
+                            if let error = error{
+                                completion(error, false, dataToBeSent)
+                                return
+                            }
+                            print("Data successfully set")
+                            oldGroupRef.delete { (error) in
+                                if let error = error{
+                                    completion(error, false, dataToBeSent)
+                                    print(error.localizedDescription)
+                                    return
+                                }
+                                oldGroupDataRef.updateData(["groupInvitationUrl":FieldValue.delete()]) { (error) in
+                                    
+                                    if let error = error{
+                                       completion(error, false, dataToBeSent)
+                                        return
+                                    }
+                                   
+                                }
+                            
+                            }
+
+                            count -= 1
+                    if count == 0{
+                            self.addAdminToGroup(user: user, group: finalGroup, freind: finalGroup.GroupAdmin.asAFriend) { (result) in
+                                switch result{
+                                case .success(_):
+                                    self.addMultipleFriendsToGroup(user: user, group: finalGroup, friendsToAdd: newFriends) { (result) in
+                                        switch result {
+                                        case .success( let bool):
+                                            if bool || !bool {
+
+                                                completion(nil,true,dataToBeSent)
+                                            
+                                                print("Successfully added to group")
+      
+                                            }
+                                            
+                                        case .failure(let error):
+                                            //complete with with error
+                                            completion(error,false,dataToBeSent)
+                                        }
+                                    }
+                                    return
+                                case .failure(_):
+                                    completion(error,false,dataToBeSent)
+                                    return
+                                }
+                                
+                            }
+                            }
+                            
+                        }
+                    }
+                }
+                //check if admin is the global user and set data(change group name in group for admin) and return completion of true
+                
+                
+            }
+        }
+    }
+    
+    func assignNewAdmin(data : [String : Any] ,user : FireUser, group:Group,friends:[Friend], completion : @escaping (Error? , Bool, [String:Any]?) -> ()){
+        let oldGroupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(user.id)
+        let groupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
+        var newFriends = [Friend]()
+        var dataToBeSent = [String:Any]()
+        let newAdmin = data["groupadmin"] as! String
+        
+        //get all the group documents
+        groupRef.getDocument { (document, error) in
+            if let error = error{
+                
+                completion(error,false,dataToBeSent)
+                return
+            }
+            //check document and unwrap groupdata to get groupadmin
+            if let document = document{
+                guard let groupData = document.data() else {return}
+                let admin = groupData["groupadmin"] as! String
+                
+                
+                FireService.sharedInstance.searchOneUserWithEmail(email: newAdmin) { (user, error) in
+                    if let error = error {
+                        print("could not find group admin user while adding new user to group",error.localizedDescription)
+                        
+                        return
+                    }
+                    guard let user = user else {return}
+                    let finalGroup = Group(GroupAdmin: user, id: group.id, name: group.name)
+                    
+                    
+                    
+                    dataToBeSent["user"] = user
+                    dataToBeSent["group"] = finalGroup
+                    dataToBeSent["friends"] = friends
+                    
+                    var count = friends.count
+                    
+                        
+    
+        
+                            for friend in friends {
+                            let ref = FireService.users.document(friend.email).collection(FireService.groupString).document(group.id)
+                                let oldGroupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(friend.id)
+                                let oldGroupDataRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
+                                ref.setData(data, merge: true) { (error) in
+                                    if let error = error{
+                                        completion(error, false, dataToBeSent)
+                                        return
+                                    }
+                                    print("Data successfully set")
+                                    oldGroupRef.delete { (error) in
+                                        if let error = error{
+                                            completion(error, false, dataToBeSent)
+                                            print(error.localizedDescription)
+                                            return
+                                        }
+                                        oldGroupDataRef.updateData(["groupInvitationUrl":FieldValue.delete()]) { (error) in
+                                            
+                                            if let error = error{
+                                               completion(error, false, dataToBeSent)
+                                                return
+                                            }
+                                           
+                                        }
+                                    }
+                                    
+                                    count -= 1
+                            if count == 0{
+                                    self.addAdminToGroup(user: user, group: finalGroup, freind: finalGroup.GroupAdmin.asAFriend) { (result) in
+                                        switch result{
+                                        case .success(_):
+                                            self.addMultipleFriendsToGroup(user: user, group: finalGroup, friendsToAdd: friends) { (result) in
+                                                switch result {
+                                                case .success( let bool):
+                                                    if bool || !bool {
+                                                           completion(nil,true,dataToBeSent)
+                                                        print("Successfully added to group")
+                                           
+                                                    }
+                                                    
+                                                case .failure(let error):
+                                                    //complete with with error
+                                                    completion(error,false,dataToBeSent)
+                                                }
+                                            }
+                                            return
+                                        case .failure(_):
+                                            completion(error,false,dataToBeSent)
+                                            return
+                                        }
+                                        
+                                    
+                                    }
+                                }
+                                
+                            
+                        }
+
+                    }
+                }
+                //check if admin is the global user and set data(change group name in group for admin) and return completion of true
+                
+                
+            }
+        }
+    }
+    func leaveGroup(user : FireUser, group:Group,friends:[Friend],completion : @escaping (Error? , Bool) -> ()){
+
+    
+        let groupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(user.id)
+        let groupDataRef = FireService.users.document(user.email).collection(FireService.groupString).document(group.id)
+ 
+        
+        groupRef.delete { (error) in
+            if let error = error{
+                completion(error,false)
+                return
+            }
+            groupDataRef.updateData(["groupInvitationUrl":FieldValue.delete()]) { (error) in
+                
+                if let error = error{
+                   completion(error, false)
+                    return
+                }
+                completion(nil,true)
+               
+            }
+
+               
+            }
+ 
+    }
+    func deleteFriendFromGroup(user : FireUser, group:Group,friend:Friend,completion : @escaping (Error? , Bool) -> ()){
+        let groupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(friend.id)
+        groupRef.delete { (error) in
+            if let error = error{
+                completion(error,false)
+                return
+            }
+
+                completion(nil,true)
+            }
+        
+        
+    }
+    
+    func dissolveGroup(user : FireUser, group:Group,completion : @escaping (Error? , Bool) -> ()){
+        let groupRef = FireService.users.document(user.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(user.id)
+        groupRef.delete { (error) in
+            if let error = error{
+                completion(error,false)
+            }
+            completion(nil,true)
+        }
+    }
     func getGroupname(user : FireUser, group:Group,completionHandler : @escaping (Group?,Bool,Error?)-> ()){
-        let groupRef =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
+        let groupRef =  FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
         var group:Group?
         groupRef.getDocument { (document, error) in
             if let error = error{
@@ -1379,7 +1827,33 @@ class FireService {
         }
         
     }
+    
+    func getGroupURL(user : FireUser, group:Group,completion : @escaping (String?,Bool,Error?)-> ()){
+        var url = String()
+        let groupRef =  FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
+            
+            groupRef.getDocument { (snapshot, error) in
+            if let error = error {
+                      completion(url,false,error)
+                  }
+                  //unwarps documents
+                guard let data = snapshot?.data() else {
+                      print("no messages")
+                      completion(url,false,error)
+                      return
+                  }
+            
+             let url = data["groupInvitationUrl"] as! String
+                
+                completion(url,true,nil)
 
+           
+        }
+
+        
+    }
+
+    
     
     
     
@@ -1666,7 +2140,7 @@ class FireService {
                 if friends.isEmpty {return}
                 //sends the same message to every person in the group
                 friends.forEach { (friend) in
-                    let groupRef =         FireService.users.document(friend.email).collection(FireService.groupString).document(group.id).collection("messages").document()
+                    let groupRef =         FireService.users.document(friend.email).collection(FireService.groupString).document(group.id).collection("messages").document("\(message.id)")
                     let message = self.changeMessageToDictionary(message)
                     groupRef.setData(message) { (error) in
                         if let error = error {

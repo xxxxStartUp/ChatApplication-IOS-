@@ -35,7 +35,7 @@ class AppSettingsCell: UITableViewCell {
             }
         case 1:
             settingsSwitch.tag = 1
-            label.text = "Sound"
+            label.text = "Notification Sound"
             label.settingsPageLabels(type: Constants.settingsPage.labelTitles)
             if settingsSwitch.isOn{
                 print("Sound On")
