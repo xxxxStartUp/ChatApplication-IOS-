@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
+class SavedMessagesFromSettingsVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
     
     @IBOutlet var savedMessagesTable: UITableView!
@@ -128,26 +128,34 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
     }
     func loadMessages (){
         
-        FireService.sharedInstance.loadSavedMessages(user: globalUser!, group: group!) { (messages, error) in
-            
+//        FireService.sharedInstance.loadSavedMessagesFromSettings2(user: globalUser!){(messages, error) in
+//            if let error = error{
+//                print(error.localizedDescription)
+//            }
+//            print("THIS DICTIONARY I AM PRINTING IS :\(messages)")
+//            }
+        FireService.sharedInstance.loadSavedMessagesFromSettings(user: globalUser!) { (messages, error) in
+
             if let error = error{
                 print(error.localizedDescription)
             }
+
+            print("savedmessagesfrom settings count:\(self.savedMessages.count)")
             self.savedMessages.removeAll()
             self.savedMessagesTable.reloadData()
             guard let messages = messages else {return}
             print(messages.count , "this is printing is in groupvc")
-            
+
             messages.forEach { (message) in
                 self.savedMessages.append(message)
                 print(message.content.content as! String, "this is printing in group vc")
             }
-            
-            
+
+
             self.savedMessages.sort { (message1, message2) -> Bool in
                 return message1.timeStamp < message2.timeStamp
             }
-            
+
             if !messages.isEmpty{
                 self.savedMessagesTable.reloadData()
                 self.savedMessagesTable.separatorStyle = .singleLine
@@ -160,7 +168,7 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
                 self.savedMessagesTable.scrollsToTop = true
                 self.savedMessagesTable.separatorStyle = .none
                 self.finalLabel?.isHidden = false
-            
+
             }
             //            if self.savedMessages.isEmpty{
             //                   self.savedMessagesTable.separatorStyle = .none
@@ -170,8 +178,9 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
             //                   self.savedMessagesTable.separatorStyle = .singleLine
             //                   self.finalLabel?.isHidden = true
             //               }
-            
+
         }
+        print("\(savedMessages.count)")
         
     }
     //updates the background color for the tableview and nav bar.
@@ -238,7 +247,7 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
 }
 
 
-extension SavedMessagesVC{
+extension SavedMessagesFromSettingsVC{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("numberofrows: \(savedMessages.count)")
         return savedMessages.count
@@ -261,7 +270,7 @@ extension SavedMessagesVC{
             
             let message = savedMessages[indexPath.row]
             print(savedMessages[indexPath.row].content)
-            FireService.sharedInstance.deleteOneSavedMessage(user: globalUser!, group: group!, MessageToDelete: message) { (result) in
+            FireService.sharedInstance.deleteSavedMessageFromSettings(user: globalUser!, MessageToDelete: message) { (result) in
                 switch result{
                     
                 case .success(let bool):

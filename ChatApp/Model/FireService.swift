@@ -528,21 +528,24 @@ class FireService {
     ///   - completionHandler: Completion handler to determine if the function completed correctly or with errors
     func saveMessages(user : FireUser, group:Group, messageToSave: Message, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
         
-        
-        let ref =         FireService.users.document(user.email).collection(FireService.savedMessages).document(group.id).collection("Messages").document("\(messageToSave.id)")
-        
-        
-        
-        ref.setData(self.changeMessageToDictionary(messageToSave)) { (error) in
-            
+        let data = ["groupname":group.name, "groupadmin" : group.GroupAdmin.email, "groupid": group.id] as [String : Any]
+        let ref = FireService.users.document(user.email).collection(FireService.savedMessages).document(group.id)
+        ref.setData(data, merge: true) { (error) in
             if let error = error{
                 completionHandler(.failure(error))
-                return
             }
-            
-            completionHandler(.success(true))
-            
+            ref.collection("Messages").document("\(messageToSave.id)").setData(self.changeMessageToDictionary(messageToSave)) { (error) in
+                if let error = error{
+                    completionHandler(.failure(error))
+                    return
+                }
+                
+                completionHandler(.success(true))
+            }
         }
+        
+        
+
     }
     
     func loadSavedMessages(user:FireUser, group:Group, completion: @escaping ([Message]?,Error?)-> ()){
@@ -578,6 +581,153 @@ class FireService {
             
         }
     }
+    func loadSavedMessagesFromSettings(user:FireUser, completion: @escaping ([Message]?,Error?)-> ()){
+        
+        
+        let ref =         FireService.users.document(user.email).collection(FireService.savedMessages)
+        
+        var messageDocumentArray = [QueryDocumentSnapshot]()
+        
+        
+        var groupAndMessageDictionary = [String:[Message]]()
+        //gets all the group documents
+        ref.getDocuments{ (snapshot, error) in
+            var messages : [Message] = []
+            if let error = error {
+                completion(nil , error)
+            }
+            //unwarps documents
+            guard let documents = snapshot?.documents else {
+                print("no saved messages from anygroup")
+                completion(messages , nil)
+                return
+            }
+                //set variable doccount that is equal to the counts of documents.
+                
+             
+                var docCount = documents.count
+            //for each document in documents, get all the message documents in the collection messages.
+                documents.forEach { (document) in
+                let messageRef = ref.document(document.documentID).collection("Messages")
+                messageRef.getDocuments { (snapshot, error) in
+                    if let error = error {
+                        completion(nil , error)
+                    }
+                   
+                    guard let messageDocuments = snapshot?.documents else {
+                        print("no messages")
+                        //completion(messages , nil)
+                        return
+                    }
+                    if messageDocuments.isEmpty{
+                        ref.document(document.documentID).delete { (error) in
+                            if let error = error{
+                            completion(nil , error)
+                            }
+                            print("Deleted document")
+                        }
+                    }
+                    //store the message document for each of the documents  in an array.
+                    messageDocumentArray.append(contentsOf: messageDocuments)
+                    
+                    docCount -= 1
+                    
+                    //if document count == 0. it has gone through all the documents and gotten the contents then loop into the message document array and append the messages to a message array and send back to front end.
+                    if docCount == 0{
+                    messageDocumentArray.forEach { (document) in
+                        let message = self.changeDictionaryToMessage(document.data())
+                        messages.append(message)
+                        print(message.content.content as! String , "this is from  loadmessageswithgroup",message.content.type.rawValue)
+                        if messages.count == messageDocumentArray.count {
+                            completion(messages, nil)
+                            return
+                        }
+                    }}
+            }
+                }
+            }
+            
+        
+    }
+    
+    func loadSavedMessagesFromSettings2(user:FireUser, completion: @escaping ([String:[Message]]?,Error?)-> ()){
+        
+        
+        let ref =         FireService.users.document(user.email).collection(FireService.savedMessages)
+        
+        var messageDocumentArray = [QueryDocumentSnapshot]()
+        
+        var groupAndSnapshotDictionary = [String:[QueryDocumentSnapshot]]()
+        var groupAndMessageDictionary = [String:[Message]]()
+        //gets all the group documents
+        ref.getDocuments{ (snapshot, error) in
+            var messages : [Message] = []
+            if let error = error {
+                completion(nil , error)
+            }
+            //unwarps documents
+            guard let documents = snapshot?.documents else {
+                print("no saved messages from anygroup")
+                completion(groupAndMessageDictionary , nil)
+                return
+            }
+                //set variable doccount that is equal to the counts of documents.
+                
+             
+                var docCount = documents.count
+            //for each document in documents, get all the message documents in the collection messages.
+                documents.forEach { (document) in
+                let messageRef = ref.document(document.documentID).collection("Messages")
+                messageRef.getDocuments { (snapshot, error) in
+                    if let error = error {
+                        completion(nil , error)
+                    }
+                   
+                    guard let messageDocuments = snapshot?.documents else {
+                        print("no messages")
+                        //completion(messages , nil)
+                        return
+                    }
+                    if messageDocuments.isEmpty{
+                        ref.document(document.documentID).delete { (error) in
+                            if let error = error{
+                            completion(nil , error)
+                            }
+                            print("Deleted document")
+                        }
+                    }
+                    //store the message document for each of the documents  in an array.
+                    messageDocumentArray.append(contentsOf: messageDocuments)
+                    groupAndSnapshotDictionary["\(document.documentID)"] = messageDocuments
+                    docCount -= 1
+                    
+                    //if document count == 0. it has gone through all the documents and gotten the contents then loop into the message document array and append the messages to a message array and send back to front end.
+                    var docIDCount = groupAndSnapshotDictionary.keys.count
+                    if docCount == 0{
+                        for(documentID,messageSnapShot) in groupAndSnapshotDictionary{
+                            messages.removeAll()
+                            messageSnapShot.forEach { (document) in
+                                let message = self.changeDictionaryToMessage(document.data())
+                                messages.append(message)
+                                
+                                groupAndMessageDictionary[documentID] = messages
+                                
+                            }
+                            docIDCount -= 1
+                            if docIDCount == 0 {
+                                completion(groupAndMessageDictionary, nil)
+                                return
+                            }
+                    }
+                        
+                    }
+            }
+                }
+            }
+            
+        
+    }
+    
     
     func deleteAllSavedMessages(user : FireUser, group:Group, MessageToDelete: [Message], completionHandler: @escaping (Result<Bool, Error>) -> Void) {
         
@@ -615,6 +765,53 @@ class FireService {
         
     }
     
+    func deleteSavedMessageFromSettings(user : FireUser, MessageToDelete: Message, completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+    
+    let ref =         FireService.users.document(user.email).collection(FireService.savedMessages)
+        
+//            .document(group.id).collection("Messages")
+    //listening for new messages
+    ref.getDocuments{ (snapshot, error) in
+        if let error = error {
+            completionHandler(.failure(error))
+        }
+        //unwarps documents
+        guard let documents = snapshot?.documents else {
+            print("no saved messages from anygroup")
+            completionHandler(.success(true))
+            return
+        }
+        if documents.count > 0 {
+        documents.forEach { (document) in
+            let messageRef = ref.document(document.documentID).collection("Messages")
+            messageRef.getDocuments { (snapshot, error) in
+                if let error = error {
+                    completionHandler(.failure(error))
+                }
+                guard let messageDocuments = snapshot?.documents else {
+                    print("no messages")
+                    //completion(messages , nil)
+                    return
+                }
+                messageDocuments.forEach { (document) in
+                    if MessageToDelete.id == document.documentID{
+                        messageRef.document(MessageToDelete.id).delete { (error) in
+                            if let error = error{
+                            completionHandler(.failure(error))
+                            }
+                            completionHandler(.success(true))
+                            
+                        }
+                    }
+                }}
+
+        }
+        }else{
+            completionHandler(.success(true))
+        }
+        
+    }
+    }
     func deleteAllGroupMessages(user : FireUser, group:Group, MessageToDelete: [Message], completionHandler: @escaping (Result<Bool, Error>) -> Void) {
         
         for message in MessageToDelete {
@@ -1993,6 +2190,9 @@ class FireService {
         let data = ["name" : friend.username,
                     "email":friend.email,
                     "id": friend.id] as [String : Any]
+        let data2 = ["name" : User.name,
+                    "email":User.email,
+                    "id": User.id] as [String : Any]
         
         if friend.email == User.email {
             fatalError("you cannot add yourself")
@@ -2009,8 +2209,14 @@ class FireService {
                         if let error = error {
                             completion(false, error)
                         }else{
-                            completion(true , nil)
-                            return
+                            FireService.users.document(friend.email).collection(FireService.firendsString).document(User.email).setData(data2) { (error) in
+                                if let error = error {
+                                completion(false, error)
+                                }
+                                completion(true , nil)
+                                return
+                            }
+                          
                         }
                     }
                     

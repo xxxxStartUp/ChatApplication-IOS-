@@ -110,7 +110,7 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
         }
     }
     
-    @objc func handlesClearButtonRightNavBarItem(){
+    @objc func handlesClearButtonRightNavBarItem(sender:UIAlertAction!){
         if let messages = messages{
             FireService.sharedInstance.deleteAllGroupMessages(user: globalUser!, group: group!, MessageToDelete: messages) { (result) in
                 
@@ -462,23 +462,35 @@ extension GroupInfoVC:UIImagePickerControllerDelegate{
     }
     func deleteGroupPicture(){
         groupImageView.isUserInteractionEnabled = false
-        FireService.sharedInstance.DeleteGroupPicture(user: globalUser!, group: group!,friends:groupParticipants) { (result) in
+        FireService.sharedInstance.getGroupPictureData(user: globalUser!, group: group!) { [self] (result) in
             switch result{
                 
-            case .success(let bool):
-                if bool{
-                    Constants.groupInfoPage.globalGroupImage = self.defaultImage
-                    Constants.groupInfoPage.groupImageState = true
-                    self.groupImageView.isUserInteractionEnabled = true
-                    return
+            case .success(let url):
+                FireService.sharedInstance.DeleteGroupPicture(user: globalUser!, group: group!,friends:groupParticipants) { (result) in
+                    switch result{
+                        
+                    case .success(let bool):
+                        if bool{
+                            
+                            Constants.groupInfoPage.globalGroupImage = self.defaultImage
+                            Constants.groupInfoPage.groupImageState = true
+                            self.groupImageView.isUserInteractionEnabled = true
+                            groupImageView.clearCachedImage(url: url.absoluteString)
+                            return
+                        }
+                    case .failure(let error):
+                        let alert = UIAlertController(title: "Could not delete", message: error.localizedDescription, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Try Again", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                        self.groupImageView.isUserInteractionEnabled = true
+                    }
                 }
-            case .failure(let error):
-                let alert = UIAlertController(title: "Could not delete", message: error.localizedDescription, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Try Again", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-                self.groupImageView.isUserInteractionEnabled = true
+                
+            case .failure(_):
+                print("failed to set image url")
             }
         }
+
         
         
         
@@ -530,9 +542,8 @@ extension GroupInfoVC{
                 rightButton.addTarget(self, action: #selector(handlesShareNavBarItem), for: .touchUpInside)
                 return rightButton
             }()
-        let clearRightBarButtonItem = UIBarButtonItem(customView: clearButton)
         let shareRightBarButtonItem = UIBarButtonItem(customView: shareButton)
-        navigationItem.rightBarButtonItems = [shareRightBarButtonItem,clearRightBarButtonItem]
+        navigationItem.rightBarButtonItems = [shareRightBarButtonItem]
         
     }
     
@@ -550,7 +561,9 @@ extension GroupInfoVC{
                 let action1 = UIAlertAction(title: "Assign new admin and leave group", style: .destructive, handler: selectMakeAdminAndLeaveGroupOption(sender:))
                     let action2 = UIAlertAction(title: "Assign admin", style: .default, handler: assignNewAdminOption(sender:))
                 let action3 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-                let actions = [action1,action2,action3]
+                let action4 = UIAlertAction(title: "Clear Chat", style: .default, handler: handlesClearButtonRightNavBarItem(sender:))
+                    
+                let actions = [action1,action2,action3,action4]
                 
                 for action in actions{
                     alertController.addAction(action)
@@ -574,7 +587,8 @@ extension GroupInfoVC{
                 print("Not admin")
                 let action1 = UIAlertAction(title: "Leave group", style: .destructive, handler: leaveGroupOption(sender:))
                 let action2 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-                let actions = [action1,action2]
+                let action3 = UIAlertAction(title: "Clear Chat", style: .default, handler: handlesClearButtonRightNavBarItem(sender:))
+                let actions = [action1,action2,action3]
                 
                 for action in actions{
                     alertController.addAction(action)

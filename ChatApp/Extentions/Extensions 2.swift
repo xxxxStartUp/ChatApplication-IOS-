@@ -58,7 +58,6 @@ extension UIButton{
             
         }
     }
-    
 }
 extension UILabel{
     func onBoardingPageHeaderLabels(){
@@ -400,8 +399,6 @@ extension UITextField{
         }
         
     }
-
-
     
 }
 
@@ -418,24 +415,9 @@ extension UIView{
         self.layer.cornerRadius = self.layer.frame.size.height/2
         self.clipsToBounds = true
         self.contentMode = .scaleAspectFill
+        
+        
     }
-    func newGroupImageView(){
-        self.layer.borderWidth = 0.5
-        self.layer.borderColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
-        self.layer.masksToBounds = false
-        self.layer.cornerRadius = self.layer.frame.size.height/2
-        self.clipsToBounds = true
-        self.contentMode = .scaleAspectFit
-    }
-    func chatLogImageView(){
-//        self.layer.borderWidth = 0.5
-//        self.layer.borderColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
-        self.layer.masksToBounds = false
-        self.layer.cornerRadius = self.layer.frame.size.height/2
-        self.clipsToBounds = true
-        self.contentMode = .scaleAspectFill
-    }
-    
     func settingsPageImageView(){
         
         self.layer.borderWidth = 1
@@ -604,6 +586,7 @@ extension UIImageView{
             self.image = cachedImage
             return
         }
+        
         //otherwise fire off a new download
 
         if let url =
@@ -624,11 +607,6 @@ extension UIImageView{
 
             }
         }}
-    
-    func clearCachedImage(url:String){
-    
-        cachedImage.removeObject(forKey: url as NSString)
-    }
     
     func thumbnailImageForFileUrl(fileUrl:NSURL){
         let asset = AVAsset(url: fileUrl as URL)

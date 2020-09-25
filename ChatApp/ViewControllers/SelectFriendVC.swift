@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import Foundation
+import MessageUI
 
-class SelectFriendVC: UIViewController {
+class SelectFriendVC: UIViewController,MFMailComposeViewControllerDelegate{
     @IBOutlet var contactsTable: UITableView!
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var newGroupBtn: UIButton!
@@ -19,7 +21,11 @@ class SelectFriendVC: UIViewController {
     var delegate : FreindDelegate?
     var filteredFriendList = [Friend]()
     var searching = false
+
+    var group:Group?
+
     let navBarButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +33,7 @@ class SelectFriendVC: UIViewController {
         updateBackgroundViews()
         //rightBarButtonItemTrick()
         setUpTableView()
+        contactsTable.tableFooterView = footerviewSetUp()
         contactsTable.allowsMultipleSelection = true
         Constants.chatLogPage.chatLogToContactsSegueSignal = true
         
@@ -40,6 +47,7 @@ class SelectFriendVC: UIViewController {
         super.viewWillAppear(true)
         updateBackgroundViews()
         Constants.chatLogPage.chatLogToContactsSegueSignal = true
+        contactsTable.tableFooterView = footerviewSetUp()
         friendListEmail.removeAll()
         
         
@@ -77,9 +85,7 @@ class SelectFriendVC: UIViewController {
             
         }
     }
-    @IBAction func addButtonPressed(_ sender: Any) {
-        performSegue(withIdentifier: "contactsToAddFriends", sender: self)
-    }
+
     //handles hiding the rightbar button when contactstable appears from segueing from the chatscreen. The reason for this is so you can only add contacts from the contacts tab
     //    func rightBarButtonItemTrick(){
     //        if Constants.chatPage.chatToContactsSegueSignal{
@@ -157,6 +163,10 @@ class SelectFriendVC: UIViewController {
             
              performSegue(withIdentifier: "contactsToNewGroupSB", sender: self)
         }
+    }
+    
+    @IBAction func addContactPressed(_ sender: Any) {
+        performSegue(withIdentifier: "contactsToAddFriends", sender: self)
     }
     
     
@@ -245,10 +255,126 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
         searchBar.text = ""
         contactsTable.reloadData()
     }
+    func footerviewSetUp() -> UIView{
+        let view:UIView = {
+            let finalLabel = UIView(frame: CGRect(x: 0, y: 0, width: contactsTable.frame.width, height: 30))
+            finalLabel.darkmodeBackground()
+            return finalLabel
+        }()
+        let button:UIButton = {
+            var addFriendsToGroup = UIButton(type: .system)
+            addFriendsToGroup.frame = view.frame
+            addFriendsToGroup.setTitle("Add To Group", for: .normal)
+            addFriendsToGroup.titleLabel?.font = UIFont(name: "HelveticaNeue-Regular", size: 14)
+            //               rightButton.setTitleColor(.red, for: .normal)
+            addFriendsToGroup.settingsPageButtons()
+            addFriendsToGroup.translatesAutoresizingMaskIntoConstraints = false
+            addFriendsToGroup.addTarget(self, action: #selector(addFriendsToGroupTapped), for: .touchUpInside)
+            return addFriendsToGroup
+        }()
+        
+        view.addSubview(button)
+//        groupOptionButton = button
+        button.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        button.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        button.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        button.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        return view
+    }
+    @objc func addFriendsToGroupTapped(){
+        if Constants.selectedContactsPage.fromChatLogIndicator{
+        if friendListEmail.isEmpty{
+            let controller = UIAlertController.alertUser(title: "No Contacts Selected", message: "Select the contacts that will be invited to the new group", whatToDo: "OK")
+            self.present(controller, animated: true, completion: nil)
+        }else{
+            
+             performSegue(withIdentifier: "contactsToNewGroupSB", sender: self)
+        }
+        }else if Constants.selectedContactsPage.fromGroupChatVCIndicator{
+            if friendListEmail.isEmpty{
+                let controller = UIAlertController.alertUser(title: "No Contacts Selected", message: "Select the contacts that will be invited to the new group", whatToDo: "OK")
+                self.present(controller, animated: true, completion: nil)
+            }else{
+                if let group = group{
+                FireService.sharedInstance.getGroupURL(user: globalUser!, group:group) { (url, completion, error) in
+                    if let error = error{
+                        print(error.localizedDescription)
+                    }
+                    if let url = url, let finalURL = URL(string: url){
+                        self.composeMail(url: finalURL)
+                }
+                }
+                }
+            }
+        }
+    }
     
+//    handles sending mail invite to people invited to the group.
+    func composeMail(url:URL){
+        
+                print("Func is called")
+                guard MFMailComposeViewController.canSendMail() else {
+                    print("Mail services not available")
+                    return
+                }
+                let composer = MFMailComposeViewController()
+                composer.mailComposeDelegate = self
+                composer.setToRecipients(self.friendListEmail)
+                composer.setSubject("\(globalUser!.name) has invited you to join a group on the Soluchat App")
+
+                composer.setMessageBody("Hello," + "\n" + "\n\(globalUser!.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", isHTML: false)
+
+                self.present(composer, animated: true, completion: nil)
+
+            }
     
-    
-    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        print("Hello is dismissed")
+        controller.dismiss(animated: true, completion: nil)
+        
+    }
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        
+        if let error = error{
+            // create the alert
+            let alert = UIAlertController(title: "Error", message: "\(error.localizedDescription)", preferredStyle: UIAlertController.Style.alert)
+            // add an action (button)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            // show the alert
+            self.present(alert, animated: true, completion: nil)
+            fatalError()
+        }
+        switch result {
+            
+        case .sent:
+            DispatchQueue.main.async {
+                // create the alert
+                let alert = UIAlertController(title: "Invite Sent", message: "The invite has been sent to the selected contacts", preferredStyle: UIAlertController.Style.alert)
+                // add an action (button)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                // show the alert
+                self.present(alert, animated: true, completion: nil)
+                
+            }
+        case .cancelled:
+            
+            print("The cancel button has been clicked")
+        case .failed:
+            // create the alert
+            let alert = UIAlertController(title: "Invite not sent", message: "The invite failed to be sent.", preferredStyle: UIAlertController.Style.alert)
+            // add an action (button)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            // show the alert
+            self.present(alert, animated: true, completion: nil)
+            
+        default:
+            print("not sure")
+            
+        }
+        controller.dismiss(animated: true, completion: nil)
+    }
+
 }
 
 

@@ -11,7 +11,7 @@ import Foundation
 import FirebaseDynamicLinks
 import MessageUI
 
-class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
+class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate, UINavigationControllerDelegate{
     
     
     @IBOutlet weak var groupNameTextField: UITextField!
@@ -24,18 +24,22 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
     var selectedFriendsListEmail: [String] = []
     var shareURL:URL? = nil
     var shareURLString:String?
+    var group:Group?
+    var defaultImage:UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        defaultImage = newGroupImageView.image
         updateViews()
         updateBackgroundViews()
         print("Selected Friend Email: \(selectedFriendsListEmail)")
 //        createDynamicLink()
-        
-        
-        
-        // Do any additional setup after loading the view.
+        setUpImageView()
+        newGroupImageView.isUserInteractionEnabled = true
+        newGroupImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handlesImageViewTapped)))
+        newGroupImageView.newGroupImageView()
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -46,8 +50,7 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
         super.viewDidDisappear(true)
         selectedFriendsListEmail.removeAll()
     }
-    
-    
+
     func createGroup() {
         if let groupName = self.groupNameTextField.text{
             if groupName == "" {
@@ -59,6 +62,7 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
             //new group is created and temp id is passed.
             let id = UUID().uuidString
             let newGroup = Group(GroupAdmin: globalUser!, id: id, name: groupName)
+            group = newGroup
             //added final id to completion to get the latest id from backend and use for creating dynamic link.
             FireService.sharedInstance.createGroup(user: globalUser!, group: newGroup) { (completed, error) in
                 if let error = error{
@@ -71,6 +75,8 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
                             //call function to save the url in FB
                             if let shareURLString = self.shareURLString{
                             let data = ["groupInvitationUrl" : shareURLString]
+                            let imageData = Constants.groupInfoPage.globalGroupImage!.pngData()!
+                            self.saveGroupPicture(data: imageData)
                             FireService.sharedInstance.addCustomDataToGroup(data: data, user: globalUser!, group: newGroup) { (error, success) in
                                 if let error = error {
                                     print(error.localizedDescription)
@@ -130,6 +136,7 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
         createGroup()
         
     }
+    
     func createDynamicLink(admin:FireUser,groupID:String,groupName:String,completion:@escaping (Bool) -> ()){
         print("this dynamic link func has been called")
         
@@ -186,6 +193,7 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate {
         }
         
     }
+    
     func showSheet(url:URL){
         let promoText = "Check out this app for solustack"
         let activityVC = UIActivityViewController(activityItems: [promoText,url], applicationActivities: nil)
@@ -313,7 +321,99 @@ extension NewGroupVC: MFMessageComposeViewControllerDelegate{
         present(composer, animated: true, completion: nil)
         
     }
+
+}
+extension NewGroupVC:UIImagePickerControllerDelegate{
     
+    func presentCameraRoll (sender : UIAlertAction!){
+        let cameraRoll = UIImagePickerController()
+        cameraRoll.delegate = self
+        cameraRoll.sourceType = .photoLibrary
+        cameraRoll.allowsEditing = true
+        self.present(cameraRoll, animated: true, completion: nil)
+    }
+    
+
+    func setUpImageView(){
+        let button:UIButton = {
+            let rightButton = UIButton(type: .system)
+            rightButton.frame = CGRect(x: newGroupImageView.frame.width - 90, y: newGroupImageView.frame.height-90 , width: 70, height: 70)
+            let configuration = UIImage.SymbolConfiguration(weight: .heavy)
+            let image = UIImage(systemName: "camera.circle.fill", withConfiguration: configuration)
+            rightButton.setImage(image, for: .normal)
+            rightButton.tintColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+            rightButton.addTarget(self, action: #selector(handlesImageViewTapped), for: .touchUpInside)
+            return rightButton
+        }()
+        newGroupImageView.addSubview(button)
+        
+//        button.rightAnchor.constraint(equalTo: newGroupImageView.rightAnchor).isActive = true
+//        button.bottomAnchor.constraint(equalTo: newGroupImageView.bottomAnchor).isActive = true
+    }
+    @objc func handlesImageViewTapped(){
+        let alertController = UIAlertController(title: "What do you want to do?", message: "", preferredStyle: .actionSheet)
+        
+        let action1 = UIAlertAction(title: "Delete Photo", style: .destructive, handler: deleteImage(sender:))
+        let action2 = UIAlertAction(title: "Choose Photo", style: .default, handler: presentCameraRoll(sender:))
+        let action3 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let actions = [action1,action2,action3]
+        
+        for action in actions{
+            alertController.addAction(action)
+        }
+        
+        self.present(alertController, animated: true, completion: nil)
+        print("Imageview was tapped")
+    }
+    @objc func deleteImage(sender : UIAlertAction!){
+        newGroupImageView.image = defaultImage
+        newGroupImageView.contentMode = .scaleAspectFit
+    }
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
+            newGroupImageView.image = image
+            newGroupImageView.contentMode = .scaleAspectFill
+            Constants.groupInfoPage.groupImageState = true
+            Constants.groupInfoPage.globalGroupImage = image
+            
+            dismiss(animated: true, completion: nil)
+        }
+            //sets image to be the edited image.
+        else if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage{
+            newGroupImageView.image = image
+            newGroupImageView.contentMode = .scaleAspectFill
+            Constants.groupInfoPage.groupImageState = true
+            Constants.groupInfoPage.globalGroupImage = image
+            
+            dismiss(animated: true, completion: nil)
+        }
+        
+  
+        
+    }
+    func saveGroupPicture(data : Data){
+        self.newGroupImageView.isUserInteractionEnabled = false
+        if let group = group{
+        FireService.sharedInstance.saveGroupPicture(data : data , user : globalUser!, group:group,friend:[globalUser!.asAFriend]) { (result) in
+            switch result {
+            case .success(_):
+                print("sucess")
+                let image = UIImage(data: data)!
+                Constants.groupInfoPage.groupImageState = true
+                Constants.groupInfoPage.globalGroupImage = image
+                self.newGroupImageView.image = image
+                self.newGroupImageView.isUserInteractionEnabled = true
+            case .failure(_):
+                print("falure")
+            }
+        }
+        }
+ 
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
     
 }
 
