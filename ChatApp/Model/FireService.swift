@@ -2320,7 +2320,7 @@ class FireService {
     
     
     //need to test
-    func addFriend(sender :FireUser ,friend : Friend , completion : @escaping (Bool , Error?) -> ()) {
+    func addFriend(user:FireUser,sender :FireUser ,friend : Friend , completion : @escaping (Bool , Error?) -> ()) {
         
         let data = ["name" : friend.username,
                     "email":friend.email,
@@ -2333,7 +2333,7 @@ class FireService {
             fatalError("you cannot add yourself")
         }
         
-        loadAllFriends(user: sender) { (friends, error) in
+        loadAllFriends(user: user) { (friends, error) in
             if let freinds = friends{
                 if freinds.contains(friend){
                     print("you have already added this person")

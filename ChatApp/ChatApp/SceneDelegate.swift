@@ -120,7 +120,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     }
                     if let friend = freind {
 //                        guard let globalUser = globalUser else {return}
-                        FireService.sharedInstance.addFriend(sender: user, friend: friend) { (sucess, error) in
+                        FireService.sharedInstance.addFriend(user:globaluser,sender: user, friend: friend) { (sucess, error) in
                             
                             if let error = error{
                                 print(error)

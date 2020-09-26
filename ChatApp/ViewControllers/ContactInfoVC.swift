@@ -122,6 +122,7 @@ class ContactInfoVC : UIViewController {
             self.contactInfoTableView.reloadData()
             self.contactInfoTableView.darkmodeBackground()
             self.navigationController?.navigationBar.darkmodeBackground()
+            self.view.darkmodeBackground()
             self.navigationBarBackgroundHandler()
 
         }

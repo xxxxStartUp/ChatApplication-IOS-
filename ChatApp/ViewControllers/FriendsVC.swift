@@ -96,6 +96,7 @@ class FriendsVC: UIViewController {
     func updateBackgroundViews(){
         DispatchQueue.main.async {
             self.contactsTable.darkmodeBackground()
+            self.view.darkmodeBackground()
             self.navigationController?.navigationBar.darkmodeBackground()
             self.navigationBarBackgroundHandler()
             
@@ -187,14 +188,21 @@ extension FriendsVC : UITableViewDelegate , UITableViewDataSource, UISearchBarDe
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        if !searching{
             guard let vc = UIStoryboard(name: "ChatStoryBoard", bundle: nil).instantiateInitialViewController()  as? ChatVC_Dara else {return}
             self.delegate = vc
             delegate?.didSendFriend(freind: friendList[indexPath.row])
             navigationController?.pushViewController(vc, animated: true)
+        }else{
+            guard let vc = UIStoryboard(name: "ChatStoryBoard", bundle: nil).instantiateInitialViewController()  as? ChatVC_Dara else {return}
+            self.delegate = vc
+            delegate?.didSendFriend(freind: filteredFriendList[indexPath.row])
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
+            if !searching{
             print(friendList[indexPath.row].email)
             FireService.sharedInstance.deleteFriend(user: globalUser!, friend: friendList[indexPath.row]) { (error, completion) in
                 if let error = error{
@@ -205,6 +213,24 @@ extension FriendsVC : UITableViewDelegate , UITableViewDataSource, UISearchBarDe
                 self.handleEmptyContacts()
 
             }
+            }else{
+                print(filteredFriendList[indexPath.row].email)
+                FireService.sharedInstance.deleteFriend(user: globalUser!, friend: filteredFriendList[indexPath.row]) { (error, completion) in
+                    if let error = error{
+                        print(error.localizedDescription)
+                    }
+                    let friendToDelete = self.filteredFriendList.remove(at: indexPath.row)
+                    self.friendList.remove(at: self.friendList.firstIndex(of: friendToDelete)!)
+                    self.contactsTable.deleteRows(at: [indexPath], with: .automatic)
+                    self.searching = false
+                    self.searchBarr?.text = ""
+                    self.contactsTable.reloadData()
+                    self.handleEmptyContacts()
+
+                }
+
+            }
+            
         }
         
     }

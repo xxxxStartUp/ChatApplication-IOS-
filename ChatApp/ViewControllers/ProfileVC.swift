@@ -146,6 +146,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         emailView.layer.cornerRadius = 10
         statusView.layer.cornerRadius = 10
         
+
     }
     
     //handles the gesture recognizer for when a picture is tapped
@@ -355,4 +356,22 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     }
     
     
+}
+extension ProfileVC{
+//    func setUpImageView(){
+//        let button:UIButton = {
+//            let rightButton = UIButton(type: .system)
+//            rightButton.frame = CGRect(x: profileImageView.frame.width - 85, y: profileImageView.frame.height-110 , width: 70, height: 70)
+//            let configuration = UIImage.SymbolConfiguration(weight: .heavy)
+//            let image = UIImage(systemName: "camera.circle.fill", withConfiguration: configuration)
+//            rightButton.setImage(image, for: .normal)
+//            rightButton.tintColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+//            rightButton.addTarget(self, action: #selector(profileImageTapped), for: .touchUpInside)
+//            return rightButton
+//        }()
+//        profileImageView.addSubview(button)
+//
+////        button.rightAnchor.constraint(equalTo: newGroupImageView.rightAnchor).isActive = true
+////        button.bottomAnchor.constraint(equalTo: newGroupImageView.bottomAnchor).isActive = true
+//    }
 }

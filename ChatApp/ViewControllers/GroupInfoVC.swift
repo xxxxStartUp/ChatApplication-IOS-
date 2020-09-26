@@ -152,7 +152,8 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
             self.participantsTableview.darkmodeBackground()
             self.navigationController?.navigationBar.darkmodeBackground()
             self.groupNameView.darkmodeBackground()
-            
+            self.view.darkmodeBackground()
+            self.groupNameTextField.groupInfoTextField()
             
             self.navigationBarBackgroundHandler()
             self.groupinfoTableview.reloadData()

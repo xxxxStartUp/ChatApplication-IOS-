@@ -18,10 +18,12 @@ class ChatLogVC: UIViewController {
     var friendDelegate : FreindDelegate?
     var groupDelegate : GroupDelegate?
     var searchBarr:UISearchBar?
+    var filteredActivity = [Activity]()
+    var searching = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationBarBackgroundHandler()
         chatLogTableview.register(UINib(nibName: "ChatLogCell", bundle: nil), forCellReuseIdentifier: "ChatCellIdentifier")
         chatLogTableview.delegate = self
         chatLogTableview.dataSource = self
@@ -33,6 +35,7 @@ class ChatLogVC: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        navigationBarBackgroundHandler()
         updateBackgroundViews()
         loadActivity()
         
@@ -42,6 +45,7 @@ class ChatLogVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        navigationBarBackgroundHandler()
         self.tabBarController?.tabBar.isHidden = false
         loadActivity()
     }
@@ -102,13 +106,28 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource,UISearchBarDeleg
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatCellIdentifier") as! ChatLogCell
-        cell.updateViews(indexPath: indexPath.row+1)
-        cell.activity = activities[indexPath.row]
-        cell.backgroundColor = .clear
-        return cell
+        if searching{
+            cell.updateViews(indexPath: indexPath.row+1)
+            cell.activity = filteredActivity[indexPath.row]
+            print("This is FilteredfriendsList\(filteredActivity)")
+            cell.backgroundColor = .clear
+            return cell
+        }
+        else{
+            cell.updateViews(indexPath: indexPath.row+1)
+            cell.activity = activities[indexPath.row]
+            print("This is friendsList\(activities)")
+            cell.backgroundColor = .clear
+            return cell
+        }
+//        cell.updateViews(indexPath: indexPath.row+1)
+//        cell.activity = activities[indexPath.row]
+//        cell.backgroundColor = .clear
+//        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if !searching{
         let activity = activities[indexPath.row]
         
         switch activity.type {
@@ -127,12 +146,35 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource,UISearchBarDeleg
             navigationController?.pushViewController(vc, animated: true)
             return
         }
+        }else{
+            let activity = filteredActivity[indexPath.row]
+            switch activity.type {
+                
+            case .GroupChat(group: let group):
+                guard let vc = UIStoryboard(name: "GroupChatSB", bundle: nil).instantiateInitialViewController()  as? GroupChatVC else {return}
+                self.groupDelegate = vc
+                groupDelegate?.didSendGroup(group: group)
+                navigationController?.pushViewController(vc, animated: true)
+                return
+                
+            case .FriendChat(friend: let friend):
+                guard let vc = UIStoryboard(name: "ChatStoryBoard", bundle: nil).instantiateInitialViewController()  as? ChatVC_Dara else {return}
+                self.friendDelegate = vc
+                friendDelegate?.didSendFriend(freind: friend)
+                navigationController?.pushViewController(vc, animated: true)
+                return
+            }
+        }
         
     }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return activities.count
+        if searching{
+            return filteredActivity.count
+        }else{
+            return activities.count
+        }
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view:UIView = {
@@ -159,6 +201,7 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource,UISearchBarDeleg
         DispatchQueue.main.async {
             self.chatLogTableview.darkmodeBackground()
             self.navigationBarBackgroundHandler()
+            self.view.darkmodeBackground()
             
             
             
@@ -206,5 +249,18 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource,UISearchBarDeleg
 
             
         }
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredActivity = activities.filter({$0.name.lowercased().prefix(searchText.count) == searchText.lowercased()})
+        print("This is friendsList\(activities)")
+        print("This is FilteredfriendsList\(filteredActivity)")
+        searching = true
+        chatLogTableview.reloadData()
+        
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searching = false
+        searchBar.text = ""
+        chatLogTableview.reloadData()
     }
 }

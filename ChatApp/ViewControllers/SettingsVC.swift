@@ -226,6 +226,7 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
             self.navigationController?.navigationBar.darkmodeBackground()
             self.signOutButton.settingsPageButtons()
             self.navigationBarBackgroundHandler()
+            self.view.darkmodeBackground()
             self.SettingsTable.reloadData()
             //self.navigationController?.navigationBar.settingsPage()
             

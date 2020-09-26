@@ -412,6 +412,7 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
         print("Display switch:\(Constants.settingsPage.displayModeSwitch)")
         DispatchQueue.main.async {
             self.chatTableView.darkmodeBackground()
+            self.view.darkmodeBackground()
             
             self.texterView.backgroundView.texterViewBackground()
             //self.navigationController?.navigationBar.darkmodeBackground()

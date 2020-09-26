@@ -367,6 +367,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         print("Display switch:\(Constants.settingsPage.displayModeSwitch)")
         DispatchQueue.main.async {
             self.groupChatTable.darkmodeBackground()
+            self.view.darkmodeBackground()
             
             self.texterView.backgroundView.texterViewBackground()
             //self.navigationController?.navigationBar.darkmodeBackground()
