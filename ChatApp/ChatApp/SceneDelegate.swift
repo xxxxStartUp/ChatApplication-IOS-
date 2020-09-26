@@ -105,6 +105,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             if let senderQueryItem = queryItems.first(where: {$0.name == "requestSenderEmail" }),let receiverQueryItem = queryItems.first(where: {$0.name == "requestReceiverEmail" }) {
                 guard let senderEmail = senderQueryItem.value else {return}
                 guard let receiverEmail = receiverQueryItem.value else {return}
+                if (globaluser.email == receiverEmail){
                 FireService.sharedInstance.searchOneUserWithEmail(email: senderEmail) { (user, error) in
                     if let error = error {
                         print("could not find group admin user while adding new user to group",error.localizedDescription)
@@ -119,7 +120,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     }
                     if let friend = freind {
 //                        guard let globalUser = globalUser else {return}
-                        FireService.sharedInstance.addFriend(User: user, friend: friend) { (sucess, error) in
+                        FireService.sharedInstance.addFriend(sender: user, friend: friend) { (sucess, error) in
                             
                             if let error = error{
                                 print(error)
@@ -135,12 +136,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                                 }
                             }}
                     }}}}
+                else{
+                    let controller = UIAlertController.alertUser(title: "URL Misalignment", message: "This is a unique URL for another user", whatToDo: "OK")
+                    self.window?.rootViewController?.present(controller, animated: true, completion: nil)
+                    print("This link is meant for \(receiverEmail)")
+                }
         }
         else{
             print("just here chilling")
         }
         
         
+        }
         }
     }
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {

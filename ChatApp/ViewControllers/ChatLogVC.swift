@@ -17,6 +17,7 @@ class ChatLogVC: UIViewController {
     var activities : [Activity] = []
     var friendDelegate : FreindDelegate?
     var groupDelegate : GroupDelegate?
+    var searchBarr:UISearchBar?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,7 +97,7 @@ class ChatLogVC: UIViewController {
 }
 
 
-extension ChatLogVC : UITableViewDelegate,UITableViewDataSource{
+extension ChatLogVC : UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate{
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -133,6 +134,25 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return activities.count
     }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view:UIView = {
+        let searchBar = UISearchBar()//UIView(frame: CGRect(x: 0, y: 0, width: contactsTable.frame.width, height: 30))
+        searchBar.placeholder = "Search groups/contacts"
+        searchBar.darkmodeBackground()
+        if Constants.settingsPage.displayModeSwitch{
+            searchBar.barStyle = .black
+        }else{
+            searchBar.barStyle = .default
+        }
+        return searchBar
+        }()
+        searchBarr = view as? UISearchBar
+        searchBarr!.delegate = self
+        return searchBarr
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 44
+    }
     
     func updateBackgroundViews(){
         
@@ -164,6 +184,8 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource{
             //handles TabBar
             self.tabBarController?.tabBar.barTintColor = .black
             tabBarController?.tabBar.isTranslucent = false
+            searchBarr?.barStyle = .black
+
             
         }
         else{
@@ -180,6 +202,8 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource{
             //handles TabBar
             self.tabBarController?.tabBar.barTintColor = .white
             tabBarController?.tabBar.isTranslucent = false
+            searchBarr?.barStyle = .default
+
             
         }
     }

@@ -37,22 +37,22 @@ class ChatLogCell: UITableViewCell {
             case .GroupChat(group:let group):
                 chatNameLabel.text =  activity.name
                 
-                FireService.sharedInstance.getGroupPictureData(user: globalUser!, group: group) { (result) in
-                   
-                    switch result{
-                        
-                    case .success(let url):
+                FireService.sharedInstance.getGroupPictureDataFromChatLog(user: globalUser!, group: group) { (url,completion,error) in
+     
+                        if let url = url{
                         //                self.profileImageView.af_setImage(withURL: url)
-                        self.profileImageview.af.setImage(withURL: url)
-                       // self.profileImageview.loadImages(urlString: url.absoluteString, mediaType: Constants.groupInfoPage.GroupImageType)
+//                        self.profileImageview.af.setImage(withURL: url)
+                        self.profileImageview.loadImages(urlString: url.absoluteString, mediaType: Constants.groupInfoPage.GroupImageType)
                        
                         //                    self.groupImageView.contentMode = .scaleAspectFit
-                        
-                    case .failure(_):
-                        print("failed to set image url")
+                        }
+                    if !completion{
+                            self.profileImageview.image = UIImage(systemName: "person.crop.circle.fill")
+                        }
+      
                     }
 
-                }
+                
                 break
             case .FriendChat:
                 chatNameLabel.text =  activity.name

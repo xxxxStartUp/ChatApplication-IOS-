@@ -521,6 +521,61 @@ class FireService {
         
     }
     
+    
+    
+    func saveMessageWithFreind(user : FireUser , freind : Friend , message : Message, completionHandler: @escaping (Result<Bool, Error>) -> Void){
+        let ref = FireService.users.document(user.email).collection(FireService.savedMessages).document(freind.id)
+        let data = self.changeMessageToDictionary(message)
+        ref.collection("FreindMessages").document("\(message.id)").setData(data) { (error) in
+            if let error = error{
+                completionHandler(.failure(error))
+                return
+            }
+            
+            completionHandler(.success(true))
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+    func loadSavedMessagesWithFriend(user:FireUser, freind:Friend, completion: @escaping ([Message]?,Error?)-> ()){
+        let ref =         FireService.users.document(user.email).collection(FireService.savedMessages).document(freind.id).collection("Messages")
+        //listening for new messages
+        ref.getDocuments{ (snapshot, error) in
+            var messages : [Message] = []
+            if let error = error {
+                completion(nil , error)
+            }
+            //unwarps documents
+            guard let documents = snapshot?.documents else {
+                print("no messages")
+                completion(messages , nil)
+                return
+            }
+            
+            documents.forEach { (document) in
+                
+                //checks if documentID is equal to group id then it returns the messages
+                
+                let message = self.changeDictionaryToMessage(document.data())
+                messages.append(message)
+                print(message.content.content as! String , "this is from loadmessageswithgroup",message.content.type.rawValue)
+                if messages.count == documents.count {
+                    completion(messages, nil)
+                    return
+                }
+            }
+            
+            
+        }
+    }
+    
+    
+    
     /// Backend function to  save  a message. This  creates a document (a message) in FireBase in the user's 'savedMessages' collection.
     /// - Parameters:
     ///   - user: The current user sqving the message
@@ -812,10 +867,27 @@ class FireService {
         
     }
     }
-    func deleteAllGroupMessages(user : FireUser, group:Group, MessageToDelete: [Message], completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+    func clearChatGroups(user : FireUser, group:Group, MessageToDelete: [Message], completionHandler: @escaping (Result<Bool, Error>) -> Void) {
         
         for message in MessageToDelete {
             let ref =         FireService.users.document(user.email).collection(FireService.groupString).document(group.id).collection("messages").document(message.id)
+            
+            ref.delete { (error) in
+                
+                if let error = error{
+                    completionHandler(.failure(error))
+                    return
+                }
+                
+                completionHandler(.success(true))
+                
+            }
+        }
+    }
+    func clearChatFriends(user : FireUser, friend:Friend, MessagesToDelete: [Message], completionHandler: @escaping (Result<Bool, Error>) -> Void) {
+        
+        for message in MessagesToDelete {
+            let ref =         FireService.users.document(user.email).collection("friends").document(friend.email).collection("messages").document(message.id)
             
             ref.delete { (error) in
                 
@@ -904,9 +976,9 @@ class FireService {
     //Updating this to send
     func sendMessageToFriend(User : FireUser, message : Message , freind : Friend ,completion : @escaping (Bool , Error?) -> ()){
         
-        let newSendRef = FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document()
+        let newSendRef = FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document("\(message.id)")
         
-        let newReceivedRef = FireService.users.document(freind.email).collection(FireService.firendsString).document(User.email).collection("messages").document()
+        let newReceivedRef = FireService.users.document(freind.email).collection(FireService.firendsString).document(User.email).collection("messages").document("\(message.id)")
         
         let messageDictionary = self.changeMessageToDictionary(message)
         
@@ -949,6 +1021,7 @@ class FireService {
                 
                 
             }else{
+                
                 print("couldnt cast to string")
             }
             
@@ -1036,12 +1109,13 @@ class FireService {
         }
     }
     
-    func getGroupPictureData(user : FireUser , group:Group, completionHandler : @escaping (Result<URL , Error>)-> ()){
-        
+    func getGroupPictureData(user : FireUser , group:Group, completionHandler : @escaping (Result<URL, Error>)-> ()){
         
         let groupRef =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
         groupRef.getDocument { (documents, error) in
-            
+            if let error = error{
+                print(error.localizedDescription)
+            }
             guard let data = documents?.data() else {return}
             
             if let url = data["groupPictureUrl"] as? String {
@@ -1051,12 +1125,37 @@ class FireService {
                     print("couldnt cast to url")
                 }
             }else{
+                
                 print("couldnt cast to string")
             }
         }
         
         
     }
+    func getGroupPictureDataFromChatLog(user : FireUser , group:Group, completionHandler : @escaping (URL?,Bool,Error?)-> ()){
+        
+        let groupRef =         FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
+        groupRef.getDocument { (documents, error) in
+            if let error = error{
+                print(error.localizedDescription)
+            }
+            guard let data = documents?.data() else {return}
+            
+            if let url = data["groupPictureUrl"] as? String {
+                if  let finalUrl = URL(string: url){
+                    completionHandler(finalUrl,true,nil)
+                }else{
+                    print("couldnt cast to url")
+                }
+            }else{
+                completionHandler(nil,false,nil)
+                print("couldnt cast to string")
+            }
+        }
+        
+        
+    }
+
     func getFriendPictureData(user : FireUser , friend:Friend, completionHandler : @escaping (Result<URL , Error>)-> ()){
         
         
@@ -1293,6 +1392,9 @@ class FireService {
                             completion(nil , error)
                         }
                         guard let friends = friends else {fatalError()}
+                        if friends.isEmpty{
+                            completion(activities,nil)
+                        }
                         print(friends,"Friends")
                         friends.forEach { (freind) in
                             let activity = Activity(activityType: .FriendChat(friend: freind))
@@ -2006,6 +2108,19 @@ class FireService {
         
         
     }
+    func deleteFriend(user : FireUser, friend:Friend,completion : @escaping (Error? , Bool) -> ()){
+        let groupRef = FireService.users.document(user.email).collection(FireService.firendsString).document(friend.email)
+        groupRef.delete { (error) in
+            if let error = error{
+                completion(error,false)
+                return
+            }
+
+                completion(nil,true)
+            }
+        
+        
+    }
     
     func dissolveGroup(user : FireUser, group:Group,completion : @escaping (Error? , Bool) -> ()){
         let groupRef = FireService.users.document(user.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(user.id)
@@ -2205,31 +2320,31 @@ class FireService {
     
     
     //need to test
-    func addFriend(User :FireUser ,friend : Friend , completion : @escaping (Bool , Error?) -> ()) {
+    func addFriend(sender :FireUser ,friend : Friend , completion : @escaping (Bool , Error?) -> ()) {
         
         let data = ["name" : friend.username,
                     "email":friend.email,
                     "id": friend.id] as [String : Any]
-        let data2 = ["name" : User.name,
-                    "email":User.email,
-                    "id": User.id] as [String : Any]
+        let data2 = ["name" : sender.name,
+                    "email":sender.email,
+                    "id": sender.id] as [String : Any]
         
-        if friend.email == User.email {
+        if friend.email == sender.email {
             fatalError("you cannot add yourself")
         }
         
-        loadAllFriends(user: User) { (friends, error) in
+        loadAllFriends(user: sender) { (friends, error) in
             if let freinds = friends{
                 if freinds.contains(friend){
                     print("you have already added this person")
                     completion(true , nil)
                     return
                 }else{
-                    FireService.users.document(User.email).collection(FireService.firendsString).document(friend.email).setData(data) { (error) in
+                    FireService.users.document(sender.email).collection(FireService.firendsString).document(friend.email).setData(data) { (error) in
                         if let error = error {
                             completion(false, error)
                         }else{
-                            FireService.users.document(friend.email).collection(FireService.firendsString).document(User.email).setData(data2) { (error) in
+                            FireService.users.document(friend.email).collection(FireService.firendsString).document(sender.email).setData(data2) { (error) in
                                 if let error = error {
                                 completion(false, error)
                                 }

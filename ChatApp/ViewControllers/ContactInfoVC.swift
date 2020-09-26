@@ -30,10 +30,20 @@ class ContactInfoVC : UIViewController {
             UpdateImageView()
         }
     }
+    var messages:[Message]?
+    
     override func viewDidLoad() {
-        
+        super.viewDidLoad()
+        updateBackgroundViews()
+        navigationBarBackgroundHandler()
         print("in contact vc ")
         setUpContactTableview()
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        updateBackgroundViews()
+        navigationBarBackgroundHandler()
     }
     
     func setUpContactTableview(){
@@ -42,6 +52,9 @@ class ContactInfoVC : UIViewController {
         contactInfoTableView.register(ContactInfoCell.self, forCellReuseIdentifier: id)
         //contactInfoTableView.estimatedRowHeight = 20
         contactInfoTableView.separatorStyle = .singleLine
+        contactInfoTableView.isScrollEnabled = false
+        contactInfoTableView.backgroundColor = .clear
+        
         contactInfoTableView.rowHeight =  60
     
         
@@ -61,7 +74,9 @@ class ContactInfoVC : UIViewController {
    fileprivate func updateView(){
         print("Updated View")
         title = friend?.username
+        
         name = friend?.username
+        
         getUser()
         
     }
@@ -74,11 +89,81 @@ class ContactInfoVC : UIViewController {
                 self.profileImageView.af.setImage(withURL: url)
                 break
             case .failure(_):
-                self.profileImageView.image = UIImage(named: "profile")
+                self.profileImageView.image = UIImage(systemName:"person.crop.circle.fill")
                 break
             }
         }
         
+    }
+    
+    @objc func clearChat(){
+        if let messages = messages{
+            FireService.sharedInstance.clearChatFriends(user: globalUser!, friend: friend!, MessagesToDelete: messages) { (result) in
+                
+                switch result{
+                    
+                case .success(let bool):
+                    if bool{
+                        print("Successfully")
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    
+                }
+            }
+            print("Right Bar button tapped")
+        }
+        print("Clear Chat")
+        print(messages)
+    }
+    //updates the background color for the tableview and nav bar.
+    func updateBackgroundViews(){
+        DispatchQueue.main.async {
+            self.contactInfoTableView.reloadData()
+            self.contactInfoTableView.darkmodeBackground()
+            self.navigationController?.navigationBar.darkmodeBackground()
+            self.navigationBarBackgroundHandler()
+
+        }
+    }
+    //handles the text color, background color and appearance of the nav bar
+    func navigationBarBackgroundHandler(){
+        
+        if Constants.settingsPage.displayModeSwitch{
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.backgroundColor = .black
+            self.navigationController?.navigationBar.isTranslucent = false
+            self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+            self.navigationController?.navigationBar.setNeedsLayout()
+            //handles TabBar
+            self.tabBarController?.tabBar.barTintColor = .black
+            tabBarController?.tabBar.isTranslucent = false
+           
+            
+            
+        }
+        else{
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.backgroundColor = .white
+            self.navigationController?.navigationBar.isTranslucent = true
+            self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+            self.navigationController?.navigationBar.setNeedsLayout()
+            
+            //handles TabBar
+            self.tabBarController?.tabBar.barTintColor = .white
+            self.tabBarController?.tabBar.backgroundColor = .white
+            tabBarController?.tabBar.isTranslucent = true
+            
+            
+        }
     }
     
     
@@ -92,7 +177,7 @@ extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
             return 1
         }
         if section == 1 {
-            return 3
+            return 2
         }
         
         if section == 2 {
@@ -107,35 +192,41 @@ extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
             return UITableViewCell()
         }
         cell.selectionStyle = .none
+        cell.backgroundColor = .clear
         cell.tintColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+        cell.ContactInfoLabel.GroupInfoPageLabels(type: Constants.groupInfoPage.settingsHeader)
+
         
         if indexPath.section == 0 {
-            cell.ContactInfoLabel.text = name ?? "no name"
+            cell.ContactInfoLabel.text = friend?.email ?? "no name"
         }
         
         if indexPath.section == 1{
             
             if indexPath.row == 0{
                 cell.ContactInfoLabel.text = "Saved Messages"
+              
+                
                 
                 cell.accessoryType = .disclosureIndicator
                 
             }
             if indexPath.row == 1{
                 cell.ContactInfoLabel.text = "Mute"
+               
                 cell.buttonIsSwitch = true
             }
-            if indexPath.row == 2{
-                cell.ContactInfoLabel.text = "Archive"
-                cell.buttonIsSwitch = true
-            }
+//            if indexPath.row == 2{
+//                cell.ContactInfoLabel.text = "Archive"
+//                cell.buttonIsSwitch = true
+//            }
             
         }
         
-        if indexPath.section == 2 {
-             cell.ContactInfoLabel.text = "Clear Chat"
-            // cell.buttonIsSwitch = nil
-        }
+//        if indexPath.section == 2 {
+//             cell.ContactInfoLabel.text = "Clear Chat"
+//            // cell.buttonIsSwitch = nil
+//        }
         
         return cell
         
@@ -158,7 +249,7 @@ extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
             return nil
         }
         else{
-            let size = CGSize(width: contactInfoTableView.frame.width, height: 60)
+            let size = CGSize(width: contactInfoTableView.frame.width, height: 0)
             let point = CGPoint(x: 0, y: 0)
             let frame = CGRect(origin: point, size: size)
             let space = UIView(frame: frame)
@@ -169,7 +260,40 @@ extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 2
+    }
+    
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        if section == 1 {
+            let size = CGSize(width: contactInfoTableView.frame.width, height: 60)
+            let point = CGPoint(x: 0, y: 0)
+            let frame = CGRect(origin: point, size: size)
+            let button = UIButton(type: .system)
+            button.frame = frame
+            button.setTitle("Clear Chat", for: .normal)
+            button.addTarget(self, action: #selector(clearChat), for: .touchUpInside)
+            button.backgroundColor =  #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+            button.settingsPageButtons()
+            return button
+        }
+        return nil
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == 1 {
+            return 50
+        }
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 1 {
+            return 20
+        }
+        
+        return 0 
     }
     
     
@@ -190,7 +314,7 @@ class ContactInfoCell : UITableViewCell {
     }
     lazy var ContactInfobackgroundView : UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -201,7 +325,7 @@ class ContactInfoCell : UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .clear
-        label.text = "Testing 123"
+        label.GroupInfoPageLabels(type: Constants.groupInfoPage.settingsHeader)
         return label
     }()
     

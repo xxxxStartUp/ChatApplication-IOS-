@@ -15,6 +15,7 @@ class FriendsVC: UIViewController {
     @IBOutlet var addButton: UIBarButtonItem!
     
     var searchBarr:UISearchBar?
+    var finalLabel:UILabel?
     
     
     var friendList : [Friend] = []
@@ -27,6 +28,8 @@ class FriendsVC: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
 //        contactsTable.tableHeaderView = headerViewSetUp()
+        setupEmptyContactsLabel()
+        handleEmptyContacts()
         updateBackgroundViews()
         setUpTableView()
         //contactsTable.allowsMultipleSelection = true
@@ -37,6 +40,8 @@ class FriendsVC: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        setupEmptyContactsLabel()
+        handleEmptyContacts()
 //        contactsTable.tableHeaderView = headerViewSetUp()
         updateBackgroundViews()
                 
@@ -46,6 +51,8 @@ class FriendsVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
         super.viewDidAppear(true)
+        setupEmptyContactsLabel()
+        handleEmptyContacts()
         loadFriends()
         
     }
@@ -81,7 +88,8 @@ class FriendsVC: UIViewController {
     func setUpTableView() -> Void {
         contactsTable.delegate = self
         contactsTable.dataSource = self
-        searchBar.delegate = self
+        
+        
     }
     
     //updates the background color for the tableview and nav bar.
@@ -111,7 +119,8 @@ class FriendsVC: UIViewController {
             //handles TabBar
             self.tabBarController?.tabBar.barTintColor = .black
             tabBarController?.tabBar.isTranslucent = false
-            searchBar.barStyle = .black
+            searchBarr?.barStyle = .black
+            contactsTable.reloadData()
             
             
         }
@@ -130,7 +139,8 @@ class FriendsVC: UIViewController {
             self.tabBarController?.tabBar.barTintColor = .white
             self.tabBarController?.tabBar.backgroundColor = .white
             tabBarController?.tabBar.isTranslucent = true
-            searchBar.barStyle = .default
+            searchBarr?.barStyle = .default
+            contactsTable.reloadData()
             
         }
     }
@@ -183,16 +193,67 @@ extension FriendsVC : UITableViewDelegate , UITableViewDataSource, UISearchBarDe
             delegate?.didSendFriend(freind: friendList[indexPath.row])
             navigationController?.pushViewController(vc, animated: true)
     }
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let view:UIView = {
-//            let searchBar = UISearchBar()//UIView(frame: CGRect(x: 0, y: 0, width: contactsTable.frame.width, height: 30))
-//            searchBar.placeholder = "Search Contacts"
-//            searchBar.darkmodeBackground()
-//            return searchBar
-//        }()
-//        let finalSearchBar = searchBar
-//        return finalSearchBar
-//    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            print(friendList[indexPath.row].email)
+            FireService.sharedInstance.deleteFriend(user: globalUser!, friend: friendList[indexPath.row]) { (error, completion) in
+                if let error = error{
+                    print(error.localizedDescription)
+                }
+                self.friendList.remove(at: indexPath.row)
+                self.contactsTable.deleteRows(at: [indexPath], with: .automatic)
+                self.handleEmptyContacts()
+
+            }
+        }
+        
+    }
+    
+    func handleEmptyContacts(){
+        if self.friendList.isEmpty{
+            self.contactsTable.separatorStyle = .none
+            self.finalLabel?.isHidden = false
+        }
+        else{
+            self.contactsTable.separatorStyle = .singleLine
+            self.finalLabel?.isHidden = true
+        }
+    }
+    func setupEmptyContactsLabel(){
+        let label:UILabel = {
+            let finalLabel = UILabel()
+            finalLabel.text = "No Contacts"
+            finalLabel.textAlignment = .center
+            
+            return finalLabel
+        }()
+        
+        finalLabel = label
+        contactsTable.addSubview(finalLabel!)
+        finalLabel?.center = contactsTable.center
+        
+        finalLabel?.isHidden = true
+        finalLabel?.settingsPageLabels(type: Constants.settingsPage.labelTitles)
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view:UIView = {
+        let searchBar = UISearchBar()//UIView(frame: CGRect(x: 0, y: 0, width: contactsTable.frame.width, height: 30))
+        searchBar.placeholder = "Search Contacts"
+        searchBar.darkmodeBackground()
+        if Constants.settingsPage.displayModeSwitch{
+            searchBar.barStyle = .black
+        }else{
+            searchBar.barStyle = .default
+        }
+        return searchBar
+        }()
+        searchBarr = view as? UISearchBar
+        searchBarr!.delegate = self
+        return searchBarr
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 44
+    }
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
