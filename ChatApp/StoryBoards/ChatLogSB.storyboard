@@ -69,7 +69,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="chatLogTableview" destination="Pmj-kn-Ipv" id="mKM-pN-AVI"/>
-                        <segue destination="Sbf-Rq-bE3" kind="show" identifier="chatLogToNewGroupIdentifier" id="UBG-hB-zax"/>
+                        <segue destination="Sbf-Rq-bE3" kind="show" identifier="chatLogToFriendsVCIdentifier" id="UBG-hB-zax"/>
                         <segue destination="nfG-8g-AaW" kind="show" identifier="chatLogToContactsIdentifier" id="Scc-e3-5xp"/>
                     </connections>
                 </viewController>
@@ -77,10 +77,10 @@
             </objects>
             <point key="canvasLocation" x="604" y="-149"/>
         </scene>
-        <!--NewGroupSB-->
+        <!--FriendsSB-->
         <scene sceneID="nP6-1h-Ib7">
             <objects>
-                <viewControllerPlaceholder storyboardName="NewGroupSB" id="Sbf-Rq-bE3" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="FriendsSB" id="Sbf-Rq-bE3" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="f56-MP-Yth"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ENZ-b4-UZC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -90,7 +90,7 @@
         <!--contact-->
         <scene sceneID="Sdo-An-BXO">
             <objects>
-                <viewControllerPlaceholder storyboardName="FriendsSB" referencedIdentifier="contact" id="nfG-8g-AaW" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="selectFriendSB" referencedIdentifier="contact" id="nfG-8g-AaW" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="0ua-rb-H9B"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rII-QB-q7h" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -20,6 +20,7 @@ class SettingsVC: UIViewController {
     
     let identifier3 = "AppSettingsCellIdentifier"
     let settingsVCToSavedMessagesID = "settingsVCToSavedMessagesID"
+    var logOutButton:UIButton?
     
     
     override func viewDidLoad() {
@@ -59,32 +60,14 @@ class SettingsVC: UIViewController {
         
     }
 
-
-    @IBAction func signOut(_ sender: Any) {
-        
-        FireService.sharedInstance.signOut()
-        globalUser = nil
-        let vc = UIStoryboard(name: "SignUpSB", bundle: nil).instantiateInitialViewController()!
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
-        
-        
-    }
-    
-    
-    
     func setUpTableView() -> Void {
         SettingsTable.delegate = self
         SettingsTable.dataSource = self
         SettingsTable.register(UINib(nibName: "ProfileInfoCell", bundle: nil), forCellReuseIdentifier: "profileInfoCellIdentifier")
         SettingsTable.register(UINib(nibName: "ChatInfoCells", bundle: nil), forCellReuseIdentifier: "ChatActionsCellsIdentifier")
         SettingsTable.register(UINib(nibName: "AppSettingsCell", bundle: nil), forCellReuseIdentifier: "AppSettingsCellIdentifier")
-        SettingsTable.tableFooterView = UIView()
+        SettingsTable.tableFooterView = footerviewSetUp()
         // SettingsTable.settingsPage()
-        
-        
-        
-        
         
     }
     
@@ -224,7 +207,8 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
         DispatchQueue.main.async {
             self.SettingsTable.darkmodeBackground()
             self.navigationController?.navigationBar.darkmodeBackground()
-            self.signOutButton.settingsPageButtons()
+            //self.signOutButton.settingsPageButtons()
+            self.logOutButton?.settingsPageButtons()
             self.navigationBarBackgroundHandler()
             self.view.darkmodeBackground()
             self.SettingsTable.reloadData()
@@ -280,4 +264,40 @@ extension Notification.Name {
         = NSNotification.Name("displayOff")
     
     
+}
+extension SettingsVC{
+    func footerviewSetUp() -> UIView{
+        let view:UIView = {
+            let finalLabel = UIView(frame: CGRect(x: 0, y: 0, width: SettingsTable.frame.width, height: 24))
+            finalLabel.backgroundColor = .clear
+            return finalLabel
+        }()
+        let button:UIButton = {
+            var logoutButton = UIButton(type: .system)
+            logoutButton.frame = view.frame
+            logoutButton.setTitle("Log out", for: .normal)
+            logoutButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Regular", size: 14)
+            //               rightButton.setTitleColor(.red, for: .normal)
+            logoutButton.settingsPageButtons()
+            logoutButton.translatesAutoresizingMaskIntoConstraints = false
+            logoutButton.addTarget(self, action: #selector(handlesSignoutTapped), for: .touchUpInside)
+            return logoutButton
+        }()
+        
+        view.addSubview(button)
+        logOutButton = button
+        button.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        button.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        button.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        button.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        return view
+    }
+   @objc func handlesSignoutTapped(){
+        FireService.sharedInstance.signOut()
+        globalUser = nil
+        let vc = UIStoryboard(name: "SignUpSB", bundle: nil).instantiateInitialViewController()!
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    }
 }
