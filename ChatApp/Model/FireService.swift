@@ -1177,6 +1177,30 @@ class FireService {
         
         
     }
+    func getFriendPictureDataFromFriendVC(user : FireUser , friend:Friend, completionHandler : @escaping (URL?,Bool,Error?)-> ()){
+        
+        let ref = FireService.users.document(friend.email)
+        ref.getDocument { (documents, error) in
+            if let error = error{
+                print(error.localizedDescription)
+            }
+            guard let data = documents?.data() else {return}
+            
+            if let url = data["profileImageUrl"] as? String {
+                if  let finalUrl = URL(string: url){
+                    completionHandler(finalUrl,true,nil)
+                }else{
+                    print("couldnt cast to url")
+                }
+            }else{
+                completionHandler(nil,false,nil)
+                print("couldnt cast to string")
+            }
+        }
+        
+        
+    }
+
     
     
     
