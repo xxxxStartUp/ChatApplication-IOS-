@@ -54,6 +54,13 @@ class SignInVC: UIViewController {
                         }
 
                         print("Signed In Successfully")
+                        if let displaymode = UserDefaults.standard.value(forKey: "displayModeSwitch") as? Bool{
+                            Constants.settingsPage.displaySwitch?.isOn = displaymode
+                        }
+                        else{
+                            UserDefaults.standard.setValue(false, forKey: "displayModeSwitch")
+                        }
+                        
                         let controller =  UIAlertController.alertUser( title: "Sucess", message: "you signed in sucesfully", whatToDo: "Go to home screen")
                         self.present(controller, animated: true) {
                             
