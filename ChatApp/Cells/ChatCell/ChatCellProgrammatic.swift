@@ -21,6 +21,7 @@ class MessgaeCell: UITableViewCell {
     var groupVC:GroupChatVC?
     var savedVC1:SavedMessagesVC?
     var savedVC2:SavedMessagesFromSettingsVC?
+    var chatVC:ChatVC_Dara?
     
     
     
@@ -236,6 +237,8 @@ class MessgaeCell: UITableViewCell {
             self.groupVC?.handlesTappedInImage(startingImageview: imageView)
             self.savedVC1?.handlesTappedInImage(startingImageview: imageView)
             self.savedVC2?.handlesTappedInImage(startingImageview: imageView)
+            self.chatVC?.handlesTappedInImage(startingImageview: imageView)
+            
         }
         
        
@@ -247,6 +250,9 @@ class MessgaeCell: UITableViewCell {
         
         let url = urlString.components(separatedBy: "thumbNailURL")[0]
         self.groupVC?.handleVideoZoomedIn(url: url)
+        self.savedVC1?.handleVideoZoomedIn(url: url)
+        self.savedVC2?.handleVideoZoomedIn(url: url)
+        self.chatVC?.handleVideoZoomedIn(url: url)
     }
     
     func handleVideoZoomedOut(url:String){
