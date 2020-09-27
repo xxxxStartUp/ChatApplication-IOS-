@@ -654,7 +654,7 @@ extension GroupChatVC {
         print(startingFrame)
         
         let tappedImageFrame = UIImageView(frame: startingFrame!)
-        tappedImageFrame.backgroundColor = .red
+        //tappedImageFrame.backgroundColor = .red
         tappedImageFrame.image = startingImageview.image
         tappedImageFrame.isUserInteractionEnabled = true
         tappedImageFrame.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTappedOutImage)))
@@ -679,6 +679,10 @@ extension GroupChatVC {
             self.blackBackgroundView?.alpha = 1
             self.texterView.alpha = 0
             tappedImageFrame.center = keywindow.center
+            tappedImageFrame.contentMode = .scaleAspectFit
+            tappedImageFrame.backgroundColor = .black
+            self.startingImageView?.image?.withRenderingMode(.alwaysOriginal)
+            
         }, completion: nil)
         
     }
@@ -692,7 +696,7 @@ extension GroupChatVC {
             //tappedOutImageView.layer.cornerRadius = 8
             tappedOutImageView.clipsToBounds = true
 
-            UIView.animate(withDuration: 0.5, delay: 0,usingSpringWithDamping: 1,initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 0.7, delay: 0,usingSpringWithDamping: 1,initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.blackBackgroundView?.alpha = 0
                 self.texterView.alpha = 1
                 tappedOutImageView.frame = startingFrame
@@ -700,6 +704,7 @@ extension GroupChatVC {
                 tappedOutImageView.removeFromSuperview()
                 self.startingImageView?.isHidden = false
                 self.startingImageView?.contentMode = .scaleAspectFill
+                self.startingImageView?.image?.withRenderingMode(.alwaysOriginal)
                 self.startingImageView?.layer.cornerRadius = 8
             })
             

@@ -19,6 +19,8 @@ class MessgaeCell: UITableViewCell {
     var trailingConstant: CGFloat = -32
     
     var groupVC:GroupChatVC?
+    var savedVC1:SavedMessagesVC?
+    var savedVC2:SavedMessagesFromSettingsVC?
     
     
     
@@ -232,6 +234,8 @@ class MessgaeCell: UITableViewCell {
         print("Image Tapped")
         if let imageView = tapGesture.view as? UIImageView{
             self.groupVC?.handlesTappedInImage(startingImageview: imageView)
+            self.savedVC1?.handlesTappedInImage(startingImageview: imageView)
+            self.savedVC2?.handlesTappedInImage(startingImageview: imageView)
         }
         
        
