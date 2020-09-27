@@ -17,6 +17,7 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     var hasScrolled : Bool = false
     var cellId = "id"
     let navBarButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+    let navBarimageView : UIImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
     var globalImageSent : UIImage?
     var globalVideoUrl: NSURL?
     var player:AVPlayer?
@@ -67,13 +68,20 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     
     
     func handleNavBarImage(){
-        navBarButton.layer.cornerRadius = 20
-        navBarButton.backgroundColor = .clear
-        navigationItem.titleView = navBarButton
-        navBarButton.addTarget(self, action: #selector(handleTapNavBarButton), for: .touchUpInside)
-        let image = UIImage(named:"profile")
-        navBarButton.setImage(image, for: .normal)
+   let navBarImageViewGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapNavBarButton))
+        navBarimageView.addGestureRecognizer(navBarImageViewGesture)
+        navBarimageView.backgroundColor = .red
+        navigationItem.titleView = navBarimageView
+        
         handleNavBarImageView()
+       
+//        navBarButton.layer.cornerRadius = 20
+//        navBarButton.backgroundColor = .clear
+//        navigationItem.titleView = navBarButton
+//        navBarButton.addTarget(self, action: #selector(handleTapNavBarButton), for: .touchUpInside)
+//        let image = UIImage(named:"profile")
+//        navBarButton.setImage(image, for: .normal)
+        
         
 
     }
@@ -85,7 +93,7 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
             FireService.sharedInstance.getProfilePicture(user: user) { (result) in
                 switch result{
                 case .success(let url):
-                    self.navBarButton.imageView?.af.setImage(withURL: url)
+                    self.navBarimageView.af.setImage(withURL: url)
                     break
                 case .failure(let error):
                     print("profileImageview Cannot be set")
