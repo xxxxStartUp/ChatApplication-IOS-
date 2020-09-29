@@ -112,7 +112,7 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
     
     @objc func handlesClearButtonRightNavBarItem(sender:UIAlertAction!){
         if let messages = messages{
-            FireService.sharedInstance.deleteAllGroupMessages(user: globalUser!, group: group!, MessageToDelete: messages) { (result) in
+            FireService.sharedInstance.clearChatGroups(user: globalUser!, group: group!, MessageToDelete: messages) { (result) in
                 
                 switch result{
                     
@@ -152,7 +152,8 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
             self.participantsTableview.darkmodeBackground()
             self.navigationController?.navigationBar.darkmodeBackground()
             self.groupNameView.darkmodeBackground()
-            
+            self.view.darkmodeBackground()
+            self.groupNameTextField.groupInfoTextField()
             
             self.navigationBarBackgroundHandler()
             self.groupinfoTableview.reloadData()
@@ -246,7 +247,7 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
                 return 1
             }
             else if section == 1 {
-                return 2
+                return 1
             }
                 
             else {
@@ -467,6 +468,7 @@ extension GroupInfoVC:UIImagePickerControllerDelegate{
             switch result{
                 
             case .success(let url):
+                
                 FireService.sharedInstance.DeleteGroupPicture(user: globalUser!, group: self.group!,friends:self.groupParticipants) { (result) in
                     switch result{
                         

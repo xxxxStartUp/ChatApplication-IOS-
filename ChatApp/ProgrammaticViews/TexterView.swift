@@ -135,17 +135,21 @@ class TexterView : UIView, UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         print("editing")
+        guard let text = textView.text  else {return}
+        
+        let finalText = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        
         var width : CGFloat = 0
         textView.isScrollEnabled = false
         let size = CGSize(width: frame.width, height: .infinity)
         let estimatedSize = textView.sizeThatFits(size)
-        guard let text = textView.text  else {return}
+        
         textView.constraints.forEach { (c) in
             if c.firstAttribute == .width{
                 width = c.constant
             }
         }
-        var height = text.height(withConstrainedWidth: width + 10, font: textView.font!)
+        let height = finalText.height(withConstrainedWidth: width + 10, font: textView.font!)
         
         
         textView.constraints.forEach { (c) in

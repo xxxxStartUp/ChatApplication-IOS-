@@ -26,6 +26,8 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate, UINavig
     var shareURLString:String?
     var group:Group?
     var defaultImage:UIImage?
+    var finalGroupImage:UIImage?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +60,7 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate, UINavig
                 self.present(controller, animated: true, completion: nil)
                 return
             }
-            if groupName.count == 15{
+            if groupName.count <= 15{
             print("Character count is equal to: \(groupName.count)")
             //new group is created and temp id is passed.
             let id = UUID().uuidString
@@ -77,7 +79,7 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate, UINavig
                             if let shareURLString = self.shareURLString{
                             let data = ["groupInvitationUrl" : shareURLString]
                                 
-                                if let image = Constants.groupInfoPage.globalGroupImage {
+                                if let image = self.finalGroupImage {
                                     if let imageData = image.pngData(){
                                       self.saveGroupPicture(data: imageData)
                                     }
@@ -387,8 +389,9 @@ extension NewGroupVC:UIImagePickerControllerDelegate{
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
             newGroupImageView.image = image
             newGroupImageView.contentMode = .scaleAspectFill
-            Constants.groupInfoPage.groupImageState = true
-            Constants.groupInfoPage.globalGroupImage = image
+            finalGroupImage = image
+//            Constants.groupInfoPage.groupImageState = true
+//            Constants.groupInfoPage.globalGroupImage = image
             
             dismiss(animated: true, completion: nil)
         }
@@ -413,10 +416,9 @@ extension NewGroupVC:UIImagePickerControllerDelegate{
             case .success(_):
                 print("sucess")
                 let image = UIImage(data: data)!
-                Constants.groupInfoPage.groupImageState = true
-                Constants.groupInfoPage.globalGroupImage = image
                 self.newGroupImageView.image = image
                 self.newGroupImageView.isUserInteractionEnabled = true
+                self.finalGroupImage = nil
             case .failure(_):
                 print("falure")
             }

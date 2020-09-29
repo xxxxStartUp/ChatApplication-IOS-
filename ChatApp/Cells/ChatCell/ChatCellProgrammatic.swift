@@ -34,7 +34,7 @@ class MessgaeCell: UITableViewCell {
 
             
             if  message.sender.email != globalUser!.email{
-                messageLabel.text = message.content.content as! String
+                messageLabel.text = (message.content.content as! String).trimmingCharacters(in: .whitespacesAndNewlines)
                 leadingContstraints?.isActive = true
                 tarilingConstraints?.isActive = false
                 nameLabel.textAlignment = .left
@@ -42,7 +42,7 @@ class MessgaeCell: UITableViewCell {
                 messageBackgroundView.chatPageViews(type: Constants.chatPage.leftChatBubblev)
                 
             }else{
-                messageLabel.text = message.content.content as! String
+                messageLabel.text = (message.content.content as! String).trimmingCharacters(in: .whitespacesAndNewlines)
                 leadingContstraints?.isActive = false
                 tarilingConstraints?.isActive = true
                 nameLabel.textAlignment = .right
@@ -161,14 +161,15 @@ class MessgaeCell: UITableViewCell {
         return view
     }()
     
-    let messageLabel : UILabel = {
-        let label = UILabel()
+    let messageLabel : UITextView = {
+        let textView = UITextView()
         //label.backgroundColor = .green
-        label.text =  ""
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        label.backgroundColor = .clear
-        return label
+        textView.text =  ""
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.isScrollEnabled = false
+        textView.backgroundColor = .clear
+        textView.isEditable = false
+        return textView
     }()
     lazy var stackView = UIStackView(arrangedSubviews: [nameLabel,messageBackgroundView , timeLabel])
     

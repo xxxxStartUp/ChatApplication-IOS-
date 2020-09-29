@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="643"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jOd-Wb-JYM">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="593"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="643"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SettingsProfileCell" rowHeight="177" id="JFH-6y-sbQ" customClass="SettingsProfileCell" customModule="ChatApp" customModuleProvider="target">
@@ -47,13 +47,13 @@
                                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="jWb-xi-Xfd">
                                                                             <rect key="frame" x="64.999999999999986" y="0.0" width="254.66666666666663" height="46"/>
                                                                             <subviews>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ebuka Egbunam" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhM-F1-XAd">
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Ebuka Egbunam" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhM-F1-XAd">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="155" height="25.333333333333332"/>
                                                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="21"/>
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H4n-CT-HPD">
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H4n-CT-HPD">
                                                                                     <rect key="frame" x="0.0" y="30.333333333333339" width="39" height="15.666666666666668"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -121,17 +121,13 @@
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oLg-J4-e6Q">
-                                        <rect key="frame" x="0.0" y="593" width="414" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="eFr-fM-6tQ"/>
-                                        </constraints>
-                                        <state key="normal" title="Sign Out"/>
-                                        <connections>
-                                            <action selector="signOut:" destination="P4w-Nq-2ev" eventType="touchUpInside" id="lB8-QM-Pdu"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="jOd-Wb-JYM" secondAttribute="bottom" id="99d-cq-FHa"/>
+                                    <constraint firstAttribute="trailing" secondItem="jOd-Wb-JYM" secondAttribute="trailing" id="V8W-0g-Yoi"/>
+                                    <constraint firstItem="jOd-Wb-JYM" firstAttribute="leading" secondItem="HWj-8h-va4" secondAttribute="leading" id="pys-Cf-SjZ"/>
+                                    <constraint firstItem="jOd-Wb-JYM" firstAttribute="top" secondItem="HWj-8h-va4" secondAttribute="top" id="wiw-m5-qVl"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Lxc-Cd-qDT"/>
@@ -148,7 +144,6 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="SettingsTable" destination="jOd-Wb-JYM" id="ymc-P8-jgg"/>
-                        <outlet property="signOutButton" destination="oLg-J4-e6Q" id="dDN-b9-JTW"/>
                         <segue destination="iDD-Y3-Nku" kind="show" identifier="settingstoprofileIdentifier" id="bwU-2y-KOw"/>
                         <segue destination="VXt-NU-iT3" kind="show" identifier="settingsVCToSavedMessagesID" id="IOd-cN-zgR"/>
                     </connections>

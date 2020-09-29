@@ -20,19 +20,33 @@ class AppSettingsCell: UITableViewCell {
     func updateViews(indexPath:Int){
         
         switch indexPath {
+        
         case 0:
-//            let notifictaion = Notification(name: .displayOn)
-//            NotificationCenter.default.post(notifictaion)
             settingsSwitch.tag = 0
             label.text = "Display Mode"
             label.settingsPageLabels(type: Constants.settingsPage.labelTitles)
+            Constants.settingsPage.displaySwitch = settingsSwitch
+            
+            if Constants.settingsPage.displayModeSwitch{
+                settingsSwitch.setOn(true, animated: true)
+            }
+            else{
+                settingsSwitch.setOn(false, animated: true)
+            }
+            
             if settingsSwitch.isOn{
+                
+ 
+                UserDefaults.standard.setValue(settingsSwitch.isOn, forKey: "displayModeSwitch")
                 
                 print("Display mode On")
             }
             else{
+                
+                UserDefaults.standard.setValue(!settingsSwitch.isOn, forKey: "displayModeSwitch")
                 print("Display mode off")
             }
+            
         case 1:
             settingsSwitch.tag = 1
             label.text = "Notification Sound"

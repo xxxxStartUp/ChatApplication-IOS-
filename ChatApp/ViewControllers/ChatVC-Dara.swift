@@ -51,6 +51,8 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
        
        
         super.viewDidLoad()
+        updateBackgroundViews()
+        navigationBarBackgroundHandler()
         messagePopUptableView = UITableView()
         chatTableView.delegate = self
         chatTableView.dataSource = self
@@ -63,18 +65,33 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(removeAnimateTableView))
         self.view.addGestureRecognizer(tapGesture)
+        handleNavBarImage()
     }
     
     
     
     func handleNavBarImage(){
+        navBarimageView.isUserInteractionEnabled = true
+        navBarimageView.contentMode = .center
    let navBarImageViewGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapNavBarButton))
         navBarimageView.addGestureRecognizer(navBarImageViewGesture)
-        navBarimageView.backgroundColor = .red
+        navBarimageView.image = UIImage(named : "profile")
         navigationItem.titleView = navBarimageView
-        
         handleNavBarImageView()
-       
+        
+//
+//        navBarButton.layer.cornerRadius = 20
+//        navBarButton.backgroundColor = .clear
+//        navBarButton.tintColor = #colorLiteral(red: 0.8941176471, green: 0.8941176471, blue: 0.8941176471, alpha: 1)
+//
+//        navigationItem.titleView = navBarButton
+//        navBarButton.addTarget(self, action: #selector(handleTapNavBarButton), for: .touchUpInside)
+//        let largeConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 40))
+//        let image = UIImage(systemName:"person.crop.circle.fill",withConfiguration: largeConfiguration)
+//        navBarButton.setImage(image, for: .normal)
+//
+//        handleNavBarImageView()
+//
 //        navBarButton.layer.cornerRadius = 20
 //        navBarButton.backgroundColor = .clear
 //        navigationItem.titleView = navBarButton
@@ -88,9 +105,13 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     
     func handleNavBarImageView(){
         FireService.sharedInstance.searchOneUserWithEmail(email: r!.email) { (user, error) in
+            
+            if let error = error{
+                print(error.localizedDescription)
+            }
             guard let user = user else {return}
             
-            FireService.sharedInstance.getProfilePicture(user: user) { (result) in
+            FireService.sharedInstance.getFriendPictureData(user: globalUser!, friend:user.asAFriend) { (result) in
                 switch result{
                 case .success(let url):
                     self.navBarimageView.af.setImage(withURL: url)
@@ -98,7 +119,8 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
                 case .failure(let error):
                     print("profileImageview Cannot be set")
                     break
-                }
+                                }
+
             }
         }
         
@@ -108,12 +130,33 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
         
         guard let vc = UIStoryboard(name: "ContactInfoSB", bundle: nil).instantiateViewController(identifier: "ContactInfoVC") as? ContactInfoVC else {return}
         vc.friend = r
+        vc.messages = messages
+        navigationController?.pushViewController(vc, animated: true)
+        //self.present(vc, animated: true, completion: nil)
+    }
+    
+    @IBAction func handleInfoBarButton(_ sender: Any) {
+        guard let vc = UIStoryboard(name: "ContactInfoSB", bundle: nil).instantiateViewController(identifier: "ContactInfoVC") as? ContactInfoVC else {return}
+        vc.friend = r
+        vc.messages = messages
         navigationController?.pushViewController(vc, animated: true)
         //self.present(vc, animated: true, completion: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        updateBackgroundViews()
+        navigationBarBackgroundHandler()
+        if r != nil {
+            //It's not loading the view: messages don't show up
+            loadMessages()
+            handleNavBarImage()
+        }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        updateBackgroundViews()
+        navigationBarBackgroundHandler()
         if r != nil {
             //It's not loading the view: messages don't show up
             loadMessages()
@@ -295,6 +338,11 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? ContactInfoVC{
+            destination.messages = messages
+    }
+    }
     
     func setUpMessagePopUptableView(){
         messagePopUptableView.removeFromSuperview()
@@ -369,6 +417,60 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
         
     }
     
+    //updates the background color for the tableview and nav bar.
+    func updateBackgroundViews(){
+        print("Display switch:\(Constants.settingsPage.displayModeSwitch)")
+        DispatchQueue.main.async {
+            self.chatTableView.darkmodeBackground()
+            self.view.darkmodeBackground()
+            
+            self.texterView.backgroundView.texterViewBackground()
+            //self.navigationController?.navigationBar.darkmodeBackground()
+            
+            self.navigationBarBackgroundHandler()
+            
+        }
+    }
+    //handles the text color, background color and appearance of the nav bar
+    func navigationBarBackgroundHandler(){
+        
+        print("Display switch:\(Constants.settingsPage.displayModeSwitch)")
+        if Constants.settingsPage.displayModeSwitch{
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            navBarAppearance.backgroundColor = .black
+            self.navigationController?.navigationBar.isTranslucent = false
+            self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+            self.navigationController?.navigationBar.setNeedsLayout()
+            //handles TabBar
+            self.tabBarController?.tabBar.barTintColor = .black
+            tabBarController?.tabBar.isTranslucent = false
+            
+        }
+        else{
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.backgroundColor = .white
+            self.navigationController?.navigationBar.isTranslucent = true
+            self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+            self.navigationController?.navigationBar.setNeedsLayout()
+            
+            //handles TabBar
+            self.tabBarController?.tabBar.barTintColor = .white
+            self.tabBarController?.tabBar.backgroundColor = .white
+            tabBarController?.tabBar.isTranslucent = true
+        }
+    }
+    
+    
+    
+    
     
     
     
@@ -406,8 +508,8 @@ extension ChatVC_Dara :UITableViewDelegate,UITableViewDataSource {
         cell.message = messages[indexPath.row]
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-         let longMessageCellTapGesture : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap(gesture:)))
-        cell.addGestureRecognizer(longMessageCellTapGesture)
+         //let longMessageCellTapGesture : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap(gesture:)))
+        //cell.addGestureRecognizer(longMessageCellTapGesture)
 
         return cell
         
@@ -463,5 +565,7 @@ extension UIViewController {
         texterView.darkmodeBackground()
     }
 }
+
+
 
 

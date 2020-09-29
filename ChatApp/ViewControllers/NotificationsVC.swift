@@ -51,6 +51,7 @@ class NotificationsVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
             self.notificationsTableView.darkmodeBackground()
             self.navigationBarBackgroundHandler()
             self.navigationController?.navigationBar.darkmodeBackground()
+            self.view.darkmodeBackground()
             self.notificationsTableView.reloadData()
             //self.navigationController?.navigationBar.settingsPage()
             

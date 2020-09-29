@@ -15,6 +15,8 @@ class ChatLogCell: UITableViewCell {
     @IBOutlet weak var chatDateLabel: UILabel!
     @IBOutlet var profileImageview: UIImageView!
     
+    @IBOutlet weak var lastMessage: UILabel!
+    
     func updateViews(indexPath: Int){
         chatNameLabel.chatLogPageLabels(type: Constants.mainPage.groupNameHeader)
         chatDateLabel.chatLogPageLabels(type: Constants.mainPage.timeStamp)
@@ -33,28 +35,31 @@ class ChatLogCell: UITableViewCell {
     var activity : Activity! {
         
         didSet{
+            lastMessage.text = "No messages"
+            chatDateLabel.text = "No time"
             switch activity.type {
             case .GroupChat(group:let group):
                 chatNameLabel.text =  activity.name
-                
-                FireService.sharedInstance.getGroupPictureData(user: globalUser!, group: group) { (result) in
-                   
-                    switch result{
-                        
-                    case .success(let url):
+                setUpTimeandMessageForGroup(group: group)
+                FireService.sharedInstance.getGroupPictureDataFromChatLog(user: globalUser!, group: group) { (url,completion,error) in
+     
+                        if let url = url{
                         //                self.profileImageView.af_setImage(withURL: url)
-                        self.profileImageview.af.setImage(withURL: url)
-                       // self.profileImageview.loadImages(urlString: url.absoluteString, mediaType: Constants.groupInfoPage.GroupImageType)
+//                        self.profileImageview.af.setImage(withURL: url)
+                        self.profileImageview.loadImages(urlString: url.absoluteString, mediaType: Constants.groupInfoPage.GroupImageType)
                        
                         //                    self.groupImageView.contentMode = .scaleAspectFit
-                        
-                    case .failure(_):
-                        print("failed to set image url")
+                        }
+                    if !completion{
+                            self.profileImageview.image = UIImage(systemName: "person.crop.circle.fill")
+                        }
+      
                     }
 
-                }
+                
                 break
-            case .FriendChat:
+            case .FriendChat(let friend):
+                setUpTimeandMessageForFriend(freind: friend)
                 chatNameLabel.text =  activity.name
                 
             }
@@ -62,5 +67,36 @@ class ChatLogCell: UITableViewCell {
             
         }
     }
+    
+    func setUpTimeandMessageForFriend(freind : Friend){
+        
+        FireService.sharedInstance.getLastMessageForFreind(freind: freind, user: globalUser!) { (result) in
+            switch result {
+            case.success(let message):
+                self.chatDateLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
+                self.lastMessage.text = message.content.content as? String
+            case .failure(_):
+                return
+            }
+        }
+        
+    }
+    
+    
+    func setUpTimeandMessageForGroup(group : Group){
+        FireService.sharedInstance.getLastMessageForGroup(group: group, user: globalUser!) { (result) in
+            switch result {
+            case.success(let message):
+                self.chatDateLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
+                self.lastMessage.text = message.content.content as? String
+            case .failure(_):
+                return
+            }
+        }
+        
+    }
+    
+    
+    
     
 }

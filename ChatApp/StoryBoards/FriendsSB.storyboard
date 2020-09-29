@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2c4-E4-iQR">
-                                <rect key="frame" x="0.0" y="100" width="414" height="587"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="643"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactCell" rowHeight="121" id="IOQ-cw-Bex" customClass="ContactCell" customModule="ChatApp" customModuleProvider="target">
@@ -35,8 +35,8 @@
                                                             <rect key="frame" x="0.0" y="1" width="90" height="89.666666666666671"/>
                                                             <color key="tintColor" red="0.86657208200000002" green="0.86672115329999999" blue="0.86656266449999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" priority="999" constant="90" id="DAy-YL-c1X"/>
-                                                                <constraint firstAttribute="height" priority="999" constant="90" id="opp-TN-eez"/>
+                                                                <constraint firstAttribute="width" constant="90" id="DAy-YL-c1X"/>
+                                                                <constraint firstAttribute="height" constant="90" id="opp-TN-eez"/>
                                                             </constraints>
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="-30" translatesAutoresizingMaskIntoConstraints="NO" id="nKW-iz-02h">
@@ -74,21 +74,14 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <searchBar contentMode="redraw" text="" placeholder="Search Contacts" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dhv-RK-ukW">
-                                <rect key="frame" x="0.0" y="44" width="414" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="E5o-UH-QQP"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="2c4-E4-iQR" firstAttribute="leading" secondItem="E5o-UH-QQP" secondAttribute="leading" id="1mK-DR-RTq"/>
                             <constraint firstItem="E5o-UH-QQP" firstAttribute="bottom" secondItem="2c4-E4-iQR" secondAttribute="bottom" id="2rd-WH-zeP"/>
-                            <constraint firstItem="2c4-E4-iQR" firstAttribute="top" secondItem="Dhv-RK-ukW" secondAttribute="bottom" id="3Ev-7U-A9q"/>
-                            <constraint firstItem="Dhv-RK-ukW" firstAttribute="leading" secondItem="2c4-E4-iQR" secondAttribute="leading" id="B3C-ck-TE1"/>
-                            <constraint firstItem="Dhv-RK-ukW" firstAttribute="trailing" secondItem="2c4-E4-iQR" secondAttribute="trailing" id="Fe9-Ki-0pv"/>
                             <constraint firstItem="E5o-UH-QQP" firstAttribute="trailing" secondItem="2c4-E4-iQR" secondAttribute="trailing" id="POr-NX-tZl"/>
-                            <constraint firstItem="Dhv-RK-ukW" firstAttribute="top" secondItem="E5o-UH-QQP" secondAttribute="top" id="dZf-AS-0dw"/>
+                            <constraint firstItem="2c4-E4-iQR" firstAttribute="top" secondItem="E5o-UH-QQP" secondAttribute="top" id="RKf-Yo-btm"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="contacts" id="U1o-hw-xtz">
@@ -106,7 +99,6 @@
                     <connections>
                         <outlet property="addButton" destination="wuM-3X-68A" id="HoB-wj-mrz"/>
                         <outlet property="contactsTable" destination="2c4-E4-iQR" id="SDW-Db-qjw"/>
-                        <outlet property="searchBar" destination="Dhv-RK-ukW" id="0o8-3V-yDQ"/>
                         <segue destination="XiX-3y-J2w" kind="show" identifier="contactsToAddFriends" id="Z1b-k0-aVm"/>
                     </connections>
                 </viewController>
