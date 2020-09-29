@@ -15,6 +15,8 @@ class ChatLogCell: UITableViewCell {
     @IBOutlet weak var chatDateLabel: UILabel!
     @IBOutlet var profileImageview: UIImageView!
     
+    @IBOutlet weak var lastMessage: UILabel!
+    
     func updateViews(indexPath: Int){
         chatNameLabel.chatLogPageLabels(type: Constants.mainPage.groupNameHeader)
         chatDateLabel.chatLogPageLabels(type: Constants.mainPage.timeStamp)
@@ -33,10 +35,12 @@ class ChatLogCell: UITableViewCell {
     var activity : Activity! {
         
         didSet{
+            lastMessage.text = "No messages"
+            chatDateLabel.text = "No time"
             switch activity.type {
             case .GroupChat(group:let group):
                 chatNameLabel.text =  activity.name
-                
+                setUpTimeandMessageForGroup(group: group)
                 FireService.sharedInstance.getGroupPictureDataFromChatLog(user: globalUser!, group: group) { (url,completion,error) in
      
                         if let url = url{
@@ -54,7 +58,8 @@ class ChatLogCell: UITableViewCell {
 
                 
                 break
-            case .FriendChat:
+            case .FriendChat(let friend):
+                setUpTimeandMessageForFriend(freind: friend)
                 chatNameLabel.text =  activity.name
                 
             }
@@ -62,5 +67,36 @@ class ChatLogCell: UITableViewCell {
             
         }
     }
+    
+    func setUpTimeandMessageForFriend(freind : Friend){
+        
+        FireService.sharedInstance.getLastMessageForFreind(freind: freind, user: globalUser!) { (result) in
+            switch result {
+            case.success(let message):
+                self.chatDateLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
+                self.lastMessage.text = message.content.content as? String
+            case .failure(_):
+                return
+            }
+        }
+        
+    }
+    
+    
+    func setUpTimeandMessageForGroup(group : Group){
+        FireService.sharedInstance.getLastMessageForGroup(group: group, user: globalUser!) { (result) in
+            switch result {
+            case.success(let message):
+                self.chatDateLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
+                self.lastMessage.text = message.content.content as? String
+            case .failure(_):
+                return
+            }
+        }
+        
+    }
+    
+    
+    
     
 }

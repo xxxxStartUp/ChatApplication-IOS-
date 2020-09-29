@@ -540,6 +540,37 @@ class FireService {
     
     
     
+    func getLastMessageForGroup(group : Group , user : FireUser, completionHandler: @escaping (Result<Message, Error>) -> Void){
+        
+        self.loadMessagesWithGroup(user: user, group: group) { (messages, error) in
+            
+            guard var messages = messages else {return}
+            
+            messages.sort { (message1, message2) -> Bool in
+                return message1.timeStamp < message2.timeStamp
+            }
+            let lastMessage = messages[messages.count-1]
+            completionHandler(.success(lastMessage))
+        }
+    }
+    
+    
+    func getLastMessageForFreind(freind : Friend , user : FireUser, completionHandler: @escaping (Result<Message, Error>) -> Void){
+        
+        self.loadMessagesWithFriend(User: user, freind: freind) { (messages, error) in
+            guard var messages = messages else {return}
+            messages.sort { (message1, message2) -> Bool in
+                return message1.timeStamp < message2.timeStamp
+            }
+            let lastMessage = messages[messages.count-1]
+            completionHandler(.success(lastMessage))
+        }
+    }
+    
+    
+    
+    
+    
     
     
     func loadSavedMessagesWithFriend(user:FireUser, freind:Friend, completion: @escaping ([Message]?,Error?)-> ()){

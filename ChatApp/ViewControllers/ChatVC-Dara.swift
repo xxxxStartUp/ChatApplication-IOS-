@@ -17,6 +17,7 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     var hasScrolled : Bool = false
     var cellId = "id"
     let navBarButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+    let navBarimageView : UIImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
     var globalImageSent : UIImage?
     var globalVideoUrl: NSURL?
     var player:AVPlayer?
@@ -84,21 +85,40 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(removeAnimateTableView))
         self.view.addGestureRecognizer(tapGesture)
+        handleNavBarImage()
     }
     
     
     
     func handleNavBarImage(){
-        navBarButton.layer.cornerRadius = 20
-        navBarButton.backgroundColor = .clear
-        navBarButton.tintColor = #colorLiteral(red: 0.8941176471, green: 0.8941176471, blue: 0.8941176471, alpha: 1)
-        
-        navigationItem.titleView = navBarButton
-        navBarButton.addTarget(self, action: #selector(handleTapNavBarButton), for: .touchUpInside)
-        let largeConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 40))
-        let image = UIImage(systemName:"person.crop.circle.fill",withConfiguration: largeConfiguration)
-        navBarButton.setImage(image, for: .normal)
+        navBarimageView.isUserInteractionEnabled = true
+        navBarimageView.contentMode = .center
+   let navBarImageViewGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapNavBarButton))
+        navBarimageView.addGestureRecognizer(navBarImageViewGesture)
+        navBarimageView.image = UIImage(named : "profile")
+        navigationItem.titleView = navBarimageView
         handleNavBarImageView()
+        
+//
+//        navBarButton.layer.cornerRadius = 20
+//        navBarButton.backgroundColor = .clear
+//        navBarButton.tintColor = #colorLiteral(red: 0.8941176471, green: 0.8941176471, blue: 0.8941176471, alpha: 1)
+//
+//        navigationItem.titleView = navBarButton
+//        navBarButton.addTarget(self, action: #selector(handleTapNavBarButton), for: .touchUpInside)
+//        let largeConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 40))
+//        let image = UIImage(systemName:"person.crop.circle.fill",withConfiguration: largeConfiguration)
+//        navBarButton.setImage(image, for: .normal)
+//
+//        handleNavBarImageView()
+//
+//        navBarButton.layer.cornerRadius = 20
+//        navBarButton.backgroundColor = .clear
+//        navigationItem.titleView = navBarButton
+//        navBarButton.addTarget(self, action: #selector(handleTapNavBarButton), for: .touchUpInside)
+//        let image = UIImage(named:"profile")
+//        navBarButton.setImage(image, for: .normal)
+        
         
 
     }
@@ -114,7 +134,7 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
             FireService.sharedInstance.getFriendPictureData(user: globalUser!, friend:user.asAFriend) { (result) in
                 switch result{
                 case .success(let url):
-                    self.navBarButton.imageView?.af.setImage(withURL: url)
+                    self.navBarimageView.af.setImage(withURL: url)
                     break
                 case .failure(let error):
                     print("profileImageview Cannot be set")
@@ -122,16 +142,6 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
                                 }
 
             }
-//            FireService.sharedInstance.getProfilePicture(user: user) { (result) in
-//                switch result{
-//                case .success(let url):
-//                    self.navBarButton.imageView?.af.setImage(withURL: url)
-//                    break
-//                case .failure(let error):
-//                    print("profileImageview Cannot be set")
-//                    break
-//                }
-//            }
         }
         
     }
@@ -520,8 +530,8 @@ extension ChatVC_Dara :UITableViewDelegate,UITableViewDataSource {
         
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-         let longMessageCellTapGesture : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap(gesture:)))
-        cell.addGestureRecognizer(longMessageCellTapGesture)
+         //let longMessageCellTapGesture : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap(gesture:)))
+        //cell.addGestureRecognizer(longMessageCellTapGesture)
 
         return cell
         
@@ -810,5 +820,7 @@ extension ChatVC_Dara{
     }
 
 }
+
+
 
 
