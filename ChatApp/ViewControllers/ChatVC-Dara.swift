@@ -25,14 +25,14 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     var messageToBeSent : Message?
     var messagePopUptableView: UITableView!
     var messagelongTapped : Message?
-     let messagePopUpCellId = "messagePopUpCellId"
+    let messagePopUpCellId = "messagePopUpCellId"
     var MessagePopUpheightAnchor : NSLayoutConstraint?
     var MessagePopUpBottomAnchor : NSLayoutConstraint?
     let messagePopUptableViewList  = [MessagepopUp(image: UIImage(named: "chat")!, title: "Save"),
                                       MessagepopUp(image: UIImage(named: "chat")!, title: "Archive"),
                                       MessagepopUp(image: UIImage(named: "chat")!, title: "Favorite"),
                                       MessagepopUp(image: UIImage(named: "chat")!, title: "Reply")]
-
+    
     
     var r : Friend?{
         didSet {
@@ -68,8 +68,8 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     }()
     @IBOutlet weak var chatTableView: UITableView!
     override func viewDidLoad() {
-       
-       
+        
+        
         super.viewDidLoad()
         updateBackgroundViews()
         navigationBarBackgroundHandler()
@@ -93,34 +93,35 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     func handleNavBarImage(){
         navBarimageView.isUserInteractionEnabled = true
         navBarimageView.contentMode = .center
-   let navBarImageViewGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapNavBarButton))
+        let navBarImageViewGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapNavBarButton))
         navBarimageView.addGestureRecognizer(navBarImageViewGesture)
         navBarimageView.image = UIImage(named : "profile")
-        navigationItem.titleView = navBarimageView
+        navigationItem.titleView = navBarButton
         handleNavBarImageView()
+        navBarButton.addTarget(self, action: #selector(handleTapNavBarButton), for: .touchUpInside)
         
-//
-//        navBarButton.layer.cornerRadius = 20
-//        navBarButton.backgroundColor = .clear
-//        navBarButton.tintColor = #colorLiteral(red: 0.8941176471, green: 0.8941176471, blue: 0.8941176471, alpha: 1)
-//
-//        navigationItem.titleView = navBarButton
-//        navBarButton.addTarget(self, action: #selector(handleTapNavBarButton), for: .touchUpInside)
-//        let largeConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 40))
-//        let image = UIImage(systemName:"person.crop.circle.fill",withConfiguration: largeConfiguration)
-//        navBarButton.setImage(image, for: .normal)
-//
-//        handleNavBarImageView()
-//
-//        navBarButton.layer.cornerRadius = 20
-//        navBarButton.backgroundColor = .clear
-//        navigationItem.titleView = navBarButton
-//        navBarButton.addTarget(self, action: #selector(handleTapNavBarButton), for: .touchUpInside)
-//        let image = UIImage(named:"profile")
-//        navBarButton.setImage(image, for: .normal)
+        //
+        //        navBarButton.layer.cornerRadius = 20
+        //        navBarButton.backgroundColor = .clear
+        //        navBarButton.tintColor = #colorLiteral(red: 0.8941176471, green: 0.8941176471, blue: 0.8941176471, alpha: 1)
+        //
+        //        navigationItem.titleView = navBarButton
+        //        navBarButton.addTarget(self, action: #selector(handleTapNavBarButton), for: .touchUpInside)
+        //        let largeConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 40))
+        //        let image = UIImage(systemName:"person.crop.circle.fill",withConfiguration: largeConfiguration)
+        //        navBarButton.setImage(image, for: .normal)
+        //
+        //        handleNavBarImageView()
+        //
+        //        navBarButton.layer.cornerRadius = 20
+        //        navBarButton.backgroundColor = .clear
+        //        navigationItem.titleView = navBarButton
+        //        navBarButton.addTarget(self, action: #selector(handleTapNavBarButton), for: .touchUpInside)
+        //        let image = UIImage(named:"profile")
+        //        navBarButton.setImage(image, for: .normal)
         
         
-
+        
     }
     
     func handleNavBarImageView(){
@@ -135,18 +136,42 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
                 switch result{
                 case .success(let url):
                     self.navBarimageView.af.setImage(withURL: url)
+                    
+                    let imageView = UIImageView()
+                    imageView.af.setImage(withURL: url, cacheKey: "imageView", placeholderImage: UIImage(named: "profile"), serializer: nil, filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.3), runImageTransitionIfCached: true) { (result) in
+                        
+                        switch result.result{
+                            
+                        case .success(let image):
+                            
+                            let data = imageView.image?.jpeg(.low)
+                            let newImage = (UIImage(data: data!))!.af.imageRoundedIntoCircle()
+                            self.navBarButton.imageView?.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+                            self.navBarButton.imageView?.contentMode = .scaleAspectFit
+                            self.navBarButton.setImage(newImage, for: .normal)
+                            self.navBarButton.backgroundColor = .clear
+                            self.navBarButton.tintColor = #colorLiteral(red: 0.8941176471, green: 0.8941176471, blue: 0.8941176471, alpha: 1)
+                            
+                            break
+                        case .failure(let error):
+                            break
+                        }
+                    }
+                    
+                    
+                    
                     break
                 case .failure(let error):
                     print("profileImageview Cannot be set")
                     break
-                                }
-
+                }
+                
             }
         }
         
     }
     
-   @objc func handleTapNavBarButton(){
+    @objc func handleTapNavBarButton(){
         
         guard let vc = UIStoryboard(name: "ContactInfoSB", bundle: nil).instantiateViewController(identifier: "ContactInfoVC") as? ContactInfoVC else {return}
         vc.friend = r
@@ -361,7 +386,7 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ContactInfoVC{
             destination.messages = messages
-    }
+        }
     }
     
     func setUpMessagePopUptableView(){
@@ -386,7 +411,7 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
         let cell = newCellView as! MessgaeCell
         messagelongTapped = cell.message
         print("tapped for long")
-
+        
         
         animateTableView()
     }
@@ -400,7 +425,7 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
         messagePopUptableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
         messagePopUptableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
         MessagePopUpheightAnchor = messagePopUptableView.heightAnchor.constraint(equalToConstant: 150)
-
+        
         MessagePopUpBottomAnchor =  messagePopUptableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 150)
         MessagePopUpBottomAnchor?.isActive = true
         MessagePopUpheightAnchor?.isActive = true
@@ -409,27 +434,27 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     private func animateTableView(){
         MessagePopUpBottomAnchor =  messagePopUptableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
         MessagePopUpheightAnchor = messagePopUptableView.heightAnchor.constraint(equalToConstant: 150)
-
-
+        
+        
         MessagePopUpheightAnchor?.isActive = true
         MessagePopUpBottomAnchor?.isActive = true
-
+        
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
         
     }
     
-
+    
     @objc private func removeAnimateTableView(){
-       // MessagePopUpheightAnchor = messagePopUptableView.heightAnchor.constraint(equalToConstant: 0)
-
-       // MessagePopUpBottomAnchor =  messagePopUptableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 100)
-
+        // MessagePopUpheightAnchor = messagePopUptableView.heightAnchor.constraint(equalToConstant: 0)
+        
+        // MessagePopUpBottomAnchor =  messagePopUptableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 100)
+        
         //MessagePopUpheightAnchor?.isActive = true
         MessagePopUpBottomAnchor?.isActive = true
-
-          let y = 500
+        
+        let y = 500
         UIView.animate(withDuration: 0.3) {
             self.messagePopUptableView.frame.origin.y = CGFloat(y)
             //self.view.layoutIfNeeded()
@@ -507,19 +532,19 @@ extension ChatVC_Dara :UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if tableView == messagePopUptableView {
-                   return messagePopUptableViewList.count
-               }
+            return messagePopUptableViewList.count
+        }
         return messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == messagePopUptableView{
-           
+            
             let cell = messagePopUptableView.dequeueReusableCell(withIdentifier: messagePopUpCellId) as! MessagePopUpCell
             cell.tag = indexPath.row
             cell.icon = messagePopUptableViewList[indexPath.row]
-          //  let tapgesture = UITapGestureRecognizer(target: self, action: #selector(handlemessagePopUpTableViewTapped(gesture:)))
-           // cell.addGestureRecognizer(tapgesture)
+            //  let tapgesture = UITapGestureRecognizer(target: self, action: #selector(handlemessagePopUpTableViewTapped(gesture:)))
+            // cell.addGestureRecognizer(tapgesture)
             return cell
         }
         
@@ -530,9 +555,9 @@ extension ChatVC_Dara :UITableViewDelegate,UITableViewDataSource {
         
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-         //let longMessageCellTapGesture : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap(gesture:)))
+        //let longMessageCellTapGesture : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap(gesture:)))
         //cell.addGestureRecognizer(longMessageCellTapGesture)
-
+        
         return cell
         
     }
@@ -622,7 +647,7 @@ extension ChatVC_Dara{
             keywindow.layer.addSublayer(playerLayer!)
             UIView.animate(withDuration: 0.5, delay: 0,usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.blackBackgroundView?.alpha = 1
-//                self.texterView.alpha = 0
+                //                self.texterView.alpha = 0
                 self.playerLayer?.frame = keywindow.frame
                 self.player?.play()
                 self.activityIndicator.startAnimating()
@@ -668,7 +693,7 @@ extension ChatVC_Dara{
         UIView.animate(withDuration: 0.5, delay: 0,usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             tappedImageFrame.frame = CGRect(x: 0, y: 0, width: keywindow.frame.width, height: height)
             self.blackBackgroundView?.alpha = 1
-//            self.texterView.alpha = 0
+            //            self.texterView.alpha = 0
             tappedImageFrame.center = keywindow.center
             tappedImageFrame.contentMode = .scaleAspectFit
             tappedImageFrame.backgroundColor = .black
@@ -686,10 +711,10 @@ extension ChatVC_Dara{
             
             //tappedOutImageView.layer.cornerRadius = 8
             tappedOutImageView.clipsToBounds = true
-
+            
             UIView.animate(withDuration: 0.7, delay: 0,usingSpringWithDamping: 1,initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.blackBackgroundView?.alpha = 0
-//                self.texterView.alpha = 1
+                //                self.texterView.alpha = 1
                 tappedOutImageView.frame = startingFrame
             }, completion: {(completed: Bool) in
                 tappedOutImageView.removeFromSuperview()
@@ -799,7 +824,7 @@ extension ChatVC_Dara{
             self.videoExitButton?.alpha = 0
             self.videoBackgroundView?.alpha = 0
             self.pauseButton?.alpha = 0
-//            self.texterView.alpha = 1
+            //            self.texterView.alpha = 1
             
         }, completion: {(completed: Bool) in
             self.playerLayer?.removeFromSuperlayer()
@@ -818,7 +843,7 @@ extension ChatVC_Dara{
         self.videoExitButton?.isHidden = true
         self.pauseButton?.isHidden = true
     }
-
+    
 }
 
 
