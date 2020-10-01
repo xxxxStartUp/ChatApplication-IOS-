@@ -96,6 +96,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         }
                         
                         if sucess{
+                            let controller = UIAlertController.alertUser(title: "Successfully Joined Group", message: "You have successfully been added to the group - \(groupName)", whatToDo: "Continue")
+                            self.window?.rootViewController?.present(controller, animated: true, completion: nil)
+                           
                             print("sucessfully added user as a freind to a group created from \(finalGroup.GroupAdmin.email)")
                         }
                         

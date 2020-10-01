@@ -554,6 +554,9 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
         if tableView == messagePopUptableView {
             print(indexPath.row)
         }
+        if tableView == groupChatTable{
+            print("tableview did select")
+        }
         
     }
     
@@ -581,6 +584,7 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
         
         
         let cell = groupChatTable.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! MessgaeCell
+        cell.isUserInteractionEnabled = true
         cell.groupVC = self
         let message = groupMessages[indexPath.row]
         cell.message = message

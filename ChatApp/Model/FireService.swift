@@ -1645,8 +1645,6 @@ class FireService {
                 fatalError("This shouldnt be happening")
                 
             }
-            
-            
         }
     }
     

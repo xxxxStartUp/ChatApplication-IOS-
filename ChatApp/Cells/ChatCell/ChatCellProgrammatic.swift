@@ -56,6 +56,7 @@ class MessgaeCell: UITableViewCell {
             if message.content.type == .image{
                  messageLabel.text = nil
                  messageLabel.isHidden = true
+                messageImageView.isUserInteractionEnabled = true
                  let urlString = message.content.content as! String
                 messageImageView.loadImages(urlString: urlString, mediaType: Constants.chatPage.groupImagesType)
                  messageBackgroundView.addSubview(messageImageView)
@@ -67,6 +68,7 @@ class MessgaeCell: UITableViewCell {
                // messageBackgroundView.isHidden = true
                
                 messageBackgroundView.backgroundColor = .clear
+                
 
 
 
@@ -118,7 +120,7 @@ class MessgaeCell: UITableViewCell {
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleImageTap)))
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleImageTap(_:))))
         
         return imageView
     }()
@@ -231,7 +233,8 @@ class MessgaeCell: UITableViewCell {
         return url
     }
     
-    @objc func handleImageTap(tapGesture:UITapGestureRecognizer){
+    
+    @objc func handleImageTap(_ tapGesture:UITapGestureRecognizer){
         print("Image Tapped")
         if let imageView = tapGesture.view as? UIImageView{
             self.groupVC?.handlesTappedInImage(startingImageview: imageView)
