@@ -68,7 +68,9 @@ struct Constants{
         static let labelTitles = "labelTitle"
         static let statusTitleLabel = "statusTitleLabel"
         static let settingsImageType = "settingsImageType"
-        static var displayModeSwitch = UserDefaults.standard.value(forKey: "displayModeSwitch") as! Bool
+       static var displayModeSwitch = false
+        
+        //UserDefaults.standard.value(forKey: "displayModeSwitch") as Bool
         static var displaySwitch:UISwitch?
     }
     struct contactsPage{

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,31 +18,29 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="sOz-bo-NzF">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EO7-1J-lZh">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="EO7-1J-lZh">
+                                        <rect key="frame" x="0.0" y="1.5" width="414" height="197.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="jKT-GR-cOH"/>
                                         </constraints>
                                     </imageView>
-
-
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="57L-jz-hfh">
-                                        <rect key="frame" x="0.0" y="200" width="414" height="548"/>
+                                        <rect key="frame" x="0.0" y="200" width="414" height="574"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-
                                     </tableView>
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="4Pr-ge-Yqy"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="sOz-bo-NzF" firstAttribute="top" secondItem="4Pr-ge-Yqy" secondAttribute="top" id="CPi-X2-RQe"/>
                             <constraint firstItem="sOz-bo-NzF" firstAttribute="trailing" secondItem="4Pr-ge-Yqy" secondAttribute="trailing" id="Vrw-8a-S5K"/>
                             <constraint firstItem="4Pr-ge-Yqy" firstAttribute="bottom" secondItem="sOz-bo-NzF" secondAttribute="bottom" id="YMr-6o-pyz"/>
                             <constraint firstItem="sOz-bo-NzF" firstAttribute="leading" secondItem="4Pr-ge-Yqy" secondAttribute="leading" id="oci-Mb-ic2"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="4Pr-ge-Yqy"/>
                     </view>
                     <navigationItem key="navigationItem" id="oNh-UR-cHl"/>
                     <connections>
@@ -76,8 +72,6 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="person" catalog="system" width="128" height="117"/>
     </resources>
 </document>
