@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import AVFoundation
-
+import Firebase
 let cachedImage = NSCache<NSString,UIImage>()
 
 extension UIButton{
@@ -669,6 +669,48 @@ extension UIImage {
     }
 }
 
+extension UIViewController {
+    // DARA PLEASE TAKE A LOOK AT THIS
+    enum userStrings : String{
+        typealias RawValue = String
+        case currentUser = "CurrentUser"
+    }
+    
+    var currentUser : FireUser? {
+        // use this to get current user any where as long as user has been saved
+        return getCurrentUserFromDisk()
+    }
+    
+    func getCurrentUserFromDisk () -> FireUser? {
+        let dict = UserDefaults.standard.dictionary(forKey: userStrings.currentUser.rawValue)
+        guard let unWrappedDict = dict else {
+            return nil
+            
+        }
+        let user = FireService.sharedInstance.changeDictionaryToFireUser(data: unWrappedDict)
+        return user
+        
+    }
+    
+    func saveCurrentUserToDisk(user : FireUser) {
+        //add to signup and sign in functions
+        let dict = FireService.sharedInstance.changeUserToDictionary(user)
+        UserDefaults.standard.set(dict, forKey: userStrings.currentUser.rawValue)
+        UserDefaults.standard.synchronize()
+        
+    }
+    
+    func deleteCurrentUserFromDisk(){
+        // add to signOut Function
+        UserDefaults.standard.removeObject(forKey: userStrings.currentUser.rawValue)
+    }
+    
+    
+    func reSaveUserToDisk(user : FireUser){
+        //call if you change something about a user
+        saveCurrentUserToDisk(user: user)
+    }
+}
 
 
 

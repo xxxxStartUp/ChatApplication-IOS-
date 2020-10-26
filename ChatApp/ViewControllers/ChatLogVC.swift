@@ -68,6 +68,8 @@ class ChatLogVC: UIViewController {
         }
         
     }
+
+    
     
     func setUpfakeActivity(){
         
