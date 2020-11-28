@@ -53,7 +53,7 @@ class ChatVC: UIViewController {
     
     func loadMessages(){
 
-        FireService.sharedInstance.loadMessagesWithFriend(User: globalUser!,  freind: r!) { (messages, error) in
+        FireService.sharedInstance.loadMessagesWithFriend(User: globalUser.toFireUser,  freind: r!) { (messages, error) in
             self.messages.removeAll()
             self.ChatTable.reloadData()
             guard let messages = messages else {return}
@@ -86,9 +86,9 @@ class ChatVC: UIViewController {
     
     @IBAction func sendMessage(_ sender: UIButton) {
         let messageContent = Content(type: .string, content: messageView.text)
-        let dummyMessage = Message(content: messageContent, sender: globalUser!, timeStamp: Date(), recieved: false)
+        let dummyMessage = Message(content: messageContent, sender: globalUser.toFireUser, timeStamp: Date(), recieved: false)
         
-        FireService.sharedInstance.sendMessageToFriend(User: globalUser!, message: dummyMessage, freind: r!) { (sucess, error) in
+        FireService.sharedInstance.sendMessageToFriend(User: globalUser.toFireUser, message: dummyMessage, freind: r!) { (sucess, error) in
             
             if let error = error {
                 fatalError(error.localizedDescription)

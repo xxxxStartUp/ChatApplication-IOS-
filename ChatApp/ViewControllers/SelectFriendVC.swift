@@ -297,7 +297,7 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
                 self.present(controller, animated: true, completion: nil)
             }else{
                 if let group = group{
-                FireService.sharedInstance.getGroupURL(user: globalUser!, group:group) { (url, completion, error) in
+                FireService.sharedInstance.getGroupURL(user: globalUser.toFireUser, group:group) { (url, completion, error) in
                     if let error = error{
                         print(error.localizedDescription)
                     }
@@ -321,9 +321,9 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
                 let composer = MFMailComposeViewController()
                 composer.mailComposeDelegate = self
                 composer.setToRecipients(self.friendListEmail)
-                composer.setSubject("\(globalUser!.name) has invited you to join a group on the Soluchat App")
+                composer.setSubject("\(globalUser.toFireUser.name) has invited you to join a group on the Soluchat App")
 
-                composer.setMessageBody("Hello," + "\n" + "\n\(globalUser!.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", isHTML: false)
+                composer.setMessageBody("Hello," + "\n" + "\n\(globalUser.toFireUser.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", isHTML: false)
 
                 self.present(composer, animated: true, completion: nil)
 

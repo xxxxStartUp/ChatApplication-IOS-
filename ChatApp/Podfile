@@ -17,6 +17,7 @@ target 'ChatApp' do
     pod 'AlamofireImage'
     pod 'Alamofire'
     pod 'Firebase/Messaging'
+    pod "QRCode"
 
   target 'ChatAppTests' do
     inherit! :search_paths

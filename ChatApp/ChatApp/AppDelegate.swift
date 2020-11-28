@@ -40,13 +40,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         application.registerForRemoteNotifications()
         Messaging.messaging().delegate = self
-        FirebaseApp.configure()
         IQKeyboardManager.shared().isEnabled = true
         
+        // Add observer for InstanceID token refresh callback.
+        NotificationCenter.default.addObserver(self,
+                                                         selector: #selector(self.tokenRefreshNotification),
+                                                         name: NSNotification.Name.InstanceIDTokenRefresh,
+                                                         object: nil)
 
         //check if user exists 
 
         return true
+    }
+    @objc func tokenRefreshNotification(_ notification: Notification) {
+        InstanceID.instanceID().instanceID { (result, error) in
+            if let error = error {
+                print("Error fetching remote instange ID: \(error)")
+            } else if let result = result {
+//                print("Remote instance ID token: \(result.token)")
+                "\(result.token)".saveWithKey(key: "deviceToken")
+             }
+        }
+        connectToFcm()
+    }
+    func connectToFcm() {
+        Messaging.messaging().token(completion: { (token, error) in
+            if let error = error {
+                print("Error fetching FCM registration token: \(error)")
+              } else if let token = token {
+//                print("FCM registration token: \(token)")
+              }
+        })
     }
 
     // MARK: UISceneSession Lifecycle

@@ -63,6 +63,15 @@ class SettingsVC: UIViewController {
     @IBAction func signOut(_ sender: Any) {
         
         FireService.sharedInstance.signOut()
+        
+            FireService.sharedInstance.updateDeviceToken(globalUser.toFireUser.email, "") { (error, isSuccess) in
+                if(isSuccess){
+                    print("SignUp user push notification token register success")
+                }else{
+                    print("SignUp user push notification token register failed")
+                }
+            }
+        
         globalUser = nil
         let vc = UIStoryboard(name: "SignUpSB", bundle: nil).instantiateInitialViewController()!
         vc.modalPresentationStyle = .fullScreen

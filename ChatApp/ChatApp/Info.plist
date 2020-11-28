@@ -33,7 +33,6 @@
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
 			<string>PushNotification</string>
-
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.495828070629-7kddqfdk7cdbejt54ral5a3vak9qlmfm</string>
@@ -68,7 +67,6 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
-
 		<string>processing</string>
 		<string>remote-notification</string>
 	</array>

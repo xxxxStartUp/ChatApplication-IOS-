@@ -9,7 +9,7 @@
 import Foundation
 
 
-class FireUser : User {
+class FireUser : CodableUser {
     
     /*
     Constant values for the 'id', 'name', 'email', and 'timeCreated'.
@@ -18,6 +18,7 @@ class FireUser : User {
     let name: String
     let id: String // I think this should be an Int as it would be easier to use an ID that is a number to quickly find or refer to a user.
     let email: String
+    let deviceToken: String
     let timeCreated: Date
     
     var messages: [Message]
@@ -27,16 +28,17 @@ class FireUser : User {
     
     
     // When creating a user, these properties will need to be provided
-    init(userID: String, userName: String, userEmail: String, creationDate: Date) {
+    init(userID: String, userName: String, userEmail: String,deviceToken: String, creationDate: Date) {
         
-        id = userID
-        name = userName
-        email = userEmail
-        timeCreated = creationDate
-        messages = []
-        group = []
-        friends = []
-        userType = TypeOfUser.regular.rawValue // I created an enum where 0 would be a regular user and 1 would be an admin user.
+        self.id = userID
+        self.name = userName
+        self.email = userEmail
+        self.deviceToken = deviceToken
+        self.timeCreated = creationDate
+        self.messages = []
+        self.group = []
+        self.friends = []
+        self.userType = TypeOfUser.regular.rawValue // I created an enum where 0 would be a regular user and 1 would be an admin user.
         super.init()
     }
     

@@ -47,7 +47,7 @@ class ChatLogVC: UIViewController {
     
     
     func loadActivity(){
-        FireService.sharedInstance.loadAllActivity(User: globalUser!) { (activities, error) in
+        FireService.sharedInstance.loadAllActivity(User: globalUser.toFireUser) { (activities, error) in
             self.activities.removeAll()
             guard let loadedactivities = activities else{fatalError()}
             print(loadedactivities.count , "count of activities")
@@ -66,11 +66,11 @@ class ChatLogVC: UIViewController {
     
     func setUpfakeActivity(){
         
-        let activity3 = Activity(activityType: .GroupChat(group: Group(GroupAdmin: FireUser(userID: "1", userName: "dara", userEmail: "daraegb@gmail.com", creationDate: Date()), id: "1", name: "Group1")))
+        let activity3 = Activity(activityType: .GroupChat(group: Group(GroupAdmin: FireUser(userID: "1", userName: "dara", userEmail: "daraegb@gmail.com",deviceToken: "", creationDate: Date()), id: "1", name: "Group1")))
         
         let activity1 = Activity(activityType: .FriendChat(friend: Friend(email: "ebukafake@gmail.com", username: "ebukaegb", id: "1")))
         let activity2 = Activity(activityType: .FriendChat(friend: Friend(email: "ebukadoublefake@gmail.com", username: "ebukaegb", id: "1")))
-        let activity4 = Activity(activityType: .GroupChat(group: Group(GroupAdmin: FireUser(userID: "1", userName: "ramzi", userEmail: "ramzi@gmail.com", creationDate: Date()), id: "1", name: "Group2")))
+        let activity4 = Activity(activityType: .GroupChat(group: Group(GroupAdmin: FireUser(userID: "1", userName: "ramzi", userEmail: "ramzi@gmail.com",deviceToken: "", creationDate: Date()), id: "1", name: "Group2")))
         
         activities.append(activity1)
         activities.append(activity2)

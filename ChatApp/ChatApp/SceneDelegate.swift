@@ -87,7 +87,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     let finalGroup = Group(GroupAdmin: user, id: groupID, name: groupName)
                     
                     
-                    FireService.sharedInstance.createGroupFromReceivingDynamicLink(user: globalUser!, group: finalGroup, friend: globalUser!.asAFriend) { (sucess, error) in
+                    FireService.sharedInstance.createGroupFromReceivingDynamicLink(user: globalUser.toFireUser, group: finalGroup, friend: globalUser.toFireUser.asAFriend) { (sucess, error) in
                         
                         if let error = error {
                             print("could not find group admin user while adding new user to group",error.localizedDescription)

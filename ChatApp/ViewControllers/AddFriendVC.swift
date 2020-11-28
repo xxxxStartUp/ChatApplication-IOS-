@@ -122,13 +122,21 @@ class AddFriendVC : UIViewController {
         FireService.sharedInstance.searchOneFreindWithEmail(email: email) { (freind, error) in
             if let error = error {
                 print(error)
-                fatalError("cannot add friend, deoes not exsist")
+                let controller = UIAlertController.alertUser(title: "Error", message: "Cannot add friend, does not exsist", whatToDo: "Try again")
+                self.present(controller, animated: true, completion: nil)
             }else{
-                self.createDynamicLink(user: globalUser!, friendEmail: email) { (completion) in
-                    if completion{
-                        print("Completed showing composer")
+                self.createDynamicLink(user: globalUser.toFireUser, friendEmail: email) { (urlString,friendEmail) in
+                    
+                    if let url = URL(string: urlString){
+                        let promoText = "Friend Invitation"
+                        self.toDynamicLinkQRVC(qrString: urlString, promoText: promoText,linkUrl: url,friendEmail: friendEmail)
                     }
                 }
+//                self.createDynamicLink(user: globalUser.toFireUser, friendEmail: email) { (completion) in
+//                    if completion{
+//                        print("Completed showing composer")
+//                    }
+//                }
                 
 //                if let friend = freind {
 //                    guard let globalUser = globalUser else {return}
@@ -160,6 +168,58 @@ class AddFriendVC : UIViewController {
 }
 extension AddFriendVC:MFMailComposeViewControllerDelegate{
     
+    func createDynamicLink(user:FireUser,friendEmail:String,completion:@escaping (String,String) -> ()){
+        print("this dynamic link func has been called")
+        
+        var components = URLComponents()
+        
+        components.scheme = "https"
+        components.host = "www.example.com"
+        components.path = "/Contacts"
+        if let user = globalUser{
+            let requestSenderEmail = URLQueryItem(name: "requestSenderEmail", value: user.email)
+            let requestReceiverEmail = URLQueryItem(name: "requestReceiverEmail", value: friendEmail)
+            components.queryItems = [requestSenderEmail,requestReceiverEmail]
+            
+            guard let linkParameter = components.url else {return}
+            
+            print("I am sharing \(linkParameter.absoluteString)")
+            
+            //create the big dynamic link
+            guard let shareLink = DynamicLinkComponents.init(link: linkParameter, domainURIPrefix: dynamicLinkDomain) else{
+                print("Couldn't create FDL components")
+                return
+            }
+            
+            if let myBundleId = Bundle.main.bundleIdentifier{
+                shareLink.iOSParameters = DynamicLinkIOSParameters(bundleID: myBundleId)
+            }
+            shareLink.iOSParameters?.appStoreID = "962194608"
+            shareLink.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
+            shareLink.socialMetaTagParameters?.title = "Join the chat in the soluchat app"
+            shareLink.socialMetaTagParameters?.descriptionText = "This is Soluchat App"
+            
+            guard let longURL = shareLink.url else{return}
+            print("This is the dynamiclink is \(longURL.absoluteString)")
+            
+            shareLink.shorten { (url, warnings, error) in
+                if let error = error {
+                    print("Shortening Link Error:\(error)")
+                }
+                if let warnings = warnings{
+                    for warning in warnings{
+                        print("FDL Warning:\(warning)")
+                    }
+                }
+                guard let url = url else{return}
+                let shortUrl = url.absoluteString
+                print("I have a short URL to share! \(url.absoluteString)")
+                self.shareURL = url
+                self.shareURLString = shortUrl
+                completion(url.absoluteString,friendEmail)
+            }
+        }
+    }
     func createDynamicLink(user:FireUser,friendEmail:String,completion:@escaping (Bool) -> ()){
         print("this dynamic link func has been called")
         
@@ -225,9 +285,9 @@ extension AddFriendVC:MFMailComposeViewControllerDelegate{
         let composer = MFMailComposeViewController()
         composer.mailComposeDelegate = self
         composer.setToRecipients([friendEmail])
-        composer.setSubject("\(globalUser!.name) sent a friend request on the Soluchat App")
+        composer.setSubject("\(globalUser.toFireUser.name) sent a friend request on the Soluchat App")
 
-        composer.setMessageBody("Hello," + "\n" + "\n\(globalUser!.name) has invited you to be a friend. Use the link below to accept his request and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", isHTML: false)
+        composer.setMessageBody("Hello," + "\n" + "\n\(globalUser.toFireUser.name) has invited you to be a friend. Use the link below to accept his request and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", isHTML: false)
         
         present(composer, animated: true, completion: nil)
         

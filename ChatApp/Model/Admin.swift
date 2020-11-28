@@ -13,7 +13,7 @@ class Admin: FireUser {
     // So insted of creating an new user for an Admin, we just pass a FireUser as a parameter, then call the function becomeAdmin() to turn the user into an Admin.
     
     init(user: FireUser){
-    super.init(userID: user.id, userName: user.name, userEmail: user.email, creationDate: user.timeCreated)
+    super.init(userID: user.id, userName: user.name, userEmail: user.email,deviceToken: user.deviceToken, creationDate: user.timeCreated)
         
     // Are values passed by reference or by value ? We will need to discuss this...
     self.messages = user.messages

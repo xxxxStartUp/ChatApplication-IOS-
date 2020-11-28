@@ -40,7 +40,6 @@ class Activity {
 enum ActivityType {
     case GroupChat(group : Group)
     case FriendChat(friend : Friend)
-    
 }
 
 

@@ -37,7 +37,7 @@ class ChatLogCell: UITableViewCell {
             case .GroupChat(group:let group):
                 chatNameLabel.text =  activity.name
                 
-                FireService.sharedInstance.getGroupPictureData(user: globalUser!, group: group) { (result) in
+                FireService.sharedInstance.getGroupPictureData(user: globalUser.toFireUser, group: group) { (result) in
                    
                     switch result{
                         

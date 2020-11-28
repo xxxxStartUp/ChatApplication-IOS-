@@ -43,21 +43,25 @@ class SignInVC: UIViewController {
     
     func login() -> Void {
         if let email = emailTextField.text, let password = passwordTextField.text{
-            //Need to complete validate class and functions in class before using it
             if Validate.isPasswordValid(password) && Validate.isValidEmail(email){
 
                 FireService.sharedInstance.signIn(email: email, password: password) { (completed) in
                     if completed{
                         FireService.sharedInstance.searchOneUserWithEmail(email: email) { (user, error) in
-                            
+                            print("searchOneUserWithEmail")
                             globalUser = user
-                        }
-
-                        print("Signed In Successfully")
-                        let controller =  UIAlertController.alertUser( title: "Sucess", message: "you signed in sucesfully", whatToDo: "Go to home screen")
-                        self.present(controller, animated: true) {
-                            
-                            self.goToTab()
+                            if(globalUser.toFireUser.email != ""){
+                                print("Signed In Successfully")
+                                let controller =  UIAlertController.alertUser( title: "Sucess", message: "you signed in sucesfully", whatToDo: "Go to home screen")
+                                self.present(controller, animated: true) {
+                                    self.goToTab()
+                                }
+                            }else{
+                                print("globalUser.toFireUser.email == '' ")
+                                FireService.sharedInstance.signOut()
+                                let controller =  UIAlertController.alertUser( title: "Email Case Sensitive", message: "Email not found", whatToDo: "Try again")
+                                self.present(controller, animated: true, completion: nil)
+                            }
                         }
                         
                     }

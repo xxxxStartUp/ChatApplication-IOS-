@@ -25,33 +25,32 @@ class ProfileInfoCell: UITableViewCell {
         //update label fonts and color
         userNameHeader.settingsPageLabels(type: Constants.settingsPage.userNameHeader)
         statusTitle.settingsPageLabels(type: Constants.settingsPage.statusTitleLabel)
-        userNameHeader.text = globalUser?.name
+        userNameHeader.text = globalUser.toFireUser.name
         setInitialImage()
-        
-        //
         
           if Constants.profilePage.globalProfileImage != nil && Constants.profilePage.profileImageState{
             profilePhoto.settingsPageImageView()
             
             profilePhoto.image = Constants.profilePage.globalProfileImage
             
-        
     }
         
     }
+    
+    // TODO: - this ! change to if let
         func setInitialImage(){
-            FireService.sharedInstance.getProfilePicture(user: globalUser!) { (result) in
-                switch result{
+            
+                FireService.sharedInstance.getProfilePicture(user: globalUser.toFireUser) { (result) in
+                    switch result{
+                    case .success(let url):
+        //                self.profileImageView.af_setImage(withURL: url)
+                        self.profilePhoto.loadImages(urlString: url.absoluteString, mediaType: Constants.settingsPage.settingsImageType)
+                        
+                    case .failure(_):
+                        print("failed to set image url")
+                    }
                     
-                case .success(let url):
-    //                self.profileImageView.af_setImage(withURL: url)
-                    self.profilePhoto.loadImages(urlString: url.absoluteString, mediaType: Constants.settingsPage.settingsImageType)
-                    
-                case .failure(_):
-                    print("failed to set image url")
                 }
-                
-            }
         }
     
 }

@@ -49,11 +49,13 @@ class SignUpVC: UIViewController {
 
     
     func signUp(){
-        if let name = nameTextField.text, let email = emailTextField.text, let password = passwordTextField.text{
+        if let name = nameTextField.text, let email1 = emailTextField.text, let password = passwordTextField.text{
             //Need to complete validate class and functions in class before using it
+            let email = email1.lowercased()
             if Validate.isPasswordValid(password) && Validate.isValidEmail(email){
                 let id = UUID().uuidString
-                let user = FireUser(userID: id, userName: name, userEmail: email, creationDate: Date())
+                
+                let user = FireUser(userID: id, userName: name, userEmail: email,deviceToken: "deviceToken".load(), creationDate: Date())
                 
                 
                 FireService.sharedInstance.SignUp(email: email, password: password) { (completed) in
@@ -117,15 +119,12 @@ extension UIViewController {
     
     
     func checkForUser(){
-        FireService.sharedInstance.getCurrentUser { (user) in
-            if let email = user?.email{
-                
-                FireService.sharedInstance.getCurrentUserData(email: email) { (fireUser, error) in
-                    if let fireUser = fireUser{
-                        globalUser = fireUser
-                        self.goToTab()
-                    }
-                    
+        let email = "email".load()
+        if(email != ""){
+            FireService.sharedInstance.getCurrentUserData(email: email) { (fireUser, error) in
+                if let fireUser = fireUser{
+                    globalUser = fireUser
+                    self.goToTab()
                 }
             }
         }

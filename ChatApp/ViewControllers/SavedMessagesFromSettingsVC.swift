@@ -95,7 +95,7 @@ class SavedMessagesFromSettingsVC: UIViewController,UITableViewDataSource,UITabl
     
     @objc func handlesTappedRightNavBarItem(){
 //
-//        FireService.sharedInstance.deleteAllSavedMessages(user: globalUser!, group: group!, MessageToDelete: savedMessages) { (result) in
+//        FireService.sharedInstance.deleteAllSavedMessages(user: globalUser.toFireUser, group: group!, MessageToDelete: savedMessages) { (result) in
 //            switch result{
 //
 //            case .success(let bool):
@@ -128,13 +128,13 @@ class SavedMessagesFromSettingsVC: UIViewController,UITableViewDataSource,UITabl
     }
     func loadMessages (){
         
-//        FireService.sharedInstance.loadSavedMessagesFromSettings2(user: globalUser!){(messages, error) in
+//        FireService.sharedInstance.loadSavedMessagesFromSettings2(user: globalUser.toFireUser){(messages, error) in
 //            if let error = error{
 //                print(error.localizedDescription)
 //            }
 //            print("THIS DICTIONARY I AM PRINTING IS :\(messages)")
 //            }
-        FireService.sharedInstance.loadSavedMessagesFromSettings(user: globalUser!) { (messages, error) in
+        FireService.sharedInstance.loadSavedMessagesFromSettings(user: globalUser.toFireUser) { (messages, error) in
 
             if let error = error{
                 print(error.localizedDescription)
@@ -270,7 +270,7 @@ extension SavedMessagesFromSettingsVC{
             
             let message = savedMessages[indexPath.row]
             print(savedMessages[indexPath.row].content)
-            FireService.sharedInstance.deleteSavedMessageFromSettings(user: globalUser!, MessageToDelete: message) { (result) in
+            FireService.sharedInstance.deleteSavedMessageFromSettings(user: globalUser.toFireUser, MessageToDelete: message) { (result) in
                 switch result{
                     
                 case .success(let bool):

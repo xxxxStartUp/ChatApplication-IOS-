@@ -100,7 +100,7 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
     
     
     func updateGroupName(){
-        FireService.sharedInstance.getGroupname(user: globalUser!, group: group!) { (group, true, error) in
+        FireService.sharedInstance.getGroupname(user: globalUser.toFireUser, group: group!) { (group, true, error) in
             if let error = error{
                 print(error.localizedDescription)
             }
@@ -112,7 +112,7 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
     
     @objc func handlesClearButtonRightNavBarItem(sender:UIAlertAction!){
         if let messages = messages{
-            FireService.sharedInstance.deleteAllGroupMessages(user: globalUser!, group: group!, MessageToDelete: messages) { (result) in
+            FireService.sharedInstance.deleteAllGroupMessages(user: globalUser.toFireUser, group: group!, MessageToDelete: messages) { (result) in
                 
                 switch result{
                     
@@ -129,18 +129,19 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
         }
     }
     @objc func handlesShareNavBarItem(){
-        
-        FireService.sharedInstance.getGroupURL(user: globalUser!, group: group!) { (urlString, success, error) in
+        FireService.sharedInstance.getGroupURL(user: globalUser.toFireUser, group: group!) { (urlString, success, error) in
             if let error = error{
                 print(error.localizedDescription)
             }
+            
             if let urlString = urlString,let url = URL(string: urlString){
-            let promoText = "Check out this app for solustack"
-            let activityVC = UIActivityViewController(activityItems: [promoText,url], applicationActivities: nil)
-            self.present(activityVC,animated: true)
+                let promoText = "Check out this app for solustack"
+                self.toDynamicLinkQRVC(qrString: urlString, promoText: promoText,linkUrl: url,friendEmail: "")
+            
+//            let activityVC = UIActivityViewController(activityItems: [promoText,url], applicationActivities: nil)
+//            self.present(activityVC,animated: true)
+            }
         }
-        }
-
     }
     
     //updates the background color for the tableview and nav bar.
@@ -348,7 +349,7 @@ extension GroupInfoVC:UITextFieldDelegate{
         if let text = groupNameTextField.text{
             textField.resignFirstResponder()
             let data = ["groupname":text]
-            FireService.sharedInstance.addCustomGroupNameData(data: data, user: globalUser!, group: group!, friends: groupParticipants) { (error, success, isAdmin ) in
+            FireService.sharedInstance.addCustomGroupNameData(data: data, user: globalUser.toFireUser, group: group!, friends: groupParticipants) { (error, success, isAdmin ) in
                 if let error = error{
                     print(error.localizedDescription)
                 }
@@ -424,7 +425,7 @@ extension GroupInfoVC:UIImagePickerControllerDelegate{
     }
     func saveGroupPicture(data : Data){
         self.groupImageView.isUserInteractionEnabled = false
-        FireService.sharedInstance.saveGroupPicture(data : data , user : globalUser!, group:group!,friend:groupParticipants) { (result) in
+        FireService.sharedInstance.saveGroupPicture(data : data , user : globalUser.toFireUser, group:group!,friend:groupParticipants) { (result) in
             switch result {
             case .success(_):
                 print("sucess")
@@ -441,7 +442,7 @@ extension GroupInfoVC:UIImagePickerControllerDelegate{
         
     }
     func setImage(){
-        FireService.sharedInstance.getGroupPictureData(user: globalUser!,group: group!) { (result) in
+        FireService.sharedInstance.getGroupPictureData(user: globalUser.toFireUser,group: group!) { (result) in
             switch result{
                 
             case .success(let url):
@@ -462,11 +463,11 @@ extension GroupInfoVC:UIImagePickerControllerDelegate{
     }
     func deleteGroupPicture(){
         groupImageView.isUserInteractionEnabled = false
-        FireService.sharedInstance.getGroupPictureData(user: globalUser!, group: group!) { [self] (result) in
+        FireService.sharedInstance.getGroupPictureData(user: globalUser.toFireUser, group: group!) { [self] (result) in
             switch result{
                 
             case .success(let url):
-                FireService.sharedInstance.DeleteGroupPicture(user: globalUser!, group: group!,friends:groupParticipants) { (result) in
+                FireService.sharedInstance.DeleteGroupPicture(user: globalUser.toFireUser, group: group!,friends:groupParticipants) { (result) in
                     switch result{
                         
                     case .success(let bool):
@@ -553,7 +554,7 @@ extension GroupInfoVC{
         if !groupParticipants.isEmpty{
         if let groupadmin = group?.GroupAdmin.email{
             
-            if groupadmin == globalUser?.email{
+            if groupadmin == globalUser.toFireUser.email{
                 
                 
                 if groupParticipants.count > 1{
@@ -583,7 +584,7 @@ extension GroupInfoVC{
                 }
             }
             else{
-                if groupParticipants.contains(globalUser!.asAFriend){
+                if groupParticipants.contains(globalUser.toFireUser.asAFriend){
                 print("Not admin")
                 let action1 = UIAlertAction(title: "Leave group", style: .destructive, handler: leaveGroupOption(sender:))
                 let action2 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -612,7 +613,7 @@ extension GroupInfoVC{
         //        participantsTableview.allowsSelectionDuringEditing = true
     }
     func dissolveGroup(sender:UIAlertAction!){
-        FireService.sharedInstance.dissolveGroup(user: globalUser!, group: group!) { (error, completion) in
+        FireService.sharedInstance.dissolveGroup(user: globalUser.toFireUser, group: group!) { (error, completion) in
             if let errors = error{
                 print(errors.localizedDescription)
                 fatalError()
@@ -631,7 +632,7 @@ extension GroupInfoVC{
     
     func leaveGroupOption(sender:UIAlertAction!){
     
-        FireService.sharedInstance.leaveGroup(user: globalUser!, group: group!, friends: groupParticipants) { (error, success) in
+        FireService.sharedInstance.leaveGroup(user: globalUser.toFireUser, group: group!, friends: groupParticipants) { (error, success) in
             if let error = error{
                 print(error.localizedDescription)
             }
@@ -645,7 +646,7 @@ extension GroupInfoVC{
             return false
         }
         if tableView == participantsTableview{
-            if globalUser?.email == group?.GroupAdmin.email{
+            if globalUser.toFireUser.email == group?.GroupAdmin.email{
                 return true
             }
             else{
@@ -677,7 +678,7 @@ extension GroupInfoVC{
                     print("cannot delete group admin")
                 }
                         else{
-                            FireService.sharedInstance.deleteFriendFromGroup(user: globalUser!, group: group!, friend: groupParticipants[indexPath.row]) { (error, completion) in
+                            FireService.sharedInstance.deleteFriendFromGroup(user: globalUser.toFireUser, group: group!, friend: groupParticipants[indexPath.row]) { (error, completion) in
                                 if let error = error{
                                     print(error.localizedDescription)
                                 }
@@ -754,7 +755,7 @@ extension GroupInfoVC{
                 self.assignAdmin = false
                 let data = ["groupadmin":groupParticipants[selectedIndexPath].email]
                 print("This is the \(data["groupadmin"])")
-                FireService.sharedInstance.assignAdminAndLeaveGroup(data: data, user: globalUser!, group: group!, friends: groupParticipants) { (error,success, dataReceived) in
+                FireService.sharedInstance.assignAdminAndLeaveGroup(data: data, user: globalUser.toFireUser, group: group!, friends: groupParticipants) { (error,success, dataReceived) in
                     if let error = error{
                         print(error.localizedDescription)
                     }
@@ -773,7 +774,7 @@ extension GroupInfoVC{
                                 //call function to save the url in FB
                                 if let shareURLString = self.shareURLString{
                                     let data = ["groupInvitationUrl" : shareURLString]
-                                    FireService.sharedInstance.addCustomDataToGroup(data: data, user: globalUser!, group: newGroup) { (error, success) in
+                                    FireService.sharedInstance.addCustomDataToGroup(data: data, user: globalUser.toFireUser, group: newGroup) { (error, success) in
                                         if let error = error {
                                             print(error.localizedDescription)
                                             fatalError()
@@ -794,7 +795,7 @@ extension GroupInfoVC{
                 self.setAdminAndLeaveGroup = false
                 let data = ["groupadmin":groupParticipants[selectedIndexPath].email]
                 print("This is the \(data["groupadmin"])")
-                FireService.sharedInstance.assignNewAdmin(data: data, user: globalUser!, group: group!, friends: groupParticipants) { (error,success, dataReceived) in
+                FireService.sharedInstance.assignNewAdmin(data: data, user: globalUser.toFireUser, group: group!, friends: groupParticipants) { (error,success, dataReceived) in
                     if let error = error{
                         print(error.localizedDescription)
                     }
@@ -813,7 +814,7 @@ extension GroupInfoVC{
                                 //call function to save the url in FB
                                 if let shareURLString = self.shareURLString{
                                     let data = ["groupInvitationUrl" : shareURLString]
-                                    FireService.sharedInstance.addCustomDataToGroup(data: data, user: globalUser!, group: newGroup) { (error, success) in
+                                    FireService.sharedInstance.addCustomDataToGroup(data: data, user: globalUser.toFireUser, group: newGroup) { (error, success) in
                                         if let error = error {
                                             print(error.localizedDescription)
                                             fatalError()

@@ -33,7 +33,7 @@ class MessgaeCell: UITableViewCell {
         timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
 
             
-            if  message.sender.email != globalUser!.email{
+            if  message.sender.email != globalUser.toFireUser.email{
                 messageLabel.text = message.content.content as! String
                 leadingContstraints?.isActive = true
                 tarilingConstraints?.isActive = false

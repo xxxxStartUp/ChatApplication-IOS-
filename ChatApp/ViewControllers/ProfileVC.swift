@@ -92,11 +92,11 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     
     
     func changeName(sender : UIAlertAction){
-        FireService.sharedInstance.addCustomData(data: ["username":name], user: globalUser!) { (error, sucess) in
+        FireService.sharedInstance.addCustomData(data: ["username":name], user: globalUser.toFireUser) { (error, sucess) in
             if sucess {
                 print("name was chnaged")
                 
-                FireService.sharedInstance.refreshUserInfo(email: globalUser!.email)
+                FireService.sharedInstance.refreshUserInfo(email: globalUser.toFireUser.email)
             }
             
         }
@@ -139,8 +139,8 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         profileImageView.profilePageImageView()
         
         //sets the email textfield name and name textfield.
-        nameTextField.text = globalUser?.name
-        emailTextField.text = globalUser?.email
+        nameTextField.text = globalUser.toFireUser.name
+        emailTextField.text = globalUser.toFireUser.email
         
         nameView.layer.cornerRadius = 10
         emailView.layer.cornerRadius = 10
@@ -243,7 +243,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     
     
     func setImage(){
-        FireService.sharedInstance.getProfilePicture(user: globalUser!) { (result) in
+        FireService.sharedInstance.getProfilePicture(user: globalUser.toFireUser) { (result) in
             switch result{
                 
             case .success(let url):
@@ -260,7 +260,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     
     func deleteProfilePicture(){
          profileImageView.isUserInteractionEnabled = false
-        FireService.sharedInstance.DeleteProfilePicture(user: globalUser!) { (result) in
+        FireService.sharedInstance.DeleteProfilePicture(user: globalUser.toFireUser) { (result) in
             switch result{
                 
             case .success(let bool):
@@ -284,7 +284,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     
     func saveProfilePicture(data : Data){
          self.profileImageView.isUserInteractionEnabled = false
-        FireService.sharedInstance.saveProfilePicture(data: data, user: globalUser!) { (result) in
+        FireService.sharedInstance.saveProfilePicture(data: data, user: globalUser.toFireUser) { (result) in
             switch result {
             case .success(_):
                 print("sucess")
