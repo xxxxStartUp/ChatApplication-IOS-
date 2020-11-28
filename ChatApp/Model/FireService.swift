@@ -1646,9 +1646,9 @@ class FireService {
     ///   - completion: Completion handler to determine if the function completed correctly or with errors
     /// - Returns: Nothing
     func searchOneUserWithEmail(email : String,completion : @escaping (FireUser? , Error?) -> ()){
-        
+        let email1 = email.lowercased()
         var data : [String : Any] = [:]
-        let query = FireService.users.whereField("email", isEqualTo: email)
+        let query = FireService.users.whereField("email", isEqualTo: email1)
         
         
         query.getDocuments { (snapshot, error) in
@@ -1722,8 +1722,9 @@ class FireService {
     ///   - completion: Completion handler to determine if the function completed correctly or with errors
     /// - Returns: Nothing
     func searchOneFreindWithEmail(email : String,completion : @escaping (Friend? , Error?) -> ()){
+        let email1 = email.lowercased()
         var data : [String : Any] = [:]
-        let query = FireService.users.whereField("email", isEqualTo: email)
+        let query = FireService.users.whereField("email", isEqualTo: email1)
         
         query.addSnapshotListener { (snapshot, error) in
             if let error = error{

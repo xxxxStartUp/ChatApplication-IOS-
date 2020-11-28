@@ -49,7 +49,8 @@ class SignUpVC: UIViewController {
 
     
     func signUp(){
-        if let name = nameTextField.text, let email = emailTextField.text, let password = passwordTextField.text{
+        if let name = nameTextField.text, let email1 = emailTextField.text, let password = passwordTextField.text{
+            let email = email1.lowercased()
             //Need to complete validate class and functions in class before using it
             if Validate.isPasswordValid(password) && Validate.isValidEmail(email){
                 let id = UUID().uuidString

@@ -124,7 +124,8 @@ class AddFriendVC : UIViewController {
                 print(error)
                 fatalError("cannot add friend, deoes not exsist")
             }else{
-                self.createDynamicLink(user: globalUser!, friendEmail: email) { (completion) in
+                let email1 = email.lowercased()
+                self.createDynamicLink(user: globalUser!, friendEmail: email1) { (completion) in
                     if completion{
                         print("Completed showing composer")
                     }
