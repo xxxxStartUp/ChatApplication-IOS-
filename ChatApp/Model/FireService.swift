@@ -130,7 +130,7 @@ class FireService {
             case .success(let bool):
                 if bool {
                     
-                    groupRef.collection("Freinds").document(freind.id).setData(frieindAsData) { (error) in
+                    groupRef.collection("Freinds").document(freind.email).setData(frieindAsData) { (error) in
                         if let error = error{
                             completionHandler(.failure(error))
                         }
@@ -178,7 +178,7 @@ class FireService {
         
         let frieindAsData = self.changeFriendToDictionary(freind)
         
-        groupRef.collection("Freinds").document(freind.id).setData(frieindAsData) { (error) in
+        groupRef.collection("Freinds").document(freind.email).setData(frieindAsData) { (error) in
             if let error = error{
                 completionHandler(.failure(error))
             }
@@ -1512,7 +1512,7 @@ class FireService {
         return ["id" : user.id,
                 "username":user.name,
                 "email":user.email,
-                "timecreated":user.timeCreated
+                "timecreated":user.timeCreated,"deviceToken":user.deviceToken
         ]
         
     }
@@ -1592,7 +1592,9 @@ class FireService {
         let email = data["email"] as! String
         let date = data["timecreated"] as! Timestamp
         let finalDate = date.dateValue()
-        let fireUser = FireUser(userID: id, userName: username, userEmail: email, creationDate: finalDate)
+        //let deviceToken = data["deviceToken"] as! String
+        
+        let fireUser = FireUser(userID: id, token: Constants.deviceTokenKey.load(), userName: username, userEmail: email, creationDate: finalDate)
         return fireUser
     }
     
@@ -1679,6 +1681,40 @@ class FireService {
         }
     }
     
+    //This function checks for the device token for 1-1 chats
+    // this function is for getting the group member device token
+        func searchDeviceToken(email : String,completion : @escaping (String? , Error?) -> ()){
+            var data : [String : Any] = [:]
+            let query = FireService.users.whereField("email", isEqualTo: email)
+            query.getDocuments { (snapshot, error) in
+                if let error = error{
+                    completion(nil , error)
+                    return
+                }
+                
+                guard let documents = snapshot?.documents else{return}
+                let count = documents.count
+                if count == 1 {
+                    for document in documents{
+                        data = document.data()
+                        print(data, "data is here")
+                        if let token = data["deviceToken"] as? String{
+                            completion(token, nil)
+                        }
+                        return
+                    }
+                }
+                if count == 0 {
+                    fatalError("email does not exists")
+                }
+                    
+                else{
+                    fatalError("This shouldnt be happening")
+                    
+                }
+            }
+        }
+    
     
     /// Function to determine if a Friend is associated to an email address
     /// - Parameters:
@@ -1754,6 +1790,7 @@ class FireService {
             guard let data = snapshot?.data() else {return}
             
             let fireUser = self.changeDictionaryToFireUser(data: data)
+            print("I have found the data-\(data)")
             completion(fireUser , nil)
             return
             
@@ -1807,7 +1844,7 @@ class FireService {
         let data = ["id" : user.id,
                     "username":user.name,
                     "email":user.email,
-                    "timecreated":user.timeCreated] as [String : Any]
+                    "timecreated":user.timeCreated,"deviceToken":user.deviceToken] as [String : Any]
         FireService.users.document(user.email).setData(data, merge: true) { (error) in
             
             if let error = error{
@@ -1908,7 +1945,7 @@ class FireService {
     
     
     func assignAdminAndLeaveGroup(data : [String : Any] ,user : FireUser, group:Group,friends:[Friend], completion : @escaping (Error? , Bool, [String:Any]?) -> ()){
-        let oldGroupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(user.id)
+        let oldGroupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(user.email)
         let groupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
         var newFriends = [Friend]()
         var dataToBeSent = [String:Any]()
@@ -1951,7 +1988,7 @@ class FireService {
                     for friend in friends {
                         
                         let ref = FireService.users.document(friend.email).collection(FireService.groupString).document(group.id)
-                        let oldGroupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(friend.id)
+                        let oldGroupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(friend.email)
                         let oldGroupDataRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
                         ref.setData(data, merge: true) { (error) in
                             if let error = error{
@@ -2017,7 +2054,7 @@ class FireService {
     }
     
     func assignNewAdmin(data : [String : Any] ,user : FireUser, group:Group,friends:[Friend], completion : @escaping (Error? , Bool, [String:Any]?) -> ()){
-        let oldGroupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(user.id)
+        let oldGroupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(user.email)
         let groupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
         var newFriends = [Friend]()
         var dataToBeSent = [String:Any]()
@@ -2058,7 +2095,7 @@ class FireService {
         
                             for friend in friends {
                             let ref = FireService.users.document(friend.email).collection(FireService.groupString).document(group.id)
-                                let oldGroupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(friend.id)
+                                let oldGroupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(friend.email)
                                 let oldGroupDataRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id)
                                 ref.setData(data, merge: true) { (error) in
                                     if let error = error{
@@ -2125,7 +2162,7 @@ class FireService {
     func leaveGroup(user : FireUser, group:Group,friends:[Friend],completion : @escaping (Error? , Bool) -> ()){
 
     
-        let groupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(user.id)
+        let groupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(user.email)
         let groupDataRef = FireService.users.document(user.email).collection(FireService.groupString).document(group.id)
  
         
@@ -2149,17 +2186,14 @@ class FireService {
  
     }
     func deleteFriendFromGroup(user : FireUser, group:Group,friend:Friend,completion : @escaping (Error? , Bool) -> ()){
-        let groupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(friend.id)
+        let groupRef = FireService.users.document(group.GroupAdmin.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(friend.email)
         groupRef.delete { (error) in
             if let error = error{
                 completion(error,false)
                 return
             }
-
                 completion(nil,true)
             }
-        
-        
     }
     func deleteFriend(user : FireUser, friend:Friend,completion : @escaping (Error? , Bool) -> ()){
         let groupRef = FireService.users.document(user.email).collection(FireService.firendsString).document(friend.email)
@@ -2176,7 +2210,7 @@ class FireService {
     }
     
     func dissolveGroup(user : FireUser, group:Group,completion : @escaping (Error? , Bool) -> ()){
-        let groupRef = FireService.users.document(user.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(user.id)
+        let groupRef = FireService.users.document(user.email).collection(FireService.groupString).document(group.id).collection("Freinds").document(user.email)
         groupRef.delete { (error) in
             if let error = error{
                 completion(error,false)
@@ -2646,7 +2680,8 @@ class FireService {
     func testActivity (){
         var activities : [Activity] = []
         let content = Content(type: .string, content: "yo")
-        let fireUser = FireUser(userID: "1", userName: "E", userEmail: "E", creationDate: Date())
+        let deviceToken = Constants.deviceTokenKey.load()
+        let fireUser = FireUser(userID: "1", token: deviceToken, userName: "E", userEmail: "E", creationDate: Date())
         let message = Message(content: content, sender: fireUser, timeStamp: Date(), recieved: false)
         let group = Group(GroupAdmin: fireUser, id: "1", name: "BJEHD")
         let activity = Activity(activityType: .GroupChat(group: group))
@@ -2668,6 +2703,79 @@ class FireService {
 enum CodableChatError : String, Error{
     
     case enocdingError = "couldNotEncode"
+}
+// MARK: - PushNotificationHelper
+extension FireService{
+    func pushNotificationToEmail(title : String,subtitle:String,reciever_email: String,completion : @escaping (Bool) -> ()){
+        self.searchDeviceToken(email: reciever_email) { (deviceToken, error) in
+            if(error == nil){
+                if let token = deviceToken{
+                    let pushNotificationSender = PushNotificationSender()
+                    pushNotificationSender.sendPushNotification(to: token, title: title, body: subtitle)
+                    completion(true)
+                }
+                completion(false)
+            }
+            completion(false)
+        }
+    }
+    func pushNotificationGroup(title : String,subtitle:String,group : Group,completion : @escaping (Result<Bool , Error>)-> ()){
+        self.searchGroupDeviceToken(group: group) { (result) in
+            switch result{
+            case .success(let deviceTokenList):
+                print("TokenIDList:\(deviceTokenList)")
+                print("group.id:\(group.id)")
+//                if friends.isEmpty {return}
+                //sends the same message to every person in the group
+                let pushNotificationSender = PushNotificationSender()
+                deviceTokenList.forEach { (token) in
+                   // if(token != "deviceToken".load()){
+                        pushNotificationSender.sendPushNotification(to: token, title: title, body: subtitle)
+                    //}
+                }
+                completion(.success(true))
+            case .failure(let error):
+                completion(.failure(error))
+                return
+            }
+        }
+    }
+    func searchGroupDeviceToken(group : Group,completion : @escaping (Result<[String] , Error>)-> ()){
+        if let currentUser = globalUser{
+            self.getFriendsInGroup(user: currentUser, group: group) { (result) in
+                var deviceTokenList = [String]()
+                switch result{
+                case .success(let friends):
+                    if friends.isEmpty {return}
+                    //sends the same message to every person in the group
+                    var count = friends.count
+                    friends.forEach { (friend) in
+                        self.searchDeviceToken(email: friend.email) { (deviceToken, error) in
+                            if let error = error{
+                                print(error.localizedDescription)
+                            }
+                            
+                                if let deviceToken = deviceToken{
+                                    deviceTokenList.append(deviceToken)
+                                    count -= 1
+                                    if count == 0 {
+                                    completion(.success(deviceTokenList))
+                                    }
+                                }
+                            
+                        }
+                    }
+                    
+                case .failure(let error):
+                    completion(.failure(error))
+                    return
+                }
+            }
+        }
+    }
+    
+    
+    
 }
 extension Encodable {
     

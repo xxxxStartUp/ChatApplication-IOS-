@@ -53,7 +53,8 @@ class SignUpVC: UIViewController {
             //Need to complete validate class and functions in class before using it
             if Validate.isPasswordValid(password) && Validate.isValidEmail(email){
                 let id = UUID().uuidString
-                let user = FireUser(userID: id, userName: name, userEmail: email, creationDate: Date())
+                let deviceToken = Constants.deviceTokenKey.load()
+                let user = FireUser(userID: id, token: deviceToken, userName: name, userEmail: email, creationDate: Date())
                 
                 
                 FireService.sharedInstance.SignUp(email: email, password: password) { (completed) in
@@ -125,6 +126,7 @@ extension UIViewController {
     func checkForUser(){
         FireService.sharedInstance.getCurrentUser { (user) in
             if let email = user?.email{
+                print("email:IS \(email)")
                 
                 FireService.sharedInstance.getCurrentUserData(email: email) { (fireUser, error) in
                     if let fireUser = fireUser{

@@ -17,6 +17,7 @@ struct Constants{
     static let groupchatSBToGroupInfoIdentifier = "GroupInfoIdentifier"
     
     static let groupImagesType = "groupImageType"
+    static let deviceTokenKey = "deviceTokenKey"
     
     
     struct onBoardingPage{
@@ -31,6 +32,7 @@ struct Constants{
     struct mainPage{
         static let groupNameHeader = "groupNameHeader"
         static let timeStamp = "timeStamp"
+        static let messagesubHeader = "messageSubHeadercl"
         
     }
     struct newGroupPage {

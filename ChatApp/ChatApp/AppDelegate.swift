@@ -34,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
          Messaging.messaging().delegate = self
           application.registerUserNotificationSettings(settings)
+          
         }
 
         application.registerForRemoteNotifications()
@@ -69,8 +70,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate : UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("registered successfully")
         Messaging.messaging().apnsToken = deviceToken
+        let token = Messaging.messaging().fcmToken
+        updateFirestorePushTokenIfNeeded(tokens:token)
         print(deviceToken)
+        
+    }
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("failed to register for remote notifs.\(error.localizedDescription)")
+    }
+    
+    func updateFirestorePushTokenIfNeeded(tokens:String?) {
+        if let token = tokens{
+            let data = ["Token":tokens]
+            tokens?.saveWithKey(key: Constants.deviceTokenKey)
+            print("token:\(token)")
+//            FireService.sharedInstance.addCustomData(data: data, user: globalUser!) { (error, completion) in
+//                if let error = error{
+//                    print("error has occured")
+//                }
+//                print("It has been entered in firebase")
+//
+//            }
+        }
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
@@ -176,4 +199,5 @@ extension AppDelegate : MessagingDelegate {
     }
     
 }
+
 

@@ -51,6 +51,15 @@ class SignInVC: UIViewController {
                         FireService.sharedInstance.searchOneUserWithEmail(email: email) { (user, error) in
                             
                             globalUser = user
+                            if let user = user{
+                            FireService.sharedInstance.addCustomData(data: ["deviceToken":Constants.deviceTokenKey.load()], user: user) { (error, completion) in
+                                if let error = error{
+                                    print("error")
+                                }
+                                
+                                
+                            }
+                        }
                         }
 
                         print("Signed In Successfully")

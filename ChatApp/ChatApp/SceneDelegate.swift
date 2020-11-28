@@ -201,7 +201,7 @@ extension SceneDelegate {
         //checks firebase for user
         FireService.sharedInstance.getCurrentUser { (user) in
             if let email = user?.email{
-                
+                print("email:IS \(email)")
                 FireService.sharedInstance.getCurrentUserData(email: email) { (fireUser, error) in
                     if let fireUser = fireUser{
                         globalUser = fireUser

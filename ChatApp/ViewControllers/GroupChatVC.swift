@@ -304,9 +304,22 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
                 
             case .success( let bool):
                 if bool {
+                    FireService.sharedInstance.pushNotificationGroup(title: self.group!.name , subtitle: message.content.content as! String, group: self.group!) { (pushResult) in
+                    switch pushResult{
+                        case .success(true):
+                          print("Push notification happened")
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            fatalError()
+                    case .success(false):
+                            fatalError()
+                    }
+                  
+                    }
                     print("messeage was sent ")
                     self.loadMessages()
                 }
+                
             case .failure(_):
                 fatalError()
             }

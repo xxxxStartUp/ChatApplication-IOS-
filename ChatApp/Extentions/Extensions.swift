@@ -96,6 +96,9 @@ extension UILabel{
                 self.textColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
                 self.font = UIFont(name: "HelveticaNeue-Light", size: 15)
                 self.adjustsFontSizeToFitWidth = true
+            case Constants.mainPage.messagesubHeader:
+                self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 15)
             default:
                 self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
                 self.font = UIFont(name: "HelveticaNeue-Medium", size: 25)
@@ -113,6 +116,9 @@ extension UILabel{
                 self.textColor = #colorLiteral(red: 0.07376488298, green: 0.5370998383, blue: 0.8941982388, alpha: 1)
                 self.font = UIFont(name: "HelveticaNeue-Light", size: 15)
                 self.adjustsFontSizeToFitWidth = true
+            case Constants.mainPage.messagesubHeader:
+                self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                self.font = UIFont(name: "HelveticaNeue-Light", size: 15)
             default:
                 self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
                 self.font = UIFont(name: "HelveticaNeue-Medium", size: 25)
@@ -485,6 +491,20 @@ extension UIView{
     
 
 }
+extension UITextView{
+    func chatTextView(){
+    if Constants.settingsPage.displayModeSwitch == false{
+        
+            self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            self.font = UIFont(name: "HelveticaNeue-Regular", size: 20)
+
+    }
+    else{
+        self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        self.font = UIFont(name: "HelveticaNeue-Regular", size: 20)
+    }
+}
+}
 
 extension UIImageView{
     
@@ -667,6 +687,36 @@ extension UIImage {
     func jpeg(_ quality: JPEGQuality) -> Data? {
         return self.jpegData(compressionQuality: quality.rawValue)
     }
+}
+extension String{
+    func saveWithKey(key:String){
+           let preferences = UserDefaults.standard
+           preferences.set(self, forKey: key)
+           let didSave = preferences.synchronize()
+           if !didSave {
+   //            print("save Failed :\(self) key:\(key)")
+           }else{
+   //            print("saved string :\(self) key:\(key)")
+           }
+       }
+       func loadWithKey(key: String)->String{
+           if let value = UserDefaults.standard.string(forKey: key) {
+   //            print("load string :\(value) key:\(key)")
+               return value
+           }else{
+   //            print("load Failed : key:\(key)")
+               return ""
+           }
+       }
+       func load()->String{
+           if let value = UserDefaults.standard.string(forKey: self) {
+               print("load string :\(value) key:\(self)")
+               return value
+           }else{
+               print("load Failed : key:\(self)")
+               return ""
+           }
+       }
 }
 
 

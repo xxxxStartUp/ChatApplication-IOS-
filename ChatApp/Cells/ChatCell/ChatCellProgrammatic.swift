@@ -34,10 +34,12 @@ class MessgaeCell: UITableViewCell {
         nameLabel.chatPageLabel(type: Constants.chatPage.senderNameLabel)
         timeLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
         timeLabel.chatPageLabel(type: Constants.chatPage.messageTimeStamp)
+        messageLabel.chatTextView()
 
             
             if  message.sender.email != globalUser!.email{
                 messageLabel.text = (message.content.content as! String).trimmingCharacters(in: .whitespacesAndNewlines)
+                messageLabel.font = UIFont(name: "HelveticaNeue-Regular", size: 12)
                 leadingContstraints?.isActive = true
                 tarilingConstraints?.isActive = false
                 nameLabel.textAlignment = .left
@@ -46,6 +48,7 @@ class MessgaeCell: UITableViewCell {
                 
             }else{
                 messageLabel.text = (message.content.content as! String).trimmingCharacters(in: .whitespacesAndNewlines)
+                messageLabel.font = UIFont(name: "HelveticaNeue-Regular", size: 12)
                 leadingContstraints?.isActive = false
                 tarilingConstraints?.isActive = true
                 nameLabel.textAlignment = .right
@@ -170,6 +173,7 @@ class MessgaeCell: UITableViewCell {
         let textView = UITextView()
         //label.backgroundColor = .green
         textView.text =  ""
+        textView.font = UIFont(name: "HelveticaNeue-Regular", size: 16)
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isScrollEnabled = false
         textView.backgroundColor = .clear

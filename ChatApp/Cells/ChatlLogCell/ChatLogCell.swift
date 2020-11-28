@@ -19,9 +19,12 @@ class ChatLogCell: UITableViewCell {
     
     func updateViews(indexPath: Int){
         chatNameLabel.chatLogPageLabels(type: Constants.mainPage.groupNameHeader)
+        
         chatDateLabel.chatLogPageLabels(type: Constants.mainPage.timeStamp)
+        lastMessage.chatLogPageLabels(type: Constants.mainPage.messagesubHeader)
 //        chatNameLabel.text = "Chat \(indexPath)"
         chatDateLabel.text = "9/1\(indexPath)/20"
+        
     
         profileImageview.chatLogImageView()
         
