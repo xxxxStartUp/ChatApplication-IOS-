@@ -308,6 +308,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
                     switch pushResult{
                         case .success(true):
                           print("Push notification happened")
+                        // create a collection of recent messages for the user
                         case .failure(let error):
                             print(error.localizedDescription)
                             fatalError()

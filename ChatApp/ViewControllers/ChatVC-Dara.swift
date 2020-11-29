@@ -294,7 +294,25 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
             if let error = error{
                 fatalError()
             }
-            if success { self.loadMessages()}
+            if success {
+                FireService.sharedInstance.pushNotificationFriend(title: globalUser!.email, subtitle: message.content.content as! String, friends: [self.r!.email]) { (pushResult) in
+                switch pushResult{
+                    case .success(true):
+                      print("Push notification happened")
+                    // create a collection of recent messages for the user
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        fatalError()
+               
+                case .success(false):
+                    fatalError()
+                }
+            
+                }
+                
+                self.loadMessages()
+                
+            }
         }
         
     }

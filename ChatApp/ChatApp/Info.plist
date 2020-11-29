@@ -72,7 +72,7 @@
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
-	<string>WelcomeScreen</string>
+	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>SignUpSB</string>
 	<key>UIRequiredDeviceCapabilities</key>

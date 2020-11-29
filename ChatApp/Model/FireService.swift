@@ -1014,7 +1014,7 @@ class FireService {
         let messageDictionary = self.changeMessageToDictionary(message)
         
         
-        newSendRef.setData(messageDictionary) { (error) in
+            newSendRef.setData(messageDictionary) { (error) in
             if let error = error {
                 completion(false, error)
             }
@@ -1027,6 +1027,23 @@ class FireService {
             }
         }
         
+    }
+    
+    //Updating this to send
+    func notifications(User : FireUser, message : Message , freindEmail : String ,completion : @escaping (Bool , Error?) -> ()){
+        
+//        let newSendRef = FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document("\(message.id)")
+        
+        let newReceivedRef = FireService.users.document(freindEmail).collection("Notifications").document(User.email).collection("messages").document("\(message.id)")
+        
+        let messageDictionary = self.changeMessageToDictionary(message)
+            
+            newReceivedRef.setData(messageDictionary) { (error) in
+                if let error = error {
+                    completion(false, error)
+                }
+                completion(true, nil)
+            }
     }
     
     
@@ -2741,6 +2758,27 @@ extension FireService{
             }
         }
     }
+    func pushNotificationFriend(title : String,subtitle:String,friends : [String],completion : @escaping (Result<Bool , Error>)-> ()){
+        self.searchFriendListDeviceToken(friends: friends) { (result) in
+            switch result{
+            case .success(let deviceTokenList):
+                print("TokenIDList:\(deviceTokenList)")
+               
+//                if friends.isEmpty {return}
+                //sends the same message to every person in the group
+                let pushNotificationSender = PushNotificationSender()
+                deviceTokenList.forEach { (token) in
+                   // if(token != "deviceToken".load()){
+                        pushNotificationSender.sendPushNotification(to: token, title: title, body: subtitle)
+                    //}
+                }
+                completion(.success(true))
+            case .failure(let error):
+                completion(.failure(error))
+                return
+            }
+        }
+    }
     func searchGroupDeviceToken(group : Group,completion : @escaping (Result<[String] , Error>)-> ()){
         if let currentUser = globalUser{
             self.getFriendsInGroup(user: currentUser, group: group) { (result) in
@@ -2774,9 +2812,31 @@ extension FireService{
             }
         }
     }
+    func searchFriendListDeviceToken(friends : [String],completion : @escaping (Result<[String] , Error>)-> ()){
+        if let currentUser = globalUser{
+                var deviceTokenList = [String]()
+                if friends.isEmpty {return}
+                    //sends the same message to every person in the group
+                var count = friends.count
+                friends.forEach { (friend) in
+                        self.searchDeviceToken(email: friend) { (deviceToken, error) in
+                            if let error = error{
+                                completion(.failure(error))
+                            }
+                                if let deviceToken = deviceToken{
+                                    deviceTokenList.append(deviceToken)
+                                    count -= 1
+                                    if count == 0 {
+                                        completion(.success(deviceTokenList))
+                                    }
+                                }
+                            
+                        }
+                    }
+                }
+    }
     
-    
-    
+        
 }
 extension Encodable {
     

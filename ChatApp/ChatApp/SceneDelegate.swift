@@ -198,6 +198,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 extension SceneDelegate {
     
     func checkForUser(){
+        self.window?.removeFromSuperview()
         //checks firebase for user
         FireService.sharedInstance.getCurrentUser { (user) in
             if let email = user?.email{

@@ -25,7 +25,7 @@ class SelectFriendVC: UIViewController,MFMailComposeViewControllerDelegate{
     var group:Group?
 
     let navBarButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-
+    var url:URL? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -322,7 +322,7 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
                 composer.mailComposeDelegate = self
                 composer.setToRecipients(self.friendListEmail)
                 composer.setSubject("\(globalUser!.name) has invited you to join a group on the Soluchat App")
-
+                self.url = url
                 composer.setMessageBody("Hello," + "\n" + "\n\(globalUser!.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", isHTML: false)
 
                 self.present(composer, animated: true, completion: nil)
@@ -355,8 +355,34 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                 // show the alert
                 self.present(alert, animated: true, completion: nil)
-                
-            }
+                if let url = self.url{
+                let message = Message(content:Content(type: .string, content: "\(globalUser!.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\(url)") , sender: globalUser!, timeStamp: Date(), recieved: false)
+                FireService.sharedInstance.pushNotificationFriend(title: "New Friend Request from \(globalUser!.email)" , subtitle: "Hello," + "\n" + "\n\(globalUser!.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", friends: self.friendListEmail) { (pushResult) in
+                switch pushResult{
+                    case .success(true):
+                      print("Push notification happened")
+                        self.friendListEmail.forEach { (friend) in
+                         
+                            FireService.sharedInstance.notifications(User: globalUser!, message: message, freindEmail: friend) { (completion, error) in
+                                if let error = error{
+                                    print(error.localizedDescription)
+                                    fatalError()
+                                }
+                        
+                            }
+                        }
+                    
+                    // create a collection of recent messages for the user
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        fatalError()
+               
+                case .success(false):
+                    fatalError()
+                }
+            
+                }
+                }}
         case .cancelled:
             
             print("The cancel button has been clicked")
