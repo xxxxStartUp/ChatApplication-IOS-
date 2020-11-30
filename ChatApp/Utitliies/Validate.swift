@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 
 class Validate {
@@ -34,4 +35,87 @@ class Validate {
     
     
     
+}
+// MARK :- Optional
+extension Optional{
+    var toFireUser : FireUser{
+        if let currentUser = self as? FireUser{
+            return currentUser
+        }else{
+            var user_id = ""
+            var user_name = ""
+            var user_email = ""
+            var user_token = ""
+            var user_creationDate = Date()
+            if let data = self as? [String:Any]{
+                if let id = data["id"] as? String{
+                    user_id = id
+                }
+                if let name = data["name"] as? String{
+                    user_name = name
+                }
+                if let email = data["email"] as? String{
+                    user_email = email
+                }
+                if let deviceToken = data["deviceToken"] as? String{
+                    user_token = deviceToken
+                }
+                if let creationDate = data["creationDate"] as? Date{
+                    user_creationDate = creationDate
+                }
+                return FireUser.init(userID: user_id, token: user_token, userName: user_name, userEmail: user_email, creationDate: user_creationDate)
+            }
+            return FireUser.init(userID: user_id, token: user_token, userName: user_name, userEmail: user_email, creationDate: user_creationDate)
+        }
+    }
+}
+
+extension UIViewController{
+    func openURLInApp(request: String){
+        let shareString = "\(request)"
+        let url = URL(string: shareString)!
+        let svc = SFSafariViewController(url: url)
+        self.present(svc, animated: true, completion: nil)
+    }
+}
+extension UIViewController{ //keyboardHandler
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    //Dismiss Keyboard
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    @IBAction func KeyboardDismiss(_ sender: Any) {
+        dismissKeyboard()
+    }
+}
+
+extension Date{
+    func DateConvert(_ newFormat:String)-> String{
+        let formatter = DateFormatter()
+//        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.dateFormat = newFormat
+        return formatter.string(from: self)
+    }
+    func next(day:Int)->Date{
+        var dayComponent    = DateComponents()
+        dayComponent.day    = day
+        let theCalendar     = Calendar.current
+        let nextDate        = theCalendar.date(byAdding: dayComponent, to: Date())
+        return nextDate!
+    }
+    func past(day:Int)->Date{
+        var pastCount = day
+        if(pastCount>0){
+            pastCount = day * -1
+        }
+        var dayComponent    = DateComponents()
+        dayComponent.day    = pastCount
+        let theCalendar     = Calendar.current
+        let nextDate        = theCalendar.date(byAdding: dayComponent, to: Date())
+        return nextDate!
+    }
 }

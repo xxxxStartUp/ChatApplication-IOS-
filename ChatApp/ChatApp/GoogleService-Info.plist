@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>495828070629-7kddqfdk7cdbejt54ral5a3vak9qlmfm.apps.googleusercontent.com</string>
+	<string>495828070629-6ue2hg0s63r6ntls15ipjre15ioleqto.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.495828070629-7kddqfdk7cdbejt54ral5a3vak9qlmfm</string>
+	<string>com.googleusercontent.apps.495828070629-6ue2hg0s63r6ntls15ipjre15ioleqto</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAT9prAeUc4sdPg58w38A-qCGseHbcEx_0</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,23 +13,23 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.ebukaebunam.ChatApp</string>
+	<string>com.cruzv35.ChatApp</string>
 	<key>PROJECT_ID</key>
 	<string>chat-app-3aaf8</string>
 	<key>STORAGE_BUCKET</key>
 	<string>chat-app-3aaf8.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:495828070629:ios:e5afaced0ff046c64b240c</string>
+	<string>1:495828070629:ios:ece2dc701e502d5f4b240c</string>
 	<key>DATABASE_URL</key>
 	<string>https://chat-app-3aaf8.firebaseio.com</string>
 </dict>

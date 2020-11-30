@@ -1029,22 +1029,116 @@ class FireService {
         
     }
     
-    //Updating this to send
-    func notifications(User : FireUser, message : Message , freindEmail : String ,completion : @escaping (Bool , Error?) -> ()){
-        
-//        let newSendRef = FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document("\(message.id)")
-        
-        let newReceivedRef = FireService.users.document(freindEmail).collection("Notifications").document(User.email).collection("messages").document("\(message.id)")
-        
-        let messageDictionary = self.changeMessageToDictionary(message)
-            
-            newReceivedRef.setData(messageDictionary) { (error) in
-                if let error = error {
-                    completion(false, error)
-                }
-                completion(true, nil)
-            }
+    enum NotificationType {
+        case FriendRequest
+        case GroupInvitation
+        case Misc
     }
+    //Updating this to send
+    func notificationDelete(_ id:String,completion : @escaping (Bool , Error?) -> ()){
+        print("notificationDelete")
+        FireService.users.document(globalUser.toFireUser.email).collection("Notifications").document(id).delete(){ (error) in
+            if error != nil{
+                print("notificationDelete ERROR")
+                completion(false,error)
+            }
+            print("notificationDelete SUCCESS")
+            completion(true,nil)
+        }
+    }
+    func notification(_ notificationType: NotificationType,_ sender : FireUser,_ dynamicLink : String, _ friendEmail:String,_ notificationTitle:String,_ notificationSubtitle:String,completion : @escaping (Bool , Error?) -> ()){
+        print("notification log")
+        let newNotificationRef = FireService.users.document(friendEmail).collection("Notifications")
+        
+        var photoUrl = ""
+        let uuid = NSUUID().uuidString
+        var notificationKey = ""
+        switch notificationType{
+            case .FriendRequest:
+                notificationKey = "friend_request"
+                FireService.sharedInstance.getProfilePicture(user: globalUser.toFireUser) {  (result) in
+                    switch result{
+                    case .success(let url):
+                        photoUrl = url.absoluteString
+                    case .failure(_):
+                        print("failed to set image url")
+                    }
+                }
+                break
+            case .GroupInvitation:
+                notificationKey = "group_request"
+                FireService.sharedInstance.getProfilePicture(user: globalUser.toFireUser) {  (result) in
+                    switch result{
+                    case .success(let url):
+                        photoUrl = url.absoluteString
+                    case .failure(_):
+                        print("failed to set image url")
+                    }
+                }
+                break
+            case .Misc:
+                notificationKey = "misc"
+                break
+        }
+        let post : [String:Any] = ["id": uuid,
+                   "notification_type": notificationKey,
+                   "user_id": sender.id,
+                    "user_name": sender.name,
+                    "user_email": sender.email,
+                    "dynamicLink": dynamicLink,
+                    "title": notificationTitle,
+                    "subtitle": notificationSubtitle,
+                    "photo_url": photoUrl,
+                    "timeStamp": Date()]
+        newNotificationRef.addDocument(data: post){ (error) in
+            if let error = error {
+                completion(false, error)
+            }
+            completion(true, nil)
+        }
+    }
+    func getNotificationLog(completion : @escaping ([NotificationModel]? , Error?) -> ()){
+        var data : [String : Any] = [:]
+        let query = FireService.users.document(globalUser.toFireUser.email).collection("Notifications").order(by: "timeStamp", descending: true)
+        
+        query.addSnapshotListener { (snapshot, error) in
+            if let error = error{
+                completion(nil , error)
+                return
+            }
+            guard let documents = snapshot?.documents else{return}
+            var count = documents.count
+            if count != 0 {
+                var notificationList : [NotificationModel] = [NotificationModel]()
+                for document in documents{
+                    data = document.data()
+                    
+                    let post = NotificationModel.init(((data["id"] as? String) != nil) ? data["id"] as! String : "",
+                                           ((data["notification_type"] as? String) != nil) ? data["notification_type"] as! String : "",
+                                           ((data["user_id"] as? String) != nil) ? data["user_id"] as! String : "",
+                                           ((data["user_name"] as? String) != nil) ? data["user_name"] as! String : "",
+                                           ((data["user_email"] as? String) != nil) ? data["user_email"] as! String : "",
+                                           ((data["dynamicLink"] as? String) != nil) ? data["dynamicLink"] as! String : "",
+                                           ((data["title"] as? String) != nil) ? data["title"] as! String : "",
+                                           ((data["subtitle"] as? String) != nil) ? data["subtitle"] as! String : "",
+                                           ((data["photo_url"] as? String) != nil) ? data["photo_url"] as! String : "",
+                                           ((data["timeStamp"] as? Date) != nil) ? data["timeStamp"] as! Date : Date())
+                    notificationList.append(post)
+                    count -= 1
+                    print("count -= 1 =\(count)")
+                    if(count == 0){
+                        completion(notificationList, nil)
+                    }
+                }
+            }else if count == 0 {
+                print("no notification log")
+            }else{
+                print("notication log \(count)")
+            }
+        }
+    }
+    
+    
     
     
     /// Retrieves the profile picture of a user.
@@ -1509,12 +1603,7 @@ class FireService {
             }
             
             completion(friendList , nil)
-            
-            
         }
-        
-        
-        
     }
     func changeFriendToDictionary( _ friend : Friend) -> [String:Any]{
         
@@ -1688,7 +1777,8 @@ class FireService {
                 
             }
             if count == 0 {
-                fatalError("email does not exists")
+                print("email does not exists")
+//                fatalError("email does not exists")
             }
                 
             else{
@@ -1771,13 +1861,7 @@ class FireService {
                 fatalError("This shouldnt be happening")
                 
             }
-            
-            
-            
-            
-            
         }
-        
     }
     
     

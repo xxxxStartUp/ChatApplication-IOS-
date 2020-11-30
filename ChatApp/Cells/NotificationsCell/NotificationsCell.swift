@@ -14,7 +14,6 @@ class NotificationsCell: UITableViewCell {
     @IBOutlet weak var notificationMarker: UIImageView!
     
     func updateViews(){
-        
         timeStampLabel.text = "10/22/1996"
         timeStampLabel.notificationsPageLabels(type: Constants.notificationPage.timeStampHeader)
         notificationMessageLabel.notificationsPageLabels(type:Constants.notificationPage.notificationMessage)

@@ -105,6 +105,7 @@
 		CBD5987D24986041000CBEBD /* ChatAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5987C24986041000CBEBD /* ChatAppUITests.swift */; };
 		CBF45C7F24C5117000E5AFA3 /* GroupInfoSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBF45C7E24C5117000E5AFA3 /* GroupInfoSB.storyboard */; };
 		CBF5DCAD257194CB00950276 /* PushNotificationSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5DCAC257194CB00950276 /* PushNotificationSender.swift */; };
+		F2248CA825747690009A29A2 /* NotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2248CA725747690009A29A2 /* NotificationModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -236,6 +237,7 @@
 		CBF45C7E24C5117000E5AFA3 /* GroupInfoSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GroupInfoSB.storyboard; sourceTree = "<group>"; };
 		CBF5DCAC257194CB00950276 /* PushNotificationSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSender.swift; sourceTree = "<group>"; };
 		D36193F093AA30834822E052 /* Pods-ChatApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp.debug.xcconfig"; path = "Target Support Files/Pods-ChatApp/Pods-ChatApp.debug.xcconfig"; sourceTree = "<group>"; };
+		F2248CA725747690009A29A2 /* NotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -296,6 +298,7 @@
 				43BBB44524A04DF20024F449 /* FireUser.swift */,
 				43BBB425249B0EE70024F449 /* Message.swift */,
 				43BBB427249B13EA0024F449 /* User.swift */,
+				F2248CA725747690009A29A2 /* NotificationModel.swift */,
 				43BD8A8D24A81C4400749E2A /* Friend.swift */,
 				43BBB45A24A19CE20024F449 /* Chat.swift */,
 				43BD8A8B24A81B6200749E2A /* Group.swift */,
@@ -924,6 +927,7 @@
 				43C6C99D24B0291D003DB77E /* ChatError.swift in Sources */,
 				43C6C9C824B58B71003DB77E /* NotificationsCell.swift in Sources */,
 				436213E824B647F900304FB3 /* ChatVC-Dara.swift in Sources */,
+				F2248CA825747690009A29A2 /* NotificationModel.swift in Sources */,
 				CB584D2424C524AC00F863AF /* GroupInfoVC.swift in Sources */,
 				43A7480924BB811400281A07 /* AppSettingsCell.swift in Sources */,
 				43BD8A9324AA6CFE00749E2A /* Global.swift in Sources */,
@@ -1105,14 +1109,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_TEAM = 9BEUBEN9L7;
+				DEVELOPMENT_TEAM = A4Z8SDLBHY;
 				INFOPLIST_FILE = ChatApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.DaramfonAkpan.ChatApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cruzv35.ChatApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1129,14 +1133,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_TEAM = 9BEUBEN9L7;
+				DEVELOPMENT_TEAM = A4Z8SDLBHY;
 				INFOPLIST_FILE = ChatApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.DaramfonAkpan.ChatApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cruzv35.ChatApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

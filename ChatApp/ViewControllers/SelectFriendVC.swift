@@ -297,14 +297,23 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
                 self.present(controller, animated: true, completion: nil)
             }else{
                 if let group = group{
-                FireService.sharedInstance.getGroupURL(user: globalUser!, group:group) { (url, completion, error) in
-                    if let error = error{
-                        print(error.localizedDescription)
+                    FireService.sharedInstance.getGroupURL(user: globalUser!, group:group) { (url, completion, error) in
+                        if let error = error{
+                                print(error.localizedDescription)
+                        }
+                        if let url = url, let finalURL = URL(string: url){
+                            for friend in self.friendList{
+                                //added a notification Log
+                                FireService.sharedInstance.notification(.GroupInvitation, globalUser.toFireUser, url, friend.email, "New Group Invitaion", "\(globalUser.toFireUser.name) has invited you to join a groupchat.") { (completion, error) in
+                                    if let error = error{
+                                        print(error.localizedDescription)
+                                        fatalError()
+                                    }
+                                }
+                            }
+                            self.composeMail(url: finalURL)
+                        }
                     }
-                    if let url = url, let finalURL = URL(string: url){
-                        self.composeMail(url: finalURL)
-                }
-                }
                 }
             }
         }
@@ -363,13 +372,12 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
                       print("Push notification happened")
                         self.friendListEmail.forEach { (friend) in
                          
-                            FireService.sharedInstance.notifications(User: globalUser!, message: message, freindEmail: friend) { (completion, error) in
-                                if let error = error{
-                                    print(error.localizedDescription)
-                                    fatalError()
-                                }
-                        
-                            }
+//                            FireService.sharedInstance.notifications(User: globalUser!, message: message, freindEmail: friend) { (completion, error) in
+//                                if let error = error{
+//                                    print(error.localizedDescription)
+//                                    fatalError()
+//                                }
+//                            }
                         }
                     
                     // create a collection of recent messages for the user
