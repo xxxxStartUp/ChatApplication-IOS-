@@ -1033,7 +1033,9 @@ class FireService {
     func notifications(User : FireUser, message : Message , freindEmail : String ,completion : @escaping (Bool , Error?) -> ()){
         
 //        let newSendRef = FireService.users.document(User.email).collection(FireService.firendsString).document(freind.email).collection("messages").document("\(message.id)")
-        
+        let data = ["id" : User.id,
+                    "name":User.name,
+                    "email":User.email]
         let newReceivedRef = FireService.users.document(freindEmail).collection("Notifications").document(User.email).collection("messages").document("\(message.id)")
         
         let messageDictionary = self.changeMessageToDictionary(message)
@@ -1041,9 +1043,45 @@ class FireService {
             newReceivedRef.setData(messageDictionary) { (error) in
                 if let error = error {
                     completion(false, error)
+                    
                 }
+                FireService.users.document(freindEmail).collection("Notifications").document(User.email).setData(data, merge: true)
                 completion(true, nil)
             }
+    }
+    /// Load all messages with  notifications
+    /// - Parameters:
+    ///   - user: user object
+    ///   - group: group object
+    ///   - completion: complets with list of messages
+    /// - Returns: None
+    func loadMessagesFromNotifications(user : FireUser, friend: Friend ,completion : @escaping ([Message]? , Error?) -> ()){
+        //refrence to get list of documents that are actaully messages
+        let ref = FireService.users.document(user.email).collection("Notifications")
+        
+        //listening for new messages
+        ref.addSnapshotListener{ (snapshot, error) in
+            var messages : [Message] = []
+            if let error = error {
+                completion(nil ,error)
+            }
+            //unwarps documents
+            guard let documents = snapshot?.documents else {
+                print("no messages")
+                completion(messages , nil)
+                return
+            }
+            
+            documents.forEach { (document) in
+                let message = self.changeDictionaryToMessage(document.data())
+                messages.append(message)
+                print(message.content.content as! String , "this is from loadmessageswithgroup",message.content.type.rawValue)
+                if messages.count == documents.count {
+                    completion(messages , nil)
+                    return
+                }
+            }
+        }
     }
     
     

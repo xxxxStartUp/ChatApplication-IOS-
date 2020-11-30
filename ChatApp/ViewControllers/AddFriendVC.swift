@@ -18,8 +18,9 @@ class AddFriendVC : UIViewController {
     @IBOutlet weak var sendInviteButton: UIButton!
     @IBOutlet weak var addContactsHeader: UILabel!
     let dynamicLinkDomain = "https://soluchat.page.link"
-    var shareURL:URL? = nil
+    var shareURL:URL? 
     var shareURLString:String?
+    var friendEmail:String?
    
     override func viewDidLoad() {
         navigationItem.largeTitleDisplayMode = .never
@@ -125,6 +126,8 @@ class AddFriendVC : UIViewController {
                 fatalError("cannot add friend, deoes not exsist")
             }else{
                 let email1 = email.lowercased()
+                self.friendEmail = email1
+                
                 self.createDynamicLink(user: globalUser!, friendEmail: email1) { (completion) in
                     if completion{
                         print("Completed showing composer")
@@ -260,6 +263,27 @@ extension AddFriendVC:MFMailComposeViewControllerDelegate{
                 // show the alert
                 self.present(alert, animated: true, completion: nil)
                  self.goToTab()
+
+                if let friendEmail = self.friendEmail,let shareURL = self.shareURL{
+                let message = Message(content:Content(type: .string, content: "\(globalUser!.name) has invited you be a friend. Use the link below to accept the request and start chatting!"  + "\n" + "\(shareURL)") , sender: globalUser!, timeStamp: Date(), recieved: false)
+                    FireService.sharedInstance.pushNotificationFriend(title: "New Group Invitation from \(globalUser!.email)" , subtitle: "Hello," + "\n" + "\n\(globalUser!.name) has invited you to be a friend. Use the link below to join the group and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(shareURL)", friends: [friendEmail]) { (pushResult) in
+                    switch pushResult{
+                        case .success(true):
+                          print("Push notification happened")
+                            self.sendFriendRequestNotificationToFB(friends: [friendEmail], message: message)
+                        
+                        // create a collection of recent messages for the user
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            fatalError()
+                   
+                    case .success(false):
+                        fatalError()
+                    }
+                
+                    }
+                }
+                
             }
         case .cancelled:
             self.goToTab()
@@ -281,4 +305,21 @@ extension AddFriendVC:MFMailComposeViewControllerDelegate{
     
 
 
+}
+
+extension AddFriendVC{
+
+func sendFriendRequestNotificationToFB(friends:[String],message:Message){
+    print("Push notification happened")
+      friends.forEach { (friend) in
+       
+          FireService.sharedInstance.notifications(User: globalUser!, message: message, freindEmail: friend) { (completion, error) in
+              if let error = error{
+                  print(error.localizedDescription)
+                  fatalError()
+              }
+      
+          }
+      }
+}
 }

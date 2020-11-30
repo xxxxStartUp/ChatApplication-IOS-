@@ -357,20 +357,11 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
                 self.present(alert, animated: true, completion: nil)
                 if let url = self.url{
                 let message = Message(content:Content(type: .string, content: "\(globalUser!.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\(url)") , sender: globalUser!, timeStamp: Date(), recieved: false)
-                FireService.sharedInstance.pushNotificationFriend(title: "New Friend Request from \(globalUser!.email)" , subtitle: "Hello," + "\n" + "\n\(globalUser!.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", friends: self.friendListEmail) { (pushResult) in
+                FireService.sharedInstance.pushNotificationFriend(title: "New Group Invitation from \(globalUser!.email)" , subtitle: "Hello," + "\n" + "\n\(globalUser!.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", friends: self.friendListEmail) { (pushResult) in
                 switch pushResult{
                     case .success(true):
                       print("Push notification happened")
-                        self.friendListEmail.forEach { (friend) in
-                         
-                            FireService.sharedInstance.notifications(User: globalUser!, message: message, freindEmail: friend) { (completion, error) in
-                                if let error = error{
-                                    print(error.localizedDescription)
-                                    fatalError()
-                                }
-                        
-                            }
-                        }
+                        self.sendFriendRequestNotificationToFB(friends: self.friendListEmail, message: message)
                     
                     // create a collection of recent messages for the user
                     case .failure(let error):
@@ -403,7 +394,22 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
 
 }
 
-
+extension SelectFriendVC{
+    
+    func sendFriendRequestNotificationToFB(friends:[String],message:Message){
+        print("Push notification happened")
+          friends.forEach { (friend) in
+           
+              FireService.sharedInstance.notifications(User: globalUser!, message: message, freindEmail: friend) { (completion, error) in
+                  if let error = error{
+                      print(error.localizedDescription)
+                      fatalError()
+                  }
+          
+              }
+          }
+    }
+}
 
 
 
