@@ -1883,10 +1883,15 @@ class FireService {
      // Need to add a function to let user know there was an error
      */
     
-    func signOut() -> Void {
+    func signOut(user:FireUser) -> Void {
         do {
-            
+            deleteData(user: user, data: "deviceToken") { (error, completion) in
+                if let error = error{
+                    print("Error \(error.localizedDescription)")
+                }
+            }
             try Auth.auth().signOut()
+            
             
         } catch let signOutError as NSError {
             print ("Error signing out: %@", signOutError)
@@ -1902,7 +1907,6 @@ class FireService {
                     "email":user.email,
                     "timecreated":user.timeCreated,"deviceToken":user.deviceToken] as [String : Any]
         FireService.users.document(user.email).setData(data, merge: true) { (error) in
-            
             if let error = error{
                 completion(error , false)
                 return
@@ -1911,6 +1915,15 @@ class FireService {
             completion(nil , true)
         }
         
+    }
+    func deleteData(user:FireUser?,data:String, completion: @escaping (Error? , Bool) -> ()){
+        if let user = user{
+        FireService.users.document(user.email).updateData([data:FieldValue.delete()]) { (error) in
+            if let error = error{
+                completion(error,true)
+            }
+        }
+        }
     }
     
     func addCustomData(data : [String : Any] ,user : FireUser ,  completion : @escaping (Error? , Bool) -> ()) {

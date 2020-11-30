@@ -294,7 +294,7 @@ extension SettingsVC{
         return view
     }
    @objc func handlesSignoutTapped(){
-        FireService.sharedInstance.signOut()
+    FireService.sharedInstance.signOut(user:globalUser!)
         globalUser = nil
         let vc = UIStoryboard(name: "SignUpSB", bundle: nil).instantiateInitialViewController()!
         vc.modalPresentationStyle = .fullScreen
