@@ -74,8 +74,8 @@ extension UIViewController{
     func openURLInApp(request: String){
         let shareString = "\(request)"
         let url = URL(string: shareString)!
-        let svc = SFSafariViewController(url: url)
-        self.present(svc, animated: true, completion: nil)
+       // let svc = SFSafariViewController(url: url)
+       // self.present(svc, animated: true, completion: nil)
     }
 }
 extension UIViewController{ //keyboardHandler
