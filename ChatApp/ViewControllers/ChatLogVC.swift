@@ -11,6 +11,7 @@ import UIKit
 class ChatLogVC: UIViewController {
     
     
+    
     @IBOutlet weak var chatLogTableview: UITableView!
     
     
@@ -40,8 +41,7 @@ class ChatLogVC: UIViewController {
         loadActivity()
         
     }
-    
-    
+        
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -52,7 +52,9 @@ class ChatLogVC: UIViewController {
     
     
     func loadActivity(){
-        FireService.sharedInstance.loadAllActivity(User: globalUser!) { (activities, error) in
+        let email = globalUser.toFireUser.email
+        print("LoadActivity \(email)")
+        FireService.sharedInstance.loadAllActivity(User: globalUser.toFireUser) { (activities, error) in
             self.activities.removeAll()
             guard let loadedactivities = activities else{fatalError()}
             print(loadedactivities.count , "count of activities")
@@ -64,18 +66,16 @@ class ChatLogVC: UIViewController {
             DispatchQueue.main.async {
                 self.chatLogTableview.reloadData()
             }
-            
         }
-        
     }
     
     func setUpfakeActivity(){
         let deviceToken = Constants.deviceTokenKey.load()
-        let activity3 = Activity(activityType: .GroupChat(group: Group(GroupAdmin: FireUser(userID: "1", token: deviceToken, userName: "dara", userEmail: "daraegb@gmail.com", creationDate: Date()), id: "1", name: "Group1")))
+        let activity3 = Activity(activityType: .GroupChat(group: Group(GroupAdmin: FireUser(userID: "1", token: deviceToken, userName: "dara", userEmail: "daraegb@gmail.com",profileImageUrl: "",status: "" , creationDate: Date()), id: "1", name: "Group1")))
         
         let activity1 = Activity(activityType: .FriendChat(friend: Friend(email: "ebukafake@gmail.com", username: "ebukaegb", id: "1")))
         let activity2 = Activity(activityType: .FriendChat(friend: Friend(email: "ebukadoublefake@gmail.com", username: "ebukaegb", id: "1")))
-        let activity4 = Activity(activityType: .GroupChat(group: Group(GroupAdmin: FireUser(userID: "1", token: deviceToken, userName: "ramzi", userEmail: "ramzi@gmail.com", creationDate: Date()), id: "1", name: "Group2")))
+        let activity4 = Activity(activityType: .GroupChat(group: Group(GroupAdmin: FireUser(userID: "1", token: deviceToken, userName: "ramzi", userEmail: "ramzi@gmail.com",profileImageUrl: "",status: "" , creationDate: Date()), id: "1", name: "Group2")))
         
         activities.append(activity1)
         activities.append(activity2)
@@ -111,6 +111,7 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource,UISearchBarDeleg
             cell.activity = filteredActivity[indexPath.row]
             print("This is FilteredfriendsList\(filteredActivity)")
             cell.backgroundColor = .clear
+            cell.profileImageview.chatLogImageView()
             return cell
         }
         else{
@@ -118,6 +119,7 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource,UISearchBarDeleg
             cell.activity = activities[indexPath.row]
             print("This is friendsList\(activities)")
             cell.backgroundColor = .clear
+            cell.profileImageview.chatLogImageView()
             return cell
         }
 //        cell.updateViews(indexPath: indexPath.row+1)
@@ -127,6 +129,7 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource,UISearchBarDeleg
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("didselect \(indexPath.row)")
         if !searching{
         let activity = activities[indexPath.row]
         
@@ -202,9 +205,6 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource,UISearchBarDeleg
             self.chatLogTableview.darkmodeBackground()
             self.navigationBarBackgroundHandler()
             self.view.darkmodeBackground()
-            
-            
-            
         }
         
     }

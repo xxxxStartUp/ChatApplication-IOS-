@@ -49,6 +49,13 @@ class AddFriendVC : UIViewController {
         }
         
     }
+    @IBAction func openCameraApp(_ sender: Any) {
+        let scannerView = ScannerViewController()
+        scannerView.pastViewController = self
+        self.present(scannerView, animated: true) {
+            print("Success")
+        }
+    }
     
     func dynamicLinkSetup(){
         var component = URLComponents()
@@ -125,7 +132,7 @@ class AddFriendVC : UIViewController {
                 fatalError("cannot add friend, deoes not exsist")
             }else{
                 let email1 = email.lowercased()
-                self.createDynamicLink(user: globalUser!, friendEmail: email1) { (completion) in
+                self.createDynamicLink(user: globalUser.toFireUser, friendEmail: email1) { (completion) in
                     if completion{
                         print("Completed showing composer")
                     }
@@ -171,7 +178,8 @@ extension AddFriendVC:MFMailComposeViewControllerDelegate{
         components.path = "/Contacts"
         if let user = globalUser{
         let requestSenderEmail = URLQueryItem(name: "requestSenderEmail", value: user.email)
-        let requestReceiverEmail = URLQueryItem(name: "requestReceiverEmail", value: friendEmail)
+//            let requestReceiverEmail = URLQueryItem(name: "requestReceiverEmail", value: friendEmail)
+            let requestReceiverEmail = URLQueryItem(name: "requestReceiverEmail", value: "")
         components.queryItems = [requestSenderEmail,requestReceiverEmail]
         
         guard let linkParameter = components.url else {return}
@@ -195,34 +203,32 @@ extension AddFriendVC:MFMailComposeViewControllerDelegate{
         guard let longURL = shareLink.url else{return}
         print("This is the dynamiclink is \(longURL.absoluteString)")
         
-        shareLink.shorten { (url, warnings, error) in
-            if let error = error {
-                print("Shortening Link Error:\(error)")
-            }
-            if let warnings = warnings{
-                for warning in warnings{
-                    print("FDL Warning:\(warning)")
+            shareLink.shorten { (url, warnings, error) in
+                if let error = error {
+                    print("Shortening Link Error:\(error)")
                 }
-            }
-            guard let url = url else{return}
-            let shortUrl = url.absoluteString
-            print("I have a short URL to share! \(url.absoluteString)")
-            //Added a Notification Log 
-            FireService.sharedInstance.notification(.FriendRequest, globalUser.toFireUser, url.absoluteString, friendEmail, "New Friend Request", "\(globalUser.toFireUser.name) added you as a friend") { (completion, error) in
-                if let error = error{
-                    print(error.localizedDescription)
-                    fatalError()
+                if let warnings = warnings{
+                    for warning in warnings{
+                        print("FDL Warning:\(warning)")
+                    }
                 }
+                guard let url = url else{return}
+                let shortUrl = url.absoluteString
+                print("I have a short URL to share! \(url.absoluteString)")
+                //Added a Notification Log
+                FireService.sharedInstance.notification(.FriendRequest, globalUser.toFireUser, url.absoluteString, friendEmail, "New Friend Request", "\(globalUser.toFireUser.name) added you as a friend") { (completion, error) in
+                    if let error = error{
+                        print(error.localizedDescription)
+                        fatalError()
+                    }
+                }
+                
+                self.shareURL = url
+                self.shareURLString = shortUrl
+                self.composeMail(url:url,friendEmail: friendEmail)
+                completion(true)
             }
-            
-            self.shareURL = url
-            self.shareURLString = shortUrl
-            self.composeMail(url:url,friendEmail: friendEmail)
-            completion(true)
         }
-            //            self.showSheet(url: url)
-        }
-        
     }
     //handles sending mail invite to people invited to the group.
     func composeMail(url:URL,friendEmail:String){
@@ -234,9 +240,9 @@ extension AddFriendVC:MFMailComposeViewControllerDelegate{
         let composer = MFMailComposeViewController()
         composer.mailComposeDelegate = self
         composer.setToRecipients([friendEmail])
-        composer.setSubject("\(globalUser!.name) sent a friend request on the Soluchat App")
+        composer.setSubject("\(globalUser.toFireUser.name) sent a friend request on the Soluchat App")
 
-        composer.setMessageBody("Hello," + "\n" + "\n\(globalUser!.name) has invited you to be a friend. Use the link below to accept his request and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", isHTML: false)
+        composer.setMessageBody("Hello," + "\n" + "\n\(globalUser.toFireUser.name) has invited you to be a friend. Use the link below to accept his request and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", isHTML: false)
         
         present(composer, animated: true, completion: nil)
         

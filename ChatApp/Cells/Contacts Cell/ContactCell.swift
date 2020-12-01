@@ -12,7 +12,6 @@ class ContactCell: UITableViewCell {
     
     @IBOutlet weak var FreindimageView: UIImageView!
     @IBOutlet weak var friendName: UILabel!
-    
     @IBOutlet weak var friendEmail: UILabel!
     
     override func awakeFromNib() {
@@ -28,7 +27,7 @@ class ContactCell: UITableViewCell {
             friendName.contactsPageLabels(type: Constants.contactsPage.UserNameHeader)
             friendEmail.contactsPageLabels(type: Constants.contactsPage.emailSubHeader)
             FreindimageView.chatLogImageView()
-            FireService.sharedInstance.getFriendPictureDataFromFriendVC(user: globalUser!, friend: friend) { (url,completion,error) in
+            FireService.sharedInstance.getFriendPictureDataFromFriendVC(user: globalUser.toFireUser, friend: friend) { (url,completion,error) in
  
                     if let url = url{
                     //                self.profileImageView.af_setImage(withURL: url)
@@ -42,7 +41,7 @@ class ContactCell: UITableViewCell {
                     }
   
                 }
-//            FireService.sharedInstance.getFriendPictureData(user: globalUser!, friend: friend) { (result) in
+//            FireService.sharedInstance.getFriendPictureData(user: globalUser.toFireUser, friend: friend) { (result) in
 //
 //                switch result{
 //

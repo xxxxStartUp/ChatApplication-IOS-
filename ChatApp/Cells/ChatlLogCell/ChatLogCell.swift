@@ -11,6 +11,7 @@ import AlamofireImage
 
 class ChatLogCell: UITableViewCell {
     
+    @IBOutlet weak var chatSenderNameLabel: UILabel!
     @IBOutlet weak var chatNameLabel: UILabel!
     @IBOutlet weak var chatDateLabel: UILabel!
     @IBOutlet var profileImageview: UIImageView!
@@ -25,7 +26,7 @@ class ChatLogCell: UITableViewCell {
 //        chatNameLabel.text = "Chat \(indexPath)"
         chatDateLabel.text = "9/1\(indexPath)/20"
         
-    
+        
         profileImageview.chatLogImageView()
         
         print("errr")
@@ -35,49 +36,63 @@ class ChatLogCell: UITableViewCell {
     }
     
     
+    
     var activity : Activity! {
         
         didSet{
+            chatSenderNameLabel.text = ""
             lastMessage.text = "No messages"
-            chatDateLabel.text = "No time"
-            switch activity.type {
-            case .GroupChat(group:let group):
-                chatNameLabel.text =  activity.name
-                setUpTimeandMessageForGroup(group: group)
-                FireService.sharedInstance.getGroupPictureDataFromChatLog(user: globalUser!, group: group) { (url,completion,error) in
-     
-                        if let url = url{
-                        //                self.profileImageView.af_setImage(withURL: url)
-//                        self.profileImageview.af.setImage(withURL: url)
-                        self.profileImageview.loadImages(urlString: url.absoluteString, mediaType: Constants.groupInfoPage.GroupImageType)
-                       
-                        //                    self.groupImageView.contentMode = .scaleAspectFit
-                        }
-                    if !completion{
-                            self.profileImageview.image = UIImage(systemName: "person.crop.circle.fill")
-                        }
-      
-                    }
+            chatDateLabel.text = ""
+                switch activity.type {
+                    case .GroupChat(group:let group):
+                        chatNameLabel.text =  activity.name
+                        setUpTimeandMessageForGroup(group: group)
+                        FireService.sharedInstance.getGroupPictureDataFromChatLog(user: globalUser.toFireUser, group: group) { (url,completion,error) in
+             
+                                if let url = url{
+                                //                self.profileImageView.af_setImage(withURL: url)
+        //                        self.profileImageview.af.setImage(withURL: url)
+                                self.profileImageview.loadImages(urlString: url.absoluteString, mediaType: Constants.groupInfoPage.GroupImageType)
+                               
+                                //                    self.groupImageView.contentMode = .scaleAspectFit
+                                }
+                            if !completion{
+                                    self.profileImageview.image = UIImage(systemName: "person.2.circle.fill")
+        //                            self.profileImageview.image = UIImage(systemName: "person.crop.circle.fill")
+                                }
+              
+                            }
+                        break
+                    case .FriendChat(let friend):
+                        setUpTimeandMessageForFriend(freind: friend)
+                        chatNameLabel.text =  activity.name
+                        FireService.sharedInstance.getFriendPictureData(user: globalUser.toFireUser, friend: friend) { (result) in
+                            
+                            switch result{
 
-                
-                break
-            case .FriendChat(let friend):
-                setUpTimeandMessageForFriend(freind: friend)
-                chatNameLabel.text =  activity.name
-                
-            }
-            
-            
+                            case .success(let url):
+                                self.profileImageview.loadImages(urlString: url.absoluteString, mediaType: Constants.groupInfoPage.GroupImageType)
+                            case .failure(_):
+                                print("failed to set image url")
+                            }
+
+                        }
+                        break
+                }
         }
     }
     
+    
     func setUpTimeandMessageForFriend(freind : Friend){
         
-        FireService.sharedInstance.getLastMessageForFreind(freind: freind, user: globalUser!) { (result) in
+        FireService.sharedInstance.getLastMessageForFreind(freind: freind, user: globalUser.toFireUser) { (result) in
             switch result {
             case.success(let message):
                 self.chatDateLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
-                self.lastMessage.text = message.content.content as? String
+                let user = message.sender.name
+                let messageContent = message.content.content
+                self.chatSenderNameLabel.text = ""
+                self.lastMessage.text = "\(messageContent)"
             case .failure(_):
                 return
             }
@@ -87,11 +102,14 @@ class ChatLogCell: UITableViewCell {
     
     
     func setUpTimeandMessageForGroup(group : Group){
-        FireService.sharedInstance.getLastMessageForGroup(group: group, user: globalUser!) { (result) in
+        FireService.sharedInstance.getLastMessageForGroup(group: group, user: globalUser.toFireUser) { (result) in
             switch result {
             case.success(let message):
                 self.chatDateLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
-                self.lastMessage.text = message.content.content as? String
+                let user = message.sender.name
+                let messageContent = message.content.content
+                self.chatSenderNameLabel.text = "\(user):"
+                self.lastMessage.text = "\(messageContent)"
             case .failure(_):
                 return
             }

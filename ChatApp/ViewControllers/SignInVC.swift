@@ -27,14 +27,26 @@ class SignInVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateViews()
+//        updateViews()
     }
     
+    @IBAction func SignUp(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     
     @IBAction func Login(_ sender: Any) {
-        
-        login()
-       // self.goToTab()
+        var isError = false
+        if(passwordTextField.text?.lowercased() == ""){
+            isError = true
+            self.snackbar("Password is Mandatory")
+        }
+        if(emailTextField.text?.lowercased() == ""){
+            isError = true
+            self.snackbar("Email is Mandatory")
+        }
+        if(!isError){
+            login()
+        }
     }
     
     
@@ -45,21 +57,19 @@ class SignInVC: UIViewController {
         if let email = emailTextField.text, let password = passwordTextField.text{
             //Need to complete validate class and functions in class before using it
             if Validate.isPasswordValid(password) && Validate.isValidEmail(email){
-
                 FireService.sharedInstance.signIn(email: email, password: password) { (completed) in
                     if completed{
                         FireService.sharedInstance.searchOneUserWithEmail(email: email) { (user, error) in
-                            
                             globalUser = user
                             if let user = user{
-                            FireService.sharedInstance.addCustomData(data: ["deviceToken":Constants.deviceTokenKey.load()], user: user) { (error, completion) in
-                                if let error = error{
-                                    print("error")
+                                FireService.sharedInstance.addCustomData(data: ["deviceToken":Constants.deviceTokenKey.load()],
+                                                                         user: user)
+                                { (error, completion) in
+                                    if let error = error{
+                                        print("error \(error)")
+                                    }
                                 }
-                                
-                                
                             }
-                        }
                         }
 
                         print("Signed In Successfully")
@@ -73,7 +83,7 @@ class SignInVC: UIViewController {
                         let controller =  UIAlertController.alertUser( title: "Sucess", message: "you signed in sucesfully", whatToDo: "Go to home screen")
                         self.present(controller, animated: true) {
                             
-                            self.goToTab()
+                            self.checkForUser()
                         }
                         
                     }
@@ -125,22 +135,18 @@ extension UIViewController {
     
     func goToTab(){
         DispatchQueue.main.async {
-            
             let vc = UIStoryboard(name: "MainTabStoryboard", bundle: nil).instantiateInitialViewController()!
             self.view.window?.rootViewController = vc
             self.view.window?.makeKeyAndVisible()
-
         }
-
-  
-        
-        
-//        self.dismiss(animated: true) {
-//            let vc = UIStoryboard(name: "MainTabStoryboard", bundle: nil).instantiateInitialViewController()!
-//            vc.modalPresentationStyle = .fullScreen
-//            self.present(vc, animated: true, completion: nil)
-//        }
-        
+    }
+    
+    func goToLogin(){
+        DispatchQueue.main.async {
+            let vc = UIStoryboard(name: "SignUpSB", bundle: nil).instantiateInitialViewController()!
+            self.view.window?.rootViewController = vc
+            self.view.window?.makeKeyAndVisible()
+        }
     }
     
 }

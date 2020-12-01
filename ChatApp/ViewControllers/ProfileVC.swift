@@ -23,6 +23,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     @IBOutlet weak var profileImageView: UIImageView!
     var defaultImage : UIImage?
     var name : String = ""
+    var status : String = ""
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setImage()
@@ -33,13 +34,17 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        refreshCurrentUser()
+        
+        
         navigationItem.largeTitleDisplayMode = .never
         defaultImage = profileImageView.image
         profilePictureGestureSetup()
         updateViews()
         updateBackgroundViews()
-        statusTextFieldGestureSetup()
+//        statusTextFieldGestureSetup() // enable if want to make action by click
         nameTextField.delegate = self
+        statusTextField.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide), name: UIResponder.keyboardDidHideNotification, object: nil)
         
                 NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -58,6 +63,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     
     @objc func keyboardWillShow(){
         name = nameTextField.text ?? ""
+        status = statusTextField.text ?? ""
         print("inserted name" , name)
        }
        
@@ -69,38 +75,61 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         if nameTextField.text != ""{
             if let newName = nameTextField.text {
                 if newName == name {
-                    return
+                }else{
+                    name = newName
+                    
+                    let alert = UIAlertController(title: "Changing your name", message: "Are you sure you want to change your name?", preferredStyle: .actionSheet)
+                    
+                    let action = UIAlertAction(title: "Yes", style: .default, handler: changeName(sender:))
+                    
+                    let action2 = UIAlertAction(title: "No", style: .cancel, handler: nil)
+                    
+                    alert.addAction(action)
+                    alert.addAction(action2)
+                    present(alert, animated: true, completion: nil)
                 }
-                name = newName
-                
-                let alert = UIAlertController(title: "Changing your name", message: "Are you sure you want to chnage your name?", preferredStyle: .actionSheet)
-                
-                let action = UIAlertAction(title: "Yes", style: .default, handler: changeName(sender:))
-                
-                let action2 = UIAlertAction(title: "No", style: .cancel, handler: nil)
-                
-                alert.addAction(action)
-                alert.addAction(action2)
-                present(alert, animated: true, completion: nil)
             }
-            
-            
-
         }
-       
+        if statusTextField.text != ""{
+            print("statusTextField not empty")
+            if let newStatus = statusTextField.text {
+                if newStatus == status {
+                    print("statusTextField equal")
+                }else{
+                    status = newStatus
+                    
+                    let alert = UIAlertController(title: "Changing your status", message: "Are you sure you want to change your status?", preferredStyle: .actionSheet)
+                    
+                    let action = UIAlertAction(title: "Yes", style: .default, handler: changeStatus(sender:))
+                    
+                    let action2 = UIAlertAction(title: "No", style: .cancel, handler: nil)
+                    
+                    alert.addAction(action)
+                    alert.addAction(action2)
+                    present(alert, animated: true, completion: nil)
+                }
+            }
+        }
     }
     
     
     func changeName(sender : UIAlertAction){
-        FireService.sharedInstance.addCustomData(data: ["username":name], user: globalUser!) { (error, sucess) in
+        FireService.sharedInstance.addCustomData(data: ["username":name], user: globalUser.toFireUser) { (error, sucess) in
             if sucess {
-                print("name was chnaged")
+                print("name was changed")
                 
-                FireService.sharedInstance.refreshUserInfo(email: globalUser!.email)
+                FireService.sharedInstance.refreshUserInfo(email: globalUser.toFireUser.email)
             }
-            
         }
-        
+    }
+    func changeStatus(sender : UIAlertAction){
+        FireService.sharedInstance.addCustomData(data: ["status":status], user: globalUser.toFireUser) { (error, sucess) in
+            if sucess {
+                print("status was changed")
+                
+                FireService.sharedInstance.refreshUserInfo(email: globalUser.toFireUser.email)
+            }
+        }
     }
     
   
@@ -123,7 +152,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         nameTextField.profilePageTextFields(type: Constants.profilePage.textfields)
         
         //statusTextField.isUserInteractionEnabled = false
-        statusTextField.allowsEditingTextAttributes = false
+//        statusTextField.allowsEditingTextAttributes = false
         statusTextField.rightView = textFieldIcon2
         statusTextField.rightViewMode = UITextField.ViewMode.unlessEditing
         statusTextField.profilePageTextFields(type: Constants.profilePage.textfields)
@@ -140,6 +169,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         
         //sets the email textfield name and name textfield.
         nameTextField.text = globalUser?.name
+        statusTextField.text = globalUser?.status
         emailTextField.text = globalUser?.email
         
         nameView.layer.cornerRadius = 10
@@ -163,7 +193,6 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
         let gesture = UITapGestureRecognizer(target: self, action: #selector(statusTextFieldTapped))
         statusTextField.isUserInteractionEnabled = true
         statusTextField.addGestureRecognizer(gesture)
-       
     }
     
     @objc func profileImageTapped(){
@@ -244,9 +273,8 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     
     
     func setImage(){
-        FireService.sharedInstance.getProfilePicture(user: globalUser!) { (result) in
+        FireService.sharedInstance.getProfilePicture(user: globalUser.toFireUser) { (result) in
             switch result{
-                
             case .success(let url):
 //                self.profileImageView.af_setImage(withURL: url)
                 self.profileImageView.loadImages(urlString: url.absoluteString, mediaType: Constants.profilePage.profileImageType)
@@ -261,7 +289,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     
     func deleteProfilePicture(){
          profileImageView.isUserInteractionEnabled = false
-        FireService.sharedInstance.DeleteProfilePicture(user: globalUser!) { (result) in
+        FireService.sharedInstance.DeleteProfilePicture(user: globalUser.toFireUser) { (result) in
             switch result{
                 
             case .success(let bool):
@@ -285,7 +313,7 @@ class ProfileVC: UIViewController,UIPickerViewDelegate, UIImagePickerControllerD
     
     func saveProfilePicture(data : Data){
          self.profileImageView.isUserInteractionEnabled = false
-        FireService.sharedInstance.saveProfilePicture(data: data, user: globalUser!) { (result) in
+        FireService.sharedInstance.saveProfilePicture(data: data, user: globalUser.toFireUser) { (result) in
             switch result {
             case .success(_):
                 print("sucess")

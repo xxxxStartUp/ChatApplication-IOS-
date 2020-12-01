@@ -30,19 +30,28 @@ class SignUpVC: UIViewController {
         let codableMessage = CodableMessage(message: "message")
         let exampleCodableUser = codableUser(name: "codableEgb", message: codableMessage)
         FireService.sharedInstance.createCodableUser(for: exampleCodableUser)
-        updateViews()
-        checkForUser()
     }
     
     @IBAction func loginButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: Constants.loginTabStoryBoardSegue, sender: self)
     }
     @IBAction func signUpButtonTapped(_ sender: Any) {
-        signUp()
-        
-        //self.goToTab()
-        
-        
+        var isError = false
+        if(passwordTextField.text?.lowercased() == ""){
+            isError = true
+            self.snackbar("Password is Mandatory")
+        }
+        if(emailTextField.text?.lowercased() == ""){
+            isError = true
+            self.snackbar("Email is Mandatory")
+        }
+        if(nameTextField.text?.lowercased() == ""){
+            isError = true
+            self.snackbar("Name is Mandatory")
+        }
+        if(!isError){
+            signUp()
+        }
     }
     
     
@@ -50,14 +59,12 @@ class SignUpVC: UIViewController {
     
     func signUp(){
         if let name = nameTextField.text, let email1 = emailTextField.text, let password = passwordTextField.text{
-            let email = email1.lowercased()
+            let email = email1.lowercased().replace(this: " ", with: "")
             //Need to complete validate class and functions in class before using it
             if Validate.isPasswordValid(password) && Validate.isValidEmail(email){
                 let id = UUID().uuidString
                 let deviceToken = Constants.deviceTokenKey.load()
-                let user = FireUser(userID: id, token: deviceToken, userName: name, userEmail: email, creationDate: Date())
-                
-                
+                let user = FireUser(userID: id, token: deviceToken, userName: name, userEmail: email,profileImageUrl: "",status: "" , creationDate: Date())
                 FireService.sharedInstance.SignUp(email: email, password: password) { (completed) in
                     if completed{
                         
@@ -72,12 +79,10 @@ class SignUpVC: UIViewController {
                                 else{
                                     UserDefaults.standard.setValue(false, forKey: "displayModeSwitch")
                                 }
-                                let controller =  UIAlertController.alertUser( title: "Sucess", message: "you are signed up", whatToDo: "good job!")
+                                let controller =  UIAlertController.alertUser( title: "Welcome! \(name)", message: "you are signed up", whatToDo: "Continue")
                                 self.present(controller, animated: true) {
                                     self.goToTab()
-                                    
                                 }
-                                
                             }else{
                                 let controller =  UIAlertController.alertUser( title: "error", message: error?.localizedDescription ?? "firebase error in save function", whatToDo: "Try again")
                                 self.present(controller, animated: true, completion: nil)
@@ -103,44 +108,5 @@ class SignUpVC: UIViewController {
         }
         
     }
-    func updateViews(){
-        helloLabel.onBoardingPageHeaderLabels()
-        emailLabel.onBoardingPageSubHeaderLabels(type: Constants.onBoardingPage.emailSubHeader)
-        nameLabel.onBoardingPageSubHeaderLabels(type: Constants.onBoardingPage.nameSubHeader)
-        passwordLabel.onBoardingPageSubHeaderLabels(type: Constants.onBoardingPage.passwordSubHeader)
-        signupButton.onBoardingPageButton(type: Constants.onBoardingPage.filledButton)
-        loginButton.onBoardingPageButton(type: Constants.onBoardingPage.notFilledButton)
-        alreadyHaveAnAccount.onBoardingPageSubHeaderLabels(type: Constants.onBoardingPage.alreadyHaveAnAccoutSubHeader)
-    }
-    
 }
-
-
-extension UIViewController {
-    // to user this just type: let user = UIViewController.user
-    
-    var user : FireUser? {
-        return  globalUser
-    }
-    
-    
-    func checkForUser(){
-        FireService.sharedInstance.getCurrentUser { (user) in
-            if let email = user?.email{
-                print("email:IS \(email)")
-                
-                FireService.sharedInstance.getCurrentUserData(email: email) { (fireUser, error) in
-                    if let fireUser = fireUser{
-                        globalUser = fireUser
-                        self.goToTab()
-                    }
-                    
-                }
-            }
-        }
-    }
-    
-
-}
-
 

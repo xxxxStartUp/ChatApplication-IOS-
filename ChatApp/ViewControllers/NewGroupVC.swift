@@ -64,16 +64,16 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate, UINavig
             print("Character count is equal to: \(groupName.count)")
             //new group is created and temp id is passed.
             let id = UUID().uuidString
-            let newGroup = Group(GroupAdmin: globalUser!, id: id, name: groupName)
+            let newGroup = Group(GroupAdmin: globalUser.toFireUser, id: id, name: groupName)
             group = newGroup
             //added final id to completion to get the latest id from backend and use for creating dynamic link.
-            FireService.sharedInstance.createGroup(user: globalUser!, group: newGroup) { (completed, error) in
+            FireService.sharedInstance.createGroup(user: globalUser.toFireUser, group: newGroup) { (completed, error) in
                 if let error = error{
                     print(error.localizedDescription)
                     fatalError()
                 }
                 if completed{
-                    self.createDynamicLink(admin: globalUser!, groupID: id, groupName: groupName) { (success) in
+                    self.createDynamicLink(admin: globalUser.toFireUser, groupID: id, groupName: groupName) { (success) in
                         if success{
                             //call function to save the url in FB
                             if let shareURLString = self.shareURLString{
@@ -86,7 +86,7 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate, UINavig
                                 }
                 
     
-                            FireService.sharedInstance.addCustomDataToGroup(data: data, user: globalUser!, group: newGroup) { (error, success) in
+                            FireService.sharedInstance.addCustomDataToGroup(data: data, user: globalUser.toFireUser, group: newGroup) { (error, success) in
                                 if let error = error {
                                     print(error.localizedDescription)
                                     fatalError()
@@ -329,9 +329,9 @@ extension NewGroupVC: MFMessageComposeViewControllerDelegate{
         let composer = MFMailComposeViewController()
         composer.mailComposeDelegate = self
         composer.setToRecipients(selectedFriendsListEmail)
-        composer.setSubject("\(globalUser!.name) has invited you to join a group on the Soluchat App")
+        composer.setSubject("\(globalUser.toFireUser.name) has invited you to join a group on the Soluchat App")
 
-        composer.setMessageBody("Hello," + "\n" + "\n\(globalUser!.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", isHTML: false)
+        composer.setMessageBody("Hello," + "\n" + "\n\(globalUser.toFireUser.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", isHTML: false)
         
         present(composer, animated: true, completion: nil)
         
@@ -411,7 +411,7 @@ extension NewGroupVC:UIImagePickerControllerDelegate{
     func saveGroupPicture(data : Data){
         self.newGroupImageView.isUserInteractionEnabled = false
         if let group = group{
-        FireService.sharedInstance.saveGroupPicture(data : data , user : globalUser!, group:group,friend:[globalUser!.asAFriend]) { (result) in
+        FireService.sharedInstance.saveGroupPicture(data : data , user : globalUser.toFireUser, group:group,friend:[globalUser.toFireUser.asAFriend]) { (result) in
             switch result {
             case .success(_):
                 print("sucess")

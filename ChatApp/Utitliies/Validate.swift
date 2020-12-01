@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SafariServices
 
 
 class Validate {
@@ -36,8 +37,10 @@ class Validate {
     
     
 }
+
 // MARK :- Optional
 extension Optional{
+    
     var toFireUser : FireUser{
         if let currentUser = self as? FireUser{
             return currentUser
@@ -46,26 +49,52 @@ extension Optional{
             var user_name = ""
             var user_email = ""
             var user_token = ""
+            var profile_ImageUrl = ""
+            var user_status = ""
             var user_creationDate = Date()
             if let data = self as? [String:Any]{
                 if let id = data["id"] as? String{
                     user_id = id
+                }else{
+                    print("failed to get id")
                 }
                 if let name = data["name"] as? String{
                     user_name = name
+                }else{
+                    print("failed to get name")
+                    if let name = data["username"] as? String{
+                        user_name = name
+                    }else{
+                        print("failed to get username")
+                    }
                 }
                 if let email = data["email"] as? String{
                     user_email = email
+                }else{
+                    print("failed to get email")
                 }
                 if let deviceToken = data["deviceToken"] as? String{
                     user_token = deviceToken
+                }else{
+                    print("failed to get deviceToken")
+                }
+                if let status = data["status"] as? String{
+                    user_status = status
+                }else{
+                    print("failed to get status")
                 }
                 if let creationDate = data["creationDate"] as? Date{
                     user_creationDate = creationDate
+                }else{
+                    print("failed to get creationDate")
                 }
-                return FireUser.init(userID: user_id, token: user_token, userName: user_name, userEmail: user_email, creationDate: user_creationDate)
+                if let profileImageUrl = data["profileImageUrl"] as? String{
+                    profileImageUrl.saveWithKey(key: "profileImageUrl")
+                    profile_ImageUrl = profileImageUrl
+                }
+                return FireUser.init(userID: user_id, token: user_token, userName: user_name, userEmail: user_email,profileImageUrl: profile_ImageUrl,status: user_status, creationDate: user_creationDate)
             }
-            return FireUser.init(userID: user_id, token: user_token, userName: user_name, userEmail: user_email, creationDate: user_creationDate)
+            return FireUser.init(userID: user_id, token: user_token, userName: user_name, userEmail: user_email,profileImageUrl: profile_ImageUrl,status: user_status, creationDate: user_creationDate)
         }
     }
 }

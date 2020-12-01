@@ -97,14 +97,14 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     /// - Parameter image: image to be sent
     private func sendImageMessage(image:UIImage){
         guard let data = image.jpeg(.lowest) else {return}
-        FireService.sharedInstance.saveImageToBeSentToGroupChat(data: data, user: globalUser!, group: group!) { (url, error) in
+        FireService.sharedInstance.saveImageToBeSentToGroupChat(data: data, user: globalUser.toFireUser, group: group!) { (url, error) in
             if let error = error{
                 print(error.localizedDescription)
                 fatalError()
             }
             let id = UUID().uuidString
             
-            let message = Message(id:id,content: Content(type: .image, content: url!), sender: globalUser!, timeStamp: Date(), recieved: false)
+            let message = Message(id:id,content: Content(type: .image, content: url!), sender: globalUser.toFireUser, timeStamp: Date(), recieved: false)
             self.messageToBeSent = message
             self.sendMessage()
         }
@@ -113,14 +113,14 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     /// - Parameter image: image to be sent
     private func sendVideoMessage(url:NSURL){
         var messageUrl = String()
-        FireService.sharedInstance.saveVideoToBeSentToGroupChat(url: url, user: globalUser!, group: group!) { (videoURL, error,properties) in
+        FireService.sharedInstance.saveVideoToBeSentToGroupChat(url: url, user: globalUser.toFireUser, group: group!) { (videoURL, error,properties) in
             if let error = error{
                 print(error.localizedDescription)
                 fatalError()
             }
             let thumbnailImage = properties["thumbNailImage"] as! UIImage
             guard let data = thumbnailImage.jpeg(.lowest) else {return}
-            FireService.sharedInstance.saveImageToBeSentToGroupChat(data: data, user: globalUser!, group: self.group!) { (url, error) in
+            FireService.sharedInstance.saveImageToBeSentToGroupChat(data: data, user: globalUser.toFireUser, group: self.group!) { (url, error) in
                 
                 if let error = error{
                     print(error.localizedDescription)
@@ -132,7 +132,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
                     //ebuka may need to refactor code for message to contain property dictionary for content.
                     let id = UUID().uuidString
 
-                    let message = Message(id:id,content: Content(type: .video, content: messageUrl), sender: globalUser!, timeStamp: Date(), recieved: false)
+                    let message = Message(id:id,content: Content(type: .video, content: messageUrl), sender: globalUser.toFireUser, timeStamp: Date(), recieved: false)
                     
                     
                     self.messageToBeSent = message
@@ -174,13 +174,13 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     }
     func loadGroupParticipants(){
 
-        FireService.sharedInstance.viewGroupParticipants(user: globalUser!, group: group!) { (participants, true, error) in
+        FireService.sharedInstance.viewGroupParticipants(user: globalUser.toFireUser, group: group!) { (participants, true, error) in
             if let error = error{
                 print(error)
                 fatalError()
             }
             self.groupParticipants = participants
-            if !self.groupParticipants.contains(globalUser!.asAFriend){
+            if !self.groupParticipants.contains(globalUser.toFireUser.asAFriend){
                 self.texterView.isHidden = true
             }
         }
@@ -196,7 +196,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         //        let cachedAvatar = imageCache.image(withIdentifier: "image")
         //        self.navBarButton.setImage(cachedAvatar, for: .normal)
         
-        FireService.sharedInstance.getGroupPictureDataFromChatLog(user: globalUser!,group: group!) { (url,completion,error) in
+        FireService.sharedInstance.getGroupPictureDataFromChatLog(user: globalUser.toFireUser,group: group!) { (url,completion,error) in
             
             if let error = error{
                 print(error.localizedDescription)
@@ -255,7 +255,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     }
     
     func getGroupName(){
-        FireService.sharedInstance.getGroupname(user: globalUser!, group: group!) { (group, true, error) in
+        FireService.sharedInstance.getGroupname(user: globalUser.toFireUser, group: group!) { (group, true, error) in
             if let error = error{
                 print(error.localizedDescription)
             }
@@ -273,7 +273,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         let content = Content(type: .string, content: messageText)
         let id = UUID().uuidString
         
-        let message = Message(id:id,content: content, sender: globalUser!, timeStamp: Date(), recieved: false)
+        let message = Message(id:id,content: content, sender: globalUser.toFireUser, timeStamp: Date(), recieved: false)
         messageToBeSent = message
         sendMessage()
         
@@ -298,7 +298,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     
     private func sendMessage() {
         guard let message = messageToBeSent else {return}
-        FireService.sharedInstance.sendMessgeToAllFriendsInGroup(message: message, user: globalUser!, group: group!, completionHandler: { (result) in
+        FireService.sharedInstance.sendMessgeToAllFriendsInGroup(message: message, user: globalUser.toFireUser, group: group!, completionHandler: { (result) in
             
             switch result{
                 
@@ -331,7 +331,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     
     
     func loadMessages (){
-        FireService.sharedInstance.loadMessagesWithGroup(user: globalUser!, group: group!) { (messages, error) in
+        FireService.sharedInstance.loadMessagesWithGroup(user: globalUser.toFireUser, group: group!) { (messages, error) in
             self.groupMessages.removeAll()
             self.groupChatTable.reloadData()
             guard let messages = messages else {return}
@@ -536,7 +536,7 @@ extension GroupChatVC : TexterViewDelegate {
         }
         switch realTapped {
         case 0:
-            FireService.sharedInstance.saveMessages(user: globalUser!,group: group!, messageToSave: messagelongTapped!) { (result) in
+            FireService.sharedInstance.saveMessages(user: globalUser.toFireUser,group: group!, messageToSave: messagelongTapped!) { (result) in
                 switch result {
                 case .success(let bool):
                     if bool {

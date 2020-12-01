@@ -26,21 +26,20 @@ class ProfileInfoCell: UITableViewCell {
         userNameHeader.settingsPageLabels(type: Constants.settingsPage.userNameHeader)
         statusTitle.settingsPageLabels(type: Constants.settingsPage.statusTitleLabel)
         userNameHeader.text = globalUser?.name
+        statusTitle.text = globalUser?.status
         setInitialImage()
         
+        profilePhoto.chatLogImageView()
         //
         
           if Constants.profilePage.globalProfileImage != nil && Constants.profilePage.profileImageState{
             profilePhoto.settingsPageImageView()
-            
             profilePhoto.image = Constants.profilePage.globalProfileImage
-            
-        
-    }
+          }
         
     }
         func setInitialImage(){
-            FireService.sharedInstance.getProfilePicture(user: globalUser!) { (result) in
+            FireService.sharedInstance.getProfilePicture(user: globalUser.toFireUser) { (result) in
                 switch result{
                     
                 case .success(let url):

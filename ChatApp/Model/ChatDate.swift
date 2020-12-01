@@ -17,13 +17,19 @@ class ChatDate {
     }
     
     func ChatDateFormat() -> String{
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MM-yyyy HH:mm"
-        let dateString = formatter.string(from: self.date)
-        return dateString
+        let chatDate = self.date.DateConvert("dd-MM-yyyy")
+        let todayDate = "".DateConvertToday(newFormat: "dd-MM-yyyy")
+        let yesterdayDate = Date().past(day: 1).DateConvert("dd-MM-yyyy")
+        if(chatDate == todayDate){
+            print("chatDate: \(chatDate) || todayDate : \(todayDate)")
+            return self.date.DateConvert("HH:mm aa")
+        }else if(chatDate == yesterdayDate){
+            print("chatDate: \(chatDate) || yesterdayDate : \(yesterdayDate)")
+            return "Yesterday"
+        }else{
+            return chatDate
+        }
     }
-    
-    
 }
 
 extension Date {
@@ -56,5 +62,90 @@ extension Date {
         
         return "\(timePassed/week) weeks ago"
         
+    }
+    
+}
+
+extension String{
+    
+    func DateConvertToday(newFormat:String)->String{
+        return Date().DateConvert(newFormat)
+    }
+    func DateConvert(oldFormat:String,newFormat:String)->String{
+        let datePostedRaw = self.replace(this: "T", with: " ")
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = oldFormat
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = newFormat
+        var validatedDate = ""
+        if let date = dateFormatterGet.date(from: datePostedRaw){
+//            print(dateFormatterPrint.string(from: date))
+            validatedDate = dateFormatterPrint.string(from: date)
+        }
+        return validatedDate
+    }
+    func DateConvert(oldFormat:String)->Date{
+        if(self != ""){
+            let isoDate = self
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+            dateFormatter.dateFormat = oldFormat
+            return dateFormatter.date(from:isoDate)!
+        }else{
+            return Date()
+        }
+    }
+    var validDate:String{
+        let datePostedRaw = self.replace(this: "T", with: " ")
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "MMM dd,yyyy"
+        var validatedDate = ""
+        if let date = dateFormatterGet.date(from: datePostedRaw){
+//            print(dateFormatterPrint.string(from: date))
+            validatedDate = dateFormatterPrint.string(from: date)
+        }
+        return validatedDate
+    }
+    var validDateTime:String{
+        let datePostedRaw = self.replace(this: "T", with: " ")
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "dd MMMM yyyy hh:mm tt"
+        var validatedDate = ""
+        if let date = dateFormatterGet.date(from: datePostedRaw){
+//            print(dateFormatterPrint.string(from: date))
+            validatedDate = dateFormatterPrint.string(from: date)
+        }
+        return validatedDate
+    }
+    var validDateTime2:String{
+        let datePostedRaw = self.replace(this: "T", with: " ")
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "dd/MM/yy hh.mmaa"
+        var validatedDate = ""
+        if let date = dateFormatterGet.date(from: datePostedRaw){
+//            print(dateFormatterPrint.string(from: date))
+            validatedDate = dateFormatterPrint.string(from: date)
+        }
+        return validatedDate
+    }
+    
+    var validTime:String{
+        let datePostedRaw = self.replace(this: "T", with: " ")
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "hh.mmaa"
+        var validatedDate = ""
+        if let date = dateFormatterGet.date(from: datePostedRaw){
+//            print(dateFormatterPrint.string(from: date))
+            validatedDate = dateFormatterPrint.string(from: date)
+        }
+        return validatedDate
     }
 }

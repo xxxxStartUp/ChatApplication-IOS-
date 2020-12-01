@@ -25,20 +25,23 @@ class FireUser : User {
     var friends: [Friend]
     var userType: Int
     var deviceToken:String
+    var profileImageUrl:String
+    var status:String
     
     
     // When creating a user, these properties will need to be provided
-    init(userID: String, token:String, userName: String, userEmail: String, creationDate: Date) {
-        
-        id = userID
-        name = userName
-        email = userEmail
-        timeCreated = creationDate
-        messages = []
-        group = []
-        friends = []
-        deviceToken = token
-        userType = TypeOfUser.regular.rawValue // I created an enum where 0 would be a regular user and 1 would be an admin user.
+    init(userID: String, token:String, userName: String, userEmail: String, profileImageUrl: String,status: String, creationDate: Date) {
+        self.id = userID
+        self.name = userName
+        self.email = userEmail
+        self.timeCreated = creationDate
+        self.messages = []
+        self.group = []
+        self.friends = []
+        self.deviceToken = token
+        self.profileImageUrl = profileImageUrl
+        self.status = status
+        self.userType = TypeOfUser.regular.rawValue // I created an enum where 0 would be a regular user and 1 would be an admin user.
         super.init()
     }
     

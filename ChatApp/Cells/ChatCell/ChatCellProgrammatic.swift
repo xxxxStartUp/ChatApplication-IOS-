@@ -37,7 +37,7 @@ class MessgaeCell: UITableViewCell {
         messageLabel.chatTextView()
 
             
-            if  message.sender.email != globalUser!.email{
+            if  message.sender.email != globalUser.toFireUser.email{
                 messageLabel.text = (message.content.content as! String).trimmingCharacters(in: .whitespacesAndNewlines)
                 messageLabel.font = UIFont(name: "HelveticaNeue-Regular", size: 12)
                 leadingContstraints?.isActive = true

@@ -86,7 +86,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
             let data = ["Token":tokens]
             tokens?.saveWithKey(key: Constants.deviceTokenKey)
             print("token:\(token)")
-//            FireService.sharedInstance.addCustomData(data: data, user: globalUser!) { (error, completion) in
+//            FireService.sharedInstance.addCustomData(data: data, user: globalUser.toFireUser) { (error, completion) in
 //                if let error = error{
 //                    print("error has occured")
 //                }

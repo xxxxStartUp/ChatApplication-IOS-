@@ -25,6 +25,8 @@ class SettingsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        refreshCurrentUser()
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Settings"
         //navigationController?.navigationBar.backgroundColor = .lightGray
@@ -37,6 +39,7 @@ class SettingsVC: UIViewController {
         
         // Do any additional setup after loading the view.
     }
+    
     
     @objc func on (){
 
@@ -294,10 +297,38 @@ extension SettingsVC{
         return view
     }
    @objc func handlesSignoutTapped(){
-        FireService.sharedInstance.signOut()
-        globalUser = nil
-        let vc = UIStoryboard(name: "SignUpSB", bundle: nil).instantiateInitialViewController()!
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
+        refreshCurrentUser()
+        let alert = UIAlertController(title: "Are you sure to Logout?", message: "", preferredStyle: .actionSheet)
+        
+    
+        let action = UIAlertAction(title: "Logout", style: .destructive) { (alert) in
+            if(globalUser.toFireUser.deviceToken == Constants.deviceTokenKey.load()){
+                FireService.sharedInstance.addCustomData(data: ["deviceToken":""], user: globalUser.toFireUser)
+                                                 { (error, completion) in
+                                                     if let error = error{
+                                                         print("error \(error)")
+                                                        self.snackbar("Failed to Sign Out")
+                                                     }else{
+                                                        FireService.sharedInstance.signOut()
+                                                        globalUser = nil
+                                                        self.goToLogin()
+                                                     }
+                                                 }
+            }else{
+                   FireService.sharedInstance.signOut()
+                   globalUser = nil
+                   self.goToLogin()
+            }
+        }
+        
+        let action2 = UIAlertAction(title: "Cancel", style: .default) { (alert) in
+            
+        }
+        
+        alert.addAction(action)
+        alert.addAction(action2)
+        present(alert, animated: true, completion: nil)
+        
+    
     }
 }

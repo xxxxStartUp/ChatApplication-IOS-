@@ -88,7 +88,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     
                    
                 
-                    FireService.sharedInstance.createGroupFromReceivingDynamicLink(user: globaluser, group: finalGroup, friend: globalUser!.asAFriend) { (sucess, error) in
+                    FireService.sharedInstance.createGroupFromReceivingDynamicLink(user: globaluser, group: finalGroup, friend: globalUser.toFireUser.asAFriend) { (sucess, error) in
                         
                         if let error = error {
                             print("could not find group admin user while adding new user to group",error.localizedDescription)
@@ -112,7 +112,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 FireService.sharedInstance.searchOneUserWithEmail(email: senderEmail) { (user, error) in
                     if let error = error {
                         print("could not find group admin user while adding new user to group",error.localizedDescription)
-                        
                         return
                     }
                 guard let user = user else {return}
@@ -132,6 +131,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //                                self.present(controller, animated: true, completion: nil)
                             }else{
                                 if sucess {
+                                    
                                     print("sucessfully added contact")
 //                                    let controller = UIAlertController.alertUser(title: "Sucesss", message: "Sucessfully added a user", whatToDo: "Check contact sb")
                                     

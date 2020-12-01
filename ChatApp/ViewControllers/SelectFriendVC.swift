@@ -17,7 +17,7 @@ class SelectFriendVC: UIViewController,MFMailComposeViewControllerDelegate{
     
     var friendList : [Friend] = []
     var friendListEmail: [String] = []
-    let identifier = "ContactCell"
+    let identifier = "ContactCellIdentifier"
     var delegate : FreindDelegate?
     var filteredFriendList = [Friend]()
     var searching = false
@@ -257,7 +257,7 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
     }
     func footerviewSetUp() -> UIView{
         let view:UIView = {
-            let finalLabel = UIView(frame: CGRect(x: 0, y: 0, width: contactsTable.frame.width, height: 30))
+            let finalLabel = UIView(frame: CGRect(x: 0, y: 0, width: contactsTable.frame.width, height: 75))
             finalLabel.darkmodeBackground()
             return finalLabel
         }()
@@ -297,20 +297,11 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
                 self.present(controller, animated: true, completion: nil)
             }else{
                 if let group = group{
-                    FireService.sharedInstance.getGroupURL(user: globalUser!, group:group) { (url, completion, error) in
+                    FireService.sharedInstance.getGroupURL(user: globalUser.toFireUser, group:group) { (url, completion, error) in
                         if let error = error{
                                 print(error.localizedDescription)
                         }
                         if let url = url, let finalURL = URL(string: url){
-                            for friend in self.friendList{
-                                //added a notification Log
-                                FireService.sharedInstance.notification(.GroupInvitation, globalUser.toFireUser, url, friend.email, "New Group Invitaion", "\(globalUser.toFireUser.name) has invited you to join a groupchat.") { (completion, error) in
-                                    if let error = error{
-                                        print(error.localizedDescription)
-                                        fatalError()
-                                    }
-                                }
-                            }
                             self.composeMail(url: finalURL)
                         }
                     }
@@ -330,9 +321,9 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
                 let composer = MFMailComposeViewController()
                 composer.mailComposeDelegate = self
                 composer.setToRecipients(self.friendListEmail)
-                composer.setSubject("\(globalUser!.name) has invited you to join a group on the Soluchat App")
+                composer.setSubject("\(globalUser.toFireUser.name) has invited you to join a group on the Soluchat App")
                 self.url = url
-                composer.setMessageBody("Hello," + "\n" + "\n\(globalUser!.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", isHTML: false)
+                composer.setMessageBody("Hello," + "\n" + "\n\(globalUser.toFireUser.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", isHTML: false)
 
                 self.present(composer, animated: true, completion: nil)
 
@@ -365,14 +356,20 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
                 // show the alert
                 self.present(alert, animated: true, completion: nil)
                 if let url = self.url{
-                let message = Message(content:Content(type: .string, content: "\(globalUser!.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\(url)") , sender: globalUser!, timeStamp: Date(), recieved: false)
-                FireService.sharedInstance.pushNotificationFriend(title: "New Friend Request from \(globalUser!.email)" , subtitle: "Hello," + "\n" + "\n\(globalUser!.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", friends: self.friendListEmail) { (pushResult) in
+                let message = Message(content:Content(type: .string, content: "\(globalUser.toFireUser.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\(url)") , sender: globalUser.toFireUser, timeStamp: Date(), recieved: false)
+                FireService.sharedInstance.pushNotificationFriend(title: "New Friend Request from \(globalUser.toFireUser.email)" , subtitle: "Hello," + "\n" + "\n\(globalUser.toFireUser.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", friends: self.friendListEmail) { (pushResult) in
                 switch pushResult{
                     case .success(true):
                       print("Push notification happened")
-                        self.friendListEmail.forEach { (friend) in
-                         
-//                            FireService.sharedInstance.notifications(User: globalUser!, message: message, freindEmail: friend) { (completion, error) in
+                        self.friendListEmail.forEach { (friend_email) in
+                            
+                            FireService.sharedInstance.notification(.GroupInvitation, globalUser.toFireUser, url.absoluteString, friend_email, "New Group Invitaion", "\(globalUser.toFireUser.name) has invited you to join a groupchat.") { (completion, error) in
+                                if let error = error{
+                                    print(error.localizedDescription)
+                                    fatalError()
+                                }
+                            }
+//                            FireService.sharedInstance.notifications(User: globalUser.toFireUser, message: message, freindEmail: friend) { (completion, error) in
 //                                if let error = error{
 //                                    print(error.localizedDescription)
 //                                    fatalError()
@@ -410,7 +407,6 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
     }
 
 }
-
 
 
 

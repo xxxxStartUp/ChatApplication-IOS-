@@ -86,7 +86,7 @@ class ContactInfoVC : UIViewController {
         FireService.sharedInstance.getProfilePicture(user: freindAsUser!) { (result) in
             switch result {
             case .success(let url):
-                self.profileImageView.af.setImage(withURL: url)
+                self.profileImageView.loadImages(urlString: url.absoluteString, mediaType: Constants.groupInfoPage.GroupImageType)
                 break
             case .failure(_):
                 self.profileImageView.image = UIImage(systemName:"person.crop.circle.fill")
@@ -98,16 +98,17 @@ class ContactInfoVC : UIViewController {
     
     @objc func clearChat(){
         if let messages = messages{
-            FireService.sharedInstance.clearChatFriends(user: globalUser!, friend: friend!, MessagesToDelete: messages) { (result) in
-                
+            FireService.sharedInstance.clearChatFriends(user: globalUser.toFireUser, friend: friend!, MessagesToDelete: messages) { (result) in
+                print("clearChat")
                 switch result{
                     
                 case .success(let bool):
                     if bool{
-                        print("Successfully")
+                        print("clearChat Successfully")
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
+                    print("clearChat Failed")
                     
                 }
             }
@@ -175,13 +176,9 @@ class ContactInfoVC : UIViewController {
 extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 1
-        }
-        if section == 1 {
             return 2
         }
-        
-        if section == 2 {
+        if section == 1 {
             return 1
         }
         return 0
@@ -189,55 +186,41 @@ extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = contactInfoTableView.dequeueReusableCell(withIdentifier: id) as? ContactInfoCell else {
-            return UITableViewCell()
-        }
-        cell.selectionStyle = .none
-        cell.backgroundColor = .clear
-        cell.tintColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
-        cell.ContactInfoLabel.GroupInfoPageLabels(type: Constants.groupInfoPage.settingsHeader)
-
-        
-        if indexPath.section == 0 {
-            cell.ContactInfoLabel.text = friend?.email ?? "no name"
-        }
-        
-        if indexPath.section == 1{
-            
-            if indexPath.row == 0{
-                cell.ContactInfoLabel.text = "Saved Messages"
-              
-                
-                
-                cell.accessoryType = .disclosureIndicator
+            if indexPath.section == 0{
+                if indexPath.row == 0{
+                    if let cell = tableView.dequeueReusableCell(withIdentifier: "participantsCellIdentifier") as?  participantsCell {
+                        cell.backgroundColor = .clear
+                        cell.username.text = friend?.username ?? "no username"
+                        cell.email.text = friend?.email ?? "no email"
+                        cell.adminLabel.text = ""
+                        return cell
+                    }
+                }
+                if indexPath.row == 1{
+                    if let cell = tableView.dequeueReusableCell(withIdentifier: "GroupchatInfoCellIdentifier") as?  GroupchatinfoCells {
+                        cell.backgroundColor = .clear
+                        cell.label.text = "Saved Messages"
+                        return cell
+                    }
+                }
                 
             }
-            if indexPath.row == 1{
-                cell.ContactInfoLabel.text = "Mute"
-               
-                cell.buttonIsSwitch = true
+            if indexPath.section == 1{
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "GroupSettingsCellIdentifier") as? GroupSettingCell{
+                    cell.label.text = "Mute"
+                    return cell
+                }
             }
-//            if indexPath.row == 2{
-//                cell.ContactInfoLabel.text = "Archive"
-//                cell.buttonIsSwitch = true
-//            }
-            
-        }
+        return UITableViewCell()
         
-//        if indexPath.section == 2 {
-//             cell.ContactInfoLabel.text = "Clear Chat"
-//            // cell.buttonIsSwitch = nil
-//        }
-        
-        return cell
         
         
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if indexPath.section == 1 {
-            if indexPath.row == 0 {
+        if indexPath.section == 0 {
+            if indexPath.row == 1 {
                // go to savedMessaged
             }
         }

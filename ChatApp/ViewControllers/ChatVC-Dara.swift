@@ -132,7 +132,7 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
             }
             guard let user = user else {return}
             
-            FireService.sharedInstance.getFriendPictureData(user: globalUser!, friend:user.asAFriend) { (result) in
+            FireService.sharedInstance.getFriendPictureData(user: globalUser.toFireUser, friend:user.asAFriend) { (result) in
                 switch result{
                 case .success(let url):
                     self.navBarimageView.af.setImage(withURL: url)
@@ -240,14 +240,14 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
         guard let data = image.jpeg(.lowest) else {return}
         
         
-        FireService.sharedInstance.saveImageToBeSentToFriend(data: data, friend: r!, user: globalUser!) { (url, error) in
+        FireService.sharedInstance.saveImageToBeSentToFriend(data: data, friend: r!, user: globalUser.toFireUser) { (url, error) in
             if let error = error{
                 print(error.localizedDescription)
                 fatalError()
             }
             
             guard let url = url else {return}
-            let message = Message(content: Content(type: .image, content: url), sender: globalUser!, timeStamp: Date(), recieved: false)
+            let message = Message(content: Content(type: .image, content: url), sender: globalUser.toFireUser, timeStamp: Date(), recieved: false)
             self.messageToBeSent = message
             self.sendMessage()
             
@@ -260,7 +260,7 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     /// - Parameter data: Data containing the image to send
     func saveImageToSend(data : Data){
         
-        FireService.sharedInstance.saveImageToSend(data: data, user: globalUser!) { (result) in
+        FireService.sharedInstance.saveImageToSend(data: data, user: globalUser.toFireUser) { (result) in
             switch result {
             case .success(_):
                 print("sucess")
@@ -279,7 +279,7 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
             return
         }
         let content = Content(type: .string, content: messageText)
-        let message = Message(content: content, sender: globalUser!, timeStamp: Date(), recieved: false)
+        let message = Message(content: content, sender: globalUser.toFireUser, timeStamp: Date(), recieved: false)
         messageToBeSent = message
         sendMessage()
         
@@ -290,12 +290,12 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     // Modified the sendMessage function to send images  URL.
     func sendMessage(){
         guard let message = messageToBeSent else {return}
-        FireService.sharedInstance.sendMessageToFriend(User: globalUser!, message: message, freind: self.r!) { (success, error) in
+        FireService.sharedInstance.sendMessageToFriend(User: globalUser.toFireUser, message: message, freind: self.r!) { (success, error) in
             if let error = error{
                 fatalError()
             }
             if success {
-                FireService.sharedInstance.pushNotificationFriend(title: globalUser!.email, subtitle: message.content.content as! String, friends: [self.r!.email]) { (pushResult) in
+                FireService.sharedInstance.pushNotificationFriend(title: globalUser.toFireUser.email, subtitle: message.content.content as! String, friends: [self.r!.email]) { (pushResult) in
                 switch pushResult{
                     case .success(true):
                       print("Push notification happened")
@@ -321,7 +321,7 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     private func sendVideoMessage(url:NSURL){
         var messageUrl = String()
         
-        FireService.sharedInstance.sendVideoToFriend(url: url, friend: r!, user: globalUser!) { (videoURL, error,properties) in
+        FireService.sharedInstance.sendVideoToFriend(url: url, friend: r!, user: globalUser.toFireUser) { (videoURL, error,properties) in
             
             if let error = error{
                 print(error.localizedDescription)
@@ -329,7 +329,7 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
             }
             let thumbnailImage = properties["thumbNailImage"] as! UIImage
             guard let data = thumbnailImage.jpeg(.lowest) else {return}
-            FireService.sharedInstance.saveImageToBeSentToFriend(data: data, friend: self.r!, user: globalUser!) { (url, error) in
+            FireService.sharedInstance.saveImageToBeSentToFriend(data: data, friend: self.r!, user: globalUser.toFireUser) { (url, error) in
                 
                 if let error = error{
                     print(error.localizedDescription)
@@ -340,7 +340,7 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
                     messageUrl = videoURL + "thumbNailURL\(finalUrl)"
                     //ebuka may need to refactor code for message to contain property dictionary for content.
                     
-                    let message = Message(content: Content(type: .video, content: messageUrl), sender: globalUser!, timeStamp: Date(), recieved: false)
+                    let message = Message(content: Content(type: .video, content: messageUrl), sender: globalUser.toFireUser, timeStamp: Date(), recieved: false)
                     
                     
                     self.messageToBeSent = message
@@ -376,7 +376,7 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     
     
     func loadMessages(){
-        FireService.sharedInstance.loadMessagesWithFriend(User: globalUser!,  freind: r!) { (messages, error) in
+        FireService.sharedInstance.loadMessagesWithFriend(User: globalUser.toFireUser,  freind: r!) { (messages, error) in
             
             self.messages.removeAll()
             self.chatTableView.reloadData()

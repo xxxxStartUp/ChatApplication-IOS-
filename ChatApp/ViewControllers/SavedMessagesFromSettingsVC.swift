@@ -129,7 +129,7 @@ class SavedMessagesFromSettingsVC: UIViewController,UITableViewDataSource,UITabl
     }
     func loadMessages (){
         
-        FireService.sharedInstance.loadSavedMessagesFromSettings(user: globalUser!) { (messages, error) in
+        FireService.sharedInstance.loadSavedMessagesFromSettings(user: globalUser.toFireUser) { (messages, error) in
 
             if let error = error{
                 print(error.localizedDescription)
@@ -266,7 +266,7 @@ extension SavedMessagesFromSettingsVC{
             
             let message = savedMessages[indexPath.row]
             print(savedMessages[indexPath.row].content)
-            FireService.sharedInstance.deleteSavedMessageFromSettings(user: globalUser!, MessageToDelete: message) { (result) in
+            FireService.sharedInstance.deleteSavedMessageFromSettings(user: globalUser.toFireUser, MessageToDelete: message) { (result) in
                 switch result{
                     
                 case .success(let bool):

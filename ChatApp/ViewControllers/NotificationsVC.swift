@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseDynamicLinks
 
 class NotificationsVC: UIViewController{
     @IBOutlet weak var notificationsTableView: UITableView!
@@ -17,6 +18,9 @@ class NotificationsVC: UIViewController{
         notificationsTableView.delegate = self
         notificationsTableView.dataSource = self
         
+        getNotificationLog()
+    }
+    func getNotificationLog(){
         FireService.sharedInstance.getNotificationLog { (rawdata, error) in
             if(error != nil){
                 print(error?.localizedDescription)
@@ -119,14 +123,19 @@ extension NotificationsVC: UITableViewDelegate,UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let notification = notificationDataList[indexPath.row]
+        print(notification)
         let accept = UIContextualAction(style: .normal, title: "Accept") { (action, view, nil) in
             print("Accept")
             if(notification.dynamicLink != ""){
-                self.openURLInApp(request: notification.dynamicLink)
+                if let url = URL(string: notification.dynamicLink) {
+                    UIApplication.shared.open(url)
+                }
                 FireService.sharedInstance.notificationDelete(notification.id) { (isSuccess, error) in
                     if error != nil{
                         print(error)
+                        return
                     }
+                    self.getNotificationLog()
                 }
             }
         }
@@ -135,7 +144,9 @@ extension NotificationsVC: UITableViewDelegate,UITableViewDataSource {
             FireService.sharedInstance.notificationDelete(notification.id) { (isSuccess, error) in
                 if error != nil{
                     print(error)
+                    return
                 }
+                self.getNotificationLog()
             }
         }
         reject.backgroundColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)

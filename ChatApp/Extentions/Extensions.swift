@@ -508,29 +508,67 @@ extension UITextView{
 
 extension UIImageView{
     
-    
+    func getSavedImage(named: String) -> UIImage? {
+        if let dir = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
+            return UIImage(contentsOfFile: URL(fileURLWithPath: dir.absoluteString).appendingPathComponent(named).path)
+        }
+        return nil
+    }
+    func saveIamge(_ urlString:String,_ image:UIImage){
+        let imageItem = image
+        let saveName = urlString.replace(this: "https://", with: "").replace(this: "/", with: "_").replace(this: ".com", with: "").replace(this: "-", with: "").replace(this: ".jpg", with: "").replace(this: ".png", with: "")
+        if(self.saveImage(image: imageItem,named: "\(saveName).png")){
+            print("save image Success \(saveName)")
+        }
+    }
+    func saveImage(image: UIImage , named:String) -> Bool {
+        guard let data = image.jpegData(compressionQuality:1) ?? image.pngData() else {
+            return false
+        }
+        guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
+            return false
+        }
+        do {
+            try data.write(to: directory.appendingPathComponent(named)!)
+            return true
+        } catch {
+            print(error.localizedDescription)
+            return false
+        }
+    }
     func loadImages(urlString:String,mediaType:String){
+        print("loadImage: \(urlString)")
+//        urlString.ImageUrl(iv: self, scale: .scaleAspectFill, true)
             
+        //loadsaveImage
+        let saveName = urlString.replace(this: "https://", with: "").replace(this: "/", with: "_").replace(this: ".com", with: "").replace(this: "-", with: "").replace(this: ".jpg", with: "").replace(this: ".png", with: "")
+        let image = getSavedImage(named: saveName)
+        if(image != nil){
+            print("local from Document Success : (saveName)")
+            self.image = image
+            return
+        }
         switch mediaType {
         case Constants.profilePage.profileImageType:
                 self.image = nil
-                
-                //check cache for image
-                if let cachedImage = cachedImage.object(forKey: urlString as NSString){
-                    self.image = cachedImage
-                    return
-                }
-                
+
+//                //check cache for image
+//                if let cachedImage = cachedImage.object(forKey: urlString as NSString){
+//                    self.image = cachedImage
+//                    return
+//                }
+
                 //otherwise fire off a new download
 
                 if let url =
                     URL(string:urlString){
                     print(url,"URL")
-                    
+
                     self.af.setImage(withURL: url, cacheKey: nil, placeholderImage: nil, serializer: nil, filter: nil, progress: nil, progressQueue: DispatchQueue.global(), imageTransition: .crossDissolve(0.1), runImageTransitionIfCached: true) { (reponse) in
 
                         switch reponse.result {
                         case .success(let image):
+                            self.saveIamge(urlString, image)
                             self.image = image
                             self.isUserInteractionEnabled = true
                             Constants.profilePage.profileImageState = true
@@ -546,30 +584,29 @@ extension UIImageView{
             }
         case Constants.chatPage.groupImagesType:
             defaultLoadImageFromGroup(urlString: urlString)
-            
+
         case Constants.settingsPage.settingsImageType:
             self.settingsPageImageView()
             self.image = nil
-            
+
             //check cache for image
             if let cachedImage = cachedImage.object(forKey: urlString as NSString){
                 self.image = cachedImage
                 return
             }
-            
+
             //otherwise fire off a new download
 
             if let url =
                 URL(string:urlString){
                 print(url,"URL")
-                
+
                 self.af.setImage(withURL: url, cacheKey: nil, placeholderImage: nil, serializer: nil, filter: nil, progress: nil, progressQueue: DispatchQueue.global(), imageTransition: .crossDissolve(0.1), runImageTransitionIfCached: true) { (reponse) in
 
                     switch reponse.result {
                     case .success(let image):
+                        self.saveIamge(urlString, image)
                         self.image = image
-                        
-                        
                         cachedImage.setObject(image, forKey: urlString as NSString)
                     case .failure(let error):
                         print(error.localizedDescription)
@@ -577,27 +614,28 @@ extension UIImageView{
                     }
 
                 }
-                
+
             }
         case Constants.groupInfoPage.GroupImageType:
                 self.image = nil
-                
+
                 //check cache for image
                 if let cachedImage = cachedImage.object(forKey: urlString as NSString){
                     self.image = cachedImage
                     return
                 }
-                
+
                 //otherwise fire off a new download
 
                 if let url =
                     URL(string:urlString){
                     print(url,"URL")
-                    
+
                     self.af.setImage(withURL: url, cacheKey: nil, placeholderImage: nil, serializer: nil, filter: nil, progress: nil, progressQueue: DispatchQueue.global(), imageTransition: .crossDissolve(0.1), runImageTransitionIfCached: true) { (reponse) in
 
                         switch reponse.result {
                         case .success(let image):
+                            self.saveIamge(urlString, image)
                             self.image = image
                             self.isUserInteractionEnabled = true
                             Constants.groupInfoPage.groupImageState = true
@@ -611,11 +649,13 @@ extension UIImageView{
 
                     }
             }
-            
+
         default:
             defaultLoadImageFromGroup(urlString: urlString)
+
+            }
         
-            }}
+    }
     func defaultLoadImageFromGroup(urlString:String){
         self.image = nil
         
@@ -636,6 +676,7 @@ extension UIImageView{
 
                 switch reponse.result {
                 case .success(let image):
+                    self.saveIamge(urlString, image)
                     self.image = image
                     self.contentMode = .scaleAspectFill
                     

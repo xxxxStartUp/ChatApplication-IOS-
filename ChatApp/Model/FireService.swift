@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import FirebaseAuth
 import FirebaseFirestoreSwift
 import FirebaseFirestore
 import FirebaseStorage
@@ -36,39 +37,33 @@ class FireService {
     // need to test
     func loadGroups(User : FireUser,completion : @escaping ([Group]? , Error?) -> ()){
         var groups  : [Group] = []
+        print("loadGroup \(User.email)")
         FireService.users.document(User.email).collection(FireService.groupString).getDocuments{ (snapshots, error) in
-            
-            if let error = error{
-                completion(nil , error)
-                return
-            }
-            
-            guard let snapShots = snapshots else {return}
-            print(snapShots.documents.count)
-            for  document in snapShots.documents{
-                let documentData = document.data()
-                print(documentData)
-                let email = documentData["groupadmin"] as! String
-                let id = documentData["groupid"] as! String
-                let name = documentData["groupname"] as! String
-                
-                self.searchOneUserWithEmail(email: email) { (user, error) in
-                    guard let user = user else {return}
-                    
-                    let group = Group(GroupAdmin: user, id: id, name: name)
-                    groups.append(group)
-                    
-                    if snapShots.count == groups.count {
-                        completion (groups, nil)
-                    }
-                    
-                    
+                if let error = error{
+                    completion(nil , error)
+                    return
                 }
-                
-                
+                guard let snapShots = snapshots else {return}
+                print(snapShots.documents.count)
+                for  document in snapShots.documents{
+                    let documentData = document.data()
+                    print(documentData)
+                    let email = documentData["groupadmin"] as! String
+                    let id = documentData["groupid"] as! String
+                    let name = documentData["groupname"] as! String
+                    
+                    self.searchOneUserWithEmail(email: email) { (user, error) in
+                        guard let user = user else {return}
+                        
+                        let group = Group(GroupAdmin: user, id: id, name: name)
+                        groups.append(group)
+                        
+                        if snapShots.count == groups.count {
+                            completion (groups, nil)
+                        }
+                    }
+                }
             }
-        }
-        
     }
     
     
@@ -1035,17 +1030,32 @@ class FireService {
         case Misc
     }
     //Updating this to send
-    func notificationDelete(_ id:String,completion : @escaping (Bool , Error?) -> ()){
-        print("notificationDelete")
-        FireService.users.document(globalUser.toFireUser.email).collection("Notifications").document(id).delete(){ (error) in
-            if error != nil{
-                print("notificationDelete ERROR")
+//    func notificationDelete(_ id:String,completion : @escaping (Bool , Error?) -> ()){
+//        print("notificationDelete")
+//        FireService.users.document(globalUser.toFireUser.email).collection("Notifications").document(id).delete() { err in
+//            if let err = err {
+//                print("notificationDelete ERROR")
+//                completion(false,err)
+//            } else {
+//                print("notificationDelete SUCCESS")
+//                completion(true,nil)
+//            }
+//        }
+//    }
+    
+    func notificationDelete(_ id:String, completion : @escaping (Bool , Error?) -> ()) {
+        print("notificationDelete \(id)")
+        let ref = FireService.users.document(globalUser.toFireUser.email).collection("Notifications").document(id)
+        ref.delete { (error) in
+            if let error = error{
                 completion(false,error)
+                return
             }
-            print("notificationDelete SUCCESS")
             completion(true,nil)
         }
     }
+    
+    
     func notification(_ notificationType: NotificationType,_ sender : FireUser,_ dynamicLink : String, _ friendEmail:String,_ notificationTitle:String,_ notificationSubtitle:String,completion : @escaping (Bool , Error?) -> ()){
         print("notification log")
         let newNotificationRef = FireService.users.document(friendEmail).collection("Notifications")
@@ -1090,7 +1100,7 @@ class FireService {
                     "subtitle": notificationSubtitle,
                     "photo_url": photoUrl,
                     "timeStamp": Date()]
-        newNotificationRef.addDocument(data: post){ (error) in
+        newNotificationRef.document(uuid).setData(post){ (error) in
             if let error = error {
                 completion(false, error)
             }
@@ -1131,6 +1141,8 @@ class FireService {
                     }
                 }
             }else if count == 0 {
+                
+                completion([NotificationModel](), nil)
                 print("no notification log")
             }else{
                 print("notication log \(count)")
@@ -1235,7 +1247,7 @@ class FireService {
                 }
                 let data = ["groupPictureUrl" : url.absoluteString]
                 
-                self.addCustomDataToAllFriendsInGroup(data: data ,user : globalUser! , group:group, friends: friend) { (error, sucess) in
+                self.addCustomDataToAllFriendsInGroup(data: data ,user : globalUser.toFireUser , group:group, friends: friend) { (error, sucess) in
                     if let error = error {
                         print(error.localizedDescription)
                         completionHandler(.failure(error))
@@ -1693,15 +1705,53 @@ class FireService {
     /// - Parameter data: Data inputted in the form of dictionary that will be used to create a FireUser
     /// - Returns: Created FireUser with the data that was provided in the function's parameter
     func changeDictionaryToFireUser(data : ([String : Any])) -> FireUser{
-        let id = data["id"] as! String
-        let username = data["username"] as! String
-        let email = data["email"] as! String
-        let date = data["timecreated"] as! Timestamp
-        let finalDate = date.dateValue()
-        //let deviceToken = data["deviceToken"] as! String
-        
-        let fireUser = FireUser(userID: id, token: Constants.deviceTokenKey.load(), userName: username, userEmail: email, creationDate: finalDate)
-        return fireUser
+        var user_id = ""
+        var user_name = ""
+        var user_email = ""
+        var user_token = ""
+        var profile_ImageUrl = ""
+        var user_status = ""
+        var user_creationDate = Date()
+        if let id = data["id"] as? String{
+            user_id = id
+        }else{
+            print("failed to get id")
+        }
+        if let name = data["name"] as? String{
+            user_name = name
+        }else{
+            print("failed to get name")
+            if let name = data["username"] as? String{
+                user_name = name
+            }else{
+                print("failed to get username")
+            }
+        }
+        if let email = data["email"] as? String{
+            user_email = email
+        }else{
+            print("failed to get email")
+        }
+        if let deviceToken = data["deviceToken"] as? String{
+            user_token = deviceToken
+        }else{
+            print("failed to get deviceToken")
+        }
+        if let status = data["status"] as? String{
+            user_status = status
+        }else{
+            print("failed to get status")
+        }
+        if let creationDate = data["creationDate"] as? Date{
+            user_creationDate = creationDate
+        }else{
+            print("failed to get creationDate")
+        }
+        if let profileImageUrl = data["profileImageUrl"] as? String{
+            profileImageUrl.saveWithKey(key: "profileImageUrl")
+            profile_ImageUrl = profileImageUrl
+        }
+        return FireUser.init(userID: user_id, token: user_token, userName: user_name, userEmail: user_email,profileImageUrl: profile_ImageUrl,status: user_status, creationDate: user_creationDate)
     }
     
     
@@ -1748,11 +1798,47 @@ class FireService {
     
     /// Function to determine if a FireUser is associated to an email address
     /// - Parameters:
+    ///   - hashKey: Email used to determine if a FireUser is associated with this email address
+    ///   - completion: Completion handler to determine if the function completed correctly or with errors
+    /// - Returns: Nothing
+    func searchOneFriendWithhashKey(hashKey : String,completion : @escaping (FireUser? , Error?) -> ()){
+        var data : [String : Any] = [:]
+        let query = FireService.users.whereField("hashKey", isEqualTo: hashKey)
+        query.getDocuments { (snapshot, error) in
+            if let error = error{
+                completion(nil , error)
+                return
+            }
+            guard let documents = snapshot?.documents else{return}
+            let count = documents.count
+            if count == 1 {
+                for document in documents{
+                    data = document.data()
+                    print(data, "data is here")
+                    let user = self.changeDictionaryToFireUser(data: data)
+                    
+                    completion(user, nil)
+                    return
+                }
+                
+            }
+            if count == 0 {
+                self.snackbar("email does not exists")
+            }
+                
+            else{
+                fatalError("This shouldnt be happening")
+                
+            }
+        }
+    }
+    /// Function to determine if a FireUser is associated to an email address
+    /// - Parameters:
     ///   - email: Email used to determine if a FireUser is associated with this email address
     ///   - completion: Completion handler to determine if the function completed correctly or with errors
     /// - Returns: Nothing
     func searchOneUserWithEmail(email : String,completion : @escaping (FireUser? , Error?) -> ()){
-        let email1 = email.lowercased()
+        let email1 = email.lowercased().replace(this: " ", with: "")
         var data : [String : Any] = [:]
         let query = FireService.users.whereField("email", isEqualTo: email1)
         
@@ -1777,8 +1863,7 @@ class FireService {
                 
             }
             if count == 0 {
-                print("email does not exists")
-//                fatalError("email does not exists")
+                self.snackbar("email does not exists")
             }
                 
             else{
@@ -1791,8 +1876,9 @@ class FireService {
     //This function checks for the device token for 1-1 chats
     // this function is for getting the group member device token
         func searchDeviceToken(email : String,completion : @escaping (String? , Error?) -> ()){
+            let email1 = email.lowercased().replace(this: " ", with: "")
             var data : [String : Any] = [:]
-            let query = FireService.users.whereField("email", isEqualTo: email)
+            let query = FireService.users.whereField("email", isEqualTo: email1)
             query.getDocuments { (snapshot, error) in
                 if let error = error{
                     completion(nil , error)
@@ -1812,7 +1898,7 @@ class FireService {
                     }
                 }
                 if count == 0 {
-                    fatalError("email does not exists")
+                    self.snackbar("email does not exists")
                 }
                     
                 else{
@@ -1829,7 +1915,7 @@ class FireService {
     ///   - completion: Completion handler to determine if the function completed correctly or with errors
     /// - Returns: Nothing
     func searchOneFreindWithEmail(email : String,completion : @escaping (Friend? , Error?) -> ()){
-        let email1 = email.lowercased()
+        let email1 = email.lowercased().replace(this: " ", with: "")
         var data : [String : Any] = [:]
         let query = FireService.users.whereField("email", isEqualTo: email1)
         
@@ -1854,9 +1940,8 @@ class FireService {
                 
             }
             if count == 0 {
-                fatalError("email does not exists")
+                self.snackbar("email does not exists")
             }
-                
             else{
                 fatalError("This shouldnt be happening")
                 
@@ -1871,7 +1956,6 @@ class FireService {
     /// - Returns: Nothing
     func getCurrentUser(completion : @escaping (FirebaseAuth.User?) -> ()){
         let user = Auth.auth().currentUser
-        
         if let user = user {
             completion(user)
         }else{
@@ -1895,7 +1979,6 @@ class FireService {
             print("I have found the data-\(data)")
             completion(fireUser , nil)
             return
-            
         }
         
     }
@@ -2783,7 +2866,7 @@ class FireService {
         var activities : [Activity] = []
         let content = Content(type: .string, content: "yo")
         let deviceToken = Constants.deviceTokenKey.load()
-        let fireUser = FireUser(userID: "1", token: deviceToken, userName: "E", userEmail: "E", creationDate: Date())
+        let fireUser = FireUser(userID: "1", token: deviceToken, userName: "E", userEmail: "E",profileImageUrl: "",status: "" , creationDate: Date())
         let message = Message(content: content, sender: fireUser, timeStamp: Date(), recieved: false)
         let group = Group(GroupAdmin: fireUser, id: "1", name: "BJEHD")
         let activity = Activity(activityType: .GroupChat(group: group))
@@ -2831,9 +2914,9 @@ extension FireService{
                 //sends the same message to every person in the group
                 let pushNotificationSender = PushNotificationSender()
                 deviceTokenList.forEach { (token) in
-                   // if(token != "deviceToken".load()){
+                    if(token != "deviceToken".load()){
                         pushNotificationSender.sendPushNotification(to: token, title: title, body: subtitle)
-                    //}
+                    }
                 }
                 completion(.success(true))
             case .failure(let error):

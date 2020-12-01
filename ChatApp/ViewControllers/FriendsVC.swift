@@ -19,7 +19,7 @@ class FriendsVC: UIViewController {
     
     
     var friendList : [Friend] = []
-    let identifier = "ContactCell"
+    let identifier = "ContactCellIdentifier"
     var delegate : FreindDelegate?
     var filteredFriendList = [Friend]()
     var searching = false
@@ -191,12 +191,19 @@ extension FriendsVC : UITableViewDelegate , UITableViewDataSource, UISearchBarDe
         if !searching{
             guard let vc = UIStoryboard(name: "ChatStoryBoard", bundle: nil).instantiateInitialViewController()  as? ChatVC_Dara else {return}
             self.delegate = vc
-            delegate?.didSendFriend(freind: friendList[indexPath.row])
+            
+            guard let friend = friendList[safe: indexPath.row] else {
+              return
+            }
+            delegate?.didSendFriend(freind:friend)
             navigationController?.pushViewController(vc, animated: true)
         }else{
             guard let vc = UIStoryboard(name: "ChatStoryBoard", bundle: nil).instantiateInitialViewController()  as? ChatVC_Dara else {return}
             self.delegate = vc
-            delegate?.didSendFriend(freind: filteredFriendList[indexPath.row])
+            guard let friend = filteredFriendList[safe: indexPath.row] else {
+              return
+            }
+            delegate?.didSendFriend(freind: friend)
             navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -204,7 +211,7 @@ extension FriendsVC : UITableViewDelegate , UITableViewDataSource, UISearchBarDe
         if editingStyle == .delete{
             if !searching{
             print(friendList[indexPath.row].email)
-            FireService.sharedInstance.deleteFriend(user: globalUser!, friend: friendList[indexPath.row]) { (error, completion) in
+            FireService.sharedInstance.deleteFriend(user: globalUser.toFireUser, friend: friendList[indexPath.row]) { (error, completion) in
                 if let error = error{
                     print(error.localizedDescription)
                 }
@@ -215,7 +222,7 @@ extension FriendsVC : UITableViewDelegate , UITableViewDataSource, UISearchBarDe
             }
             }else{
                 print(filteredFriendList[indexPath.row].email)
-                FireService.sharedInstance.deleteFriend(user: globalUser!, friend: filteredFriendList[indexPath.row]) { (error, completion) in
+                FireService.sharedInstance.deleteFriend(user: globalUser.toFireUser, friend: filteredFriendList[indexPath.row]) { (error, completion) in
                     if let error = error{
                         print(error.localizedDescription)
                     }
@@ -310,4 +317,9 @@ extension FriendsVC : UITableViewDelegate , UITableViewDataSource, UISearchBarDe
     
     
     
+}
+extension Array {
+    subscript (safe index: Int) -> Element? {
+        return indices ~= index ? self[index] : nil
+    }
 }

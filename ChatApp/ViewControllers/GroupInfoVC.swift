@@ -11,23 +11,22 @@ import FirebaseDynamicLinks
 
 class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
     
-    @IBOutlet weak var groupinfoTableview: UITableView!
-    @IBOutlet weak var participantsTableview: UITableView!
+    @IBOutlet weak var tableView: UITableView!
+//    @IBOutlet weak var participantsTableview: UITableView!
     @IBOutlet weak var groupNameView: UIView!
     @IBOutlet weak var groupNameTextField: UITextField!
     
     @IBOutlet var groupImageView: UIImageView!
     var defaultImage:UIImage?
+    
     let identifier1 = "GroupchatInfoCellIdentifier"
-    
     let identifier2 = "GroupSettingsCellIdentifier"
-    
     let identifier3 = "participantsCellIdentifier"
-    
     let identifier4 = "participantsHeaderCellIdentifier"
     
     let GroupInfoVCToSavedMessagesID = "GroupInfoVCToSavedMessagesID"
     let dynamicLinkDomain = "https://soluchat.page.link"
+    
     var groupDelegate : GroupDelegate?
     var groupParticipants = [Friend]()
     var tempParticipants = [Friend]()
@@ -57,13 +56,13 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
         updateBackgroundViews()
         
         setupTableView()
-        setupRightNavItem()
+//        setupRightNavItem()
         
         groupNameTextField.delegate = self
         updateGroupName()
         groupPictureGestureSetup()
-        participantsTableview.allowsSelection = false
-        groupinfoTableview.setEditing(false, animated: false)
+//        participantsTableview.allowsSelection = false
+//        groupinfoTableview.setEditing(false, animated: false)
         
         
         setImage()
@@ -79,24 +78,32 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
     }
     
     func setupTableView(){
-        groupinfoTableview.delegate = self
-        groupinfoTableview.dataSource = self
-        participantsTableview.delegate = self
-        participantsTableview.dataSource = self
-        groupinfoTableview.register(UINib(nibName: "GroupchatinfoCells", bundle: nil), forCellReuseIdentifier: identifier1)
-        groupinfoTableview.register(UINib(nibName: "GroupSettingCell", bundle: nil), forCellReuseIdentifier: identifier2)
-        participantsTableview.register(UINib(nibName: "participantsHeaderCell", bundle: nil), forCellReuseIdentifier: identifier4)
-        participantsTableview.register(UINib(nibName: "participantsCell", bundle: nil), forCellReuseIdentifier: identifier3)
-        
-        
-        
-        groupinfoTableview.tableFooterView = UIView()
-        participantsTableview.tableFooterView = footerviewSetUp()
-        //participantsTableview.tableHeaderView = UIView()
-        
+        tableView.tableFooterView = footerviewSetUp()
     }
     
+    @IBAction func onClickQR(_ sender: Any) {
+        FireService.sharedInstance.getGroupURL(user: globalUser!, group: group!) { (urlString, success, error) in
+            if let error = error{
+                print(error.localizedDescription)
+            }
+            if let urlString = urlString,let name = self.group?.name{
+                self.toGroupQRLink(groupLink: urlString, groupName: name)
+            }
+        }
+    }
     
+    @IBAction func shareLink(_ sender: Any) {
+        FireService.sharedInstance.getGroupURL(user: globalUser!, group: group!) { (urlString, success, error) in
+            if let error = error{
+                print(error.localizedDescription)
+            }
+            if let urlString = urlString,let url = URL(string: urlString){
+                let promoText = "Check out this app for solustack"
+                let activityVC = UIActivityViewController(activityItems: [promoText,url], applicationActivities: nil)
+                self.present(activityVC,animated: true)
+            }
+        }
+    }
     
     
     func updateGroupName(){
@@ -105,7 +112,6 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
                 print(error.localizedDescription)
             }
             print(group!.GroupAdmin.email)
-            
             self.groupNameTextField.text = group?.name
         }
     }
@@ -135,10 +141,10 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
                 print(error.localizedDescription)
             }
             if let urlString = urlString,let url = URL(string: urlString){
-            let promoText = "Check out this app for solustack"
-            let activityVC = UIActivityViewController(activityItems: [promoText,url], applicationActivities: nil)
-            self.present(activityVC,animated: true)
-        }
+                let promoText = "Check out this app for solustack"
+                let activityVC = UIActivityViewController(activityItems: [promoText,url], applicationActivities: nil)
+                self.present(activityVC,animated: true)
+            }
         }
 
     }
@@ -148,48 +154,31 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
         
         
         DispatchQueue.main.async {
-            self.groupinfoTableview.darkmodeBackground()
-            self.participantsTableview.darkmodeBackground()
+            self.tableView.darkmodeBackground()
             self.navigationController?.navigationBar.darkmodeBackground()
             self.groupNameView.darkmodeBackground()
             self.view.darkmodeBackground()
             self.groupNameTextField.groupInfoTextField()
             
             self.navigationBarBackgroundHandler()
-            self.groupinfoTableview.reloadData()
-            self.participantsTableview.reloadData()
-            //self.navigationController?.navigationBar.settingsPage()
-            
+            self.tableView.reloadData()
             self.groupNameTextField.groupInfoTextField()
-            
-            let rightImage:UIButton = {
-                
-                let button = UIButton(type: .system)
-                
-                let image = UIImage(systemName:"pencil")
-                
-                button.setImage(image, for: .normal)
-                button.isUserInteractionEnabled = false
-                return button
-            }()
-            
-            
-            self.groupNameTextField.rightViewMode = .unlessEditing
-            
-            self.groupNameTextField.tintColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
-            
-            self.groupNameTextField.rightView = rightImage
-            
-            
-            
+//            let rightImage:UIButton = {
+//                let button = UIButton(type: .system)
+//                let image = UIImage(systemName:"pencil")
+//                button.setImage(image, for: .normal)
+//                button.isUserInteractionEnabled = false
+//                return button
+//            }()
+//            self.groupNameTextField.rightViewMode = .unlessEditing
+//            self.groupNameTextField.tintColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+//            self.groupNameTextField.rightView = rightImage
         }
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? SavedMessagesVC{
             destination.group = group
-            
         }
-        
     }
     //handles the text color, background color and appearance of the nav bar
     func navigationBarBackgroundHandler(){
@@ -233,109 +222,69 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
 extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if tableView == groupinfoTableview{
-            return 2
-        }
-        else{
-            return 1
-        }
+        return 2
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if tableView == groupinfoTableview{
-            if section == 0 {
-                return 1
-            }
-            else if section == 1 {
-                return 1
-            }
-                
-            else {
-                return 0
-            }
-        }else{
-            
+        if section == 0 {
+            return 2
         }
-        return groupParticipants.count
+        else if section == 1 {
+            return groupParticipants.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if tableView == groupinfoTableview{
-            switch indexPath.section {
-            case 0:
-                if let cell = groupinfoTableview.dequeueReusableCell(withIdentifier: identifier1) as?  GroupchatinfoCells {
-                    
+        if indexPath.section == 0{
+            if indexPath.row == 0{
+                if let cell = tableView.dequeueReusableCell(withIdentifier: identifier1) as?  GroupchatinfoCells {
                     //cell.updateviews go here
                     cell.backgroundColor = .clear
-                    
                     cell.updateView()
-                
                     tableView.setEditing(false, animated: false)
                     return cell
                 }
-            case 1:
-                if let cell = groupinfoTableview.dequeueReusableCell(withIdentifier: identifier2) as? GroupSettingCell{
+            }
+            if indexPath.row == 1{
+                if let cell = tableView.dequeueReusableCell(withIdentifier: identifier2) as? GroupSettingCell{
                     cell.backgroundColor = .clear
                     cell.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-                    cell.updateViews(indexPath: indexPath.row)
+                    cell.updateViews(indexPath: 0)
                     tableView.setEditing(false, animated: false)
                     return cell
                 }
-                
-                
-            default:
-                break
             }
-            
         }
-        else{
-            if let cell = participantsTableview.dequeueReusableCell(withIdentifier: identifier3) as? participantsCell  {
-                
+        else if indexPath.section == 1{
+            if let cell = tableView.dequeueReusableCell(withIdentifier: identifier3) as? participantsCell  {
                 //        Dara used this to test the viewGroupParticipants function in fireservice
                 cell.updateViews(groupParticipants:
                     self.groupParticipants,indexPath:indexPath.row,group:group!)
                 print(self.groupParticipants,"group Participants",indexPath.row)
                 cell.backgroundColor = .clear
                 return cell
-                
             }
-            
         }
         return UITableViewCell()
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if tableView == groupinfoTableview{
-            if section == 0 {
-                let view = UIView()
-                view.darkmodeBackground()
-                return view
-            }
-            
-            if section == 1 {
-                let view = UIView()
-                view.darkmodeBackground()
-                return view
-            }
-            
+        if section == 0{
+            let view = UIView()
+            view.darkmodeBackground()
+            return view
         }
-        else{
+        else if section == 1{
             let view = tableView.dequeueReusableCell(withIdentifier: identifier4) as! participantsHeaderCell
             view.updateviews()
             return view
         }
-        
         return nil
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        
-        if tableView == groupinfoTableview{
-            
-            if section == 1 {
-                return 0
-            }
-            
-        }else{
+        if section == 0{
+            return 0
+        }
+        else if section == 1{
             return 35
         }
         return 0
@@ -364,7 +313,7 @@ extension GroupInfoVC:UITextFieldDelegate{
                 }
             }
         }
-        participantsTableview.reloadData()
+        tableView.reloadData()
         return true
     }
 }
@@ -493,10 +442,6 @@ extension GroupInfoVC:UIImagePickerControllerDelegate{
                 print("failed to set image url")
             }
         }
-
-        
-        
-        
     }
     
 }
@@ -505,7 +450,7 @@ extension GroupInfoVC:UIImagePickerControllerDelegate{
 extension GroupInfoVC{
     func footerviewSetUp() -> UIView{
         let view:UIView = {
-            let finalLabel = UIView(frame: CGRect(x: 0, y: 0, width: participantsTableview.frame.width, height: 24))
+            let finalLabel = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 44))
             finalLabel.backgroundColor = .clear
             return finalLabel
         }()
@@ -525,7 +470,8 @@ extension GroupInfoVC{
         groupOptionButton = button
         button.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         button.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        button.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        button.topAnchor.constraint(equalTo: view.topAnchor, constant: 16).isActive = true
+//        button.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         button.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         return view
@@ -547,7 +493,6 @@ extension GroupInfoVC{
             }()
         let shareRightBarButtonItem = UIBarButtonItem(customView: shareButton)
         navigationItem.rightBarButtonItems = [shareRightBarButtonItem]
-        
     }
     
     @objc func handlesLeaveGroupTapped(){
@@ -608,8 +553,8 @@ extension GroupInfoVC{
         }
     }
     func selectMakeAdminAndLeaveGroupOption(sender:UIAlertAction!){
-        participantsTableview.reloadData()
-        participantsTableview.allowsSelection = true
+        tableView.reloadData()
+        tableView.allowsSelection = true
         setAdminAndLeaveGroup = true
         //        participantsTableview.isEditing = true
         //        participantsTableview.allowsSelectionDuringEditing = true
@@ -626,8 +571,8 @@ extension GroupInfoVC{
     }
     
     func assignNewAdminOption(sender:UIAlertAction!){
-        participantsTableview.reloadData()
-        participantsTableview.allowsSelection = true
+        tableView.reloadData()
+        tableView.allowsSelection = true
         assignAdmin = true
         print("New group admin assigned")
     }
@@ -638,16 +583,16 @@ extension GroupInfoVC{
             if let error = error{
                 print(error.localizedDescription)
             }
-            self.participantsTableview.reloadData()
+            self.tableView.reloadData()
             
             
         }
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if tableView == groupinfoTableview{
+        if indexPath.section == 0{
             return false
         }
-        if tableView == participantsTableview{
+        else if indexPath.section == 1{
             if globalUser?.email == group?.GroupAdmin.email{
                 return true
             }
@@ -655,76 +600,70 @@ extension GroupInfoVC{
                 return false
             }
         }
-     
         return false
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
-        if tableView == participantsTableview{
-        if editingStyle == .delete{
-            
-            print("Editing:\(indexPath.row)")
-            if groupParticipants.count > 1{
-            if let groupadmin = group?.GroupAdmin.email{
-                       
-                    
-                if groupParticipants[indexPath.row].email == groupadmin{
-                    let alertController = UIAlertController(title: "Oh no :)", message: "You need to assign a new group admin before leaving the group", preferredStyle: .alert)
-                                   
-                                   
-                    let action = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-                    alertController.addAction(action)
-                    
-                    self.present(alertController, animated: true, completion: nil)
-                    
-                    print("cannot delete group admin")
-                }
-                        else{
-                            FireService.sharedInstance.deleteFriendFromGroup(user: globalUser!, group: group!, friend: groupParticipants[indexPath.row]) { (error, completion) in
-                                if let error = error{
-                                    print(error.localizedDescription)
+        if indexPath.section == 1{
+            if editingStyle == .delete{
+                
+                print("Editing:\(indexPath.row)")
+                if groupParticipants.count > 1{
+                if let groupadmin = group?.GroupAdmin.email{
+                           
+                        
+                    if groupParticipants[indexPath.row].email == groupadmin{
+                        let alertController = UIAlertController(title: "Oh no :)", message: "You need to assign a new group admin before leaving the group", preferredStyle: .alert)
+                                       
+                                       
+                        let action = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                        alertController.addAction(action)
+                        
+                        self.present(alertController, animated: true, completion: nil)
+                        
+                        print("cannot delete group admin")
+                    }
+                            else{
+                                FireService.sharedInstance.deleteFriendFromGroup(user: globalUser!, group: group!, friend: groupParticipants[indexPath.row]) { (error, completion) in
+                                    if let error = error{
+                                        print(error.localizedDescription)
+                                    }
+                                    print("successfully deleted user from group")
+                                    self.groupParticipants.remove(at: indexPath.row)
+                                    self.tableView.reloadData()
                                 }
-                                print("successfully deleted user from group")
-                                self.groupParticipants.remove(at: indexPath.row)
-                                self.participantsTableview.reloadData()
+                            }
                     }
                 }
-                }
-            }
-            else{
-                let alertController = UIAlertController(title: "Dissolve Group Action", message: "Are you sure you want to go ahead and dissolve the group?", preferredStyle: .alert)
-                               
-                               
-                let action = UIAlertAction(title: "No", style: .cancel, handler: nil)
-                let action1 = UIAlertAction(title: "Yes", style: .default, handler: dissolveGroup(sender:))
-                let actions = [action,action1]
-                      
+                else{
+                    let alertController = UIAlertController(title: "Dissolve Group Action", message: "Are you sure you want to go ahead and dissolve the group?", preferredStyle: .alert)
+                                   
+                                   
+                    let action = UIAlertAction(title: "No", style: .cancel, handler: nil)
+                    let action1 = UIAlertAction(title: "Yes", style: .default, handler: dissolveGroup(sender:))
+                    let actions = [action,action1]
+                          
                       for action in actions{
                           alertController.addAction(action)
                       }
-                
-                
-                self.present(alertController, animated: true, completion: nil)
-            }
+                    
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                }
 
             }
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if tableView == groupinfoTableview{
+        if indexPath.section == 0 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "GroupchatInfoCellIdentifier", for: indexPath) as? GroupchatinfoCells{
                 if indexPath.row == 0 {
                     performSegue(withIdentifier: GroupInfoVCToSavedMessagesID, sender: self)
                 }
-                
             }
-            
         }
-        if tableView == participantsTableview{
-            
-            if let cell = participantsTableview.dequeueReusableCell(withIdentifier: identifier3) as? participantsCell  {
+        else if indexPath.section == 1{
+            if let cell = tableView.dequeueReusableCell(withIdentifier: identifier3) as? participantsCell  {
                 
                 let alertController = UIAlertController(title: "What do you want to do?", message: "", preferredStyle: .actionSheet)
                 
@@ -745,7 +684,6 @@ extension GroupInfoVC{
                 self.present(alertController, animated: true, completion: nil)
                 
             }
-            
         }
     }
     //handles changing the admin to a new user.
@@ -768,7 +706,7 @@ extension GroupInfoVC{
                     
                     print(friends)
                     if success{
-                        self.participantsTableview.reloadData()
+                        self.tableView.reloadData()
                         self.group = newGroup
                         self.setAdminAndLeaveGroup = false
                         self.createDynamicLink(admin: newGroup.GroupAdmin, groupID: newGroup.id, groupName: newGroup.name) { (success) in
@@ -808,7 +746,7 @@ extension GroupInfoVC{
                     
                     print(friends)
                     if success{
-                        self.participantsTableview.reloadData()
+                        self.tableView.reloadData()
                         self.group = newGroup
                         self.assignAdmin = false
                         self.createDynamicLink(admin: newGroup.GroupAdmin, groupID: newGroup.id, groupName: newGroup.name) { (success) in

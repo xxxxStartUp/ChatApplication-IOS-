@@ -121,7 +121,7 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
     
     func loadFreindMessage(){
         
-        FireService.sharedInstance.loadMessagesWithFriend(User: globalUser!, freind: freind!) { (messages, error) in
+        FireService.sharedInstance.loadMessagesWithFriend(User: globalUser.toFireUser, freind: freind!) { (messages, error) in
             
         }
     }
@@ -150,7 +150,7 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
     }
     func loadMessages (){
         
-        FireService.sharedInstance.loadSavedMessages(user: globalUser!, group: group!) { (messages, error) in
+        FireService.sharedInstance.loadSavedMessages(user: globalUser.toFireUser, group: group!) { (messages, error) in
             
             if let error = error{
                 print(error.localizedDescription)
@@ -276,7 +276,7 @@ extension SavedMessagesVC{
             
             let message = savedMessages[indexPath.row]
             print(savedMessages[indexPath.row].content)
-            FireService.sharedInstance.deleteOneSavedMessage(user: globalUser!, group: group!, MessageToDelete: message) { (result) in
+            FireService.sharedInstance.deleteOneSavedMessage(user: globalUser.toFireUser, group: group!, MessageToDelete: message) { (result) in
                 switch result{
                     
                 case .success(let bool):

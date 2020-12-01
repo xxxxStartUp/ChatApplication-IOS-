@@ -106,6 +106,14 @@
 		CBF45C7F24C5117000E5AFA3 /* GroupInfoSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBF45C7E24C5117000E5AFA3 /* GroupInfoSB.storyboard */; };
 		CBF5DCAD257194CB00950276 /* PushNotificationSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF5DCAC257194CB00950276 /* PushNotificationSender.swift */; };
 		F2248CA825747690009A29A2 /* NotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2248CA725747690009A29A2 /* NotificationModel.swift */; };
+		F29A0B53257615C300046CD4 /* SplashScreenSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F29A0B52257615C300046CD4 /* SplashScreenSB.storyboard */; };
+		F29A0B5B2576163200046CD4 /* SplashScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29A0B5A2576163200046CD4 /* SplashScreenVC.swift */; };
+		F29A0B60257617A600046CD4 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29A0B5F257617A600046CD4 /* String+Extension.swift */; };
+		F29A0BEF2576A0F000046CD4 /* GroupLinkQRVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29A0BEE2576A0F000046CD4 /* GroupLinkQRVC.swift */; };
+		F29A0C452576A7C000046CD4 /* AddFriendQRVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29A0C442576A7BF00046CD4 /* AddFriendQRVC.swift */; };
+		F29A0C4D2576A99C00046CD4 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29A0C4C2576A99C00046CD4 /* UIView+Extension.swift */; };
+		F29A0C552576A9BD00046CD4 /* Snackbar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29A0C542576A9BD00046CD4 /* Snackbar+Extension.swift */; };
+		F29A0C5D2576AC2E00046CD4 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29A0C5C2576AC2E00046CD4 /* ScannerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -238,6 +246,14 @@
 		CBF5DCAC257194CB00950276 /* PushNotificationSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSender.swift; sourceTree = "<group>"; };
 		D36193F093AA30834822E052 /* Pods-ChatApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp.debug.xcconfig"; path = "Target Support Files/Pods-ChatApp/Pods-ChatApp.debug.xcconfig"; sourceTree = "<group>"; };
 		F2248CA725747690009A29A2 /* NotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationModel.swift; sourceTree = "<group>"; };
+		F29A0B52257615C300046CD4 /* SplashScreenSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SplashScreenSB.storyboard; sourceTree = "<group>"; };
+		F29A0B5A2576163200046CD4 /* SplashScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenVC.swift; sourceTree = "<group>"; };
+		F29A0B5F257617A600046CD4 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		F29A0BEE2576A0F000046CD4 /* GroupLinkQRVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupLinkQRVC.swift; sourceTree = "<group>"; };
+		F29A0C442576A7BF00046CD4 /* AddFriendQRVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendQRVC.swift; sourceTree = "<group>"; };
+		F29A0C4C2576A99C00046CD4 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		F29A0C542576A9BD00046CD4 /* Snackbar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Snackbar+Extension.swift"; sourceTree = "<group>"; };
+		F29A0C5C2576AC2E00046CD4 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -348,6 +364,7 @@
 				436213E724B647F900304FB3 /* ChatVC-Dara.swift */,
 				43C6C9ED24B590B2003DB77E /* ProfileVC.swift */,
 				43C6C9C924B58B85003DB77E /* NotificationsVC.swift */,
+				F29A0B5A2576163200046CD4 /* SplashScreenVC.swift */,
 				43BBB45524A0795E0024F449 /* ChatVC.swift */,
 				2733F28F2516A07200C12729 /* SavedMessagesVC.swift */,
 				43BBB44C24A064660024F449 /* SettingsVC.swift */,
@@ -357,7 +374,9 @@
 				43BBB432249C99B80024F449 /* SignInVC.swift */,
 				CB381BA4249DB7C6000A8041 /* SignUpVC.swift */,
 				43BD8A9824AA713D00749E2A /* AddFriendVC.swift */,
+				F29A0C442576A7BF00046CD4 /* AddFriendQRVC.swift */,
 				CB584D2324C524AC00F863AF /* GroupInfoVC.swift */,
+				F29A0BEE2576A0F000046CD4 /* GroupLinkQRVC.swift */,
 				CB85DDF124CE77BA00E94353 /* SelectFriendVC.swift */,
 				CB2570D1251A887100EEBA8D /* SavedMessagesFromSettingsVC.swift */,
 				2727D50125108D9700CCC9C8 /* ContactInfoVC.swift */,
@@ -369,6 +388,7 @@
 			isa = PBXGroup;
 			children = (
 				43BBB435249C9E1C0024F449 /* Validate.swift */,
+				F29A0C5C2576AC2E00046CD4 /* ScannerViewController.swift */,
 			);
 			path = Utitliies;
 			sourceTree = "<group>";
@@ -444,27 +464,28 @@
 		43C6C9CB24B58D9E003DB77E /* StoryBoards */ = {
 			isa = PBXGroup;
 			children = (
-				43C6C9CC24B58D9E003DB77E /* ChatLogSB.storyboard */,
-				43C6C9CD24B58D9E003DB77E /* AddFriendSB.storyboard */,
-				43C6C9CE24B58D9E003DB77E /* ChatStoryBoard.storyboard */,
+				F29A0B52257615C300046CD4 /* SplashScreenSB.storyboard */,
 				43C6C9CF24B58D9E003DB77E /* SignInSB.storyboard */,
-				43C6C9D024B58D9E003DB77E /* SettingsSB.storyboard */,
 				43C6C9D124B58D9E003DB77E /* SignUpSB.storyboard */,
+				43C6C9CC24B58D9E003DB77E /* ChatLogSB.storyboard */,
+				43C6C9D024B58D9E003DB77E /* SettingsSB.storyboard */,
+				43C6C9DC24B58D9E003DB77E /* profileStoryBoard.storyboard */,
+				43C6C9D724B58D9E003DB77E /* NewGroupSB.storyboard */,
+				CBF45C7E24C5117000E5AFA3 /* GroupInfoSB.storyboard */,
+				436213E524B647D300304FB3 /* GroupChatSB.storyboard */,
+				43C6C9CD24B58D9E003DB77E /* AddFriendSB.storyboard */,
+				43C6C9DA24B58D9E003DB77E /* FriendsSB.storyboard */,
+				CB85DDEF24CE771D00E94353 /* selectFriendSB.storyboard */,
+				2727D50325108E0200CCC9C8 /* ContactInfoSB.storyboard */,
+				43C6C9DD24B58D9E003DB77E /* ChatSB.storyboard */,
+				43C6C9CE24B58D9E003DB77E /* ChatStoryBoard.storyboard */,
 				43C6C9D224B58D9E003DB77E /* BadConnection */,
 				43C6C9D524B58D9E003DB77E /* MainSB.storyboard */,
-				43C6C9D724B58D9E003DB77E /* NewGroupSB.storyboard */,
 				43C6C9D824B58D9E003DB77E /* MainTabStoryboard.storyboard */,
 				43C6C9D924B58D9E003DB77E /* NotificationSB.storyboard */,
-				436213E524B647D300304FB3 /* GroupChatSB.storyboard */,
 				2733F2912516A09400C12729 /* SavedMessagesSB.storyboard */,
-				43C6C9DA24B58D9E003DB77E /* FriendsSB.storyboard */,
 				43C6C9DB24B58D9E003DB77E /* WelcomeScreenSB.storyboard */,
-				43C6C9DC24B58D9E003DB77E /* profileStoryBoard.storyboard */,
-				43C6C9DD24B58D9E003DB77E /* ChatSB.storyboard */,
-				CBF45C7E24C5117000E5AFA3 /* GroupInfoSB.storyboard */,
-				CB85DDEF24CE771D00E94353 /* selectFriendSB.storyboard */,
 				CB2570D6251A896D00EEBA8D /* SavedMessagesFromSettingsSB.storyboard */,
-				2727D50325108E0200CCC9C8 /* ContactInfoSB.storyboard */,
 			);
 			path = StoryBoards;
 			sourceTree = "<group>";
@@ -524,6 +545,9 @@
 		CBA262A724AFB7C600F81034 /* Extentions */ = {
 			isa = PBXGroup;
 			children = (
+				F29A0B5F257617A600046CD4 /* String+Extension.swift */,
+				F29A0C4C2576A99C00046CD4 /* UIView+Extension.swift */,
+				F29A0C542576A9BD00046CD4 /* Snackbar+Extension.swift */,
 				CBA262AA24AFBB5F00F81034 /* Extensions.swift */,
 			);
 			path = Extentions;
@@ -712,6 +736,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2758031F24EB97F800057807 /* participantsHeaderCell.xib in Resources */,
+				F29A0B53257615C300046CD4 /* SplashScreenSB.storyboard in Resources */,
 				43C6C9DE24B58D9E003DB77E /* ChatLogSB.storyboard in Resources */,
 				CB2570D7251A896D00EEBA8D /* SavedMessagesFromSettingsSB.storyboard in Resources */,
 				43C6C9E024B58D9E003DB77E /* ChatStoryBoard.storyboard in Resources */,
@@ -890,9 +915,11 @@
 				436213EA24B6484D00304FB3 /* GroupDelegate.swift in Sources */,
 				43BBB419249A7B910024F449 /* Git.swift in Sources */,
 				43BBB44824A061150024F449 /* FriendsVC.swift in Sources */,
+				F29A0B5B2576163200046CD4 /* SplashScreenVC.swift in Sources */,
 				43BBB44424A04DE60024F449 /* Admin.swift in Sources */,
 				CB381BA7249EF5BB000A8041 /* Constants.swift in Sources */,
 				436213E424B647B100304FB3 /* GroupChatVC.swift in Sources */,
+				F29A0C5D2576AC2E00046CD4 /* ScannerViewController.swift in Sources */,
 				43BD8A8E24A81C4400749E2A /* Friend.swift in Sources */,
 				43E1A25924BAA3AA00511642 /* TexterView.swift in Sources */,
 				CBA262AB24AFBB5F00F81034 /* Extensions.swift in Sources */,
@@ -900,8 +927,10 @@
 				2758031B24EB97F800057807 /* GroupchatinfoCells.swift in Sources */,
 				43BBB45424A071B20024F449 /* SettingsCell.swift in Sources */,
 				43BBB45624A0795E0024F449 /* ChatVC.swift in Sources */,
+				F29A0BEF2576A0F000046CD4 /* GroupLinkQRVC.swift in Sources */,
 				2758032524EB987900057807 /* ChatDate.swift in Sources */,
 				43BBB44624A04DF20024F449 /* FireUser.swift in Sources */,
+				F29A0C452576A7C000046CD4 /* AddFriendQRVC.swift in Sources */,
 				43BBB433249C99B80024F449 /* SignInVC.swift in Sources */,
 				43BBB45224A070BD0024F449 /* SettingsProfileCell.swift in Sources */,
 				43C2F9FA24A315700080CD8F /* NewGroupVC.swift in Sources */,
@@ -916,6 +945,7 @@
 				43BBB428249B13EA0024F449 /* User.swift in Sources */,
 				CBF5DCAD257194CB00950276 /* PushNotificationSender.swift in Sources */,
 				2758031C24EB97F800057807 /* participantsCell.swift in Sources */,
+				F29A0C4D2576A99C00046CD4 /* UIView+Extension.swift in Sources */,
 				43A7480624BB811400281A07 /* ProfileInfoCell.swift in Sources */,
 				43A7480A24BB811400281A07 /* ChatInfoCells.swift in Sources */,
 				CB85DDF224CE77BA00E94353 /* SelectFriendVC.swift in Sources */,
@@ -926,11 +956,13 @@
 				439F921E24AD469000EC9A33 /* FriendDelegate.swift in Sources */,
 				43C6C99D24B0291D003DB77E /* ChatError.swift in Sources */,
 				43C6C9C824B58B71003DB77E /* NotificationsCell.swift in Sources */,
+				F29A0B60257617A600046CD4 /* String+Extension.swift in Sources */,
 				436213E824B647F900304FB3 /* ChatVC-Dara.swift in Sources */,
 				F2248CA825747690009A29A2 /* NotificationModel.swift in Sources */,
 				CB584D2424C524AC00F863AF /* GroupInfoVC.swift in Sources */,
 				43A7480924BB811400281A07 /* AppSettingsCell.swift in Sources */,
 				43BD8A9324AA6CFE00749E2A /* Global.swift in Sources */,
+				F29A0C552576A9BD00046CD4 /* Snackbar+Extension.swift in Sources */,
 				2709E88B250298EC006E0DF0 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
