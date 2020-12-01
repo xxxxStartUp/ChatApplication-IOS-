@@ -191,6 +191,7 @@ extension AppDelegate : MessagingDelegate {
             print("Remote InstanceID token: \(result.token)")
           }
         }
+        updateFirestorePushTokenIfNeeded(tokens: fcmToken)
     }
     
 
