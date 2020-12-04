@@ -16,23 +16,17 @@ class ChatLogCell: UITableViewCell {
     @IBOutlet weak var chatDateLabel: UILabel!
     @IBOutlet var profileImageview: UIImageView!
     
-    @IBOutlet weak var lastMessage: UILabel!
+//    @IBOutlet weak var lastMessage: UILabel!
     
     func updateViews(indexPath: Int){
-        chatNameLabel.chatLogPageLabels(type: Constants.mainPage.groupNameHeader)
-        
         chatDateLabel.chatLogPageLabels(type: Constants.mainPage.timeStamp)
-        lastMessage.chatLogPageLabels(type: Constants.mainPage.messagesubHeader)
-//        chatNameLabel.text = "Chat \(indexPath)"
+        chatNameLabel.chatLogPageLabels(type: Constants.mainPage.groupNameHeader)
+//        lastMessage.chatLogPageLabels(type: Constants.mainPage.messagesubHeader)
+        chatNameLabel.text = "Chat \(indexPath)"
         chatDateLabel.text = "9/1\(indexPath)/20"
-        
-        
+        contentView.darkmodeBackground()
         profileImageview.chatLogImageView()
-        
         print("errr")
-        
-        
-        
     }
     
     
@@ -41,7 +35,7 @@ class ChatLogCell: UITableViewCell {
         
         didSet{
             chatSenderNameLabel.text = ""
-            lastMessage.text = "No messages"
+//            lastMessage.text = "No messages"
             chatDateLabel.text = ""
                 switch activity.type {
                     case .GroupChat(group:let group):
@@ -91,8 +85,8 @@ class ChatLogCell: UITableViewCell {
                 self.chatDateLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
                 let user = message.sender.name
                 let messageContent = message.content.content
-                self.chatSenderNameLabel.text = ""
-                self.lastMessage.text = "\(messageContent)"
+                self.chatSenderNameLabel.text = "\(messageContent)"
+//                self.lastMessage.text = "\(messageContent)"
             case .failure(_):
                 return
             }
@@ -108,8 +102,8 @@ class ChatLogCell: UITableViewCell {
                 self.chatDateLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
                 let user = message.sender.name
                 let messageContent = message.content.content
-                self.chatSenderNameLabel.text = "\(user):"
-                self.lastMessage.text = "\(messageContent)"
+                self.chatSenderNameLabel.text = "\(user): \(messageContent)"
+//                self.lastMessage.text = "\(messageContent)"
             case .failure(_):
                 return
             }

@@ -1060,31 +1060,31 @@ class FireService {
         print("notification log")
         let newNotificationRef = FireService.users.document(friendEmail).collection("Notifications")
         
-        var photoUrl = ""
+        let photoUrl = sender.profileImageUrl
         let uuid = NSUUID().uuidString
         var notificationKey = ""
         switch notificationType{
             case .FriendRequest:
                 notificationKey = "friend_request"
-                FireService.sharedInstance.getProfilePicture(user: globalUser.toFireUser) {  (result) in
-                    switch result{
-                    case .success(let url):
-                        photoUrl = url.absoluteString
-                    case .failure(_):
-                        print("failed to set image url")
-                    }
-                }
+//                FireService.sharedInstance.getProfilePicture(user: globalUser.toFireUser) {  (result) in
+//                    switch result{
+//                    case .success(let url):
+//                        photoUrl = url.absoluteString
+//                    case .failure(_):
+//                        print("failed to set image url")
+//                    }
+//                }
                 break
             case .GroupInvitation:
                 notificationKey = "group_request"
-                FireService.sharedInstance.getProfilePicture(user: globalUser.toFireUser) {  (result) in
-                    switch result{
-                    case .success(let url):
-                        photoUrl = url.absoluteString
-                    case .failure(_):
-                        print("failed to set image url")
-                    }
-                }
+//                FireService.sharedInstance.getProfilePicture(user: globalUser.toFireUser) {  (result) in
+//                    switch result{
+//                    case .success(let url):
+//                        photoUrl = url.absoluteString
+//                    case .failure(_):
+//                        print("failed to set image url")
+//                    }
+//                }
                 break
             case .Misc:
                 notificationKey = "misc"

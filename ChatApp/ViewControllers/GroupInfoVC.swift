@@ -16,6 +16,11 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
     @IBOutlet weak var groupNameView: UIView!
     @IBOutlet weak var groupNameTextField: UITextField!
     
+    @IBOutlet weak var viewSavedMessages: UIView!
+    @IBOutlet weak var viewMuteSetting: UIView!
+    
+    @IBOutlet weak var saveMessageLabel: UILabel!
+    @IBOutlet weak var togglelabel: UILabel!
     @IBOutlet var groupImageView: UIImageView!
     var defaultImage:UIImage?
     
@@ -81,6 +86,18 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
         tableView.tableFooterView = footerviewSetUp()
     }
     
+    @IBAction func onMuteValueChange(_ sender: UISwitch) {
+        togglelabel.GroupInfoPageLabels(type: Constants.groupInfoPage.settingsHeader)
+        if sender.isOn{
+            print("Display mode On")
+        }
+        else{
+            print("Display mode off")
+        }
+    }
+    @IBAction func onClickSavedMessage(_ sender: Any) {
+        performSegue(withIdentifier: GroupInfoVCToSavedMessagesID, sender: self)
+    }
     @IBAction func onClickQR(_ sender: Any) {
         FireService.sharedInstance.getGroupURL(user: globalUser!, group: group!) { (urlString, success, error) in
             if let error = error{
@@ -154,6 +171,13 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
         
         
         DispatchQueue.main.async {
+            
+            self.viewSavedMessages.darkmodeBackground()
+            self.viewMuteSetting.darkmodeBackground()
+            
+            self.saveMessageLabel.settingsPageLabels(type: Constants.settingsPage.labelTitles)
+            self.togglelabel.settingsPageLabels(type: Constants.settingsPage.labelTitles)
+            
             self.tableView.darkmodeBackground()
             self.navigationController?.navigationBar.darkmodeBackground()
             self.groupNameView.darkmodeBackground()
@@ -222,40 +246,40 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
 extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 2
-        }
-        else if section == 1 {
+//        if section == 0 {
+//            return 2
+//        }
+//        else if section == 1 {
             return groupParticipants.count
-        }
-        return 0
+//        }
+//        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0{
-            if indexPath.row == 0{
-                if let cell = tableView.dequeueReusableCell(withIdentifier: identifier1) as?  GroupchatinfoCells {
-                    //cell.updateviews go here
-                    cell.backgroundColor = .clear
-                    cell.updateView()
-                    tableView.setEditing(false, animated: false)
-                    return cell
-                }
-            }
-            if indexPath.row == 1{
-                if let cell = tableView.dequeueReusableCell(withIdentifier: identifier2) as? GroupSettingCell{
-                    cell.backgroundColor = .clear
-                    cell.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-                    cell.updateViews(indexPath: 0)
-                    tableView.setEditing(false, animated: false)
-                    return cell
-                }
-            }
-        }
-        else if indexPath.section == 1{
+//        if indexPath.section == 0{
+//            if indexPath.row == 0{
+//                if let cell = tableView.dequeueReusableCell(withIdentifier: identifier1) as?  GroupchatinfoCells {
+//                    //cell.updateviews go here
+//                    cell.backgroundColor = .clear
+//                    cell.updateView()
+//                    tableView.setEditing(false, animated: false)
+//                    return cell
+//                }
+//            }
+//            if indexPath.row == 1{
+//                if let cell = tableView.dequeueReusableCell(withIdentifier: identifier2) as? GroupSettingCell{
+//                    cell.backgroundColor = .clear
+//                    cell.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+//                    cell.updateViews(indexPath: 0)
+//                    tableView.setEditing(false, animated: false)
+//                    return cell
+//                }
+//            }
+//        }
+//        else if indexPath.section == 1{
             if let cell = tableView.dequeueReusableCell(withIdentifier: identifier3) as? participantsCell  {
                 //        Dara used this to test the viewGroupParticipants function in fireservice
                 cell.updateViews(groupParticipants:
@@ -264,30 +288,31 @@ extension GroupInfoVC : UITableViewDataSource , UITableViewDelegate {
                 cell.backgroundColor = .clear
                 return cell
             }
-        }
+//        }
         return UITableViewCell()
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0{
-            let view = UIView()
-            view.darkmodeBackground()
-            return view
-        }
-        else if section == 1{
+//        if section == 0{
+//            let view = UIView()
+//            view.darkmodeBackground()
+//            return view
+//        }
+//        else if section == 1{
             let view = tableView.dequeueReusableCell(withIdentifier: identifier4) as! participantsHeaderCell
             view.updateviews()
+            view.darkmodeBackground()
             return view
-        }
-        return nil
+//        }
+//        return nil
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0{
-            return 0
-        }
-        else if section == 1{
+//        if section == 0{
+//            return 0
+//        }
+//        else if section == 1{
             return 35
-        }
-        return 0
+//        }
+//        return 0
     }
     
     
@@ -589,21 +614,21 @@ extension GroupInfoVC{
         }
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == 0{
-            return false
-        }
-        else if indexPath.section == 1{
+//        if indexPath.section == 0{
+//            return false
+//        }
+//        else if indexPath.section == 1{
             if globalUser?.email == group?.GroupAdmin.email{
                 return true
             }
             else{
                 return false
             }
-        }
-        return false
+//        }
+//        return false
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if indexPath.section == 1{
+//        if indexPath.section == 1{
             if editingStyle == .delete{
                 
                 print("Editing:\(indexPath.row)")
@@ -649,20 +674,19 @@ extension GroupInfoVC{
                     
                     self.present(alertController, animated: true, completion: nil)
                 }
-
             }
-        }
+//        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "GroupchatInfoCellIdentifier", for: indexPath) as? GroupchatinfoCells{
-                if indexPath.row == 0 {
-                    performSegue(withIdentifier: GroupInfoVCToSavedMessagesID, sender: self)
-                }
-            }
-        }
-        else if indexPath.section == 1{
+//        if indexPath.section == 0 {
+//            if let cell = tableView.dequeueReusableCell(withIdentifier: "GroupchatInfoCellIdentifier", for: indexPath) as? GroupchatinfoCells{
+//                if indexPath.row == 0 {
+//                    performSegue(withIdentifier: GroupInfoVCToSavedMessagesID, sender: self)
+//                }
+//            }
+//        }
+//        else if indexPath.section == 1{
             if let cell = tableView.dequeueReusableCell(withIdentifier: identifier3) as? participantsCell  {
                 
                 let alertController = UIAlertController(title: "What do you want to do?", message: "", preferredStyle: .actionSheet)
@@ -684,7 +708,7 @@ extension GroupInfoVC{
                 self.present(alertController, animated: true, completion: nil)
                 
             }
-        }
+//        }
     }
     //handles changing the admin to a new user.
     func setAsAdminClicked(sender:UIAlertAction!){

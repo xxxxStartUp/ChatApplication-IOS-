@@ -116,7 +116,6 @@ extension SettingsVC : UITableViewDataSource , UITableViewDelegate {
                 
                 //cell.updateviews go here
                 cell.backgroundColor = .clear
-                
                 cell.updateViews()
                 
                 return cell

@@ -123,13 +123,25 @@ extension NotificationsVC: UITableViewDelegate,UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let notification = notificationDataList[indexPath.row]
-        print(notification)
-        let accept = UIContextualAction(style: .normal, title: "Accept") { (action, view, nil) in
-            print("Accept")
-            if(notification.dynamicLink != ""){
-                if let url = URL(string: notification.dynamicLink) {
-                    UIApplication.shared.open(url)
+        
+        if(notification.notification_type == "friend_request" || notification.notification_type == "group_request"){
+            let accept = UIContextualAction(style: .normal, title: "Accept") { (action, view, nil) in
+                print("Accept")
+                if(notification.dynamicLink != ""){
+                    if let url = URL(string: notification.dynamicLink) {
+                        UIApplication.shared.open(url)
+                    }
+                    FireService.sharedInstance.notificationDelete(notification.id) { (isSuccess, error) in
+                        if error != nil{
+                            print(error)
+                            return
+                        }
+                        self.getNotificationLog()
+                    }
                 }
+            }
+            let reject = UIContextualAction(style: .normal, title: "Reject") { (action, view, nil) in
+                print("Reject")
                 FireService.sharedInstance.notificationDelete(notification.id) { (isSuccess, error) in
                     if error != nil{
                         print(error)
@@ -138,22 +150,27 @@ extension NotificationsVC: UITableViewDelegate,UITableViewDataSource {
                     self.getNotificationLog()
                 }
             }
-        }
-        let reject = UIContextualAction(style: .normal, title: "Reject") { (action, view, nil) in
-            print("Reject")
-            FireService.sharedInstance.notificationDelete(notification.id) { (isSuccess, error) in
-                if error != nil{
-                    print(error)
-                    return
+            reject.backgroundColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
+            accept.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+            let config = UISwipeActionsConfiguration(actions: [accept,reject])
+            config.performsFirstActionWithFullSwipe = false
+            return config
+        }else{
+            let reject = UIContextualAction(style: .normal, title: "Delete") { (action, view, nil) in
+                print("Delete")
+                FireService.sharedInstance.notificationDelete(notification.id) { (isSuccess, error) in
+                    if error != nil{
+                        print(error)
+                        return
+                    }
+                    self.getNotificationLog()
                 }
-                self.getNotificationLog()
             }
+            reject.backgroundColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
+            let config = UISwipeActionsConfiguration(actions: [reject])
+            config.performsFirstActionWithFullSwipe = false
+            return config
         }
-        reject.backgroundColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
-        accept.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
-        let config = UISwipeActionsConfiguration(actions: [accept,reject])
-        config.performsFirstActionWithFullSwipe = false
-        return config
     }
     
     

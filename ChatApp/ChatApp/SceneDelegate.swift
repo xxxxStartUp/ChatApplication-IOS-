@@ -60,7 +60,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func handleIncomingDynamicLink(dynamicLink:DynamicLink){
         if let globaluser = globalUser{
         guard let url = dynamicLink.url else{
-            print("That's weird. My dynamic link object has no url")
+            print("That's weird. My dynamic link object has no url \(dynamicLink.url)")
+            
             return
         }
         print("Your incoming link parameter is \(url.absoluteString)")

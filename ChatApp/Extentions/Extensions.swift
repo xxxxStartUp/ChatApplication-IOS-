@@ -453,7 +453,7 @@ extension UIView{
         
     }
     func darkmodeBackground(){
-        if Constants.settingsPage.displayModeSwitch {
+        if Constants.settingsPage.displayModeSwitch{
             self.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         }
         else{
@@ -494,10 +494,8 @@ extension UIView{
 extension UITextView{
     func chatTextView(){
     if Constants.settingsPage.displayModeSwitch == false{
-        
             self.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
             self.font = UIFont(name: "HelveticaNeue-Regular", size: 20)
-
     }
     else{
         self.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -761,5 +759,26 @@ extension String{
 }
 
 
-
+extension Bool{
+    
+ func saveWithKey(key:String){
+        let preferences = UserDefaults.standard
+        preferences.set(self, forKey: key)
+        let didSave = preferences.synchronize()
+        if !didSave {
+//            print("save Failed :\(self) key:\(key)")
+        }else{
+//            print("saved string :\(self) key:\(key)")
+        }
+    }
+    func load(_ key:String)->Bool{
+        if let value = UserDefaults.standard.bool(forKey: key) as? Bool {
+            print("load string :\(value) key:\(self)")
+            return value
+        }else{
+            print("load Failed : key:\(self)")
+            return self
+        }
+    }
+}
 

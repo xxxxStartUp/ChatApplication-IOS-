@@ -178,8 +178,8 @@ extension AddFriendVC:MFMailComposeViewControllerDelegate{
         components.path = "/Contacts"
         if let user = globalUser{
         let requestSenderEmail = URLQueryItem(name: "requestSenderEmail", value: user.email)
-//            let requestReceiverEmail = URLQueryItem(name: "requestReceiverEmail", value: friendEmail)
-            let requestReceiverEmail = URLQueryItem(name: "requestReceiverEmail", value: "")
+        let requestReceiverEmail = URLQueryItem(name: "requestReceiverEmail", value: friendEmail)
+//            let requestReceiverEmail = URLQueryItem(name: "requestReceiverEmail", value: "")
         components.queryItems = [requestSenderEmail,requestReceiverEmail]
         
         guard let linkParameter = components.url else {return}

@@ -28,6 +28,7 @@ class AppSettingsCell: UITableViewCell {
             Constants.settingsPage.displaySwitch = settingsSwitch
             
             if Constants.settingsPage.displayModeSwitch{
+                
                 settingsSwitch.setOn(true, animated: true)
             }
             else{
@@ -35,14 +36,10 @@ class AppSettingsCell: UITableViewCell {
             }
             
             if settingsSwitch.isOn{
-                
- 
                 UserDefaults.standard.setValue(settingsSwitch.isOn, forKey: "displayModeSwitch")
-                
                 print("Display mode On")
             }
             else{
-                
                 UserDefaults.standard.setValue(!settingsSwitch.isOn, forKey: "displayModeSwitch")
                 print("Display mode off")
             }
@@ -72,6 +69,7 @@ class AppSettingsCell: UITableViewCell {
      if settingsSwitch.isOn{
          let notifictaion = Notification(name: .displayOn)
          NotificationCenter.default.post(notifictaion)
+         true.saveWithKey(key: "displayModeSwitch")
          Constants.settingsPage.displayModeSwitch = true
          print(Constants.settingsPage.displayModeSwitch)
          
@@ -81,6 +79,7 @@ class AppSettingsCell: UITableViewCell {
          let notifictaion = Notification(name: .displayOff)
          NotificationCenter.default.post(notifictaion)
          print("off view")
+        false.saveWithKey(key: "displayModeSwitch")
          Constants.settingsPage.displayModeSwitch = false
          print(Constants.settingsPage.displayModeSwitch)
      }

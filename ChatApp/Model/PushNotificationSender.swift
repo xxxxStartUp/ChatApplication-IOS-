@@ -11,6 +11,7 @@ import UIKit
 
 class PushNotificationSender {
     func sendPushNotification(to token: String, title: String, body: String) {
+        let serverKey = "AAAAc3Gn8OU:APA91bFy64cH0oOn7E0CshFMWwElORnNlcANGFcpWbmpt9MPgBDgXrDT6LhGOyhFTCg7pIruDsCJYFPOAXbIFcWB01hnBaqMH9knhobi-yo5G2s8hvWbqYyCLjMUi1TB7IQCx2yFziaI"
         let urlString = "https://fcm.googleapis.com/fcm/send"
         let url = NSURL(string: urlString)!
         let paramString: [String : Any] = ["to" : token,
@@ -21,7 +22,7 @@ class PushNotificationSender {
         request.httpMethod = "POST"
         request.httpBody = try? JSONSerialization.data(withJSONObject:paramString, options: [.prettyPrinted])
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("key=AAAAc3Gn8OU:APA91bFy64cH0oOn7E0CshFMWwElORnNlcANGFcpWbmpt9MPgBDgXrDT6LhGOyhFTCg7pIruDsCJYFPOAXbIFcWB01hnBaqMH9knhobi-yo5G2s8hvWbqYyCLjMUi1TB7IQCx2yFziaI", forHTTPHeaderField: "Authorization")
+        request.setValue("key=\(serverKey)", forHTTPHeaderField: "Authorization")
         let task =  URLSession.shared.dataTask(with: request as URLRequest)  { (data, response, error) in
             do {
                 if let jsonData = data {

@@ -80,8 +80,6 @@ class ChatLogVC: UIViewController {
         activities.append(activity1)
         activities.append(activity2)
         activities.append(activity3)
-        
-        
     }
     
     
@@ -112,6 +110,7 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource,UISearchBarDeleg
             print("This is FilteredfriendsList\(filteredActivity)")
             cell.backgroundColor = .clear
             cell.profileImageview.chatLogImageView()
+            cell.darkmodeBackground()
             return cell
         }
         else{
@@ -120,6 +119,7 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource,UISearchBarDeleg
             print("This is friendsList\(activities)")
             cell.backgroundColor = .clear
             cell.profileImageview.chatLogImageView()
+            cell.darkmodeBackground()
             return cell
         }
 //        cell.updateViews(indexPath: indexPath.row+1)

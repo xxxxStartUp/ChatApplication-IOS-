@@ -167,17 +167,18 @@ extension FriendsVC : UITableViewDelegate , UITableViewDataSource, UISearchBarDe
             if searching{
                 cell.friend = filteredFriendList[indexPath.row]
                 print("This is FilteredfriendsList\(filteredFriendList)")
-                cell.backgroundColor = .clear
+                cell.darkmodeBackground()
                 return cell
             }
             else{
                 cell.friend = friendList[indexPath.row]
                 print("This is friendsList\(friendList)")
-                cell.backgroundColor = .clear
+                cell.darkmodeBackground()
                 return cell
             }
         }else{
             let cell = UITableViewCell()
+            cell.darkmodeBackground()
             cell.textLabel?.text = "cell isnt working"
             return cell
         }

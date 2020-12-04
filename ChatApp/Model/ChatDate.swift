@@ -22,12 +22,12 @@ class ChatDate {
         let yesterdayDate = Date().past(day: 1).DateConvert("dd-MM-yyyy")
         if(chatDate == todayDate){
             print("chatDate: \(chatDate) || todayDate : \(todayDate)")
-            return self.date.DateConvert("HH:mm aa")
+            return "Today\n\(self.date.DateConvert("HH:mm aa"))"
         }else if(chatDate == yesterdayDate){
             print("chatDate: \(chatDate) || yesterdayDate : \(yesterdayDate)")
-            return "Yesterday"
+            return "Yesterday\n\(self.date.DateConvert("HH:mm aa"))"
         }else{
-            return chatDate
+            return self.date.DateConvert("dd/MM/yyyy\nHH:mm aa")
         }
     }
 }

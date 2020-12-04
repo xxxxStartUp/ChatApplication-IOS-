@@ -13,8 +13,14 @@ class ProfileInfoCell: UITableViewCell {
     @IBOutlet weak var userNameHeader: UILabel!
     @IBOutlet weak var statusTitle: UILabel!
     @IBOutlet weak var profilePhoto: UIImageView!
+    
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+    }
     func updateViews(){
-        
         //using this as a temporary solution because cell tint color in xcode has a bug
         let image = UIImage(systemName: "chevron.right.circle.fill")
         let imageView = UIImageView(image: image)

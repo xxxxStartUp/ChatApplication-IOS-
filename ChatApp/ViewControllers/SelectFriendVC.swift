@@ -190,13 +190,13 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
             if searching{
                 cell.friend = filteredFriendList[indexPath.row]
                 print("This is FilteredfriendsList\(filteredFriendList)")
-                cell.backgroundColor = .clear
+                cell.darkmodeBackground()
                 return cell
             }
             else{
                 cell.friend = friendList[indexPath.row]
                 print("This is friendsList\(friendList)")
-                cell.backgroundColor = .clear
+                cell.darkmodeBackground()
                 return cell
             }
         }else{
@@ -363,7 +363,7 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
                       print("Push notification happened")
                         self.friendListEmail.forEach { (friend_email) in
                             
-                            FireService.sharedInstance.notification(.GroupInvitation, globalUser.toFireUser, url.absoluteString, friend_email, "New Group Invitaion", "\(globalUser.toFireUser.name) has invited you to join a groupchat.") { (completion, error) in
+                            FireService.sharedInstance.notification(.GroupInvitation, globalUser.toFireUser, url.absoluteString, friend_email, "New Group Invitation", "\(globalUser.toFireUser.name) has invited you to join a groupchat.") { (completion, error) in
                                 if let error = error{
                                     print(error.localizedDescription)
                                     fatalError()
