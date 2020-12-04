@@ -20,14 +20,22 @@ class ChatDate {
         let chatDate = self.date.DateConvert("dd-MM-yyyy")
         let todayDate = "".DateConvertToday(newFormat: "dd-MM-yyyy")
         let yesterdayDate = Date().past(day: 1).DateConvert("dd-MM-yyyy")
+        
+        let numChatDate : Int = Int(self.date.DateConvert("yyyyMMdd")) ?? 0
+        let numAWeek : Int = Int(Date().past(day: 7).DateConvert("yyyyMMdd")) ?? 0
+        
         if(chatDate == todayDate){
             print("chatDate: \(chatDate) || todayDate : \(todayDate)")
-            return "Today\n\(self.date.DateConvert("HH:mm aa"))"
+//            return "Today\n\(self.date.DateConvert("HH:mm aa"))"
+            return "\(self.date.DateConvert("HH:mm aa"))"
         }else if(chatDate == yesterdayDate){
-            print("chatDate: \(chatDate) || yesterdayDate : \(yesterdayDate)")
-            return "Yesterday\n\(self.date.DateConvert("HH:mm aa"))"
+//            print("chatDate: \(chatDate) || yesterdayDate : \(yesterdayDate)")
+            return "Yesterday"
+        }else if(numChatDate > numAWeek){
+            return self.date.DateConvert("EEEE")
         }else{
-            return self.date.DateConvert("dd/MM/yyyy\nHH:mm aa")
+//            return self.date.DateConvert("dd/MM/yyyy\nHH:mm aa")
+            return self.date.DateConvert("dd/MM/yyyy")
         }
     }
 }

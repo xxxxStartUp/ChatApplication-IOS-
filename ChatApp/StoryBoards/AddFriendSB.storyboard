@@ -12,7 +12,6 @@
         <!--Add FriendVC-->
         <scene sceneID="RVD-Fn-4FB">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kdy-WE-j5f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController id="K2B-Il-9wv" customClass="AddFriendVC" customModule="ChatApp" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Fik-gu-Fld">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
@@ -102,6 +101,7 @@
                         <outlet property="sendInviteButton" destination="nPm-Yg-jNu" id="tuf-v5-hWF"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kdy-WE-j5f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-277" y="208"/>
         </scene>
@@ -110,7 +110,6 @@
             <objects>
                 <navigationController id="PdE-Ci-unM" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="f8S-EK-td6">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>

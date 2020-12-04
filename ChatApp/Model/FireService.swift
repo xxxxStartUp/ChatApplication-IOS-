@@ -2935,9 +2935,9 @@ extension FireService{
                 //sends the same message to every person in the group
                 let pushNotificationSender = PushNotificationSender()
                 deviceTokenList.forEach { (token) in
-                   // if(token != "deviceToken".load()){
+                    if(token != "deviceToken".load()){
                         pushNotificationSender.sendPushNotification(to: token, title: title, body: subtitle)
-                    //}
+                    }
                 }
                 completion(.success(true))
             case .failure(let error):
