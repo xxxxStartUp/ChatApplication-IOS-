@@ -2956,6 +2956,7 @@ extension FireService{
                     //sends the same message to every person in the group
                     var count = friends.count
                     friends.forEach { (friend) in
+                        if friend.email != currentUser.email{
                         self.searchDeviceToken(email: friend.email) { (deviceToken, error) in
                             if let error = error{
                                 print(error.localizedDescription)
@@ -2970,6 +2971,7 @@ extension FireService{
                                 }
                             
                         }
+                    }
                     }
                     
                 case .failure(let error):

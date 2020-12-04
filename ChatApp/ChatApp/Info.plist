@@ -45,6 +45,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Scan QR Code</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This application will like to access your photo library</string>
 	<key>UIApplicationSceneManifest</key>
@@ -94,7 +96,5 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Scan QR Code</string>
 </dict>
 </plist>
