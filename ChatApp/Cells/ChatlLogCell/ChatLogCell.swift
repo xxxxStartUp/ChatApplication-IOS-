@@ -15,16 +15,26 @@ class ChatLogCell: UITableViewCell {
     @IBOutlet weak var chatNameLabel: UILabel!
     @IBOutlet weak var chatDateLabel: UILabel!
     @IBOutlet var profileImageview: UIImageView!
+    @IBOutlet weak var backView: UIView!
     
-//    @IBOutlet weak var lastMessage: UILabel!
     
+//  @IBOutlet weak var lastMessage: UILabel!
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+       
+        
+    }
     func updateViews(indexPath: Int){
+        backView.darkmodeBackground()
+        
+        contentView.darkmodeBackground()
         chatDateLabel.chatLogPageLabels(type: Constants.mainPage.timeStamp)
         chatNameLabel.chatLogPageLabels(type: Constants.mainPage.groupNameHeader)
 //        lastMessage.chatLogPageLabels(type: Constants.mainPage.messagesubHeader)
         chatNameLabel.text = "Chat \(indexPath)"
         chatDateLabel.text = "9/1\(indexPath)/20"
-        contentView.darkmodeBackground()
+        
+        
         profileImageview.chatLogImageView()
         print("errr")
     }
@@ -34,9 +44,11 @@ class ChatLogCell: UITableViewCell {
     var activity : Activity! {
         
         didSet{
-            chatSenderNameLabel.text = ""
-//            lastMessage.text = "No messages"
-            chatDateLabel.text = ""
+            self.darkmodeBackground()
+            contentView.darkmodeBackground()
+//            chatSenderNameLabel.text = ""
+////            lastMessage.text = "No messages"
+//            chatDateLabel.text = ""
                 switch activity.type {
                     case .GroupChat(group:let group):
                         chatNameLabel.text =  activity.name
@@ -85,7 +97,9 @@ class ChatLogCell: UITableViewCell {
                 self.chatDateLabel.text = ChatDate(date: message.timeStamp).ChatDateFormat()
                 let user = message.sender.name
                 let messageContent = message.content.content
-                self.chatSenderNameLabel.text = "\(messageContent)"
+                self.chatSenderNameLabel.notificationsPageLabels(type: Constants.notificationPage.notificationMessage)
+                self.chatSenderNameLabel.text = "\(user): \(messageContent)"
+                
 //                self.lastMessage.text = "\(messageContent)"
             case .failure(_):
                 return
@@ -103,6 +117,9 @@ class ChatLogCell: UITableViewCell {
                 let user = message.sender.name
                 let messageContent = message.content.content
                 self.chatSenderNameLabel.text = "\(user): \(messageContent)"
+                self.chatSenderNameLabel.notificationsPageLabels(type: Constants.notificationPage.notificationMessage)
+                self.chatSenderNameLabel.contactsPageLabels(type: Constants.contactsPage.emailSubHeader)
+                
 //                self.lastMessage.text = "\(messageContent)"
             case .failure(_):
                 return

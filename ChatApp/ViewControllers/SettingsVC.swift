@@ -310,6 +310,7 @@ extension SettingsVC{
                                                      }else{
                                                         FireService.sharedInstance.signOut()
                                                         globalUser = nil
+                                                        cachedImage.removeAllObjects()
                                                         self.goToLogin()
                                                      }
                                                  }

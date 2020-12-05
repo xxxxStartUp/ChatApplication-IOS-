@@ -102,16 +102,22 @@ extension NotificationsVC: UITableViewDelegate,UITableViewDataSource {
             let title = cell.viewWithTag(2) as! UILabel
             let subtitle = cell.viewWithTag(3) as! UILabel
             let timeStamp = cell.viewWithTag(4) as! UILabel
+            title.notificationsPageLabels(type: Constants.notificationPage.notificationHeader)
+            subtitle.notificationsPageLabels(type: Constants.notificationPage.notificationMessage)
+            cell.backgroundColor = .clear
             title.text = notification.title
             subtitle.text = notification.subtitle
             timeStamp.text = notification.timeStamp.DateConvert("dd/MM/yy HH:mmaa")
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.backgroundColor = .clear
             let notificationPhoto = cell.viewWithTag(1) as! UIImageView
             let title = cell.viewWithTag(2) as! UILabel
             let subtitle = cell.viewWithTag(3) as! UILabel
             let timeStamp = cell.viewWithTag(4) as! UILabel
+            title.notificationsPageLabels(type: Constants.notificationPage.notificationHeader)
+            subtitle.notificationsPageLabels(type: Constants.notificationPage.notificationMessage)
             notificationPhoto.layer.cornerRadius = CGFloat(65/2)
             notificationPhoto.loadImages(urlString: notification.photo_url, mediaType: Constants.profilePage.profileImageType)
             title.text = notification.title

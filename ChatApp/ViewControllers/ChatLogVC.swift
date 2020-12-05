@@ -25,11 +25,12 @@ class ChatLogVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationBarBackgroundHandler()
+        updateBackgroundViews()
         chatLogTableview.register(UINib(nibName: "ChatLogCell", bundle: nil), forCellReuseIdentifier: "ChatCellIdentifier")
         chatLogTableview.delegate = self
         chatLogTableview.dataSource = self
         navigationController?.navigationBar.prefersLargeTitles = true
-        chatLogTableview.separatorStyle = .none
+        chatLogTableview.separatorStyle = .singleLine
         
         
         

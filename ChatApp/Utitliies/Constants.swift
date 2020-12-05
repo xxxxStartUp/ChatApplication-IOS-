@@ -48,6 +48,7 @@ struct Constants{
     struct notificationPage{
         static let timeStampHeader = "newContactsHeader"
         static let notificationMessage = "notificationsMessage"
+        static let notificationHeader = "notificationHeader"
         static let indicator = "indicatorView"
     }
     struct Identifiers{
