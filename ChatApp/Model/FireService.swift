@@ -1118,7 +1118,7 @@ class FireService {
             }
             guard let documents = snapshot?.documents else{return}
             var count = documents.count
-            if count != 0 {
+          //  if count != 0 {
                 var notificationList : [NotificationModel] = [NotificationModel]()
                 for document in documents{
                     data = document.data()
@@ -1134,19 +1134,22 @@ class FireService {
                                            ((data["photo_url"] as? String) != nil) ? data["photo_url"] as! String : "",
                                            ((data["timeStamp"] as? Date) != nil) ? data["timeStamp"] as! Date : Date())
                     notificationList.append(post)
+                    print("notificationList is here:\(notificationList)")
                     count -= 1
                     print("count -= 1 =\(count)")
                     if(count == 0){
+                        print("notificationList when count is zero:\(notificationList)")
                         completion(notificationList, nil)
                     }
                 }
-            }else if count == 0 {
-                
-                completion([NotificationModel](), nil)
-                print("no notification log")
-            }else{
-                print("notication log \(count)")
-            }
+          //  }
+//            else if count == 0 {
+//
+//                completion([NotificationModel](), nil)
+//                print("no notification log")
+//            }else{
+//                print("notication log \(count)")
+//            }
         }
     }
     

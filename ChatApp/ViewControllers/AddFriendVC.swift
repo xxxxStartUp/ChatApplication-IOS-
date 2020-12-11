@@ -216,17 +216,17 @@ extension AddFriendVC:MFMailComposeViewControllerDelegate{
                 let shortUrl = url.absoluteString
                 print("I have a short URL to share! \(url.absoluteString)")
                 //Added a Notification Log
-                FireService.sharedInstance.notification(.FriendRequest, globalUser.toFireUser, url.absoluteString, friendEmail, "New Friend Request", "\(globalUser.toFireUser.name) added you as a friend") { (completion, error) in
+                FireService.sharedInstance.notification(.FriendRequest, globalUser.toFireUser, url.absoluteString, friendEmail, "New Friend Request", "\(globalUser.toFireUser.name) added you as a friend") { (completions, error) in
                     if let error = error{
                         print(error.localizedDescription)
                         fatalError()
                     }
+                    self.shareURL = url
+                    self.shareURLString = shortUrl
+                    self.composeMail(url:url,friendEmail: friendEmail)
+                    completion(true)
                 }
                 
-                self.shareURL = url
-                self.shareURLString = shortUrl
-                self.composeMail(url:url,friendEmail: friendEmail)
-                completion(true)
             }
         }
     }

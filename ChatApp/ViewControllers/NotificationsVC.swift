@@ -12,7 +12,7 @@ import FirebaseDynamicLinks
 class NotificationsVC: UIViewController{
     @IBOutlet weak var notificationsTableView: UITableView!
     
-    var notificationDataList = [NotificationModel]()
+    var notificationDataList: [NotificationModel] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         notificationsTableView.delegate = self
@@ -21,6 +21,8 @@ class NotificationsVC: UIViewController{
         getNotificationLog()
     }
     func getNotificationLog(){
+        self.notificationDataList.removeAll()
+        self.notificationsTableView.reloadData()
         FireService.sharedInstance.getNotificationLog { (rawdata, error) in
             if(error != nil){
                 print(error?.localizedDescription)
