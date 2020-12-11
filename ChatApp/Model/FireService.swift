@@ -1133,6 +1133,9 @@ class FireService {
                                            ((data["subtitle"] as? String) != nil) ? data["subtitle"] as! String : "",
                                            ((data["photo_url"] as? String) != nil) ? data["photo_url"] as! String : "",
                                            ((data["timeStamp"] as? Date) != nil) ? data["timeStamp"] as! Date : Date())
+                    
+                    print(data["timeStamp"])
+                    print(data["timeStamp"] as? Date)
                     notificationList.append(post)
                     count -= 1
                     print("count -= 1 =\(count)")
