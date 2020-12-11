@@ -17,6 +17,7 @@ class NotificationsCell: UITableViewCell {
         timeStampLabel.text = "10/22/1996"
         timeStampLabel.notificationsPageLabels(type: Constants.notificationPage.timeStampHeader)
         notificationMessageLabel.notificationsPageLabels(type:Constants.notificationPage.notificationMessage)
+        notificationMessageLabel.notificationsPageLabels(type: Constants.notificationPage.notificationHeader)
         notificationMessageLabel.text = "Dara just left the chat"
     }
 

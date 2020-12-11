@@ -1118,7 +1118,7 @@ class FireService {
             }
             guard let documents = snapshot?.documents else{return}
             var count = documents.count
-            if count != 0 {
+          //  if count != 0 {
                 var notificationList : [NotificationModel] = [NotificationModel]()
                 for document in documents{
                     data = document.data()
@@ -1137,19 +1137,22 @@ class FireService {
                     print(data["timeStamp"])
                     print(data["timeStamp"] as? Date)
                     notificationList.append(post)
+                    print("notificationList is here:\(notificationList)")
                     count -= 1
                     print("count -= 1 =\(count)")
                     if(count == 0){
+                        print("notificationList when count is zero:\(notificationList)")
                         completion(notificationList, nil)
                     }
                 }
-            }else if count == 0 {
-                
-                completion([NotificationModel](), nil)
-                print("no notification log")
-            }else{
-                print("notication log \(count)")
-            }
+          //  }
+//            else if count == 0 {
+//
+//                completion([NotificationModel](), nil)
+//                print("no notification log")
+//            }else{
+//                print("notication log \(count)")
+//            }
         }
     }
     
@@ -2959,6 +2962,7 @@ extension FireService{
                     //sends the same message to every person in the group
                     var count = friends.count
                     friends.forEach { (friend) in
+                        if friend.email != currentUser.email{
                         self.searchDeviceToken(email: friend.email) { (deviceToken, error) in
                             if let error = error{
                                 print(error.localizedDescription)
@@ -2973,6 +2977,7 @@ extension FireService{
                                 }
                             
                         }
+                    }
                     }
                     
                 case .failure(let error):
