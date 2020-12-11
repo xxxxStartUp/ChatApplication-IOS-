@@ -15,43 +15,29 @@ class ChatLogCell: UITableViewCell {
     @IBOutlet weak var chatNameLabel: UILabel!
     @IBOutlet weak var chatDateLabel: UILabel!
     @IBOutlet var profileImageview: UIImageView!
-    @IBOutlet weak var backView: UIView!
+//    @IBOutlet weak var backView: UIView!
     
     
 //  @IBOutlet weak var lastMessage: UILabel!
     override class func awakeFromNib() {
         super.awakeFromNib()
-       
-        
     }
     func updateViews(indexPath: Int){
-        backView.darkmodeBackground()
-        
-        contentView.darkmodeBackground()
         chatDateLabel.chatLogPageLabels(type: Constants.mainPage.timeStamp)
         chatNameLabel.chatLogPageLabels(type: Constants.mainPage.groupNameHeader)
 //        lastMessage.chatLogPageLabels(type: Constants.mainPage.messagesubHeader)
         chatNameLabel.text = "Chat \(indexPath)"
         chatDateLabel.text = "9/1\(indexPath)/20"
-        
-        
         profileImageview.chatLogImageView()
         print("errr")
     }
-    
-    
-    
-    override class func awakeFromNib() {
-        super.awakeFromNib()
-    }
+
+
     var activity : Activity! {
         
         didSet{
-            self.darkmodeBackground()
-            contentView.darkmodeBackground()
-//            chatSenderNameLabel.text = ""
-////            lastMessage.text = "No messages"
-//            chatDateLabel.text = ""
+            chatSenderNameLabel.text = ""
+            chatDateLabel.text = ""
                 switch activity.type {
                     case .GroupChat(group:let group):
                         chatNameLabel.text =  activity.name

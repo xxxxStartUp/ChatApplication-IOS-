@@ -36,6 +36,7 @@ class NotificationsVC: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         updateBackgroundViews()
+        getNotificationLog()
     }
     //updates the background color for the tableview and nav bar.
     func updateBackgroundViews(){

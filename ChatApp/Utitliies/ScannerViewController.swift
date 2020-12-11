@@ -88,27 +88,47 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
                 print(error.localizedDescription)
             }
             guard let user = user else {return}
-        
-            FireService.sharedInstance.searchOneFreindWithEmail(email:user.email) { (freind, error) in
-                if let error = error {
-                    print(error)
-                    self.pastViewController.snackbar("cannot add friend, deoes not exsist")
-//                    fatalError("cannot add friend, deoes not exsist")
-                }
-                if let friend = freind {
-//                        guard let globalUser = globalUser else {return}
-                    FireService.sharedInstance.addFriend(user:globalUser.toFireUser,sender: globalUser.toFireUser, friend: friend) { (sucess, error) in
-                        if let error = error{
-                            print(error)
-                        }else{
-                            if sucess {
-                                self.pastViewController.snackbar("sucessfully added contact")
-                                print("sucessfully added contact")
+            
+                var isFriendExisted = false
+                FireService.sharedInstance.loadAllFriends(user: globalUser.toFireUser) { (friends, error) in
+                    
+                    if let friends = friends{
+                        var friendData : Friend = Friend.init(email: "", username: "", id: "")
+                        for friend in friends{
+                            if(user.email == friend.email){
+                                isFriendExisted = true
+                                friendData = friend
+                            }
+                        }
+                        DispatchQueue.main.async {
+                            if(!isFriendExisted){
+                                FireService.sharedInstance.searchOneFreindWithEmail(email:user.email) { (freind, error) in
+                                    if let error = error {
+                                        print(error)
+                                        self.pastViewController.snackbar("cannot add friend, deoes not exsist")
+                    //                    fatalError("cannot add friend, deoes not exsist")
+                                    }
+                                    if let friend = freind {
+                    //                        guard let globalUser = globalUser else {return}
+                                        FireService.sharedInstance.addFriend(user:globalUser.toFireUser,sender: globalUser.toFireUser, friend: friend) { (sucess, error) in
+                                            if let error = error{
+                                                print(error)
+                                            }else{
+                                                if sucess {
+                                                    self.pastViewController.snackbar("sucessfully added contact")
+                                                    print("sucessfully added contact")
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }else{
+                                self.snackbar("\(friendData.username) is already a friend")
                             }
                         }
                         
                     }
-                }
+                    
             }
             
         }

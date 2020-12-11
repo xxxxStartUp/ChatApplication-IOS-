@@ -1061,30 +1061,16 @@ class FireService {
         let newNotificationRef = FireService.users.document(friendEmail).collection("Notifications")
         
         let photoUrl = sender.profileImageUrl
-        let uuid = NSUUID().uuidString
+        var uuid = NSUUID().uuidString
         var notificationKey = ""
         switch notificationType{
             case .FriendRequest:
                 notificationKey = "friend_request"
-//                FireService.sharedInstance.getProfilePicture(user: globalUser.toFireUser) {  (result) in
-//                    switch result{
-//                    case .success(let url):
-//                        photoUrl = url.absoluteString
-//                    case .failure(_):
-//                        print("failed to set image url")
-//                    }
-//                }
+                uuid = "\(sender.email)friend_request\(friendEmail)".MD5()
                 break
             case .GroupInvitation:
                 notificationKey = "group_request"
-//                FireService.sharedInstance.getProfilePicture(user: globalUser.toFireUser) {  (result) in
-//                    switch result{
-//                    case .success(let url):
-//                        photoUrl = url.absoluteString
-//                    case .failure(_):
-//                        print("failed to set image url")
-//                    }
-//                }
+                uuid = "\(sender.email)group_request\(friendEmail)".MD5()
                 break
             case .Misc:
                 notificationKey = "misc"
@@ -1122,7 +1108,7 @@ class FireService {
                 var notificationList : [NotificationModel] = [NotificationModel]()
                 for document in documents{
                     data = document.data()
-                    
+                    let timeStamp = ((data["timeStamp"] as? Timestamp) != nil) ? data["timeStamp"] as! Timestamp : Timestamp()
                     let post = NotificationModel.init(((data["id"] as? String) != nil) ? data["id"] as! String : "",
                                            ((data["notification_type"] as? String) != nil) ? data["notification_type"] as! String : "",
                                            ((data["user_id"] as? String) != nil) ? data["user_id"] as! String : "",
@@ -1132,10 +1118,10 @@ class FireService {
                                            ((data["title"] as? String) != nil) ? data["title"] as! String : "",
                                            ((data["subtitle"] as? String) != nil) ? data["subtitle"] as! String : "",
                                            ((data["photo_url"] as? String) != nil) ? data["photo_url"] as! String : "",
-                                           ((data["timeStamp"] as? Date) != nil) ? data["timeStamp"] as! Date : Date())
+                                           timeStamp.dateValue())
                     
-                    print(data["timeStamp"])
-                    print(data["timeStamp"] as? Date)
+                    print("notificationList \(timeStamp.dateValue())")
+                    print("notificationList \(data["timeStamp"] as? Timestamp)")
                     notificationList.append(post)
                     print("notificationList is here:\(notificationList)")
                     count -= 1
@@ -1920,6 +1906,63 @@ class FireService {
     ///   - email: Email used to determine if a Friend  is associated with this email address
     ///   - completion: Completion handler to determine if the function completed correctly or with errors
     /// - Returns: Nothing
+    func searchOneFreindWithEmailAddFriend(email : String,completion : @escaping (Friend? , Error?) -> ()){
+        var isFriendExisted = false
+        loadAllFriends(user: globalUser.toFireUser) { (friends, error) in
+            
+            if let friends = friends{
+                var friendData : Friend = Friend.init(email: "", username: "", id: "")
+                for friend in friends{
+                    if(email == friend.email){
+                        isFriendExisted = true
+                        friendData = friend
+                    }
+                }
+                DispatchQueue.main.async {
+                    if(!isFriendExisted){
+                        let email1 = email.lowercased().replace(this: " ", with: "")
+                        var data : [String : Any] = [:]
+                        let query = FireService.users.whereField("email", isEqualTo: email1)
+                        
+                        query.addSnapshotListener { (snapshot, error) in
+                            if let error = error{
+                                completion(nil , error)
+                                return
+                            }
+                            
+                            guard let documents = snapshot?.documents else{return}
+                            let count = documents.count
+                            if count == 1 {
+                                for document in documents{
+                                    data = document.data()
+                                    let user = self.changeDictionaryToFireUser(data: data)
+                                    let friend = self.changeDictionaryToFriend(user: user)
+                                    
+                                    completion(friend, nil)
+                                    return
+                                }
+                                
+                                
+                            }
+                            if count == 0 {
+                                self.snackbar("email does not exists")
+                            }
+                            else{
+                                fatalError("This shouldnt be happening")
+                                
+                            }
+                        }
+                    }else{
+                        self.snackbar("\(friendData.username) is already a friend")
+                    }
+                }
+                
+            }
+            
+        }
+        
+        
+    }
     func searchOneFreindWithEmail(email : String,completion : @escaping (Friend? , Error?) -> ()){
         let email1 = email.lowercased().replace(this: " ", with: "")
         var data : [String : Any] = [:]

@@ -8,9 +8,8 @@
 
 import UIKit
 
+
 class ChatLogVC: UIViewController {
-    
-    
     
     @IBOutlet weak var chatLogTableview: UITableView!
     
@@ -31,24 +30,24 @@ class ChatLogVC: UIViewController {
         chatLogTableview.dataSource = self
         navigationController?.navigationBar.prefersLargeTitles = true
         chatLogTableview.separatorStyle = .singleLine
-        
-        
-        
+        loadActivity()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        print("viewWillAppear")
         navigationBarBackgroundHandler()
         updateBackgroundViews()
+        self.chatLogTableview.reloadData()
         loadActivity()
-        
     }
         
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        print("viewDidAppear")
         navigationBarBackgroundHandler()
         self.tabBarController?.tabBar.isHidden = false
-        loadActivity()
+//        loadActivity()
     }
     
     
@@ -104,12 +103,14 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource,UISearchBarDeleg
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatCellIdentifier") as! ChatLogCell
         if searching{
             cell.updateViews(indexPath: indexPath.row+1)
             cell.activity = filteredActivity[indexPath.row]
             print("This is FilteredfriendsList\(filteredActivity)")
-            cell.backgroundColor = .clear
+//            cell.backgroundColor = .clear
             cell.profileImageview.chatLogImageView()
             cell.darkmodeBackground()
             return cell
@@ -118,11 +119,15 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource,UISearchBarDeleg
             cell.updateViews(indexPath: indexPath.row+1)
             cell.activity = activities[indexPath.row]
             print("This is friendsList\(activities)")
-            cell.backgroundColor = .clear
+//            cell.backgroundColor = .clear
             cell.profileImageview.chatLogImageView()
             cell.darkmodeBackground()
             return cell
         }
+        
+        
+        
+        
 //        cell.updateViews(indexPath: indexPath.row+1)
 //        cell.activity = activities[indexPath.row]
 //        cell.backgroundColor = .clear

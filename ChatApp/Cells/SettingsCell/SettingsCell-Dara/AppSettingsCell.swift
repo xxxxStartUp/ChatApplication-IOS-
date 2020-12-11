@@ -28,7 +28,6 @@ class AppSettingsCell: UITableViewCell {
             Constants.settingsPage.displaySwitch = settingsSwitch
             
             if Constants.settingsPage.displayModeSwitch{
-                
                 settingsSwitch.setOn(true, animated: true)
             }
             else{
@@ -43,7 +42,6 @@ class AppSettingsCell: UITableViewCell {
                 UserDefaults.standard.setValue(!settingsSwitch.isOn, forKey: "displayModeSwitch")
                 print("Display mode off")
             }
-            
         case 1:
             settingsSwitch.tag = 1
             label.text = "Notification Sound"

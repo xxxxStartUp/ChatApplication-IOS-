@@ -126,7 +126,7 @@ class AddFriendVC : UIViewController {
                 self.present(controller, animated: true, completion: nil)
                 return
             }else{
-        FireService.sharedInstance.searchOneFreindWithEmail(email: email) { (freind, error) in
+        FireService.sharedInstance.searchOneFreindWithEmailAddFriend(email: email) { (freind, error) in
             if let error = error {
                 print(error)
                 fatalError("cannot add friend, deoes not exsist")
@@ -221,12 +221,12 @@ extension AddFriendVC:MFMailComposeViewControllerDelegate{
                         print(error.localizedDescription)
                         fatalError()
                     }
-                    self.shareURL = url
-                    self.shareURLString = shortUrl
-                    self.composeMail(url:url,friendEmail: friendEmail)
-                    completion(true)
                 }
                 
+                self.shareURL = url
+                self.shareURLString = shortUrl
+                self.composeMail(url:url,friendEmail: friendEmail)
+                completion(true)
             }
         }
     }

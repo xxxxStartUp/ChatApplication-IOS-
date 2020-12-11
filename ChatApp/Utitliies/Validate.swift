@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SafariServices
+import CryptoKit
 
 
 class Validate {
@@ -146,5 +147,13 @@ extension Date{
         let theCalendar     = Calendar.current
         let nextDate        = theCalendar.date(byAdding: dayComponent, to: Date())
         return nextDate!
+    }
+}
+extension String{
+    func MD5() -> String {
+        let digest = Insecure.MD5.hash(data: self.data(using: .utf8) ?? Data())
+        return digest.map {
+            String(format: "%02hhx", $0)
+        }.joined()
     }
 }
