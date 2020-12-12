@@ -190,15 +190,27 @@ extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
                 if indexPath.row == 0{
                     if let cell = tableView.dequeueReusableCell(withIdentifier: "participantsCellIdentifier") as?  participantsCell {
                         cell.backgroundColor = .clear
+                        cell.username.GroupInfoPageLabels(type: Constants.groupInfoPage.userNameHeader)
+                        cell.email.GroupInfoPageLabels(type: Constants.groupInfoPage.emailHeader)
                         cell.username.text = friend?.username ?? "no username"
                         cell.email.text = friend?.email ?? "no email"
-                        cell.adminLabel.text = ""
+                        //cell.adminLabel.text = ""
                         return cell
                     }
                 }
                 if indexPath.row == 1{
                     if let cell = tableView.dequeueReusableCell(withIdentifier: "GroupchatInfoCellIdentifier") as?  GroupchatinfoCells {
                         cell.backgroundColor = .clear
+                        cell.label.GroupInfoPageLabels(type: Constants.groupInfoPage.settingsHeader)
+                        //using this as a temporary solution because cell tint color in xcode has a bug
+                        let image = UIImage(systemName: "chevron.right.circle.fill")
+                        let imageView = UIImageView(image: image)
+                        cell.accessoryView = imageView
+                        imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)
+                        imageView.tintColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+//                        cell.tintColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+//                        cell.accessoryView?.tintColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+//                        cell.accessoryView?.backgroundColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
                         cell.label.text = "Saved Messages"
                         return cell
                     }
@@ -207,7 +219,9 @@ extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
             }
             if indexPath.section == 1{
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "GroupSettingsCellIdentifier") as? GroupSettingCell{
+                    cell.backgroundColor = .clear
                     cell.label.text = "Mute"
+                    cell.label.GroupInfoPageLabels(type: Constants.groupInfoPage.settingsHeader)
                     return cell
                 }
             }

@@ -46,10 +46,10 @@
                                                             <rect key="frame" x="8" y="8" width="398" height="38.5"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="4Je-ix-BUa">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="270" height="38.5"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="398" height="38.5"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Daramfon Akpan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fh3-rl-68M">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="270" height="17"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="398" height="17"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="270" id="fca-0W-mex"/>
                                                                             </constraints>
@@ -58,19 +58,13 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Daramfon@gmail.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="glB-p1-aju">
-                                                                            <rect key="frame" x="0.0" y="22" width="270" height="16.5"/>
+                                                                            <rect key="frame" x="0.0" y="22" width="398" height="16.5"/>
                                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                     </subviews>
                                                                 </stackView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Admin" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F00-oe-Nri">
-                                                                    <rect key="frame" x="278" y="0.0" width="120" height="38.5"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
                                                             </subviews>
                                                         </stackView>
                                                     </subviews>
@@ -83,7 +77,6 @@
                                                 </tableViewCellContentView>
                                                 <viewLayoutGuide key="safeArea" id="Kyf-Gc-1jz"/>
                                                 <connections>
-                                                    <outlet property="adminLabel" destination="F00-oe-Nri" id="QOj-vO-zDX"/>
                                                     <outlet property="email" destination="glB-p1-aju" id="EDl-hn-rWt"/>
                                                     <outlet property="username" destination="fh3-rl-68M" id="gnO-ce-70U"/>
                                                 </connections>
@@ -139,6 +132,7 @@
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <viewLayoutGuide key="safeArea" id="JZi-mV-cD3"/>
+                                                <color key="tintColor" red="0.1333333333" green="0.57647058819999997" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <outlet property="label" destination="pMC-gp-HZd" id="Vv7-RJ-uXs"/>
                                                 </connections>
