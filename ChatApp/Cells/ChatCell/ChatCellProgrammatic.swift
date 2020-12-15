@@ -17,7 +17,7 @@ class MessgaeCell: UITableViewCell {
     var playerLayer:AVPlayerLayer?
     var player:AVPlayer?
     var trailingConstant: CGFloat = -32
-    
+    var indexPath : IndexPath?
     var groupVC:GroupChatVC?
     var savedVC1:SavedMessagesVC?
     var savedVC2:SavedMessagesFromSettingsVC?

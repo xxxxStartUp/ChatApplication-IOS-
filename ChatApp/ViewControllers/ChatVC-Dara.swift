@@ -81,10 +81,10 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         self.chatTableView.contentInset = insets
         messagePopUptableView.register(MessagePopUpCell.self, forCellReuseIdentifier: messagePopUpCellId)
-        setUpMessagePopUptableView()
+        //setUpMessagePopUptableView()
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(removeAnimateTableView))
-        self.view.addGestureRecognizer(tapGesture)
+       // let tapGesture = UITapGestureRecognizer(target: self, action: #selector(removeAnimateTableView))
+       // self.view.addGestureRecognizer(tapGesture)
         handleNavBarImage()
     }
     
@@ -429,9 +429,25 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
         let cell = newCellView as! MessgaeCell
         messagelongTapped = cell.message
         print("tapped for long")
+        guard let indexPath = cell.indexPath else { return}
+        let rect =  chatTableView.rectForRow(at: indexPath)
+        let saveMenuItem = UIMenuItem(title: "Save", action: #selector(saveMessgeFromMenuItem))
+        UIMenuController.shared.menuItems = [saveMenuItem]
+        UIMenuController.shared.setTargetRect(rect, in: chatTableView)
+        UIMenuController.shared.arrowDirection = .default
+        UIMenuController.shared.setMenuVisible(true, animated: true)
         
         
-        animateTableView()
+       // animateTableView()
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+            return true
+    }
+    
+    
+    @objc func saveMessgeFromMenuItem(){
+        print("sved message")
     }
     
     
@@ -465,11 +481,7 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     
     
     @objc private func removeAnimateTableView(){
-        // MessagePopUpheightAnchor = messagePopUptableView.heightAnchor.constraint(equalToConstant: 0)
-        
-        // MessagePopUpBottomAnchor =  messagePopUptableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 100)
-        
-        //MessagePopUpheightAnchor?.isActive = true
+     
         MessagePopUpBottomAnchor?.isActive = true
         
         let y = 500
@@ -570,11 +582,12 @@ extension ChatVC_Dara :UITableViewDelegate,UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! MessgaeCell
         cell.chatVC = self
         cell.message = messages[indexPath.row]
-        
+        cell.tag = indexPath.row
+        cell.indexPath = indexPath
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-        //let longMessageCellTapGesture : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap(gesture:)))
-        //cell.addGestureRecognizer(longMessageCellTapGesture)
+        let longMessageCellTapGesture : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap(gesture:)))
+        cell.addGestureRecognizer(longMessageCellTapGesture)
         
         return cell
         
