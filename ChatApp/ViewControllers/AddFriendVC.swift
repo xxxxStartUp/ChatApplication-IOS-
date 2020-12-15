@@ -221,6 +221,20 @@ extension AddFriendVC:MFMailComposeViewControllerDelegate{
                         print(error.localizedDescription)
                         fatalError()
                     }
+                    FireService.sharedInstance.pushNotificationFriend(title: "New Friend Request", subtitle: "\(globalUser.toFireUser.name) added you as a friend", friends: [friendEmail]) { (pushResult) in
+                    switch pushResult{
+                        case .success(true):
+                          print("Push notification happened")
+                        // create a collection of recent messages for the user
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                            fatalError()
+                   
+                    case .success(false):
+                        fatalError()
+                    }
+                
+                    }
                 }
                 
                 self.shareURL = url

@@ -302,6 +302,32 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
                                 print(error.localizedDescription)
                         }
                         if let url = url, let finalURL = URL(string: url){
+                            
+                            self.friendListEmail.forEach { (friend_email) in
+                                
+                                FireService.sharedInstance.notification(.GroupInvitation, globalUser.toFireUser, url, friend_email, "New Group Invitation", "\(globalUser.toFireUser.name) has invited you to join a groupchat.") { (completion, error) in
+                                    if let error = error{
+                                        print(error.localizedDescription)
+                                        fatalError()
+                                    }
+                                    FireService.sharedInstance.pushNotificationFriend(title: "New Group Invitation", subtitle: "\(globalUser.toFireUser.name) has invited you to join a groupchat.", friends: self.friendListEmail) { (pushResult) in
+                                    switch pushResult{
+                                        case .success(true):
+                                          print("Push notification happened")
+                                        // create a collection of recent messages for the user
+                                        case .failure(let error):
+                                            print(error.localizedDescription)
+                                            fatalError()
+                                   
+                                    case .success(false):
+                                        fatalError()
+                                    }
+                                
+                                    }
+                                }
+
+                            }
+
                             self.composeMail(url: finalURL)
                         }
                     }
@@ -357,36 +383,36 @@ extension SelectFriendVC : UITableViewDelegate , UITableViewDataSource, UISearch
                 self.present(alert, animated: true, completion: nil)
                 if let url = self.url{
                 let message = Message(content:Content(type: .string, content: "\(globalUser.toFireUser.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\(url)") , sender: globalUser.toFireUser, timeStamp: Date(), recieved: false)
-                FireService.sharedInstance.pushNotificationFriend(title: "New Friend Request from \(globalUser.toFireUser.email)" , subtitle: "Hello," + "\n" + "\n\(globalUser.toFireUser.name) has invited you to join a groupchat. Use the link below to join the group and start chatting!" + "\n" + "\nThanks for choosing our app for your messaging needs. From all of us here at Solustack, Happy chatting!" + "\n" + "\n" + "\(url)", friends: self.friendListEmail) { (pushResult) in
-                switch pushResult{
-                    case .success(true):
-                      print("Push notification happened")
-                        self.friendListEmail.forEach { (friend_email) in
-                            
-                            FireService.sharedInstance.notification(.GroupInvitation, globalUser.toFireUser, url.absoluteString, friend_email, "New Group Invitation", "\(globalUser.toFireUser.name) has invited you to join a groupchat.") { (completion, error) in
-                                if let error = error{
-                                    print(error.localizedDescription)
-                                    fatalError()
-                                }
-                            }
-//                            FireService.sharedInstance.notifications(User: globalUser.toFireUser, message: message, freindEmail: friend) { (completion, error) in
+//                FireService.sharedInstance.pushNotificationFriend(title: "New Friend Request from \(globalUser.toFireUser.email)" , subtitle: "Hello," + "\n" + "\n\(globalUser.toFireUser.name) has invited you to join a groupchat", friends: self.friendListEmail) { (pushResult) in
+//                switch pushResult{
+//                    case .success(true):
+//                      print("Push notification happened")
+//                        self.friendListEmail.forEach { (friend_email) in
+//
+//                            FireService.sharedInstance.notification(.GroupInvitation, globalUser.toFireUser, url.absoluteString, friend_email, "New Group Invitation", "\(globalUser.toFireUser.name) has invited you to join a groupchat.") { (completion, error) in
 //                                if let error = error{
 //                                    print(error.localizedDescription)
 //                                    fatalError()
 //                                }
+//
 //                            }
-                        }
-                    
-                    // create a collection of recent messages for the user
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                        fatalError()
-               
-                case .success(false):
-                    fatalError()
-                }
-            
-                }
+////                            FireService.sharedInstance.notifications(User: globalUser.toFireUser, message: message, freindEmail: friend) { (completion, error) in
+////                                if let error = error{
+////                                    print(error.localizedDescription)
+////                                    fatalError()
+////                                }
+////                            }
+//                        }
+//
+//                    // create a collection of recent messages for the user
+//                    case .failure(let error):
+//                        print(error.localizedDescription)
+//                        fatalError()
+//
+//                case .success(false):
+//                    fatalError()
+//                }
+//                }
                 }}
         case .cancelled:
             
