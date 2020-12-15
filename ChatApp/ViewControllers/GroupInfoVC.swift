@@ -15,6 +15,7 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
 //    @IBOutlet weak var participantsTableview: UITableView!
     @IBOutlet weak var groupNameView: UIView!
     @IBOutlet weak var groupNameTextField: UITextField!
+    @IBOutlet weak var backView: UIView!
     
     @IBOutlet weak var viewSavedMessages: UIView!
     @IBOutlet weak var viewMuteSetting: UIView!
@@ -172,6 +173,8 @@ class GroupInfoVC: UIViewController, UINavigationControllerDelegate {
         
         DispatchQueue.main.async {
             
+            self.backView.darkmodeBackground()
+            self.view.darkmodeBackground()
             self.viewSavedMessages.darkmodeBackground()
             self.viewMuteSetting.darkmodeBackground()
             

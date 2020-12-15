@@ -52,8 +52,8 @@ class ChatLogCell: UITableViewCell {
                                 //                    self.groupImageView.contentMode = .scaleAspectFit
                                 }
                             if !completion{
-                                    self.profileImageview.image = UIImage(systemName: "person.2")
-        //                            self.profileImageview.image = UIImage(systemName: "person.crop.circle.fill")
+//                                    self.profileImageview.image = UIImage(systemName: "person.2")
+                                    self.profileImageview.image = UIImage(systemName: "person.2.circle.fill")
                                 }
               
                             }

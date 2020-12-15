@@ -23,8 +23,8 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="88" translatesAutoresizingMaskIntoConstraints="NO" id="2cZ-PA-HmX">
                                         <rect key="frame" x="15" y="0.0" width="364" height="433"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yLf-K9-XPL">
-                                                <rect key="frame" x="62" y="0.0" width="240" height="128"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pers" translatesAutoresizingMaskIntoConstraints="NO" id="yLf-K9-XPL">
+                                                <rect key="frame" x="118" y="0.0" width="128" height="128"/>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="oYo-aN-3NB">
@@ -345,6 +345,7 @@
     </scenes>
     <resources>
         <image name="bubble.left.and.bubble.right" catalog="system" width="128" height="96"/>
+        <image name="pers" width="128" height="128"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
