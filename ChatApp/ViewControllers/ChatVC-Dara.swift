@@ -447,7 +447,20 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     
     
     @objc func saveMessgeFromMenuItem(){
-        print("sved message")
+        print("saved message")
+        FireService.sharedInstance.saveMessageWithFreind(user: globalUser!, freind: r! , message: messagelongTapped!) { (result) in
+            
+            switch result{
+            
+            case .success(let sucess):
+                if sucess{
+                    print("sucssfully saved image")
+                }
+                
+            case .failure( let error):
+                print(error.localizedDescription , "There was an error saving message")
+            }
+        }
     }
     
     
