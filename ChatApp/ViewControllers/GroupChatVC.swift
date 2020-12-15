@@ -203,7 +203,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
             }
             if let url = url{
                 let largeConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 60))
-                let image = UIImage(systemName:"person.crop.circle.fill",withConfiguration: largeConfiguration)
+                let image = UIImage(systemName:"person.2.circle.fill",withConfiguration: largeConfiguration)
             
                 let imageView = UIImageView()
                 imageView.af.setImage(withURL: url, cacheKey: nil, placeholderImage: image, serializer: nil, filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.3), runImageTransitionIfCached: false) { (_) in
@@ -221,7 +221,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
                 }
             if !completion{
                 let largeConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 60))
-                let image = UIImage(systemName:"person.crop.circle.fill",withConfiguration: largeConfiguration)
+                let image = UIImage(systemName:"person.2.circle.fill",withConfiguration: largeConfiguration)
                 self.navBarButton.imageView?.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
                 self.navBarButton.imageView?.contentMode = .scaleAspectFit
                 self.navBarButton.setImage(image, for: .normal)

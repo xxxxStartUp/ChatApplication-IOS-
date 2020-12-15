@@ -38,10 +38,13 @@ class ChatLogCell: UITableViewCell {
         didSet{
             chatSenderNameLabel.text = ""
             chatDateLabel.text = ""
+            
                 switch activity.type {
+                
                     case .GroupChat(group:let group):
                         chatNameLabel.text =  activity.name
                         setUpTimeandMessageForGroup(group: group)
+                        
                         FireService.sharedInstance.getGroupPictureDataFromChatLog(user: globalUser.toFireUser, group: group) { (url,completion,error) in
              
                                 if let url = url{
