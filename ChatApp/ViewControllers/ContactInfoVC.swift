@@ -236,6 +236,12 @@ extension ContactInfoVC : UITableViewDelegate , UITableViewDataSource {
         if indexPath.section == 0 {
             if indexPath.row == 1 {
                // go to savedMessaged
+                
+                let vc = UIStoryboard(name: "SavedMessagesSB", bundle: nil).instantiateViewController(identifier: "SavedMessagesVC") as! SavedMessagesVC
+                vc.isFriend = true
+                vc.freind = self.friend
+                navigationController?.pushViewController(vc, animated: true)
+                
             }
         }
         

@@ -149,9 +149,8 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let tapgesture = UITapGestureRecognizer(target: self, action: #selector(removeAnimateTableView))
-        self.view.addGestureRecognizer(tapgesture)
-        messagePopUptableView = UITableView(frame: CGRect(x: 0, y: 500, width: 0, height: 0))
+   
+        //messagePopUptableView = UITableView(frame: CGRect(x: 0, y: 500, width: 0, height: 0))
         updateBackgroundViews()
         
         groupChatTable.delegate = self
@@ -163,7 +162,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         let insets = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         self.groupChatTable.contentInset = insets
         
-        messagePopUptableView.register(MessagePopUpCell.self, forCellReuseIdentifier: messagePopUpCellId)
+        //messagePopUptableView.register(MessagePopUpCell.self, forCellReuseIdentifier: messagePopUpCellId)
         
         
         getGroupName()
@@ -252,6 +251,11 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         updateBackgroundViews()
         loadMessages()
         handleNavBarImage()
+    }
+    
+    
+    override var canBecomeFirstResponder: Bool {
+            return true
     }
     
     func getGroupName(){
@@ -428,46 +432,71 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
     }
     
     
-    @objc func  handleLongTap(gesture : UIGestureRecognizer){
-        let cellView = gesture.view
-        guard let newCellView = cellView else {return}
-        let cell = newCellView as! MessgaeCell
-        messagelongTapped = cell.message
-        print("tapped for long")
-        //remove tableView
-        removeTableView(tableView: messagePopUptableView)
-        //removeAnimateTableView()
-        //add tableView
-        messagePopUptableView.delegate = self
-        messagePopUptableView.dataSource = self
-        self.view.addSubview(messagePopUptableView)
-        messagePopUptableView.estimatedRowHeight = 40
-        messagePopUptableView.rowHeight = UITableView.automaticDimension
-        constainMessagePopUpTableView()
-        messagePopUptableView.isScrollEnabled = false
-        messagePopUptableView.layer.cornerRadius = 15
-        messagePopUptableView.layer.borderWidth = 0.4
-        messagePopUptableView.layer.borderColor = UIColor.gray.cgColor
-        messagePopUptableView.allowsSelection = true
+ //   @objc func  handleLongTap(gesture : UIGestureRecognizer){
+//        let cellView = gesture.view
+//        guard let newCellView = cellView else {return}
+//        let cell = newCellView as! MessgaeCell
+//        messagelongTapped = cell.message
+//        print("tapped for long")
+//        //remove tableView
+//        removeTableView(tableView: messagePopUptableView)
+//        //removeAnimateTableView()
+//        //add tableView
+//        messagePopUptableView.delegate = self
+//        messagePopUptableView.dataSource = self
+//        self.view.addSubview(messagePopUptableView)
+//        messagePopUptableView.estimatedRowHeight = 40
+//        messagePopUptableView.rowHeight = UITableView.automaticDimension
+//        constainMessagePopUpTableView()
+//        messagePopUptableView.isScrollEnabled = false
+//        messagePopUptableView.layer.cornerRadius = 15
+//        messagePopUptableView.layer.borderWidth = 0.4
+//        messagePopUptableView.layer.borderColor = UIColor.gray.cgColor
+//        messagePopUptableView.allowsSelection = true
         
         //add tableView frame auto layout
         //animateTableView
-        animateTableView()
+       // animateTableView()
+        
+        
+        
+    //}
+    
+    @objc func  handleLongTap(gesture : UILongPressGestureRecognizer){
+        if gesture.state == .began{
+            let cellView = gesture.view
+            guard let newCellView = cellView else {return}
+            let cell = newCellView as! MessgaeCell
+            messagelongTapped = cell.message
+            print("tapped for long")
+            guard let indexPath = cell.indexPath else { return}
+            let rect =  groupChatTable.rectForRow(at: indexPath)
+            let saveMenuItem = UIMenuItem(title: "Save", action: #selector(saveMessage))
+            UIMenuController.shared.menuItems = [saveMenuItem]
+            UIMenuController.shared.setTargetRect(rect, in: groupChatTable)
+            UIMenuController.shared.arrowDirection = .default
+            UIMenuController.shared.setMenuVisible(true, animated: true)
+            
+        }
+
     }
     
-    
-    func constainMessagePopUpTableView(){
-        messagePopUptableView.translatesAutoresizingMaskIntoConstraints = false
-        messagePopUptableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
-        messagePopUptableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
-        MessagePopUpheightAnchor = messagePopUptableView.heightAnchor.constraint(equalToConstant: messagePopUptableView.contentSize.height)
-        //messagePopUptableView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0).isActive = true
-        
-        MessagePopUpBottomAnchor =  messagePopUptableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
-        MessagePopUpBottomAnchor?.isActive = true
-        
-        
+    @objc func saveMessage(){
+        FireService.sharedInstance.saveMessages(user: globalUser.toFireUser,group: group!, messageToSave: messagelongTapped!) { (result) in
+            switch result {
+            case .success(let bool):
+                if bool {
+                   print("saved messages in group")
+                    break
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                
+            }
+        }
     }
+    
+
     
     private func removeTableView(tableView : UITableView){
         tableView.removeFromSuperview()
@@ -481,12 +510,6 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         UIView.animate(withDuration: 0.3) {
             //            self.messagePopUptableView.frame.origin.y = CGFloat(y)
             self.view.layoutIfNeeded()
-        }
-    }
-    @objc private func removeAnimateTableView(){
-        let y = self.view.frame.height
-        UIView.animate(withDuration: 0.3) {
-            self.messagePopUptableView.frame.origin.y = CGFloat(y)
         }
     }
     
@@ -526,36 +549,7 @@ extension GroupChatVC : TexterViewDelegate {
         
     }
     
-    @objc func handlemessagePopUpTableViewTapped(gesture : UITapGestureRecognizer){
-        print("tapped")
-        //removeAnimateTableView()
-        
-        let tapped = gesture.view?.tag
-        guard let realTapped = tapped else {
-            return
-        }
-        switch realTapped {
-        case 0:
-            FireService.sharedInstance.saveMessages(user: globalUser.toFireUser,group: group!, messageToSave: messagelongTapped!) { (result) in
-                switch result {
-                case .success(let bool):
-                    if bool {
-                        self.removeAnimateTableView()
-                        break
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    self.removeAnimateTableView()
-                }
-            }
-        default:
-            self.removeAnimateTableView()
-            break
-        }
-        
-        self.removeAnimateTableView()
-        
-    }
+    
     
     
 }
@@ -584,17 +578,7 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == messagePopUptableView{
-            
-            let cell = messagePopUptableView.dequeueReusableCell(withIdentifier: messagePopUpCellId) as! MessagePopUpCell
-            cell.tag = indexPath.row
-            cell.icon = messagePopUptableViewList[indexPath.row]
-            let tapgesture = UITapGestureRecognizer(target: self, action: #selector(handlemessagePopUpTableViewTapped(gesture:)))
-            cell.addGestureRecognizer(tapgesture)
-            
-            
-            return cell
-        }
+
         
         
         let cell = groupChatTable.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! MessgaeCell
@@ -604,8 +588,14 @@ extension GroupChatVC : UITableViewDelegate , UITableViewDataSource {
         cell.message = message
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
+        cell.tag = indexPath.row
+        cell.indexPath = indexPath
+        cell.backgroundColor = .clear
+        cell.selectionStyle = .none
         let longMessageCellTapGesture : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap(gesture:)))
         cell.addGestureRecognizer(longMessageCellTapGesture)
+//        let longMessageCellTapGesture : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap(gesture:)))
+//        cell.addGestureRecognizer(longMessageCellTapGesture)
         return cell
     }
     

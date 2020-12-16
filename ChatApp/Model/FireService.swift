@@ -519,9 +519,12 @@ class FireService {
     
     
     func saveMessageWithFreind(user : FireUser , freind : Friend , message : Message, completionHandler: @escaping (Result<Bool, Error>) -> Void){
-        let ref = FireService.users.document(user.email).collection(FireService.savedMessages).document(freind.id)
+       // let ref = FireService.users.document(user.email).collection(FireService.savedMessages).document(freind.id)
         let data = self.changeMessageToDictionary(message)
-        ref.collection("FreindMessages").document("\(message.id)").setData(data) { (error) in
+        let ref = FireService.users.document(user.email).collection(FireService.firendsString).document(freind.email).collection("savedMessages").document("\(message.id)")
+        
+        
+        ref.setData(data) { (error) in
             if let error = error{
                 completionHandler(.failure(error))
                 return
@@ -569,7 +572,8 @@ class FireService {
     
     
     func loadSavedMessagesWithFriend(user:FireUser, freind:Friend, completion: @escaping ([Message]?,Error?)-> ()){
-        let ref =         FireService.users.document(user.email).collection(FireService.savedMessages).document(freind.id).collection("Messages")
+       // let ref =         FireService.users.document(user.email).collection(FireService.savedMessages).document(freind.id).collection("Messages")
+        let ref = FireService.users.document(user.email).collection(FireService.firendsString).document(freind.email).collection("savedMessages")
         //listening for new messages
         ref.getDocuments{ (snapshot, error) in
             var messages : [Message] = []

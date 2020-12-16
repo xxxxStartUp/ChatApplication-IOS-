@@ -423,22 +423,23 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
         constainMessagePopUpTableView()
     }
     
-    @objc func  handleLongTap(gesture : UIGestureRecognizer){
-        let cellView = gesture.view
-        guard let newCellView = cellView else {return}
-        let cell = newCellView as! MessgaeCell
-        messagelongTapped = cell.message
-        print("tapped for long")
-        guard let indexPath = cell.indexPath else { return}
-        let rect =  chatTableView.rectForRow(at: indexPath)
-        let saveMenuItem = UIMenuItem(title: "Save", action: #selector(saveMessgeFromMenuItem))
-        UIMenuController.shared.menuItems = [saveMenuItem]
-        UIMenuController.shared.setTargetRect(rect, in: chatTableView)
-        UIMenuController.shared.arrowDirection = .default
-        UIMenuController.shared.setMenuVisible(true, animated: true)
-        
-        
-       // animateTableView()
+    @objc func  handleLongTap(gesture : UILongPressGestureRecognizer){
+        if gesture.state == .began{
+            let cellView = gesture.view
+            guard let newCellView = cellView else {return}
+            let cell = newCellView as! MessgaeCell
+            messagelongTapped = cell.message
+            print("tapped for long")
+            guard let indexPath = cell.indexPath else { return}
+            let rect =  chatTableView.rectForRow(at: indexPath)
+            let saveMenuItem = UIMenuItem(title: "Save", action: #selector(saveMessgeFromMenuItem))
+            UIMenuController.shared.menuItems = [saveMenuItem]
+            UIMenuController.shared.setTargetRect(rect, in: chatTableView)
+            UIMenuController.shared.arrowDirection = .default
+            UIMenuController.shared.setMenuVisible(true, animated: true)
+            
+        }
+
     }
     
     override var canBecomeFirstResponder: Bool {
@@ -447,14 +448,15 @@ class ChatVC_Dara: UIViewController, UIImagePickerControllerDelegate & UINavigat
     
     
     @objc func saveMessgeFromMenuItem(){
-        print("saved message")
+        
         FireService.sharedInstance.saveMessageWithFreind(user: globalUser!, freind: r! , message: messagelongTapped!) { (result) in
             
             switch result{
             
             case .success(let sucess):
                 if sucess{
-                    print("sucssfully saved image")
+                    print("saved message")
+                    print("sucssfully saved message")
                 }
                 
             case .failure( let error):
@@ -581,17 +583,7 @@ extension ChatVC_Dara :UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tableView == messagePopUptableView{
-            
-            let cell = messagePopUptableView.dequeueReusableCell(withIdentifier: messagePopUpCellId) as! MessagePopUpCell
-            cell.tag = indexPath.row
-            cell.icon = messagePopUptableViewList[indexPath.row]
-            //  let tapgesture = UITapGestureRecognizer(target: self, action: #selector(handlemessagePopUpTableViewTapped(gesture:)))
-            // cell.addGestureRecognizer(tapgesture)
-            return cell
-        }
-        
-        
+
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! MessgaeCell
         cell.chatVC = self
         cell.message = messages[indexPath.row]

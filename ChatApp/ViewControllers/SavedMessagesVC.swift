@@ -19,7 +19,7 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
     var savedMessagesDictionary : [String:Message] = [:]
     var savedMessagesKeys:[String] = []
     var savedMessages:[Message] = []
-    
+    var isFriend = false
     var group: Group?
     var finalLabel:UILabel?
     var rightBarButton:UIBarButtonItem?
@@ -67,7 +67,7 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
         updateBackgroundViews()
         finalLabel?.settingsPageLabels(type: Constants.settingsPage.labelTitles)
         loadMessages()
-       
+        
         
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -148,7 +148,49 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
         print("Right Bar button tapped")
         
     }
-    func loadMessages (){
+    
+    
+    func loadMessgesWithFriend(){
+        FireService.sharedInstance.loadSavedMessagesWithFriend(user: globalUser.toFireUser, freind: freind!) { (messages, error) in
+            
+            if let error = error{
+                print(error.localizedDescription)
+            }
+            self.savedMessages.removeAll()
+            self.savedMessagesTable.reloadData()
+            guard let messages = messages else {return}
+            print(messages.count , "this is printing is in groupvc")
+            
+            messages.forEach { (message) in
+                self.savedMessages.append(message)
+                print(message.content.content as! String, "this is printing in group vc")
+            }
+            
+            
+            self.savedMessages.sort { (message1, message2) -> Bool in
+                return message1.timeStamp < message2.timeStamp
+            }
+            
+            if !messages.isEmpty{
+                self.savedMessagesTable.reloadData()
+                self.savedMessagesTable.separatorStyle = .singleLine
+                self.finalLabel?.isHidden = true
+                let indexPath = IndexPath(row: self.savedMessages.count-1, section: 0)
+                self.savedMessagesTable.scrollToRow(at:indexPath, at: .bottom, animated: true)
+                print(self.savedMessages[0].content.content)
+            }
+            else{
+                self.savedMessagesTable.scrollsToTop = true
+                self.savedMessagesTable.separatorStyle = .none
+                self.finalLabel?.isHidden = false
+                
+            }
+            
+        }
+        
+    }
+    
+    func loadMessagesWithGroup(){
         
         FireService.sharedInstance.loadSavedMessages(user: globalUser.toFireUser, group: group!) { (messages, error) in
             
@@ -182,10 +224,19 @@ class SavedMessagesVC: UIViewController,UITableViewDataSource,UITableViewDelegat
                 self.savedMessagesTable.scrollsToTop = true
                 self.savedMessagesTable.separatorStyle = .none
                 self.finalLabel?.isHidden = false
-            
+                
             }
-
+            
         }
+        
+    }
+    func loadMessages (){
+        
+        if isFriend {
+            loadMessgesWithFriend()
+            return
+        }
+        loadMessagesWithGroup()
         
     }
     //updates the background color for the tableview and nav bar.
@@ -278,7 +329,7 @@ extension SavedMessagesVC{
             print(savedMessages[indexPath.row].content)
             FireService.sharedInstance.deleteOneSavedMessage(user: globalUser.toFireUser, group: group!, MessageToDelete: message) { (result) in
                 switch result{
-                    
+                
                 case .success(let bool):
                     if bool{
                         print("Saved Messages:\(self.savedMessages.count)")
@@ -330,7 +381,7 @@ extension SavedMessagesVC{
             keywindow.layer.addSublayer(playerLayer!)
             UIView.animate(withDuration: 0.5, delay: 0,usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.blackBackgroundView?.alpha = 1
-//                self.texterView.alpha = 0
+                //                self.texterView.alpha = 0
                 self.playerLayer?.frame = keywindow.frame
                 self.player?.play()
                 self.activityIndicator.startAnimating()
@@ -376,7 +427,7 @@ extension SavedMessagesVC{
         UIView.animate(withDuration: 0.5, delay: 0,usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             tappedImageFrame.frame = CGRect(x: 0, y: 0, width: keywindow.frame.width, height: height)
             self.blackBackgroundView?.alpha = 1
-//            self.texterView.alpha = 0
+            //            self.texterView.alpha = 0
             tappedImageFrame.center = keywindow.center
             tappedImageFrame.contentMode = .scaleAspectFit
             tappedImageFrame.backgroundColor = .black
@@ -394,10 +445,10 @@ extension SavedMessagesVC{
             
             //tappedOutImageView.layer.cornerRadius = 8
             tappedOutImageView.clipsToBounds = true
-
+            
             UIView.animate(withDuration: 0.7, delay: 0,usingSpringWithDamping: 1,initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.blackBackgroundView?.alpha = 0
-//                self.texterView.alpha = 1
+                //                self.texterView.alpha = 1
                 tappedOutImageView.frame = startingFrame
             }, completion: {(completed: Bool) in
                 tappedOutImageView.removeFromSuperview()
@@ -507,7 +558,7 @@ extension SavedMessagesVC{
             self.videoExitButton?.alpha = 0
             self.videoBackgroundView?.alpha = 0
             self.pauseButton?.alpha = 0
-//            self.texterView.alpha = 1
+            //            self.texterView.alpha = 1
             
         }, completion: {(completed: Bool) in
             self.playerLayer?.removeFromSuperlayer()
@@ -526,5 +577,5 @@ extension SavedMessagesVC{
         self.videoExitButton?.isHidden = true
         self.pauseButton?.isHidden = true
     }
-
+    
 }

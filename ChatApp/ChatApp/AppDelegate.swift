@@ -73,6 +73,7 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         print("registered successfully")
         Messaging.messaging().apnsToken = deviceToken
         let token = Messaging.messaging().fcmToken
+        print("fcm token : " , token)
         updateFirestorePushTokenIfNeeded(tokens:token)
         print(deviceToken)
         
