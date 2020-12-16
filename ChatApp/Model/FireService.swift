@@ -2961,13 +2961,17 @@ extension FireService{
                 print("group.id:\(group.id)")
 //                if friends.isEmpty {return}
                 //sends the same message to every person in the group
+                var count = deviceTokenList.count
                 let pushNotificationSender = PushNotificationSender()
                 deviceTokenList.forEach { (token) in
                     if(token != "deviceToken".load()){
                         pushNotificationSender.sendPushNotification(to: token, title: title, body: subtitle)
+                        count -= 1
+                    }
+                    if count == 0 {
+                        completion(.success(true))
                     }
                 }
-                completion(.success(true))
             case .failure(let error):
                 completion(.failure(error))
                 return
@@ -2983,12 +2987,17 @@ extension FireService{
 //                if friends.isEmpty {return}
                 //sends the same message to every person in the group
                 let pushNotificationSender = PushNotificationSender()
+                var count = deviceTokenList.count
                 deviceTokenList.forEach { (token) in
                     if(token != "deviceToken".load()){
                         pushNotificationSender.sendPushNotification(to: token, title: title, body: subtitle)
+                        count -= 1
+                    }
+                    if count == 0 {
+                        completion(.success(true))
                     }
                 }
-                completion(.success(true))
+                
             case .failure(let error):
                 completion(.failure(error))
                 return
