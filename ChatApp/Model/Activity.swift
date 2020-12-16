@@ -15,6 +15,7 @@ class Activity {
     
     var type : ActivityType
     var name : String
+    var lastActive : Date?
     
     init(activityType : ActivityType) {
         self.type = activityType

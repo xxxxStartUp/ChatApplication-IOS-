@@ -124,14 +124,6 @@ extension ChatLogVC : UITableViewDelegate,UITableViewDataSource,UISearchBarDeleg
             cell.darkmodeBackground()
             return cell
         }
-        
-        
-        
-        
-//        cell.updateViews(indexPath: indexPath.row+1)
-//        cell.activity = activities[indexPath.row]
-//        cell.backgroundColor = .clear
-//        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
