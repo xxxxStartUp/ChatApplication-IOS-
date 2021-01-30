@@ -64,6 +64,12 @@ class SignUpVC: UIViewController {
                             
                             if sucess{
                                 globalUser = user
+                                if let displaymode = UserDefaults.standard.value(forKey: "displayModeSwitch") as? Bool{
+                                    Constants.settingsPage.displaySwitch?.isOn = displaymode
+                                }
+                                else{
+                                    UserDefaults.standard.setValue(false, forKey: "displayModeSwitch")
+                                }
                                 let controller =  UIAlertController.alertUser( title: "Sucess", message: "you are signed up", whatToDo: "good job!")
                                 self.present(controller, animated: true) {
                                     self.goToTab()

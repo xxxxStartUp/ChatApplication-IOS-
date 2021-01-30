@@ -180,6 +180,9 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
                 fatalError()
             }
             self.groupParticipants = participants
+            if !self.groupParticipants.contains(globalUser!.asAFriend){
+                self.texterView.isHidden = true
+            }
         }
 
         
@@ -193,27 +196,38 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         //        let cachedAvatar = imageCache.image(withIdentifier: "image")
         //        self.navBarButton.setImage(cachedAvatar, for: .normal)
         
-        FireService.sharedInstance.getGroupPictureData(user: globalUser!,group: group!) { (result) in
-            switch result{
-                
-            case .success(let url):
-                
+        FireService.sharedInstance.getGroupPictureDataFromChatLog(user: globalUser!,group: group!) { (url,completion,error) in
+            
+            if let error = error{
+                print(error.localizedDescription)
+            }
+            if let url = url{
+                let largeConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 60))
+                let image = UIImage(systemName:"person.crop.circle.fill",withConfiguration: largeConfiguration)
+            
                 let imageView = UIImageView()
-                imageView.af.setImage(withURL: url, cacheKey: nil, placeholderImage: UIImage(named: "profile"), serializer: nil, filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.3), runImageTransitionIfCached: false) { (_) in
+                imageView.af.setImage(withURL: url, cacheKey: nil, placeholderImage: image, serializer: nil, filter: nil, progress: nil, progressQueue: .global(), imageTransition: .crossDissolve(0.3), runImageTransitionIfCached: false) { (_) in
                     let data = imageView.image?.jpeg(.low)
                     let newImage = (UIImage(data: data!))!.af.imageRoundedIntoCircle()
-                    self.navBarButton.imageView?.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
+                    self.navBarButton.imageView?.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
                     self.navBarButton.imageView?.contentMode = .scaleAspectFit
                     self.navBarButton.setImage(newImage, for: .normal)
-                    
+                    self.navBarButton.backgroundColor = .clear
+                    self.navBarButton.tintColor = #colorLiteral(red: 0.8941176471, green: 0.8941176471, blue: 0.8941176471, alpha: 1)
                     
                     
                 }
-                
-                
-                
-            case .failure(_):
-                print("failed to set image url")
+
+                }
+            if !completion{
+                let largeConfiguration = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 60))
+                let image = UIImage(systemName:"person.crop.circle.fill",withConfiguration: largeConfiguration)
+                self.navBarButton.imageView?.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+                self.navBarButton.imageView?.contentMode = .scaleAspectFit
+                self.navBarButton.setImage(image, for: .normal)
+                self.navBarButton.backgroundColor = .clear
+                self.navBarButton.layer.cornerRadius = 20
+                self.navBarButton.tintColor = #colorLiteral(red: 0.8941176471, green: 0.8941176471, blue: 0.8941176471, alpha: 1)
             }
             
         }
@@ -353,6 +367,7 @@ class GroupChatVC: UIViewController, UIImagePickerControllerDelegate & UINavigat
         print("Display switch:\(Constants.settingsPage.displayModeSwitch)")
         DispatchQueue.main.async {
             self.groupChatTable.darkmodeBackground()
+            self.view.darkmodeBackground()
             
             self.texterView.backgroundView.texterViewBackground()
             //self.navigationController?.navigationBar.darkmodeBackground()
@@ -639,7 +654,7 @@ extension GroupChatVC {
         print(startingFrame)
         
         let tappedImageFrame = UIImageView(frame: startingFrame!)
-        tappedImageFrame.backgroundColor = .red
+        //tappedImageFrame.backgroundColor = .red
         tappedImageFrame.image = startingImageview.image
         tappedImageFrame.isUserInteractionEnabled = true
         tappedImageFrame.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTappedOutImage)))
@@ -664,6 +679,10 @@ extension GroupChatVC {
             self.blackBackgroundView?.alpha = 1
             self.texterView.alpha = 0
             tappedImageFrame.center = keywindow.center
+            tappedImageFrame.contentMode = .scaleAspectFit
+            tappedImageFrame.backgroundColor = .black
+            self.startingImageView?.image?.withRenderingMode(.alwaysOriginal)
+            
         }, completion: nil)
         
     }
@@ -674,16 +693,18 @@ extension GroupChatVC {
         
         if let tappedOutImageView = tapGesture.view,let startingFrame = startingFrame{
             
-            tappedOutImageView.layer.cornerRadius = 8
+            //tappedOutImageView.layer.cornerRadius = 8
             tappedOutImageView.clipsToBounds = true
 
-            UIView.animate(withDuration: 0.5, delay: 0,usingSpringWithDamping: 1,initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 0.7, delay: 0,usingSpringWithDamping: 1,initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.blackBackgroundView?.alpha = 0
                 self.texterView.alpha = 1
                 tappedOutImageView.frame = startingFrame
             }, completion: {(completed: Bool) in
                 tappedOutImageView.removeFromSuperview()
                 self.startingImageView?.isHidden = false
+                self.startingImageView?.contentMode = .scaleAspectFill
+                self.startingImageView?.image?.withRenderingMode(.alwaysOriginal)
                 self.startingImageView?.layer.cornerRadius = 8
             })
             

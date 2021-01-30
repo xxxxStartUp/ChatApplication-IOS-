@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="My3-nn-G2J">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="My3-nn-G2J">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,7 +22,7 @@
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.crop.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="7un-rp-Nqv">
                                         <rect key="frame" x="64.5" y="0.5" width="230" height="229"/>
-                                        <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" red="0.89411764709999997" green="0.8941736817" blue="0.89401060340000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="230" id="BT7-kC-Vff"/>
                                             <constraint firstAttribute="height" constant="230" id="fKb-gn-9zQ"/>
@@ -65,7 +67,7 @@
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
                                                         </subviews>
-                                                        <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" systemColor="linkColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="bottom" secondItem="JUn-BX-Fwy" secondAttribute="bottom" constant="3" id="COA-So-hQ5"/>
                                                             <constraint firstItem="JUn-BX-Fwy" firstAttribute="leading" secondItem="OAr-8E-3xq" secondAttribute="leading" constant="8" id="SD6-8r-5Ph"/>
@@ -112,7 +114,7 @@
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
                                                         </subviews>
-                                                        <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" systemColor="linkColor"/>
                                                         <constraints>
                                                             <constraint firstItem="3ca-GE-whW" firstAttribute="leading" secondItem="ifd-Bs-DVo" secondAttribute="leading" constant="8" id="OH0-H7-nuU"/>
                                                             <constraint firstAttribute="trailing" secondItem="3ca-GE-whW" secondAttribute="trailing" constant="8" id="TI8-1h-PFZ"/>
@@ -159,7 +161,7 @@
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
                                                         </subviews>
-                                                        <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" systemColor="linkColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="8eV-gY-9EQ"/>
                                                             <constraint firstItem="6ni-HE-KXE" firstAttribute="top" secondItem="Bdt-23-NsV" secondAttribute="top" constant="3" id="9yp-mk-irf"/>
@@ -175,13 +177,13 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="dGC-Vq-9cK"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="pkm-IO-bE0" firstAttribute="leading" secondItem="JQo-AX-RIQ" secondAttribute="leading" constant="8" id="AmG-Cv-NnH"/>
                             <constraint firstItem="dGC-Vq-9cK" firstAttribute="trailing" secondItem="pkm-IO-bE0" secondAttribute="trailing" constant="8" id="bDd-lS-2aV"/>
                             <constraint firstItem="pkm-IO-bE0" firstAttribute="top" secondItem="dGC-Vq-9cK" secondAttribute="top" id="jlW-eh-thN"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="dGC-Vq-9cK"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" image="person.crop.circle.fill" catalog="system" id="Acz-fJ-H3H"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
@@ -205,5 +207,11 @@
     </scenes>
     <resources>
         <image name="person.crop.circle.fill" catalog="system" width="128" height="121"/>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

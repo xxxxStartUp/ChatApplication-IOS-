@@ -28,16 +28,16 @@ class GroupSettingCell: UITableViewCell {
             else{
                 print("Display mode off")
             }
-        case 1:
-            settingsSwitch.tag = 1
-            label.text = "Archive"
-            label.GroupInfoPageLabels(type: Constants.groupInfoPage.settingsHeader)
-            if settingsSwitch.isOn{
-               
-            }
-            else{
-                
-            }
+//        case 1:
+//            settingsSwitch.tag = 1
+//            label.text = "Archive"
+//            label.GroupInfoPageLabels(type: Constants.groupInfoPage.settingsHeader)
+//            if settingsSwitch.isOn{
+//
+//            }
+//            else{
+//
+//            }
         default:
             label.text = "Error"
             

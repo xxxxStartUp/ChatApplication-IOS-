@@ -23,9 +23,9 @@ class ChatInfoCells: UITableViewCell {
         case 0:
             label.text = "Saved Messages"
             label.settingsPageLabels(type: Constants.settingsPage.labelTitles)
-        case 1:
-            label.text = "Archived Chat"
-            label.settingsPageLabels(type: Constants.settingsPage.labelTitles)
+//        case 1:
+//            label.text = "Archived Chat"
+//            label.settingsPageLabels(type: Constants.settingsPage.labelTitles)
         default:
             label.text = "Error"
         }

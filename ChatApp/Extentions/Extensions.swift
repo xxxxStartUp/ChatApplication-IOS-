@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import AVFoundation
-
+import Firebase
 let cachedImage = NSCache<NSString,UIImage>()
 
 extension UIButton{
@@ -412,8 +412,8 @@ extension UIView{
     }
     
     func profilePageImageView(){
-        self.layer.borderWidth = 0.5
-        self.layer.borderColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+//        self.layer.borderWidth = 1
+//        self.layer.borderColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
         self.layer.masksToBounds = false
         self.layer.cornerRadius = self.layer.frame.size.height/2
         self.clipsToBounds = true
@@ -438,8 +438,8 @@ extension UIView{
     
     func settingsPageImageView(){
         
-        self.layer.borderWidth = 1
-        self.layer.borderColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
+//        self.layer.borderWidth = 1
+//        self.layer.borderColor = #colorLiteral(red: 0.1453940272, green: 0.6507653594, blue: 0.9478648305, alpha: 1)
         self.layer.masksToBounds = false
         self.layer.cornerRadius = self.layer.frame.size.height/2
         self.clipsToBounds = true
@@ -602,7 +602,9 @@ extension UIImageView{
         //check cache for image
         if let cachedImage = cachedImage.object(forKey: urlString as NSString){
             self.image = cachedImage
+            self.contentMode = .scaleAspectFill
             return
+            
         }
         //otherwise fire off a new download
 
@@ -615,6 +617,7 @@ extension UIImageView{
                 switch reponse.result {
                 case .success(let image):
                     self.image = image
+                    self.contentMode = .scaleAspectFill
                     
                     cachedImage.setObject(image, forKey: urlString as NSString)
                 case .failure(let error):
@@ -666,6 +669,48 @@ extension UIImage {
     }
 }
 
+extension UIViewController {
+    // DARA PLEASE TAKE A LOOK AT THIS
+    enum userStrings : String{
+        typealias RawValue = String
+        case currentUser = "CurrentUser"
+    }
+    
+    var currentUser : FireUser? {
+        // use this to get current user any where as long as user has been saved
+        return getCurrentUserFromDisk()
+    }
+    
+    func getCurrentUserFromDisk () -> FireUser? {
+        let dict = UserDefaults.standard.dictionary(forKey: userStrings.currentUser.rawValue)
+        guard let unWrappedDict = dict else {
+            return nil
+            
+        }
+        let user = FireService.sharedInstance.changeDictionaryToFireUser(data: unWrappedDict)
+        return user
+        
+    }
+    
+    func saveCurrentUserToDisk(user : FireUser) {
+        //add to signup and sign in functions
+        let dict = FireService.sharedInstance.changeUserToDictionary(user)
+        UserDefaults.standard.set(dict, forKey: userStrings.currentUser.rawValue)
+        UserDefaults.standard.synchronize()
+        
+    }
+    
+    func deleteCurrentUserFromDisk(){
+        // add to signOut Function
+        UserDefaults.standard.removeObject(forKey: userStrings.currentUser.rawValue)
+    }
+    
+    
+    func reSaveUserToDisk(user : FireUser){
+        //call if you change something about a user
+        saveCurrentUserToDisk(user: user)
+    }
+}
 
 
 

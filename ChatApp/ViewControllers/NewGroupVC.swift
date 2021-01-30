@@ -26,6 +26,8 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate, UINavig
     var shareURLString:String?
     var group:Group?
     var defaultImage:UIImage?
+    var finalGroupImage:UIImage?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +60,8 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate, UINavig
                 self.present(controller, animated: true, completion: nil)
                 return
             }
-
+            if groupName.count <= 15{
+            print("Character count is equal to: \(groupName.count)")
             //new group is created and temp id is passed.
             let id = UUID().uuidString
             let newGroup = Group(GroupAdmin: globalUser!, id: id, name: groupName)
@@ -75,8 +78,14 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate, UINavig
                             //call function to save the url in FB
                             if let shareURLString = self.shareURLString{
                             let data = ["groupInvitationUrl" : shareURLString]
-                            let imageData = Constants.groupInfoPage.globalGroupImage!.pngData()!
-                            self.saveGroupPicture(data: imageData)
+                                
+                                if let image = self.finalGroupImage {
+                                    if let imageData = image.pngData(){
+                                      self.saveGroupPicture(data: imageData)
+                                    }
+                                }
+                
+    
                             FireService.sharedInstance.addCustomDataToGroup(data: data, user: globalUser!, group: newGroup) { (error, success) in
                                 if let error = error {
                                     print(error.localizedDescription)
@@ -88,7 +97,13 @@ class NewGroupVC: UIViewController, MFMailComposeViewControllerDelegate, UINavig
                         }
                     }
                 }
+            }
                 
+            }
+            else{
+                let controller = UIAlertController.alertUser(title: "Character limit exceeded", message: "The maximum number of characters allowed is 15. Please use a shorter group name", whatToDo: "Try again")
+                self.present(controller, animated: true, completion: nil)
+                return
             }
             
         }
@@ -374,8 +389,9 @@ extension NewGroupVC:UIImagePickerControllerDelegate{
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
             newGroupImageView.image = image
             newGroupImageView.contentMode = .scaleAspectFill
-            Constants.groupInfoPage.groupImageState = true
-            Constants.groupInfoPage.globalGroupImage = image
+            finalGroupImage = image
+//            Constants.groupInfoPage.groupImageState = true
+//            Constants.groupInfoPage.globalGroupImage = image
             
             dismiss(animated: true, completion: nil)
         }
@@ -400,10 +416,9 @@ extension NewGroupVC:UIImagePickerControllerDelegate{
             case .success(_):
                 print("sucess")
                 let image = UIImage(data: data)!
-                Constants.groupInfoPage.groupImageState = true
-                Constants.groupInfoPage.globalGroupImage = image
                 self.newGroupImageView.image = image
                 self.newGroupImageView.isUserInteractionEnabled = true
+                self.finalGroupImage = nil
             case .failure(_):
                 print("falure")
             }

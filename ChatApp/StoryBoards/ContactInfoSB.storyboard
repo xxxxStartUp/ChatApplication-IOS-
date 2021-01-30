@@ -15,37 +15,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="sOz-bo-NzF">
-                                <rect key="frame" x="0.0" y="44" width="414" height="792"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="sOz-bo-NzF">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EO7-1J-lZh">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="250"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="EO7-1J-lZh">
+                                        <rect key="frame" x="0.0" y="1.5" width="414" height="197.5"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="250" id="jKT-GR-cOH"/>
+                                            <constraint firstAttribute="height" constant="200" id="jKT-GR-cOH"/>
                                         </constraints>
                                     </imageView>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="57L-jz-hfh">
-                                        <rect key="frame" x="0.0" y="252" width="414" height="540"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="57L-jz-hfh">
+                                        <rect key="frame" x="0.0" y="200" width="414" height="574"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="EO7-1J-lZh" secondAttribute="trailing" id="0Zx-UM-Di9"/>
-                                    <constraint firstAttribute="trailing" secondItem="57L-jz-hfh" secondAttribute="trailing" id="841-SU-9Nx"/>
-                                    <constraint firstItem="EO7-1J-lZh" firstAttribute="leading" secondItem="sOz-bo-NzF" secondAttribute="leading" id="TPC-9D-VsB"/>
-                                    <constraint firstItem="57L-jz-hfh" firstAttribute="leading" secondItem="sOz-bo-NzF" secondAttribute="leading" id="rmA-sJ-nNK"/>
-                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="sOz-bo-NzF" firstAttribute="centerX" secondItem="Txh-Vd-qxx" secondAttribute="centerX" id="6ZV-Aj-ZSN"/>
-                            <constraint firstItem="sOz-bo-NzF" firstAttribute="top" secondItem="4Pr-ge-Yqy" secondAttribute="top" id="XBe-ob-dtf"/>
-                            <constraint firstItem="sOz-bo-NzF" firstAttribute="leading" secondItem="4Pr-ge-Yqy" secondAttribute="leading" id="YLV-6F-vco"/>
-                            <constraint firstItem="4Pr-ge-Yqy" firstAttribute="bottom" secondItem="sOz-bo-NzF" secondAttribute="bottom" constant="26" id="kvb-oh-Tos"/>
+                            <constraint firstItem="sOz-bo-NzF" firstAttribute="top" secondItem="4Pr-ge-Yqy" secondAttribute="top" id="CPi-X2-RQe"/>
+                            <constraint firstItem="sOz-bo-NzF" firstAttribute="trailing" secondItem="4Pr-ge-Yqy" secondAttribute="trailing" id="Vrw-8a-S5K"/>
+                            <constraint firstItem="4Pr-ge-Yqy" firstAttribute="bottom" secondItem="sOz-bo-NzF" secondAttribute="bottom" id="YMr-6o-pyz"/>
+                            <constraint firstItem="sOz-bo-NzF" firstAttribute="leading" secondItem="4Pr-ge-Yqy" secondAttribute="leading" id="oci-Mb-ic2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4Pr-ge-Yqy"/>
                     </view>
+                    <navigationItem key="navigationItem" id="oNh-UR-cHl"/>
                     <connections>
                         <outlet property="contactInfoTableView" destination="57L-jz-hfh" id="ryo-gy-ghH"/>
                         <outlet property="profileImageView" destination="EO7-1J-lZh" id="F4x-5c-UyS"/>
@@ -53,7 +50,28 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QTl-vV-o0L" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1047.8260869565217" y="73.660714285714278"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="hYA-uy-kq3">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4Yo-75-zxn" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="50f-Sv-RLT">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="UQ5-VH-rm5" kind="relationship" relationship="rootViewController" id="7IV-EK-maJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cVX-av-ugv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
             <point key="canvasLocation" x="137.68115942028987" y="73.660714285714278"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="person" catalog="system" width="128" height="117"/>
+    </resources>
 </document>
